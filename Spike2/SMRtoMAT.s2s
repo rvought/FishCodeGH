@@ -1,0 +1,18 @@
+‘This file allows you to choose a folder location and converts all of the smr files in a file folder to .mat files with the same name’
+
+
+var vh%;
+var numFiles%;
+var names$[1000];
+var i%;
+
+FilePathSet("", 0, "Select a folder"); 
+numFiles% := FileList(names$[], 0);
+for i% := 0 to numFiles%-1 do
+    vh% := FileOpen(names$[i%], 0);
+    ExportChanList(1); 'Initialise the channel list
+    ExportChanList(0, MaxTime(), -1);
+    FileSaveAs(Left$(names$[i%], len(names$[i%])-3)+"mat",100,0,"",0,
+    "UseSName=1|UseCName=0|WaveTimes=0|BinFreq=0|BinTimes=0|WaveData=2|MarkAs=1|TMarkAs=2|RMarkAs=2|RMarkData=2|WaveMarkAs=2|WaveMarkData=2|Compat=0"); 'Export (string args)
+    FileClose();
+next;

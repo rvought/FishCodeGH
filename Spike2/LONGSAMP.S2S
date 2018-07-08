@@ -1,0 +1,520 @@
+
+'--------------------------------------------------------------
+' LongSamp.s2s  SCRIPT FOR SAMPLING SUCCESSIVE DATA-FILES
+'--------------------------------------------------------------
+' Version: 1.01
+'    Date: 27/08/99
+'  Author: Andrew Gill (CED)
+'
+' Modifications:
+'
+' (08/09/99 AG) 1. SampleAuto...() settings disabled.
+'               2. Test ViewKind() before saving in case no data. 
+' (14/09/99 AG) 1. Times of files in 24 h and time of start not
+'                  finish.
+'               2. Error message if 1401 not connected.
+'
+' Description:
+' ------------
+' To allow long sampling times while sampling at high rates,
+' this script opens and samples a sequence of data files and
+' saves them as a set.
+'
+' The user enters the sampling time to be used for each data-
+' file, the directory for the saved data, a 'root' name for
+' generating file-names and the maximum number of files to sample.
+' The default sampling time is the maximum possible for the 
+' tick-rate set in the sampling configuration. The directory 
+' entered is created if it doesn't already exist. 
+'
+' Successively sampled files are saved as ROOTnnn.smr where
+' ROOT is the root file-name and nnn takes values from 000
+' to 999.
+'
+' The user is given the option to delete existing files which
+' would interfere with the sequence to be recorded.
+'
+' Note for users of Spike2 version 2.xx:
+' --------------------------------------
+' The file-names are calculated manually for compatibility with
+' Spike2 version 2.xx. However, the Time$() and Date$ functions 
+' do not exist in version 2 so the functions GetDate$() and 
+' GetTime$() should be amended as indicated below in the code.
+'
+' SampleAuto...() functions also don't exist in version 2.xx. 
+' These also need to be commented out (as annotated in the script).
+'---------------------------------------------------------------
+
+'Settings and default values...
+var setMinutesPerFile;                    'Sampling time for each file in minutes...
+                                          'Directory to save sampled data-files in...
+var setSaveDirectory$ := "C:\\DIANA";
+var setRootName$      := "DATE";          'Root file-name for naming data-files...
+var setMaximumFiles%;                     'Maximum number of files to record...
+
+'Toolbar constants...
+const mainToolSettings% := 6;
+const mainToolStart%    := 4;
+const mainToolStop%     := 3;
+const mainToolQuit%     := 1;
+const mainToolText$ := "Main toolbar...";
+const mainToolAllow% := 4 + 256;          'Allow window sizing and Window menu...
+
+'Other constants...
+const setMaximumTicks% := 2147483647;     'Maximum number of ticks possible (see Spike2 manual)...
+
+'Other variables...
+var setFileNumber%;                       'Number of file in set...
+var setSecondsPerFile%;                   'Sampling time in seconds...
+
+var setLimitTime;                         'Used to save limits set in sampling configuration...
+var setLimitSize;
+
+var setAutoFileOn%;                       'Automatic filing features we want to turn off...
+var setAutoCommentOn%;
+
+var setStartFile%;                        'File number to start at...
+
+var setTimeStarted$;                      'Time of start for each file...
+
+'Handles...
+var sh% := -1;
+var fh% := -1;
+
+'---------------------------------------------
+' Begin script...
+'---------------------------------------------
+
+var ok%;
+
+var sVis%;
+sh% := App(3);
+if sh% > 0 then sVis% := View(sh%).WindowVisible(0); endif;
+
+FileClose(-1,-1);             'Close all open files...
+
+ToolbarVisible(1);				'Make toolbar visible...
+
+DoMainToolbar%();					'Do the toolbar...
+
+FileClose(-1,-1);
+
+if sh% > 0 then View(sh%).WindowVisible(sVis%); endif;
+
+Halt;
+
+'---------------------------------------------
+' End script...
+'---------------------------------------------
+
+
+
+func DoMainToolbar%()
+ToolbarClear();
+
+ToolbarSet(0,                 "",         DoIdle%);
+ToolbarSet(mainToolSettings%, "Settings", DoSettings%);
+ToolbarSet(mainToolStart%,    "Start",    DoStart%);
+ToolbarSet(mainToolStop%,     "Stop",     DoStop%);
+ToolbarSet(mainToolQuit%,     "Quit",     DoQuit%);
+
+ToolbarEnable(mainToolSettings%, 1);
+ToolbarEnable(mainToolStart%,    0);
+ToolbarEnable(mainToolStop%,     0);
+ToolbarEnable(mainToolQuit%,     1);
+
+setMinutesPerFile := 0.0; 'Initialise this so that maximum default value picked up
+                          'first time Settings is run...
+var smph%;                'Disable sampling controls...
+smph% := App(8);
+if smph% >= 0 then View(smph%).WindowVisible(0); endif;
+
+Toolbar(mainToolText$, mainToolAllow%);
+
+return 1;
+end;
+
+
+
+func DoIdle%()
+var ok% := 1;
+if SampleStatus() = 2 then
+	if Seconds() > setSecondsPerFile% then   'Call OpenNewFile%() every 'n' seconds...
+		ok% := OpenNewFile%();
+	endif;
+endif;
+if not ok% then TidyUp() endif;
+return 1;
+end;
+
+
+
+'Input the settings...
+func DoSettings%()
+var again%;
+var timeOk%;
+var pathOk%;
+var filesOk%;
+var allOk%;
+var maxMinutesPerFile;
+
+setLimitTime := SampleLimitTime();         'Get file limits...
+setLimitSize := SampleLimitSize();
+SampleLimitTime(-1 * Abs(setLimitTime));   'Disable the limits on the file...
+SampleLimitSize(-1 * Abs(setLimitSize));
+
+'Comment out the next two lines in Spike2 version 2.xx...
+setAutoFileOn% := SampleAutoFile(0);	    'Disable auto-file save (if left On and no file-name supplied
+                                           'then an unwanted dialog box appears...
+setAutoCommentOn% := SampleAutoComment(0); 'Likewise...
+
+                                                     'Work out maximum sampling time from ticks...
+																	  '(see Spike2 manual p20)...
+maxMinutesPerFile := setMaximumTicks% * SampleUsPerTime() * 1.0e-6 / 60.0;
+maxMinutesPerFile := Round(maxMinutesPerFile * 0.95);   'Reduce by 5% just to be on the safe side...
+
+if setMinutesPerFile = 0.0 then setMinutesPerFile := maxMinutesPerFile endif;
+
+repeat 
+
+	again% := 0;
+
+	DlgCreate("Enter settings...");
+	DlgReal(1, "Sampling time for each data file (min):", 0.0, maxMinutesPerFile);
+	DlgText("Directory for files:", 2, 2);
+	DlgString(2, 35, 100, "", 20);
+	DlgString(3, "Root file-name:", 5, "a-zA-Z0-9");
+	DlgInteger(4, "Maximum number of files:", 1, 999);
+	
+	ok% := DlgShow(setMinutesPerFile, setSaveDirectory$, setRootName$, setMaximumFiles%);
+	
+	if ok% then
+	
+		allOk% := 1;
+	
+		timeOk% := 1;
+		setSecondsPerFile% := Round(setMinutesPerFile * 60.0);
+		if setSecondsPerFile% = 0 then
+			Message("Invalid sampling time entered...");
+			timeOk% := 0;
+		endif;
+	
+		if timeOk% then
+	
+			if setSaveDirectory$ = "" then
+				Message("Please enter a directory to save files in...");
+				pathOk% := -1;
+			else
+				pathOk% := FilePathSet(setSaveDirectory$);
+				if pathOk% < 0 then
+					ok% := Query(Print$("Make new directory (%s)?", setSaveDirectory$));
+					if ok% then
+						pathOk% := FilePathSet(setSaveDirectory$, 0, 1);
+						if pathOk% < 0 then                  'Directory only made if only one level up required...
+							Message("Can't make directory!");
+						endif;
+					endif;
+				endif;
+			endif;
+	
+			if pathOk% >= 0 then
+		
+				filesOk% := ProcessRootFileName%();
+	
+			endif;
+	
+		endif;
+	
+		if timeOk% = 0 or pathOk% < 0 or filesOk% = 0 then allOk% := 0; endif;
+	
+		if allOk% then
+			ToolbarEnable(mainToolSettings%, 1);
+			ToolbarEnable(mainToolStart%,    1);
+			ToolbarEnable(mainToolStop%,     0);
+			ToolbarEnable(mainToolQuit%,     1);
+		else 
+			again% := 1;
+		endif;
+
+	endif; 
+
+until not again%;
+
+return 1;
+end;
+
+
+
+'Start sampling...
+func DoStart%()
+
+fh% := FileNew(0, 4);    'Enable the WaveMark spikes window..
+
+if fh% >= 0 then
+
+	View(LogHandle());
+	EditSelectAll();
+	EditClear();
+	PrintLog("Date: %s\n", GetDate$());
+	PrintLog("Directory: %s\n\n", setSaveDirectory$);
+	PrintLog("\nFiles saved\tTime\n");
+	PrintLog(  "-----------\t----\n\n");
+	Window(75,0,100,100);
+	FrontView(LogHandle());
+
+	View(fh%);
+	Window(0,0,75,100);
+	FrontView(fh%);
+
+	Seconds(0);          'Start timer...
+	setFileNumber% := 0; 'Reset file number...
+
+	setTimeStarted$ := GetTime$();
+
+	SampleStart();
+
+	ToolbarEnable(mainToolSettings%, 0);
+	ToolbarEnable(mainToolStart%,    0);
+	ToolbarEnable(mainToolStop%,     1);
+	ToolbarEnable(mainToolQuit%,     1);
+else
+	Message("ERROR: Could not start file. Check 1401 connections.");
+endif;
+return 1;
+end;
+
+
+
+'Stop sampling...
+func DoStop%()
+var ok%;
+ok% := Query("REALLY STOP SAMPLING?");
+
+if ok% then
+
+	SampleStop();
+
+	SaveDataFile();
+
+	View(fh%); FileClose(0,-1); fh% := -1;
+
+	TidyUp();
+
+endif;
+
+return 1;
+end;
+
+
+
+func DoQuit%()
+var ok%;
+ok% := Query("Really quit?");
+return not ok%;
+end;
+
+
+
+'Called by the idle routine to start sampling a new data-file...
+func OpenNewFile%()
+var ok% := 1;
+
+SampleStop();
+
+SaveDataFile();
+
+if ViewKind(fh%) = 0 then View(fh%); FileClose(0,-1); fh% := -1; endif;
+
+if setFileNumber% < setMaximumFiles% then
+
+	fh% := FileNew(0);
+	
+	if fh% >= 0 then
+	
+		View(fh%);
+		Window(0,0,75,100);
+		FrontView(fh%);
+	
+		Seconds(0);    'Reset timer...
+
+		setTimeStarted$ := GetTime$();
+	
+		SampleStart();
+	
+	else
+		Message("File did not open...");
+		ok% := 0;
+	endif;
+
+else
+	Message("Maximum number of files has been reached...");
+	ok% := 0;
+endif;
+
+return ok%;
+end;
+
+
+
+'Tidy up after stopping sampling...
+proc TidyUp()
+
+View(LogHandle());     'View list of files created...
+Window(30,10,70,90);
+Interact("Press OK to continue...", 0);
+View(LogHandle());
+WindowVisible(0);
+
+SampleLimitTime(setLimitTime);   'Restore the limits on the file...
+SampleLimitSize(setLimitSize);
+
+'Comment out the next two lines in Spike2 version 2.xx...
+SampleAutoFile(setAutoFileOn%);  'Restore auto-filing settings...
+SampleAutoComment(setAutoCommentOn%);
+
+ToolbarEnable(mainToolSettings%, 1);
+ToolbarEnable(mainToolStart%,    0);
+ToolbarEnable(mainToolStop%,     0);
+ToolbarEnable(mainToolQuit%,     1);
+
+end;
+
+
+
+'Save the current data-file...
+proc SaveDataFile()
+var fName$;
+var ok%;
+
+setFileNumber% := setFileNumber% + 1;
+
+if setFileNumber% + setStartFile% - 1 > 999 then
+	Message("Too many files...");
+else
+	if ViewKind(fh%) = 0 then
+		fName$ := setRootName$ + Right$("000" + Str$(setStartFile% + setFileNumber% - 1), 3) + ".smr";
+		View(fh%);
+		FileComment$(1, Print$("Date: %s   Time: %s", GetDate$(), setTimeStarted$));
+		ok% := FileSaveAs(fName$, -1, 1);
+		if ok% < 0 then
+			PrintLog("*** Error saving file %s\n", fName$);
+		else
+			PrintLog("%s\t%s\n", fName$, GetTime$());
+		endif;
+	else
+		PrintLog("*** No data ***\t%s\n", GetTime$());
+	endif;
+endif;
+end;
+
+
+
+'Process the root file-name entered in Settings...
+func ProcessRootFileName%()
+var ok%;
+var filesOk% := 1;
+var numOfExistingFiles%;
+var names$[1000];
+var highestExisting% := 0;
+
+setStartFile% := 1;
+
+if setRootName$ = "" then
+	Message("Please enter a valid root name...");
+	filesOk% := 0;
+else
+
+	'If non-blank root name then see if any matching files in the directory set...
+	numOfExistingFiles% := FileList(names$[], 0, setRootName$ + "*.smr");  'Get files matching template...
+
+	if numOfExistingFiles% > 0 then
+
+		var i%;
+
+		'Valid files must be root + 'nnn' (eg if root is 'Temp' we want 'Temp001' but not 'TempA001')...
+		var count% := 0;
+		var num% := 0;
+		for i% := 0 to numOfExistingFiles% - 1 do
+			if ValidFile%(setRootName$, names$[i%]) then
+				num% := Val(Mid$(names$[i%], Len(setRootName$) + 1, 3));
+				if num% > highestExisting% then highestExisting% := num% endif;
+				count% := count% + 1;
+			endif;
+		next;
+
+		'If we've got some matches then ask if want to delete them...
+		if count% > 0 then
+			ok% := Query(Print$("%d files already exist: continue starting at %s or delete existing files?",
+		                       count%, setRootName$ + Right$("000" + Str$(highestExisting% + 1), 3) ),
+							 "Continue", "Delete");
+			if not ok% then
+				ok% := Query(Print$("Please confirm: delete %d existing files (%s*.smr)?", count%, setRootName$));
+				if ok% then
+					'Delete all valid files (both .smr and .s2r)...
+					for i% := 0 to numOfExistingFiles% - 1 do
+						if ValidFile%(setRootName$, names$[i%]) then
+							ToolbarText(Print$("Deleting %s...", names$[i%]));  'Show message and pause so it can be read...
+							Seconds(0); while Seconds() < 0.5 do; wend;
+							FileDelete(names$[i%]);
+							FileDelete(SMRToS2R$(names$[i%]));
+						endif;
+						ToolbarText(mainToolText$);
+					next;
+				else
+					filesOk% := 0;
+				endif;
+			else
+				ok% := Query(Print$("Please confirm: continue starting at %s?",
+		                       setRootName$ + Right$("000" + Str$(highestExisting% + 1), 3) ));
+				if ok% then
+					setStartFile% := highestExisting% + 1;
+				else
+					filesOk% := 0;
+				endif;
+			endif;
+		endif;
+
+	endif;
+endif;
+		
+return filesOk%;
+end;
+
+
+'A valid file is named 'ROOTnnn'...
+func ValidFile%(root$, name$)
+var work$;
+var ret% := 0;
+work$ := Mid$(name$, Len(root$) + 1, 3);
+if Val(work$) > 0 then ret% := 1 endif;
+return ret%;
+end;
+
+
+'For file name eg 'Temp001.smr' return 'Temp001.s2r'...
+func SMRToS2R$(fName$)
+var ret$;
+var pos%;
+pos% := InStr(fName$, ".");
+ret$ := Left$(fName$, pos% - 1) + ".s2r";
+return ret$;
+end;
+
+
+
+'Returns the date...
+func GetDate$()
+var ret$;
+ret$ := Date$();    'This line for Spike2 version 3.xx...
+'ret$ := "";        'This line for Spike2 version 2.xx...
+return ret$;
+end;
+
+'Returns the time...
+func GetTime$()
+var ret$;
+ret$ := Time$(1);   'This line for Spike2 version 3.xx...
+'ret$ := "";        'This line for Spike2 version 2.xx...
+return ret$;
+end;
+

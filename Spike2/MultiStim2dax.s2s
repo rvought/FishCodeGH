@@ -1,0 +1,271 @@
+'|Random Output Script
+'Takes as many files as you like (well up to 100) and plays them out Randomly with out replace.
+
+Var Name$[100];
+Var num%;'Number of files
+Var Arr[100];
+var check%[100];
+var go%;
+var data%;
+var ct%;
+Var tim;
+var repeats%:=20,TimeS%:=10,Random%:=2; '''''change defaults. 
+Var vari;
+var done%;
+Var last%:=0; 'Know the last output 
+Var Loc$:="FishFish";
+Var Path$;
+Var del%;
+Var dac%[2]; dac%[0] := 0; dac%[1] := 1; Var cad%[2]; cad%[0] := 1; cad%[1] := 2;
+
+ToolbarText("");
+FileOpen%();
+DoToolbar();   'Try it out
+Halt;
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''' The Toolbar
+Func DoToolbar()    'Set your own name...
+ToolbarClear();     'Remove any old buttons
+ToolbarSet(0, "", Idle%);   'Idle routine
+ToolbarSet(1, "&Quit",quit%);    'This button returns its number
+ToolbarSet(2, "&Output now", Output%);   'Link to function
+return Toolbar("Ready", 1023);
+end;
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''' The so-called Idle routine
+Func Idle%()   'Button 0 routine
+Var out%,out$;
+
+If SampleStatus()=-1 and go%>0 then 'If sampling stopped and we are playing
+    Stop%();
+endif
+If SampleStatus()=2 and go%=1 and del%=0 then; 'If sampling and we are told to play
+    if ct%=(num%*repeats%) then; 'Total count reached then
+        Stop%();
+    else
+        if done%=0 then 'make sure we do not start with the same output next run
+            repeat 'if we get the same number repeat until not
+                out%:=Rand(Num%,1); 
+            until out%<>last%;
+        Else
+            out%:=Rand(Num%,1);
+        Endif
+        
+        'PrintLog("\n%d\t",out%); 'Print the Number of the waveform
+        Vari:=Rand();	'Generate a random Number
+		Vari:=vari*Random%;'Get the random Number up into the right range
+        'PrintLog("\t%f\t%f",Vari,TimeS%);
+		
+		if check%[out%-1]>-1 then;	'If it is legal to play the wave
+            Out$:=Print$("%d",out%);
+            SampleKey(out$); 'Trigger the output
+            Seconds(0); 'Set the Seconds to zero
+            
+            check%[out%-1]:=-1; 'Make the wave unavailable for next time
+            done%:=done%+1;	'Segment counter incremented
+            ct%:=ct%+1;	'Total counter incrementedented           
+			if ct%=(num%*repeats%) then
+				Stop%();
+				Else
+			Del%:=1;
+			Delay(tim,TimeS%,Vari);
+			endif
+            If done%=num% then 'If section done then
+                ArrConst(check%[],Arr[]); 'Reset the array
+                Last%:=out%;    'Get the last known output
+                Done%:=0;   'Reset the sectionn counter
+            endif
+        endif;
+    endif;
+    
+endif
+
+if del%=1 then
+	Delay(tim,TimeS%,Vari);
+Endif
+
+return 1;
+end;
+
+Proc Delay(tim,TimeS%,Vari);
+Var DelayTim;
+DelayTim:=Tim+TimeS%+Vari;
+'PrintLog("\t%f",Delaytim);
+if Seconds()<DelayTim then;
+	Return 
+			else
+	ToolbarText("Playing....");
+	Del%:=0;
+			Endif
+
+Return 
+end
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Func Output%()   'Button 2 routine
+If SampleStatus()<>2 then
+    Message("Must start sampling first");
+    return 1
+endif
+if go%=0 then;
+    RndDialog%();
+    ToolbarSet(2,"&Stop output",Output%);
+    Toolbar("playing....", 1023);
+    Go%:=1;
+    
+Else
+    Stop%();
+endif
+
+return 1;  'This leaves toolbar active
+end;
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Func FileOpen%();
+Var i%,j%;
+Var err%;
+
+Var ok%;
+Var Save%;
+Var reg%;
+Var Val$,Read$;
+Var txt$;
+
+SampleClear();
+FilePathSet(Path$,0,"Song folder");
+Path$:=FilePath$(0);
+Num%:=FileList(Name$[],0);
+
+Arr[0]:=1;
+For j%:=1 to num%-1 do
+    Arr[j%]:=Arr[j%-1]+1;
+Next
+
+Profile(Loc$,"Seq",val$,Read$);
+
+If Read$>"" then
+    Profile(Loc$,"Seq",val$,Read$);
+    Txt$:=Print$("Use stored %S",Read$);
+    Save%:=Query(txt$);
+    
+    If Save%=1 then
+        Err%:=FileOpen(Read$,6,2); 
+        AddWaves%();
+        OpenFile%();
+    Else
+        GetConfig();
+    Endif
+Else
+    GetConfig();
+Endif
+
+return 1;
+end
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Func AddWaves%();
+Var k%;
+Var key$,Lb$;
+FilePathSet(Path$,0);
+ToolbarText("Loading waves");
+For k%:=0 to num%-1 do
+    Key$:=Print$("%d",k%+1);
+    Lb$:=Print$("%d",k%+1);
+    FileOpen(name$[k%],0);
+    PlayWaveAdd(key$,lb$,dac%[],0,MaxTime(),cad%[],1,Name$[k%]);
+    FileClose(0,-1);
+next
+ToolbarText("loaded");
+Return 1
+end
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Func GetConfig();
+Var p%;
+Var File$[100];
+Var reg%;
+Var Seq$;
+Var Err%;
+Var ok%;
+var SeqPath$;
+Var list%;
+FilePathSet("",0,"Please open the config file location");
+SeqPath$:=FilePath$(0);
+P%:=FileList(File$[],6);
+
+DlgCreate("Setup");  'Start new dialog
+DlgList(1,"Config file to use",File$[0:p%]);
+DlgButton(0,"Cancel");
+DlgButton(1,"OK");
+ok% := DlgShow(list%);
+
+If ok%=0 then
+    Message("Cancelled");
+    Halt
+Endif
+
+Seq$:=Seqpath$+File$[list%];
+Reg%:=Query("Store this location?");
+
+If reg%=1 then
+    Profile(Loc$,"Seq",Seq$);
+Endif
+
+Err%:=FileOpen(Seq$,6,2); 
+If Err%>-1 then
+    AddWaves%();
+    OpenFile%()
+    
+Else 
+    Message("Could not open config file. %s",Error$(err%));
+endif
+Return 1
+End 
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Func OpenFile%();
+Data%:=FileNew(0,3);
+If data%>0 then
+    Window(0,0,100,100);
+    WindowVisible(1);
+else Message(error$(data%));
+    halt
+endif
+Return 1
+end
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Func RndDialog%();
+Var ok%;
+DlgCreate("Random output");  'Start new dialog
+DlgInteger(1,"Inter trial interval",1,100,0,0,5);
+DlgInteger(2,"Number of repeats - random without replace",1,100,0,0,5);
+DlgInteger(3,"Random time between song sec",1,100,0,0,5);
+DlgButton(0,"Cancel");
+DlgButton(1,"OK");
+ok% := DlgShow(TimeS%,repeats%,Random%);
+If ok%=1 then
+    go%:=1;
+Else
+    DoToolbar();
+Endif
+Return 1
+end
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Func Stop%();
+Go%:=0; 	'Set all counters to nul
+        ct%:=0; 'Total number of outputs
+        Done%:=0; 'Segment counter
+        ArrConst(check%[],Arr[]); 'Reset the array
+ToolbarSet(2,"&Output now",Output%);
+ToolbarText("Stopped");
+        Message("Output stopped");
+Return 1
+end
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Func Quit%();
+Halt;
+Return 0
+end
