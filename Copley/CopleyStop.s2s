@@ -1,0 +1,58 @@
+Var port%:=7; ' Change to Match Port Number from CME2
+var baud%:=19200;
+var bits%:=8;
+var par%:=0;
+var stop%:=1;
+Var hsk%:=0;
+Var List%:=1;
+
+Var ascale$:="s r0x19 100000\n";     ' Analog scaling, counts per 10V
+'Var ascale$:="s r0x19 5000000\n";     ' Analog scaling, counts per 10V
+
+Var mvel$:="s r0xcb 100000\n";        ' Max velocity, counts per second
+Var macc$:="s r0xcc 100000\n";        ' Max acceleration, counts per second
+Var mdec$:="s r0xcd 100000\n";        ' Max deceleration, counts per second
+
+Var apos$:="s r0x24 22\n";          ' 22 is Analog Position mode
+Var avel$:="s r0x24 12\n";          ' 12 is Analog Velocity mode
+Var stp$:="s r0x24 0\n";            ' stops the device
+
+Var pstart$:="t 1\n";               ' Start program
+Var pendd$:="t 0\n";                ' Stop program
+Var homeit$:="t 2\n";                ' Send it home (I hope!)
+Var eerr$;
+Var err%;
+var ok%; 
+Var Out$;
+var in$;
+
+Var term$:="\r\n";
+
+'' Open the Serial Port (need to have already made contact via CME2 prior to running this script.
+err%:=SerialOpen(port%, baud%, bits%, par%, stop%, hsk%);
+
+
+'' Stop the device*********************************************************
+'err%:=SerialWrite(port%, stp$);
+'     err%:=SerialRead(port%, in$);
+'     Message(Print$("Stopped the Device = %s ", in$));
+
+'Var posMode$:= "s r0x24 21\n"; ' position mode
+'err%:=SerialWrite(port%, posMode$);
+'    err%:=SerialRead(port%, in$);
+'    Message(Print$("Position Mode is %s ", in$));
+
+'err%:=SerialWrite(port%, homeit$);
+'     err%:=SerialRead(port%, in$);
+'     Message(Print$("Fear and loathing = %s ", in$));
+
+'' Stop the device*********************************************************
+
+err%:=SerialWrite(port%, stp$);
+     err%:=SerialRead(port%, in$);
+     Message(Print$("Stopped the Device = %s ", in$));
+
+
+'' Close the serial port
+SerialClose(port%);
+

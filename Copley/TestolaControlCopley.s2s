@@ -1,0 +1,77 @@
+'''''''''''''''''''''''''''''''''''''''''''''''''''''' Setup for CME ASCII control
+Var port%:=5;
+var baud%:=19200; ' 19200 115200
+Var bits%:=8;
+Var par%:=0;
+Var stop%:=1;
+Var hsk%:=0;
+Var List%:=1;
+
+Var ascale$:="s r0x19 250000\n";     ' Analog scaling, counts per 10V
+'Var ascale$:="s r0x19 5000000\n";     ' Analog scaling, counts per 10V
+
+Var mvel$:="s r0xcb 100000\n";        ' Max velocity, counts per second
+Var macc$:="s r0xcc 100000\n";        ' Max acceleration, counts per second
+Var mdec$:="s r0xcd 100000\n";        ' Max deceleration, counts per second
+
+Var apos$:="s r0x24 22\n";          ' 22 is Analog Position mode
+Var avel$:="s r0x24 12\n";          ' 12 is Analog Velocity mode
+Var stp$:="s r0x24 0\n";            ' stops the device
+
+Var pstart$:="t 1\n";               ' Start program
+Var pendd$:="t 0\n";                ' Stop program
+
+Var eerr$;
+Var err%;
+var ok%;
+Var Out$;
+var in$;
+
+Var term$:="\r\n";
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''' VELOCITY MODE
+'' Open the Serial Port (need to have already made contact via CME2 prior to running this script)
+err%:=SerialOpen(port%, baud%, bits%, par%, stop%, hsk%);
+
+'' Sets the scaling of the voltage to velocity.
+err%:=SerialWrite(port%, ascale$);
+    err%:=SerialRead(port%, in$);
+'    Message(Print$("Scale is %s ", in$));
+
+'' Activates analogue velocity mode
+'err%:=SerialWrite(port%, avel$);
+err%:=SerialWrite(port%, apos$);
+'err%:=SerialWrite(port%, pstart$);
+    err%:=SerialRead(port%, in$);
+'    Message(Print$("Velocity = %s ", in$));
+
+'' Closes the serial port.
+SerialClose(port%);
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''' Load Movement
+
+ok%:=SampleSequencer("C:\\esf\\HalfHz.pls"); 'usestandard, single waveform  sequencer to the configuration
+if ok% < 0 then 
+    Message("Couldn't find sequencer file: C:\\esf\\HalfHz.pls.");      
+endif;
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''' Start Sampling
+SampleStart();
+Message(Print$("Click OK to finish trial"));
+'SampleStop();
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''' STOP Copley
+
+'' Open the Serial Port (need to have already made contact via CME2 prior to running this script.
+err%:=SerialOpen(port%, baud%, bits%, par%, stop%, hsk%);
+
+'' End analogue velocity mode, stop the device
+err%:=SerialWrite(port%, stp$);
+     err%:=SerialRead(port%, in$);
+'     Message(Print$("Stopped the Device = %s ", in$));
+
+'' Close the serial port
+SerialClose(port%);
+
+
+

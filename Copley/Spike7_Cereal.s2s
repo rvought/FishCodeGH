@@ -1,0 +1,5 @@
+var foo$;
+
+SerialOpen(3,9600);
+SerialRead(3,foo$);
+SerialClose(3);

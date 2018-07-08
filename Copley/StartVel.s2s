@@ -1,0 +1,44 @@
+Var port%:=6;
+var baud%:=19200;
+var bits%:=8;
+var par%:=0;
+var stop%:=1;
+Var hsk%:=0;
+Var List%:=1;
+
+Var ascale$:="s r0x19 250000\n";     ' Analog scaling, counts per 10V
+'Var ascale$:="s r0x19 500000\n";     ' Analog scaling, counts per 10V
+' 5,000,000 is 1V/0.5Hz -> 4cm, 1V/1Hz -> 2cm
+'ascale, 'mvel, macc, mdec is 500,000 1V/0.5Hz -> .5cm
+
+Var apos$:="s r0x24 22\n";          ' 22 is Analog Position mode
+Var avel$:="s r0x24 12\n";          ' 12 is Analog Velocity mode
+Var stp$:="s r0x24 0\n";            ' stops the device
+
+Var pstart$:="t 1\n";               ' Start program
+Var pendd$:="t 0\n";                ' Stop program
+Var eerr$;
+Var err%;
+var ok%;
+Var Out$;
+var in$;
+
+Var term$:="\r\n";
+
+'' Open the Serial Port (need to have already made contact via CME2 prior to running this script.
+err%:=SerialOpen(port%, baud%, bits%, par%, stop%, hsk%);
+
+'' Sets the scaling of the voltage to velocity.
+err%:=SerialWrite(port%, ascale$);
+    err%:=SerialRead(port%, in$);
+'    Message(Print$("Scale is %s ", in$));
+
+'' Activates analogue velocity mode
+err%:=SerialWrite(port%, apos$);
+'err%:=SerialWrite(port%, pstart$);
+    err%:=SerialRead(port%, in$);
+    Message(Print$("Velocity = %s ", in$));
+
+'' Closes the serial port.
+SerialClose(port%);
+

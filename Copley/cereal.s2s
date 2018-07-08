@@ -1,0 +1,86 @@
+Var port%:=5;
+var baud%:=19200;
+var bits%:=8;
+var par%:=0;
+var stop%:=1;
+Var hsk%:=0;
+Var List%:=1;
+
+Var ascale$:="s r0x19 5000000\n";     ' Analog scaling, counts per 10V
+
+Var mvel$:="s r0xcb 100000\n";        ' Max velocity, counts per second
+Var macc$:="s r0xcc 100000\n";        ' Max acceleration, counts per second
+Var mdec$:="s r0xcd 100000\n";        ' Max deceleration, counts per second
+
+Var apos$:="s r0x24 22\n";          ' 22 is Analog Position mode
+Var avel$:="s r0x24 12\n";          ' 12 is Analog Velocity mode
+Var stp$:="s r0x24 0\n";            ' stops the device
+
+Var pstart$:="t 1\n";               ' Start program
+Var pendd$:="t 0\n";                ' Stop program
+Var eerr$;
+Var err%;
+var ok%;
+Var Out$;
+var in$;
+
+Var term$:="\r\n";
+
+err%:=SerialOpen(port%, baud%, bits%, par%, stop%, hsk%);
+
+'err%:=SerialWrite(port%, pendd$);
+'    err%:=SerialRead(port%, in$);
+'   Message(Print$("End program is = %s ", pendd$));
+
+err%:=SerialWrite(port%, ascale$);
+    err%:=SerialRead(port%, in$);
+'    Message(Print$("Scale is %s ", in$));
+
+'Pause(stop%);
+'err%:=SerialWrite(port%, mvel$);
+'err%:=SerialWrite(port%, macc$);
+'err%:=SerialWrite(port%, mdec$);
+err%:=SerialWrite(port%, avel$);
+'err%:=SerialWrite(port%, pstart$);
+    err%:=SerialRead(port%, in$);
+    Message(Print$("Velocity = %s ", in$));
+
+'err%:=SerialWrite(port%, ascale$);
+'    err%:=SerialRead(port%, in$);
+'    Message(Print$("Scaling is = %s ", ascale$));
+
+'err%:=SerialWrite(port%, mvel$);
+'    err%:=SerialRead(port%, in$);
+'    Message(Print$("Velocity is = %s ", mvel$));
+
+'err%:=SerialWrite(port%, macc$);
+'    err%:=SerialRead(port%, in$);
+'    Message(Print$("Acceleration is = %s ", macc$));
+
+'err%:=SerialWrite(port%, mdec$);
+'    err%:=SerialRead(port%, in$);
+'    Message(Print$("Deceleration is = %s ", mdec$));
+
+'err%:=SerialWrite(port%, apos$);
+'    err%:=SerialRead(port%, in$);
+'    Message(Print$("Set Position Mode = %s ", apos$));
+
+'err%:=SerialWrite(port%, avel$);
+'    err%:=SerialRead(port%, in$);
+'    Message(Print$("Set Velocity Mode = %s ", avel$));
+
+'err%:=SerialWrite(port%, pstart$);
+'     err%:=SerialRead(port%, in$);
+'     Message(Print$("Start Program = %s ", in$));
+
+'err%:=SerialWrite(port%, pendd$);
+'     err%:=SerialRead(port%, in$);
+'     Message(Print$("End Program = %s ", in$));
+
+err%:=SerialWrite(port%, stp$);
+     err%:=SerialRead(port%, in$);
+'     Message(Print$("Stop the Device = %s ", in$));
+
+
+SerialClose(port%);
+
