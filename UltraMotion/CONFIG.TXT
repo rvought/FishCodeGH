@@ -1,0 +1,212 @@
+#
+# CONFIG.TXT
+#
+# Each line prefaced by a "#" symbol is a comment
+
+#Interface Mode (ifMode)
+#0 = Human Mode
+#1 = Machine Mode
+#2 = Machine Mode with Checksum
+ifMode = 0 
+
+baud = 115200
+
+
+
+#Operating Modes (opMode)
+#0 = CLI mode
+#1 = toggle mode
+#2 = proportional mode
+#3 = incremental mode
+#4 = pre-set position mode
+opMode = 2
+
+
+#Toggle mode configuration (tmCFG) (opMode = 1)
+#0 = speed and torque set in config file
+#1 = voltage sets speed, torque set in config file
+#2 = current sets speed, torque set in config file
+#3 = speed set in config file, voltage sets torque
+#4 = speed set in config file, current sets speed
+tmCFG = 1
+
+#Propotional mode configuration (pmCFG) (opMode = 2)
+#0 = position command set by 1-2ms pulse input
+#1 = position command set by analog voltage input
+#2 = position command set by analog current input
+pmCFG = 1
+
+#Incremental mode configuration (imCFG) (opMode = 3)
+#0 = Step and direction input format
+#1 = Step up, Step down input format
+#2 = A/B quadrature input format
+imCFG = 0
+
+#Software endstops (set inside of the physical stops defined in HARDWARE.TXT)
+
+#Retracted soft limit
+spMin = 2048
+
+#Extended soft limit
+spMax = 63474
+
+
+#PID gains (32-bit unsigned)
+kp = 1500
+ki = 400000
+kd = 12000
+
+
+#Maximum torque command permitted (1 - 32767)
+maxTorq = 30000
+
+#Minimum value for maxTorq in toggle mode with analog torque control
+mtMin = 8000
+
+
+#Maximum speed in trajectory commands, toggle mode, or pre-set position mode
+maxSpeed = 5000000
+
+#Minimum value for maxSpeed in toggle mode with analog speed control
+msMin = 200000
+
+
+#Acceleration setting for trajectory commands, toggle mode, or pre-set position mode
+accel = 20000
+
+
+#Toggle mode stop setting
+#0 = snap to position
+#1 = decelerate at accel
+#2 = brake for 100 ms, then snap to position
+stopMode = 0 #decelerate at acceleration rate
+
+#1-2ms pulse input settings
+#(60,000 counts per millisecond)
+pMin = 66000
+pMax = 115000
+
+#Set this lower for more filter, higher for less filter
+pFilter = 1000
+
+
+#-10v to +10V Analog voltage input settings
+
+#Input range: 10cm for 2.5V (+/- 1.25V)
+#vMin = 27000 #0V
+#vMax = 42000 #10V
+
+#Input range: 10cm for 5V (+/- 2.5V)
+vMin = 20000 #0V
+vMax = 49000 #10V
+
+
+#Set this lower for more filter, higher for less filter
+vFilter = 3000
+
+
+#4-20 mA input settings
+cMin = 0
+cMax= 65520
+cFilter = 2000
+
+
+#Number of encoder counts per input increment (Incremental Mode)
+stepSize = 1
+
+
+#Pre-set position mode settings
+posTime = 25 #time delay before recognizing change in input state as valid
+Pos1 = 4096  #retracted position
+Pos2 = 14736 #1.25" from retracted position
+Pos3 = 14336
+Pos4 = 14336
+
+
+# Configurable IO pins
+
+# DIO1 and DIO2 are configurable I/O pins.
+# They can act as high-speed digital inputs, 
+# or 5V digital outputs which can source up to 250mA, or sink up to 2 amps.
+# There are three variables to configure each DIO pin: ioPinx, ioBitx, and ioPWMx where "x" is either "1" or "2"
+
+# ioPinx Mode Selectors
+# 0 = Input (high impedance)
+# 1 = Output GND
+# 2 = Output +5V
+# 3 = Output status bit (masked status bits, 1KHz update)
+# 4 = Output 1KHz PWM
+
+# ioBitx is a mask used when ioPinx = 3.
+# ioBitx is bitwise ANDed with the status register, the result is tested for 0
+
+# ioPWMx PWM Output Source Selectors (ioPinx = 4)
+# All source ranges are converted to the PWM duty-cycle
+# range of 0-60000
+# 0 = Actuator position (spMin to spMax)
+# 1 = Actuator velocity (-512 to +511)
+# 2 = Actuator torque (-32768 to +32767)
+# 3 = Bus Voltage (0 to 1023)
+# 4 = Commanded position (spMin to spMax)
+# 5 = 1-2ms pulse input channel (pMin to pMax)
+# 6 = Analog voltage input (vMin to vMax)
+# 7 = Analog current input (cMin to cMax)
+
+# DIO1 Configuration
+ioPin1 = 0
+ioBit1 = 0
+ioPWM1 = 0
+
+# DIO2 Configuration
+ioPin2 = 0
+ioBit2 = 0
+ioPWM2 = 0
+
+#debug mode
+errMode = 7
+
+#Status bit threshold values
+#These values define the behavior of the associated status bit
+
+#Position error threshold for "at target position"
+atTarg = 63
+
+#Position error threshold for "position error over threshold 
+ovErrP = 8191
+
+#Speed threshold for "speed over threshold 
+ovSpeed = 8
+
+#Torque threshold (aboslute) for "torque over threshold 
+ovTorq = 20000
+
+#Position threshold for "position greater than threshold 
+posGrtr = 32767
+
+#Position threshold for "position less than threshold 
+posLess = 32768
+
+#Over temperature threshold
+ovTemp = 32765
+
+
+#Data streaming over serial
+
+# 1 = start data streaming at power-up
+# 0 = data streaming off
+sFlag = 0 #data streaming off after startup
+
+#Timer interval between stream data points (65535 = Max (3.57633Hz))
+#There are 234375 increments of this timer in one second 
+#sTime = 2344   #this is about 100 Hz
+sTime = 23438 #this is about 10 Hz
+
+# Column 1
+strX1 = 1
+
+# Column 2
+strX2 = 0
+
+# Column 3
+strX3 = 0
+

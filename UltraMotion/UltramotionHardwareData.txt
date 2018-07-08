@@ -1,0 +1,13 @@
+Rotor: Winding to Rotor offset value used to initialize commutation angle
+adc1z: Offset value for motor phase current 1 (value with zero current flowing through coil)
+adc2z: Offset value for motor phase current 2 (value with zero current flowing through coil)
+adc3z: Offset value for motor phase current 3 (value with zero current flowing through coil)
+encRef: Initialization/calibration of Phase Index absolute position sensor
+rPos: Retracted mechanical limit in Phase Index sensor counts
+ePos: Extended mechanical limit in Phase Index sensor counts
+qP: P-gain for torque component (FOC)
+qI= I-gain for torque component (FOC)
+dP= P-gain for flux component (FOC)
+dI= I-gain for flux component (FOC)
+sNum="10105305"
+

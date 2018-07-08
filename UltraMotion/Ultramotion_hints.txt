@@ -1,0 +1,424 @@
+Chat started
+Hannah
+Hello, 
+I have the cylinder in voltage mode, and am aware of the voltage filter option, however, other than smoothing the input signal, is there another way to smooth the movements of the cylinder in general, and make its movements less shaky?
+
+Bill joined the chat
+Rob joined the chat
+
+Rob
+Hi hannah
+
+Have you looked at your voltage signal to see if it is very noisy?
+Hannah
+I am using a sine wave generator which should be supplying a smooth signal
+
+
+Rob
+Is it shaky when stationary?
+Hannah
+No
+
+A small vibration is being created, much less than a millimeter in amplitude when the cylinder is moving
+
+However, I would like to decrease the vibration effect
+
+
+Rob
+You should first scope your signal to make sure its a clean signal
+Hannah
+I have done this
+
+Is there a way to check to see if it has to do with feedback to the cylinder or another variable in the movement?
+
+
+Rob
+do you have a serial connection to the actuator?
+Hannah
+yes
+
+
+Rob
+you can stream your "command"
+
+Are you grounding the shielding on the signal line?
+Hannah
+How would I stream a 0.5Hz 10cm sine wave?
+
+We use analog commands because that is what we are familiar with, however, would like to use serial if you have any suggestions on how to do so.
+
+
+Rob
+I suggested the streaming to help diagnose if the signal is noisy
+Hannah
+We are very sure that our signal is clean. If it wasn't, it would vibrate if stationary and we are very familiar with analog sine waves.
+
+
+Rob
+I am not doubting the signal is clean coming out of the generator.  I am wondering if it's picking up noise from the motor power wires as it travels to the actuator
+
+If this was the case, it would not vibrate unless it was moving
+Hannah
+so how would this be minimized?
+
+
+Rob
+are you connecting the shield "drain wires" to ground for the analog and power cables?
+
+If the servo is getting a clean signal it will be very stable and not vibrate
+
+with a serial connection, you can stream the command input and see if can see the bouncing input
+
+Can you send a video of the vibration?
+Hannah
+okay, how would I do this in serial?
+
+Bill left the chat
+
+Rob
+do you have a serial port on a computer nearby?
+Hannah
+Yes
+
+We are connected at the moment
+
+The vibration would be hardly visible in a video.  It is very tiny but important for our experiment
+
+The serial port is connected at the moment
+
+
+Rob
+do you have putty or some other serial terminal for windows
+Hannah
+yes
+
+
+Rob
+check what port you have the servo conencted to
+Hannah
+I am already connected with the servo and can communicate with it through putty
+
+
+Rob
+great
+
+send an x11 command
+Hannah
+okay
+
+
+Rob
+what was the response
+
+I am not in front of a servo so I am working from memory
+Hannah
+It just said Stream Column1: 1 Actuator Position Type: 16 but unsigned integer
+
+
+Rob
+ok
+
+it should be X12
+
+Description: Define what variable each of the three columns are reporting
+•	0 = Column Off
+•	1 = Position Feedback
+•	2 = Position Setpoint
+•	3 = Motor Current Feedback
+•	4 = Motor Current Setpoint
+•	5 = Motor Phase 1 Current
+•	6 = Motor Phase 2 Current
+•	7 = Motor Phase 3 Current
+•	8 = Velocity at 1.25 kHz
+•	9 = Velocity at 156.25 Hz
+•	10 = Encoder Interval Timer
+•	11 = Supply Voltage
+•	12 = Supply Voltage Rate of Change
+•	13 = Status Register
+•	14 = 1-2 ms Pulse Input
+•	15 = Filtered 1-2 ms Pulse Input
+•	16 = Analog Voltage Input
+•	17 = Filtered Analog Voltage Input
+•	18 = Analog Current Input
+•	19 = Filtered Analog Current Input
+•	20 = Temperature Sensor Input
+•	21 = Position Error
+•	22 = Quadrature Input Errors
+•	23 = 32-bit Counter with 100 µs Increments 
+Reference Appendix D: Streaming Variables for more detailed information.
+Hannah
+okay
+
+
+Rob
+we are setting up to stream the setpoint
+Hannah
+okay, what is the next step
+
+
+Rob
+x216
+
+you can steam up to 3 columns of data
+Hannah
+okay
+
+
+Rob
+x216 streams the analog input
+
+XS will turn streaming on
+Hannah
+okay, it said OK
+
+
+Rob
+do you have analog filter set?
+
+i am sorry...XG enables streaming
+
+XS turns it off
+Hannah
+I figured it out and it streamed
+
+What should we do with these numbers? Plot them?
+
+
+Rob
+they should not be bouncing now
+Hannah
+yes
+
+
+Rob
+start sending your voltage command
+
+you can grab these values and see if they are bouncing
+
+just out of curiosity, did you try the analog filter and did it help?
+Hannah
+yes, we tried even applying a filter of 500 and it was not smooth. There was no visible difference from 6000
+
+
+Rob
+Can you email me the config file.  rob@ultramotion.com
+Hannah
+okay, I just sent it
+
+
+Rob
+ok....I dont see any major config problems
+
+How are you detecting the vibration?
+Hannah
+The cylinder is operating a moving arm that is partially in water and we can see the movement in rippling on the waters surface in the direction perpendicular to the movement of the arm
+
+
+Rob
+are you pushing much load?
+Hannah
+no, it is less than 200grams on a slide
+
+We can also feel the vibrations
+
+
+Rob
+try changing PID gains
+Hannah
+How should I adjust those numbers?
+
+
+Rob
+before we do that, can you send details for the signal generator
+
+and can you type "fs" and let me know the firmware version
+Hannah
+the version is 0.954. What information on the signal generator would you like>
+
+
+Rob
+part number
+Hannah
+Agilent 33210A and we have the appropriate 50ohm termination on it.  We have also used an HP8904 sine wave generator with no difference between the function of the device on the two generators
+
+
+Rob
+OK..lets try changing the config PID
+
+kp = 1000
+ki = 200000
+kd = 10000
+Hannah
+That seems to be smoother
+
+
+Rob
+you need to restart the servo for the new gains to take effect
+Hannah
+Yes, we did the zr 321.  It worked great! Thank you! Do you have any hints on adjusting the PID values?
+
+
+Rob
+It's triky to tune the PID without watching the feedback
+
+It comes tuned to "default" settings for "snappy" response.
+Hannah
+Any hints would be great, but its about time to head out of the lab.  We can play with these numbers another day to further adjust.
+
+Thank you!
+
+
+Rob
+You can also adjust the FOC gains in the hardware.txt
+
+this will help as well
+Hannah
+How would you suggest altering this?
+
+
+Rob
+Qp
+
+Qi, Dp, and Di
+default values should be 4500 and 450
+
+you can try 2500 and 250
+	
+Qp and Dp are typically 4500  Qi and Di and 450
+
+
+
+
+
+
+
+New conversation: June 13, 2016
+
+
+
+Hannah
+Hello, I am trying to adjust the numbers for the qi, dp, and di values for a servo cylinder to make the motions smoother.  I've noticed that there is an inverse relationship between the smoothness of the motion and the values for these numbers.  But I am just wondering how adjusting only one of the values will affect the motion.
+
+Chat started
+Bill joined the chat
+
+Bill
+Hi Hannah, our engineering department is busy at the moment. Can I have someone get back to you shortly?
+Hannah
+Yes. Thank you so much!
+
+
+Bill
+no problem. someone will get back to you within the next hour or so
+Hannah
+okay thank you
+
+Tom joined the chat
+
+Tom
+Hi Hannah
+Hannah
+hello
+
+Bill left the chat
+
+Tom
+these values represent the proportional and integral gains responsible for controlling the current through the motor coils
+Hannah
+Okay, so would you have any suggestions on adjusting them to increase the smoothness of the machines
+
+
+Tom
+the best way to adjust these is to stream motor current feedback and motor current setpoint and adjust the FOC gains until the error is as small as possible
+
+using the default gain values should result in smooth motion. Any disturbances due to slight PID instability will be high frequency (5-10 kHz)
+Hannah
+The default gain values did not create a smooth enough motion.  There are no issues with our signal going into the cylinder, so we are trying to use these numbers to decrease vibrations that are resulting from the movement of the cylinder
+
+
+Tom
+and you've adjusted the position PID gains in the coniguration file?
+Hannah
+The last person that I talked to said to adjust them in the hardware file
+
+
+Tom
+there are position PID gains in the configuration file. The FOC (Field-Oriented Control) gains are locating the hardware file
+Hannah
+Okay. How should I change these values for increased smoothness
+
+
+Tom
+The position PID gains can be reduced to smooth motion
+Hannah
+For reference, we are working in voltage mode
+
+okay, do you have any suggestions on what values to try
+
+
+Tom
+I would try position PID gain values around Kp = 500,, Ki = 20000, Kd = 4000
+
+these are low values that should smooth out your motion
+
+what are your current values for both position and FOC gains/
+Hannah
+the current values for kp, ki and kd were the default and the foc gains are qi=250 dp=2500 and di=250
+
+
+Tom
+qd is set to 2500 as well?
+Hannah
+do you mean qp?
+
+
+Tom
+yes, sorry
+Hannah
+its okay! I was not instructed to alter this number.  Should I change that as well?
+
+
+Tom
+yes, set that to 2500 instead of 4500
+Hannah
+okay thank you
+
+
+Tom
+then try the position PID gains that I sent above as well
+Hannah
+I believe that had an effect.  If I continue to lower those numbers will it increase the smoothness? Also, is there any drawback to lowering these numbers?
+
+
+Tom
+further reducing these values will lead to a very "loose" system that does not respond well to external disturbances
+
+it is also possible that the system becomes unstable when continuing to lower the gains
+Hannah
+Okay, thank you
+
+
+Tom
+unfortunately, this isn't a calculable number and has to be determined experimentally.
+Hannah
+What would you say is the threshold for instability?
+
+
+Tom
+very hard to say since it is highly dependent on motion profiles, system inertia, loads, etc.
+
+I would mostly try lowering Kd
+Hannah
+okay thank you
+
+
+Tom
+no problem, let me know how it goes
+
+my direct email is tom@ultramotion.com
+Hannah
+thank you
+
+
+
+
