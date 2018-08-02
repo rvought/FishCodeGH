@@ -172,8 +172,8 @@ graphs = 1;           % Graphs on
 strt = 1;             % Start analysing from the beginning of the input
 % signal
 
-Ls = length(signal)
-stp = smplfreq*60     % By default, analyze 1 min
+Ls = length(signal);
+stp = smplfreq*60;     % By default, analyze 1 min
 if stp > Ls           % If signal shorter than 1 min, analyze until the end
     stp = Ls          % of the input signal
 end;
