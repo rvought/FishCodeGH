@@ -4,13 +4,14 @@ function out = sunburn(neuron)
 
 size = input('size idx for heat/hist');
 
-Fs = neuron(1).pFs;
+Fs = neuron(1).s(1).pFs;
 position =[];
 tim = [];
 spikes = [];
-for jj = 1:length(neuron)               %% this cycles through all of the stimuli
-    if neuron(jj).sizeDX == size
-        position = [position neuron(jj).pos'];
+for kk = 1:length(neuron)
+for jj = 1:length(neuron(kk).s)               %% this cycles through all of the stimuli
+    if neuron(kk).s(jj).sizeDX == size
+        position = [position neuron(kk).s(jj).pos'];
         
         if isempty(tim) %must use isempty because the first stimuli of a particular size is not always jj=1
             nextim = 0; 
@@ -18,12 +19,12 @@ for jj = 1:length(neuron)               %% this cycles through all of the stimul
             nextim = tim(end);
         end
         
-        curtim = (1/Fs:1/Fs:length(neuron(jj).pos)/Fs) + nextim;
+        curtim = (1/Fs:1/Fs:length(neuron(kk).s(jj).pos)/Fs) + nextim;
         tim = [tim curtim];
-        spikes = [spikes (neuron(jj).st' + nextim)];
+        spikes = [spikes (neuron(kk).s(jj).st' + nextim)];
     end
 end
-
+end
 out.spikes = spikes;
 out.Fs = Fs;
 
