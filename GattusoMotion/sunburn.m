@@ -100,6 +100,7 @@ veledges = min(out.vel):velsteps:max(out.vel);
 
 length(out.pos)
 length(position)
+0:
 poschart = out.pos/position; 
 velchart = out.vel/firstorder;
 accchart = out.acc/secondorder;
