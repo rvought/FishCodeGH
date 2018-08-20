@@ -102,7 +102,7 @@ length(out.pos)
 length(position)
 possteps = length(position)/length(out.pos);
 poswork = 0:possteps:position;
-poswork
+
 poschart = out.pos/position; 
 velchart = out.vel/firstorder;
 accchart = out.acc/secondorder;
