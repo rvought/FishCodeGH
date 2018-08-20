@@ -98,7 +98,10 @@ accsteps = 0.0000015;
 posedges = -5:0.1:5;
 veledges = min(out.vel):velsteps:max(out.vel);
 
-poschart = out.pos/
+poschart = out.pos/position; 
+velchart = out.vel/firstorder;
+accchart = out.acc/secondorder;
+
 
 accedges = min(out.acc):accsteps:max(out.acc);
 subplot(131); a = histcounts(out.pos, posedges); plot(posedges(1:end-1), a/sum(a), 'b'), 
