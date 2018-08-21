@@ -123,6 +123,8 @@ length(aa)
 length(dd)
 length(bb)
 length(ff)
+length(cc)
+length(gg)
 posad = aa/dd;
 velbf = bb/ff;
 acccg = cc/gg;
