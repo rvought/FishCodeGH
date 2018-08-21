@@ -118,6 +118,8 @@ cc = c/sum(c);
 dd = d/sum(d);
 ff = f/sum(f);
 gg = g/sum(g);
+length(aa)
+length(dd)
 length(bb)
 length(ff)
 posad = aa/dd;
