@@ -118,6 +118,8 @@ cc = c/sum(c);
 dd = d/sum(d);
 ff = f/sum(f);
 gg = g/sum(g);
+length(bb)
+length(ff)
 posad = aa/dd;
 velbf = bb/ff;
 acccg = cc/gg;
