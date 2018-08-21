@@ -21,7 +21,7 @@ for jj = 1:length(neuron(kk).s)               %% this cycles through all of the 
         
         curtim = (1/Fs:1/Fs:length(neuron(kk).s(jj).pos)/Fs) + nextim;
         tim = [tim curtim];
-        spikes = [spikes (neuron(kk).s(jj).st' + nextim)];
+        spikes = [spikes (neuron(kk).s(jj).st + nextim)];
     end
 end
 end
