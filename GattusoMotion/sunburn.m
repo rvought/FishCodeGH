@@ -99,17 +99,29 @@ posedges = -5:0.1:5;
 veledges = min(out.vel):velsteps:max(out.vel);
 
 accedges = min(out.acc):accsteps:max(out.acc);
-subplot(131); a = histcounts(out.pos, posedges); plot(posedges(1:end-1), a/sum(a), 'b'), 
-subplot(132); b = histcounts(out.vel, veledges); plot(veledges(1:end-1), b/sum(b), 'b'),
-subplot(133); c = histcounts(out.acc, accedges); plot(accedges(1:end-1), c/sum(c), 'b'), 
+subplot(131); a = histcounts(out.pos, posedges); %plot(posedges(1:end-1), a/sum(a), 'b'), 
+subplot(132); b = histcounts(out.vel, veledges); %plot(veledges(1:end-1), b/sum(b), 'b'),
+subplot(133); c = histcounts(out.acc, accedges); %plot(accedges(1:end-1), c/sum(c), 'b'), 
 
 stimedges = -5:0.1:5;
 foedges = min(firstorder):velsteps: max(firstorder);
 soedges = min(secondorder):accsteps:max(secondorder);
 
-subplot(131); hold on, d = histcounts(position, stimedges); plot(stimedges(1:end-1), d/ (sum(d)), 'r'), xlabel('Position'); ylabel('Time Percentge'); legend('Spikes', 'Stimulus')
-subplot(132); hold on, f = histcounts(firstorder, foedges); plot(foedges(1:end-1), f / (sum(f)), 'r'), xlabel('Velocity'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus')
-subplot(133); hold on, g = histcounts(secondorder, soedges); plot(soedges(1:end-1), g/ (sum(g)), 'r'), 
-xlabel('Acceleration'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus'); % axis([-5*10^(-5), 5*10^(-5), 0, 0.005])
+subplot(131); hold on, d = histcounts(position, stimedges); %plot(stimedges(1:end-1), d/ (sum(d)), 'r'), xlabel('Position'); ylabel('Time Percentge'); legend('Spikes', 'Stimulus')
+subplot(132); hold on, f = histcounts(firstorder, foedges); %plot(foedges(1:end-1), f / (sum(f)), 'r'), xlabel('Velocity'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus')
+subplot(133); hold on, g = histcounts(secondorder, soedges); %plot(soedges(1:end-1), g/ (sum(g)), 'r'), 
+%xlabel('Acceleration'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus'); % axis([-5*10^(-5), 5*10^(-5), 0, 0.005])
+
+aa = a/sum(a);
+bb = b/sum(b);
+cc = c/sum(c);
+dd = d/sum(d);
+ff = f/sum(f);
+gg = g/sum(g);
+posad = aa/dd;
+velbf = bb/ff;
+acccg = cc/gg;
+
+
 end
 
