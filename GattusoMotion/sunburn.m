@@ -99,6 +99,7 @@ posedges = -5:0.1:5;
 veledges = min(out.vel):velsteps:max(out.vel);
 
 accedges = min(out.acc):accsteps:max(out.acc);
+
 subplot(131); a = histcounts(out.pos, posedges); %plot(posedges(1:end-1), a/sum(a), 'b'), 
 subplot(132); b = histcounts(out.vel, veledges); %plot(veledges(1:end-1), b/sum(b), 'b'),
 subplot(133); c = histcounts(out.acc, accedges); %plot(accedges(1:end-1), c/sum(c), 'b'), 
