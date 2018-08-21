@@ -108,10 +108,10 @@ stimedges = -5:0.1:5;
 foedges = min(firstorder):velsteps: max(firstorder);
 soedges = min(secondorder):accsteps:max(secondorder);
 
-subplot(131); hold on, d = histcounts(position, stimedges); %plot(stimedges(1:end-1), d/ (sum(d)), 'r'), xlabel('Position'); ylabel('Time Percentge'); legend('Spikes', 'Stimulus')
-subplot(132); hold on, f = histcounts(firstorder, foedges); %plot(foedges(1:end-1), f / (sum(f)), 'r'), xlabel('Velocity'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus')
-subplot(133); hold on, g = histcounts(secondorder, soedges); %plot(soedges(1:end-1), g/ (sum(g)), 'r'), 
-%xlabel('Acceleration'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus'); % axis([-5*10^(-5), 5*10^(-5), 0, 0.005])
+subplot(131); hold on, d = histcounts(position, stimedges); plot(stimedges(1:end-1), d/ (sum(d)), 'r'), xlabel('Position'); ylabel('Time Percentge'); legend('Spikes', 'Stimulus')
+subplot(132); hold on, f = histcounts(firstorder, foedges); plot(foedges(1:end-1), f / (sum(f)), 'r'), xlabel('Velocity'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus')
+subplot(133); hold on, g = histcounts(secondorder, soedges); plot(soedges(1:end-1), g/ (sum(g)), 'r'), 
+xlabel('Acceleration'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus'); % axis([-5*10^(-5), 5*10^(-5), 0, 0.005])
 % 
 % aa = a/sum(a);
 % bb = b/sum(b);
