@@ -125,9 +125,9 @@ subplot(133); hold on, g = histcounts(secondorder, soedges); %plot(soedges(1:end
 % length(ff)
 % length(cc)
 % length(gg)
-posad = aa/dd;
-velbf = bb/ff;
-acccg = cc/gg;
+% posad = aa/dd;
+% velbf = bb/ff;
+% acccg = cc/gg;
 
 
 end
