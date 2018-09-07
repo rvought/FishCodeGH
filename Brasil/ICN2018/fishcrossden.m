@@ -36,9 +36,9 @@ Fs = median(diff(in(idx).pair(j).sharedtims));
     fishnum(in(idx).pair(j).fishnums(2)).totpower(end+1) = sum(real(out(j).p));
     
     figure(1); plot(out(j).w, real(out(j).p), '-*'); 
-    figure(1+j); clf; hold on; 
-    plot(in(idx).pair(j).sharedtims, di, '*'); 
-    plot(in(idx).pair(j).sharedtims, fr, '*');
+    %figure(1+j); clf; hold on; 
+    %plot(in(idx).pair(j).sharedtims, di, '*'); 
+    %plot(in(idx).pair(j).sharedtims, fr, '*');
 
 end
 
@@ -49,4 +49,7 @@ end
 
 %% Test hypothesis 2: There are dominant and submissive fish
 
-
+figure(3); clf; hold on;
+for k=1:numfish
+    plot(k, sum([fishnum(k).totpower]));
+end
