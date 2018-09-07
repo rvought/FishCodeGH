@@ -10,7 +10,7 @@ di = di / max(abs(di));
 fr = in(idx).pair(j).dF - mean(in(idx).pair(j).dF);
 fr = fr / max(abs(fr));                    
 
-Fs = median(diff(out(idx).pair(j).sharedtims));
+Fs = median(diff(oinut(idx).pair(j).sharedtims));
 
 [out(j).p, out(j).w] = cpsd(di(1:10:end), fr(1:10:end), [], [], [], 0.1*Fs); 
     figure(1); plot(out(j).w, real(out(j).p), '-*'); 
