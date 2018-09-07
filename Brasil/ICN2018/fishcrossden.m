@@ -1,9 +1,13 @@
-function out = fishcrossden(in, idx)
+function out = fishcrossden(in, idx, idxs)
 % Run fishdist or fishdistS first
 
 figure(1); clf; hold on;
 
-for j=1:length(in(idx).pair)
+if nargin == 2
+    idxs = 1:length(in(idx).pair);
+end
+
+for j = idxs
 
 di = in(idx).pair(j).descartes - mean(in(idx).pair(j).descartes);
 di = di / max(abs(di));                                        
