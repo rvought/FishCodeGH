@@ -21,13 +21,13 @@ end
 for j = idxs
 
 di = in(idx).pair(j).descartes - mean(in(idx).pair(j).descartes);
-    fishnum(in(idx).pair(j).fishnums(1)).meandist(end+1) = mean(di);
-    fishnum(in(idx).pair(j).fishnums(2)).meandist(end+1) = mean(di);    
+    fishnum(in(idx).pair(j).fishnums(1)).meandist(end+1) = mean(in(idx).pair(j).descartes);
+    fishnum(in(idx).pair(j).fishnums(2)).meandist(end+1) = mean(in(idx).pair(j).descartes);    
 di = di / max(abs(di));                                        
 
 fr = in(idx).pair(j).dF - mean(in(idx).pair(j).dF);
-    fishnum(in(idx).pair(j).fishnums(1)).meandF(end+1) = mean(di);
-    fishnum(in(idx).pair(j).fishnums(2)).meandF(end+1) = mean(di);
+    fishnum(in(idx).pair(j).fishnums(1)).meandF(end+1) = mean(fr);
+    fishnum(in(idx).pair(j).fishnums(2)).meandF(end+1) = mean(fr);
 fr = fr / max(abs(fr));                    
 
 Fs = median(diff(in(idx).pair(j).sharedtims));
