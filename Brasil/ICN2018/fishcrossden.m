@@ -7,15 +7,16 @@ figure(1); clf; hold on;
 
 numfish = length(in(idx).fish);
 for k=1:numfish
-    out(j).fishnum(k).meandist = [];
-    out(j).fishnum(k).meandF = [];
+    fishnum(k).meandist = [];
+    fishnum(k).meandF = [];
+    fishnum(k).totpower = [];
 end
 
 if nargin == 2
     idxs = 1:length(in(idx).pair);
 end
 
-% Extract the Cross Spectral Density for every pair
+%% Extract the Cross Spectral Density for every pair
 for j = idxs
 
 di = in(idx).pair(j).descartes - mean(in(idx).pair(j).descartes);
@@ -40,4 +41,12 @@ Fs = median(diff(in(idx).pair(j).sharedtims));
     plot(in(idx).pair(j).sharedtims, fr, '*');
 
 end
+
+%% Test hypothesis 1: Distance determines strength of interaction
+
+
+
+
+%% Test hypothesis 2: There are dominant and submissive fish
+
 
