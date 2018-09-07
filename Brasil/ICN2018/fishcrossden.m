@@ -56,4 +56,5 @@ figure(3); clf; hold on;
 for k=1:numfish
     plot(k, sum([fishnum(k).totpower]), 'b*', 'MarkerSize', 5);
     plot(k, sum([fishnum(k).totabspower]), 'r*', 'MarkerSize', 5);
+    xlim([0, numfish+1]);
 end
