@@ -5,6 +5,12 @@ function out = fishcrossden(in, idx, idxs)
 
 figure(1); clf; hold on;
 
+numfish = length(in(idx).fish);
+for k=1:numfish
+    out(j).fishnum(k).meandist = [];
+    out(j).fishnum(k).meandF = [];
+end
+
 if nargin == 2
     idxs = 1:length(in(idx).pair);
 end
@@ -12,8 +18,13 @@ end
 for j = idxs
 
 di = in(idx).pair(j).descartes - mean(in(idx).pair(j).descartes);
+    out(j).fishnum(in(idx).pair(j).fishnums(1)).meandist(end+1) = mean(di);
+    out(j).fishnum(in(idx).pair(j).fishnums(2)).meandist(end+1) = mean(di);    
 di = di / max(abs(di));                                        
+
 fr = in(idx).pair(j).dF - mean(in(idx).pair(j).dF);
+    out(j).fishnum(in(idx).pair(j).fishnums(1)).meandF(end+1) = mean(di);
+    out(j).fishnum(in(idx).pair(j).fishnums(2)).meandF(end+1) = mean(di);
 fr = fr / max(abs(fr));                    
 
 Fs = median(diff(in(idx).pair(j).sharedtims));
