@@ -95,7 +95,7 @@ subplot(224); plot(out.acc(pp), out.vel(pp), '.'); xlabel('Acceleration'); ylabe
 figure;
 velsteps = 0.0005;
 accsteps = 0.0000015;
-posedges = -5:0.1:5;
+posedges = -5:0.2:5;
 veledges = -0.02:velsteps:0.02; % need to define bins rather than calculate them on a per trial basis 
 
 accedges = -0.25*10^(-4):accsteps:0.25*10^(-4); % need to define bins rather than calculate them on a per trial basis 
@@ -104,7 +104,7 @@ subplot(131); a = histcounts(out.pos, posedges); plot(posedges(1:end-1), a/sum(a
 subplot(132); b = histcounts(out.vel, veledges); plot(veledges(1:end-1), b/sum(b), 'b'),
 subplot(133); c = histcounts(out.acc, accedges); plot(accedges(1:end-1), c/sum(c), 'b'), 
 
-stimedges = -5:0.1:5;
+stimedges = -5:0.2:5;
 foedges = -0.02:velsteps: 0.02;
 soedges = -0.25*10^(-4):accsteps:0.25*10^(-4);
 
