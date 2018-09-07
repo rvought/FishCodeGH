@@ -12,11 +12,11 @@ fr = fr / max(abs(fr));
 
 Fs = median(diff(out(idx).pair(j).sharedtims));
 
-[p, w] = cpsd(di(1:10:end), fr(1:10:end), [], [], [], 0.1*Fs); 
-    figure(1); plot(w, real(p), '-*'); 
+[out(j).p, out(j).w] = cpsd(di(1:10:end), fr(1:10:end), [], [], [], 0.1*Fs); 
+    figure(1); plot(out(j).w, real(out(j).p), '-*'); 
     figure(1+j); clf; hold on; 
-    plot(out(idx).pair(j).sharedtims, di, '*'); 
-    plot(out(idx).pair(j).sharedtims, fr, '*');
+    plot(in(idx).pair(j).sharedtims, di, '*'); 
+    plot(in(idx).pair(j).sharedtims, fr, '*');
 
 end
 
