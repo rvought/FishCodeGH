@@ -113,6 +113,7 @@ for j=1:length(in) % For each entry
 end % For every entry
         
 figure(1); hold on; 
+length(out)
 for k = 3:17
     for j=1:length(out(k).pair)
         plot(out(k).pair(j).meanDist, out(k).pair(j).dFmean, 'c*'); 
