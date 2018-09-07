@@ -1,5 +1,7 @@
 function out = fishcrossden(in, idx, idxs)
 % Run fishdist or fishdistS first
+% e.g. in = fishdist(f, [100 1100])
+
 
 figure(1); clf; hold on;
 
