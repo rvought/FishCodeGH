@@ -47,6 +47,14 @@ end
 
 %% Test hypothesis 1: Distance determines strength of interaction
 
+figure(2); clf;  
+for k=1:numfish
+    subplot(121); hold on;
+    plot(fishnum(k).meandist, fishnum(k).totpower, 'b*');
+    subplot(122); hold on;
+    plot(fishnum(k).meandist, fishnum(k).totabspower, 'r*');
+end
+
 
 
 
