@@ -10,6 +10,7 @@ for k=1:numfish
     fishnum(k).meandist = [];
     fishnum(k).meandF = [];
     fishnum(k).totpower = [];
+    fishnum(k).totabspower = [];
 end
 
 if nargin == 2
@@ -34,6 +35,8 @@ Fs = median(diff(in(idx).pair(j).sharedtims));
 [out(j).p, out(j).w] = cpsd(di(1:20:end), fr(1:20:end), [], [], [], 0.05*Fs); 
     fishnum(in(idx).pair(j).fishnums(1)).totpower(end+1) = sum(real(out(j).p));
     fishnum(in(idx).pair(j).fishnums(2)).totpower(end+1) = sum(real(out(j).p));
+    fishnum(in(idx).pair(j).fishnums(1)).totabspower(end+1) = sum(abs(real(out(j).p)));
+    fishnum(in(idx).pair(j).fishnums(2)).totabspower(end+1) = sum(abs(real(out(j).p)));
     
     figure(1); plot(out(j).w, real(out(j).p), '-*'); 
     %figure(1+j); clf; hold on; 
@@ -51,5 +54,6 @@ end
 
 figure(3); clf; hold on;
 for k=1:numfish
-    plot(k, sum([fishnum(k).totpower]), '*');
+    plot(k, sum([fishnum(k).totpower]), 'b*', 'MarkerSize', 5);
+    plot(k, sum([fishnum(k).totabspower]), 'r*', 'MarkerSize', 5);
 end
