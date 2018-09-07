@@ -11,7 +11,7 @@ spikes = [];
 for kk = 1:length(neuron)
 for jj = 1:length(neuron(kk).s)               %% this cycles through all of the stimuli
     if neuron(kk).s(jj).sizeDX == size
-        position = [position neuron(kk).s(jj).pos];
+        position = [position neuron(kk).s(jj).pos'];
         
         if isempty(tim) %must use isempty because the first stimuli of a particular size is not always jj=1
             nextim = 0; 
