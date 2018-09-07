@@ -98,7 +98,7 @@ accsteps = 0.0000015;
 posedges = -5:0.1:5;
 veledges = -0.02:velsteps:0.02; % need to define bins rather than calculate them on a per trial basis 
 
-accedges = -0.01:accsteps:0.01; % need to define bins rather than calculate them on a per trial basis 
+accedges = -0.25*E(-3):accsteps:0.25*E(-3); % need to define bins rather than calculate them on a per trial basis 
 
 subplot(131); a = histcounts(out.pos, posedges); plot(posedges(1:end-1), a/sum(a), 'b'), 
 subplot(132); b = histcounts(out.vel, veledges); plot(veledges(1:end-1), b/sum(b), 'b'),
@@ -106,7 +106,7 @@ subplot(133); c = histcounts(out.acc, accedges); plot(accedges(1:end-1), c/sum(c
 
 stimedges = -5:0.1:5;
 foedges = -0.02:velsteps: 0.02;
-soedges = -0.01:accsteps:0.01;
+soedges = -0.25*E(-3):accsteps:0.25*E(-3);
 
 subplot(131); hold on, d = histcounts(position, stimedges); plot(stimedges(1:end-1), d/ (sum(d)), 'r'), xlabel('Position'); ylabel('Time Percentge'); legend('Spikes', 'Stimulus')
 subplot(132); hold on, f = histcounts(firstorder, foedges); plot(foedges(1:end-1), f / (sum(f)), 'r'), xlabel('Velocity'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus')
