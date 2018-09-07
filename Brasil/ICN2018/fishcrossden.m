@@ -1,5 +1,5 @@
 function out = fishcrossden(in, idx)
-
+% Run fishdist or fishdistS first
 
 figure(1); clf; hold on;
 
@@ -20,9 +20,3 @@ Fs = median(diff(out(idx).pair(j).sharedtims));
 
 end
 
->> [p, w] = cpsd(di(1:10:end), -fr(1:10:end), [], [], [], 0.1/median(diff(out(3).pair(1).sharedtims))); figure(2); clf; plot(w,real(p), '-*');
->> [p, w] = cpsd(di(1:10:end), -fr(1:10:end), [], [], [], 0.1/median(diff(out(3).pair(1).sharedtims))); figure(2); clf; plot(w,real(p), '-*');
->> 
->> figure(1); clf; plot(out(3).pair(1).descartes, di, '*'); hold on; plot(out(3).pair(1).descartes, fr, '*');
->> figure(1); clf; plot(out(3).pair(1).sharedtims, di, '*'); hold on; plot(out(3).pair(1).sharedtims, fr, '*');
->> [p, w] = cpsd(di(1:10:end), fr(1:10:end), [], [], [], 0.1/median(diff(out(3).pair(1).sharedtims))); figure(2); clf; plot(w,real(p), '-*');
