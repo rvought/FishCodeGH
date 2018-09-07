@@ -51,5 +51,5 @@ end
 
 figure(3); clf; hold on;
 for k=1:numfish
-    plot(k, sum([fishnum(k).totpower]));
+    plot(k, sum([fishnum(k).totpower]), '*');
 end
