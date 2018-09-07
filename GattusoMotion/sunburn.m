@@ -94,7 +94,7 @@ subplot(224); plot(out.acc(pp), out.vel(pp), '.'); xlabel('Acceleration'); ylabe
 
 figure;
 velsteps = 0.001;
-accsteps = 0.000015;
+accsteps = 0.0000015;
 posedges = -5:0.2:5;
 veledges = -0.02:velsteps:0.02; % need to define bins rather than calculate them on a per trial basis 
 
