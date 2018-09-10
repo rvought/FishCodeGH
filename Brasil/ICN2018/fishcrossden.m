@@ -60,7 +60,7 @@ end
 
 %% Test hypothesis 2: There are dominant and submissive fish
 
-figure(3); clf; hold on;
+figure(3); hold on; title('By fish sum(psd)');
 for k=1:numfish
     plot(k, sum([fishnum(k).totpower]), 'b*', 'MarkerSize', 5);
     plot(k, sum([fishnum(k).totabspower]), 'r*', 'MarkerSize', 5);
