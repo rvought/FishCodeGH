@@ -58,7 +58,6 @@ end
 
 
 
-%% Test hypothesis 2: There are dominant and submissive fish
 
 figure(3); hold on; title('By fish sum(psd)');
 for k=1:numfish
