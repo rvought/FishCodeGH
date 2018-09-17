@@ -60,8 +60,9 @@ for k=1:numfish
         ddpwr(end+1) =  fishnum(k).totabspower(jj);
     end
 end
-
-[~,~,~,~,stats] = regress(dd,ddpwr)
+dd 
+ddpwr
+[~,~,~,~,stats] = regress(dd',ddpwr')
 
 
 
