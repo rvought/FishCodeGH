@@ -61,7 +61,7 @@ for k=1:numfish
     end
 end
 
-[~,~,~,~,stats] = regress(dd,ddpwd)
+[~,~,~,~,stats] = regress(dd,ddpwr)
 
 
 
