@@ -47,17 +47,19 @@ end
 
 %% Test hypothesis 1: Distance determines strength of interaction
 
-ddtst(1:2,1) = [];
+dd = []; ddpwr = [];
+
 figure(2);   
 for k=1:numfish
     subplot(121); title('Distance vs. sum(psd)'); hold on;
     plot(fishnum(k).meandist, fishnum(k).totpower, 'b*');
     subplot(122); title('Distance vs. sum(abs(psd))');hold on;
     plot(fishnum(k).meandist, fishnum(k).totabspower, 'r*', 'MarkerSize', 4);
-    ddtst(:,end+1) = [fishnum(k).meandist fishnum(k).totabspower];
+    dd(end+1) = fishnum(k).meandist;
+    ddpwr(end+1) =  fishnum(k).totabspower;
 end
 
-
+[~,~,~,~,stats] = regress(dd,ddpwd)
 
 
 
