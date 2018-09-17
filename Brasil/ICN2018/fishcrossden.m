@@ -55,9 +55,10 @@ for k=1:numfish
     plot(fishnum(k).meandist, fishnum(k).totpower, 'b*');
     subplot(122); title('Distance vs. sum(abs(psd))');hold on;
     plot(fishnum(k).meandist, fishnum(k).totabspower, 'r*', 'MarkerSize', 4);
-    fishnum(k).meandist
-    dd(end+1) = fishnum(k).meandist;
-    ddpwr(end+1) =  fishnum(k).totabspower;
+    for jj = 1:length(fishnum(k).meandist)
+        dd(end+1) = fishnum(k).meandist(jj);
+        ddpwr(end+1) =  fishnum(k).totabspower(jj);
+    end
 end
 
 [~,~,~,~,stats] = regress(dd,ddpwd)
