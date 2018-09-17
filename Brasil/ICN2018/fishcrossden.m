@@ -52,7 +52,8 @@ for k=1:numfish
     subplot(121); title('Distance vs. sum(psd)'); hold on;
     plot(fishnum(k).meandist, fishnum(k).totpower, 'b*');
     subplot(122); title('Distance vs. sum(abs(psd))');hold on;
-    plot(fishnum(k).meandist, fishnum(k).totabspower, 'r*');
+    plot(fishnum(k).meandist, fishnum(k).totabspower, 'r*', 'MarkerSize', 4);
+    ddtst(end+1) = fishnum(k).totabspower
 end
 
 
