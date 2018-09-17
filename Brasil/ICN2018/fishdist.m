@@ -1,4 +1,4 @@
-ofunction out = fishdist(in, dur)
+function out = fishdist(in, dur)
 % out = fishdist(in, dur)
 % God help me code!
 
