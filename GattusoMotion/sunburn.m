@@ -123,9 +123,9 @@ for mm = 1:length(c)
     acccg(mm) = (g(mm)/sum(g))-(c(mm)/sum(g));
 end
 
-subplot(234); plot(stimedges(1:end-1), posad, 'k', 'LineWidth', 2); xlabel('Spikes- Postion');
-subplot(235); plot(foedges(1:end-1), velbf, 'k', 'LineWidth', 2); xlabel('Spikes-Velocity');
-subplot(236); plot(soedges(1:end-1), acccg, 'k', 'LineWidth', 2); xlabel('Spikes-Acceleration');
+subplot(234); plot(stimedges(1:end-1), posad, 'k', 'LineWidth', 2); xlabel('Spikes-Stimulus : Position');
+subplot(235); plot(foedges(1:end-1), velbf, 'k', 'LineWidth', 2); xlabel('Spikes-Stimulus : Velocity');
+subplot(236); plot(soedges(1:end-1), acccg, 'k', 'LineWidth', 2); xlabel('Spikes-Stimulus : Acceleration');
 
 end
 
