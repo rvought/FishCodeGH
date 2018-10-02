@@ -105,6 +105,9 @@ for zz = 1:length(out.acc)
     if out.acc(zz) > 0
         newout.acc = [newout.acc out.acc(zz)];
     end
+    if out.acc(zz) <0
+        newout.acc = [newout.acc out.acc(zz)];
+    end
 end
         
 out.acc = newout.acc;
