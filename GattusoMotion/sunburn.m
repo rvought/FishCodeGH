@@ -103,7 +103,7 @@ z = 1;
 for zz = 1:length(out.acc)
     while z < (length(out.acc)+1)
         if out.acc(zz) ~=0
-        newout.acc(z) = out.acc(zz)
+        newout.acc(z) = out.acc(zz);
         z = z + 1;
         end
     end
