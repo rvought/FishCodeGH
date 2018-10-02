@@ -99,9 +99,15 @@ posedges = -5:0.2:5;
 veledges = -0.02:velsteps:0.02; % need to define bins rather than calculate them on a per trial basis 
 
 accedges = -0.25*10^(-4):accsteps:0.25*10^(-4); % need to define bins rather than calculate them on a per trial basis 
-
-while zz < (length(out.pos)+1)
-    if out.pos
+z = 1;
+for zz = 1:length(out.acc)
+    while z < (length(out.acc)+1)
+        if out.acc(zz) ~=0
+        newout.acc(z) = out.acc(zz)
+        z = z + 1;
+        end
+    end
+end
 
 subplot(231); a = histcounts(out.pos, posedges); plot(posedges(1:end-1), a/sum(a), 'b'), 
 subplot(232); b = histcounts(out.vel, veledges); plot(veledges(1:end-1), b/sum(b), 'b'),
