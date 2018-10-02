@@ -120,7 +120,7 @@ for jj = 1:length(b)
     velbf(jj) = (f(jj)/sum(f))-(b(jj)/sum(b));
 end
 for mm = 1:length(c)
-    acccg(mm) = (g(mm)/sum(g))-(c(mm)/sum(g));
+    acccg(mm) = (g(mm)/sum(g))-(c(mm)/sum(c));
 end
 
 subplot(234); plot(stimedges(1:end-1), posad, 'k', 'LineWidth', 2); xlabel('Spikes-Stimulus : Position');
