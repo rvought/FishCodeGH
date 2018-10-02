@@ -112,7 +112,11 @@ subplot(131); hold on, d = histcounts(position, stimedges); plot(stimedges(1:end
 subplot(132); hold on, f = histcounts(firstorder, foedges); plot(foedges(1:end-1), f / (sum(f)), 'r'), xlabel('Velocity'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus')
 subplot(133); hold on, g = histcounts(secondorder, soedges); plot(soedges(1:end-1), g/ (sum(g)), 'r'), 
 xlabel('Acceleration'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus'); % axis([-5*10^(-5), 5*10^(-5), 0, 0.005])
-a
+
+for kk = 1:length(a)
+    posad(kk) = d(kk)-a(kk);
+end
+
 
 
 end
