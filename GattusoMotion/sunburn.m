@@ -102,10 +102,9 @@ accedges = -0.25*10^(-4):accsteps:0.25*10^(-4); % need to define bins rather tha
 
 newout.acc = [];
 for zz = 1:length(out.acc)
-    if out.acc(zz) > 0
-        newout.acc = [newout.acc out.acc(zz)];
-    end
-    if out.acc(zz) <0
+    if out.acc(zz) == 0
+        holder = [holder out.acc(zz)]
+    else
         newout.acc = [newout.acc out.acc(zz)];
     end
 end
