@@ -101,9 +101,10 @@ veledges = -0.02:velsteps:0.02; % need to define bins rather than calculate them
 accedges = -0.25*10^(-4):accsteps:0.25*10^(-4); % need to define bins rather than calculate them on a per trial basis 
 
 newout.acc = [];
+holder = [];
 for zz = 1:length(out.acc)
     if out.acc(zz) == 0
-        holder = [holder out.acc(zz)]
+        holder = [holder out.acc(zz)];
     else
         newout.acc = [newout.acc out.acc(zz)];
     end
