@@ -1,4 +1,4 @@
-function out = painkiller(data)
+oiufunction out = painkiller(data)
     %% calculating the ISI
     ISI = ISIfinder(data);
     
