@@ -116,7 +116,12 @@ xlabel('Acceleration'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus');
 for kk = 1:length(a)
     posad(kk) = d(kk)-a(kk);
 end
-
+for jj = l:length(b)
+    velbf(jj) = f(jj)-b(jj);
+end
+for mm = 1:length(c)
+    acccg(mm) = g(mm)-c(mm);
+end
 
 
 end
