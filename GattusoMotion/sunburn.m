@@ -100,17 +100,17 @@ veledges = -0.02:velsteps:0.02; % need to define bins rather than calculate them
 
 accedges = -0.25*10^(-4):accsteps:0.25*10^(-4); % need to define bins rather than calculate them on a per trial basis 
 
-subplot(131); a = histcounts(out.pos, posedges); plot(posedges(1:end-1), a/sum(a), 'b'), 
-subplot(132); b = histcounts(out.vel, veledges); plot(veledges(1:end-1), b/sum(b), 'b'),
-subplot(133); c = histcounts(out.acc, accedges); plot(accedges(1:end-1), c/sum(c), 'b'), 
+subplot(231); a = histcounts(out.pos, posedges); plot(posedges(1:end-1), a/sum(a), 'b'), 
+subplot(232); b = histcounts(out.vel, veledges); plot(veledges(1:end-1), b/sum(b), 'b'),
+subplot(233); c = histcounts(out.acc, accedges); plot(accedges(1:end-1), c/sum(c), 'b'), 
 
 stimedges = -5:0.2:5;
 foedges = -0.02:velsteps: 0.02;
 soedges = -0.25*10^(-4):accsteps:0.25*10^(-4);
 
-subplot(131); hold on, d = histcounts(position, stimedges); plot(stimedges(1:end-1), d/ (sum(d)), 'r'), xlabel('Position'); ylabel('Time Percentge'); legend('Spikes', 'Stimulus')
-subplot(132); hold on, f = histcounts(firstorder, foedges); plot(foedges(1:end-1), f / (sum(f)), 'r'), xlabel('Velocity'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus')
-subplot(133); hold on, g = histcounts(secondorder, soedges); plot(soedges(1:end-1), g/ (sum(g)), 'r'), 
+subplot(231); hold on, d = histcounts(position, stimedges); plot(stimedges(1:end-1), d/ (sum(d)), 'r'), xlabel('Position'); ylabel('Time Percentge'); legend('Spikes', 'Stimulus')
+subplot(232); hold on, f = histcounts(firstorder, foedges); plot(foedges(1:end-1), f / (sum(f)), 'r'), xlabel('Velocity'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus')
+subplot(233); hold on, g = histcounts(secondorder, soedges); plot(soedges(1:end-1), g/ (sum(g)), 'r'), 
 xlabel('Acceleration'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus'); % axis([-5*10^(-5), 5*10^(-5), 0, 0.005])
 
 for kk = 1:length(a)
