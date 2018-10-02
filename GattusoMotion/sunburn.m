@@ -108,6 +108,7 @@ for zz = 1:length(out.acc)
         end
     end
 end
+out.acc = newout.acc;
 
 subplot(231); a = histcounts(out.pos, posedges); plot(posedges(1:end-1), a/sum(a), 'b'), 
 subplot(232); b = histcounts(out.vel, veledges); plot(veledges(1:end-1), b/sum(b), 'b'),
