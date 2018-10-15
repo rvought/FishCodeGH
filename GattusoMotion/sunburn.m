@@ -49,7 +49,7 @@ for ss = length(spikes):-1:1;
     pv(ss,:) = [cpos(ss) cvel(ss)];
     av(ss,:) = [cacc(ss) cvel(ss)];
     
-end
+end =
 out.cpos = cpos;
 out.cvel = cvel;
 out.cacc = cacc;
