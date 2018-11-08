@@ -6,6 +6,6 @@ function QuickPlotGrid(in)
 for j = 1:length(in.fish)
     
    figure(1); plot(in.fish(j).freq(:,1), in.fish(j).freq(:,2), '*'); ylim([200 600]);
-   figure(2); plot(in.fish(j).x, in.fish.y, '*-');
+   figure(2); plot(in.fish(j).x, in.fish(j).y, '*-');
     
 end
