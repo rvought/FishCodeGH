@@ -1,4 +1,4 @@
-function QuickPlotGrid(in, win)
+function QuickPlotGrid(in)
 
    figure(1); clf; hold on;
    figure(2); clf; hold on;
