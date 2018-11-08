@@ -5,7 +5,7 @@ function QuickPlotGrid(in, win)
    
 for j = 1:length(in.fish)
     
-   figure(1); plot(in.fish(j).freq(:,1), in.fish(j).freq(:,1), '*'); 
+   figure(1); plot(in.fish(j).freq(:,1), in.fish(j).freq(:,2), '*'); 
    figure(2); plot(in.fish(j).x, in.fish.y, '*-');
     
 end
