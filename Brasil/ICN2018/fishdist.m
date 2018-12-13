@@ -4,13 +4,13 @@ function out = fishdist(in, dur)
 
 startim = dur(1); endtim = dur(2);
 
-for j=1:length(in) % For each entry
+for j=1:length(data.fish) % For each fish
     
-    numfish = length(in(j).c); % How many fish in this recording
+    numfish = length(data.fish); % How many fish in this recording
     
     % SINGLE FISH DATA
     
-    for ff = 1:length(in(j).c) % for each fish
+    for ff = 1:length(data.fish) % for each fish
         cts = find(in(j).c(ff).tim > startim & in(j).c(ff).tim < endtim); % Current epoch
         
         % Mean and variance of frequency of this fish
