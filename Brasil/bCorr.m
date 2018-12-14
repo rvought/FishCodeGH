@@ -151,11 +151,12 @@ for j=1:length(data) % For each recording session
                 curdFs = fillmissing(dF, 'linear') - mean(fillmissing(dF, 'linear'));                
                
                 for kk = 1:stepz
-length(sharedtims)
+
                     curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
-length(curridx) 
+ 
                     if length(curridx) > 25 % Half of the cutoff above
-                    
+                    max(curridx)
+                    length(curdistrack)
                     [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
                        out(j).corr(p).r(kk) = r(2);
                        out(j).corr(p).p(kk) = pVal(2);
