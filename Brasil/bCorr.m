@@ -152,7 +152,8 @@ for j=1:length(data) % For each recording session
                     
                     aa = xcorr(curdistrack, curdFs);
                     
-                    out(j).corr(p).xcorr(kk) = max(abs(aa));
+                    [~, idx] = max(abs(aa));
+                    out(j).corr(p).xcorr(kk) = aa(idx); 
                     
                 end
                 
