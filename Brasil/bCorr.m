@@ -148,7 +148,7 @@ for j=1:length(data) % For each recording session
                 curdFs = fillmissing(dF, 'linear') - mean(fillmissing(dF, 'linear'));                
                
                 for kk = 1:stepz
-startim
+length(sharedtims)
                     curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
                     
                     if length(curridx) > 25 % Half of the cutoff above
