@@ -148,9 +148,10 @@ for j=1:length(data) % For each recording session
                 for kk = 1:stepz
 
                     curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
-                    length(curridx)
                     
-                   [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
+                    if length(curridx) > 25 % Half of the cutoff above
+                    
+                    [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
                        out(j).corr(p).r(kk) = r(2);
                        out(j).corr(p).p(kk) = pVal(2);
                        
@@ -161,13 +162,12 @@ for j=1:length(data) % For each recording session
                     [~, idx] = max(abs(aa));
                     out(j).corr(p).xcorr(kk) = aa(idx);
                     out(j).corr(p).xcorrtime(kk) = 2*idx/length(aa);
+                    end
                     
                     startim = startim + stepsize;
                     
                 end
-                
-                fprintf('step');
-                
+                                
                 end % Had enough samples to be worth analysis
             end % Fish might be interacting
            
