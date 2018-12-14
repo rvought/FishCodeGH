@@ -147,7 +147,7 @@ for j=1:length(data) % For each recording session
                 curdistrack = fillmissing(Descartes, 'linear') - mean(fillmissing(Descartes, 'linear'));
                 curdFs = fillmissing(dF, 'linear') - mean(fillmissing(dF, 'linear'));                
                
-                for kk = 1:stepz-1
+                for kk = 1:stepz
 
                     curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
                     
