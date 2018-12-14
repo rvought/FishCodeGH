@@ -21,11 +21,13 @@ B=double(B);
      
 na = hist(A(:),L); 
 na = na/sum(na);
+
 nb = hist(B(:),L); 
 nb = nb/sum(nb);
+
 n2 = histogram2(A,B,L); 
 n2values = n2.Values/sum(n2.Values);
-out=sum(minf(n2values, na'*nb)); 
+out=sum(minf(n2values, na' * nb)); 
 
 % -----------------------
 function y=minf(pab,papb)
