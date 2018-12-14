@@ -103,7 +103,7 @@ for j=1:length(data) % For each recording session
                     
                     % What is the dF?                    
                         dF(yy) = abs(data(j).fish(combos(p,1)).freq(sharedidx(yy),2) - ...
-                            data(j).fish(combos(p,2)).freq(data(j).fish(sharedidx(yy),2)) );                    
+                            data(j).fish(combos(p,2)).freq(sharedidx(yy),2) );                    
                     
                     % How far apart are they?
                         XY(1,1) = data(j).fish(combos(p,1)).x(sharedidx(yy));
