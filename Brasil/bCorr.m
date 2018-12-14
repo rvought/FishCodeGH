@@ -81,7 +81,7 @@ for j=1:length(data) % For each recording session
         for p = 1:length(combos) % For each pair of fish
             
             out(j).pair(p).fishnums = combos(p,:); % Save the output combo
-            combos(p,:)
+
             % DO BOTH FISH APPEAR DURING THIS EPOCH AND OVERLAP IN TIME?
             
               firstfishtim =  find(data(j).fish(combos(p,1)).freq(:,1) > startim & data(j).fish(combos(p,1)).freq(:,1) < endtim); 
@@ -99,7 +99,7 @@ for j=1:length(data) % For each recording session
             if ~isempty(sharedtims) % FISH MIGHT BE INTERACTING!!!!!!
                 
                 if length(sharedtims) > 50 % MEETS MINIMUM NUMBER OF SAMPLES (THIS NEEDS TO BE EDITABLE)
-                
+                length(sharedtims)
                 for yy = length(sharedtims):-1:1
                                         
                     sharedidx(yy) = find(data(j).fish(combos(p,1)).freq(:,1) == sharedtims(yy));
