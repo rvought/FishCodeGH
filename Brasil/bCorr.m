@@ -139,7 +139,7 @@ for j=1:length(data) % For each recording session
                 analtime = 200; % Window for correlation analysis in seconds
                 stepz = (max(sharedtims) - analtime) / stepsize;
                 out(j).corr(p).Fs = 1/stepsize; 
-                startim = rango(1);
+                startim = max([rango(1), min(sharedtims)]);
                 
                 % Get rid of NaNs from the data (fillmissing linear) and
                 % subtract the means for clean crosscorrelation analyses
