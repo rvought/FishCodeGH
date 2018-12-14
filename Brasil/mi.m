@@ -32,5 +32,5 @@ out=sum(minf(n2values, na' * nb));
 % -----------------------
 function y=minf(pab,papb)
 I = find(papb > 1e-12 & pab > 1e-12); % function support 
-I = I(1:end-1000);
+I = I(1:256);
 y = pab(I) .* log2(pab(I) ./ papb(I));
