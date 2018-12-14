@@ -89,7 +89,7 @@ for j=1:length(data) % For each recording session
               secondfishtim = find(data(j).fish(combos(p,2)).freq(:,1) > startim & data(j).fish(combos(p,2)).freq(:,1) < endtim); 
             if ~isempty(secondfishtim)
                 
-            clear sharedidx FD Descartes dF;                
+            clear sharedtims sharedidx FD Descartes dF;                
 
             sharedtims = intersect(data(j).fish(combos(p,1)).freq(firstfishtim,1), data(j).fish(combos(p,2)).freq(secondfishtim,1));
             
@@ -126,8 +126,8 @@ for j=1:length(data) % For each recording session
                 out(j).pair(p).descartes = Descartes;
                 out(j).pair(p).dF = dF;
                 
-                        % maxlen = min([length(dF), length(Descartes)]);
                         if abs(length(dF) - length(Descartes)) > 0; fprintf('Yowza!'); end
+                        
                 FD(:,1) = dF;
                 FD(:,2) = Descartes;
                 [out(j).pair(p).covDistdF, out(j).pair(p).covDistdFpval] = corrcoef(FD);
@@ -136,7 +136,7 @@ for j=1:length(data) % For each recording session
                 % Calculate Correlations
                 
                 stepsize = 10; % How many seconds to move forward
-                analtime = 200; % Window for correlation analysis in seconds-+
+                analtime = 200; % Window for correlation analysis in seconds
                 stepz = (max(sharedtims) - analtime) / stepsize;
                 out(j).corr(p).Fs = 1/stepsize; 
                 startim = rango(1);
