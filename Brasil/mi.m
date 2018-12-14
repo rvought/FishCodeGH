@@ -1,4 +1,4 @@
-function I=mi(A,B,varargin) 
+function out = mi(A,B,varargin) 
 %MI Determines the mutual information of two images or signals
 %
 %   I=mi(A,B)   Mutual information of A and B, using 256 bins for
@@ -25,9 +25,12 @@ nb = hist(B(:),L);
 nb = nb/sum(nb);
 n2 = histogram2(A,B,L); 
 n2values = n2.Values/sum(n2.Values);
-I=sum(minf(n2values, na'*nb)); 
+out=sum(minf(n2values, na'*nb)); 
 
 % -----------------------
 function y=minf(pab,papb)
 I = find(papb > 1e-12 & pab > 1e-12); % function support 
+max(I)
+length(pab)
+length(papb)
 y = pab(I) .* log2(pab(I) ./ papb(I));
