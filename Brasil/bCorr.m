@@ -98,16 +98,18 @@ for j=1:length(data) % For each recording session
                 if length(sharedtims) > 50 % MEETS MINIMUM NUMBER OF SAMPLES (THIS NEEDS TO BE EDITABLE)
                 
                 for yy = length(sharedtims):-1:1
+                                        
+                    sharedidx(yy) = find(data(j).fish(combos(p,1)).freq(:,1) == sharedtims(yy));
                     
                     % What is the dF?                    
-                        dF(yy) = abs(data(j).fish(combos(p,1)).freq(data(j).fish(combos(p,1)).freq(:,1) == sharedtims(yy),2) - ...
-                            data(j).fish(combos(p,2)).freq(data(j).fish(combos(p,2)).freq(:,1) == sharedtims(yy),2) );                    
+                        dF(yy) = abs(data(j).fish(combos(p,1)).freq(sharedidx(yy),2) - ...
+                            data(j).fish(combos(p,2)).freq(data(j).fish(sharedidx(yy),2)) );                    
                     
                     % How far apart are they?
-                        XY(1,1) = data(j).fish(combos(p,1)).x(data(j).fish(combos(p,1)).freq(:,1) == sharedtims(yy));
-                        XY(2,1) = data(j).fish(combos(p,1)).y(data(j).fish(combos(p,1)).freq(:,1) == sharedtims(yy));
-                        XY(1,2) = data(j).fish(combos(p,2)).x(data(j).fish(combos(p,2)).freq(:,1) == sharedtims(yy));
-                        XY(2,2) = data(j).fish(combos(p,2)).y(data(j).fish(combos(p,2)).freq(:,1) == sharedtims(yy));
+                        XY(1,1) = data(j).fish(combos(p,1)).x(sharedidx(yy));
+                        XY(2,1) = data(j).fish(combos(p,1)).y(sharedidx(yy));
+                        XY(1,2) = data(j).fish(combos(p,2)).x(sharedidx(yy));
+                        XY(2,2) = data(j).fish(combos(p,2)).y(sharedidx(yy));
                         
                         Descartes(yy) = pdist(XY);
                                         
@@ -134,7 +136,8 @@ for j=1:length(data) % For each recording session
                 stepsize = 10; % How many seconds to move forward
                 analtime = 200; % Window for correlation analysis in seconds-+
                 stepz = (max(sharedtims) - analtime) / stepsize;
-                out(j).corr(p).Fs = 1/stepsize;                
+                out(j).corr(p).Fs = 1/stepsize; 
+                startim = rango(1);
                 
                 % Get rid of NaNs from the data (fillmissing linear) and
                 % subtract the means for clean crosscorrelation analyses
@@ -143,8 +146,10 @@ for j=1:length(data) % For each recording session
                 curdFs = fillmissing(dF, 'linear') - mean(fillmissing(dF, 'linear'));                
                
                 for kk = 1:stepz
+
+                    curridx = sharedidx(sharedtims > startim & sharedtims < stepsize*kk);
                     
-                   [r, pVal] = corrcoef(curdistrack, curdFs); 
+                   [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
                        out(j).corr(p).r(kk) = r(2);
                        out(j).corr(p).p(kk) = pVal(2);
                        
@@ -155,6 +160,8 @@ for j=1:length(data) % For each recording session
                     [~, idx] = max(abs(aa));
                     out(j).corr(p).xcorr(kk) = aa(idx);
                     out(j).corr(p).xcorrtime(kk) = 2*idx/length(aa);
+                    
+                    startim = startim + stepsize;
                     
                 end
                 
