@@ -117,9 +117,7 @@ for j=1:length(data) % For each recording session
                         Descartes(yy) = pdist(XY);
                                         
                 end
-                
-                length(sharedidx)
-                                
+                                                
                 out(j).pair(p).dFmean = mean(dF);
                 out(j).pair(p).dFvar = var(dF);
                 out(j).pair(p).meanDist = mean(Descartes);
@@ -155,8 +153,6 @@ for j=1:length(data) % For each recording session
                     curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
  
                     if length(curridx) > 25 % Half of the cutoff above
-                        bbbb = curdFs(curridx);
-                        aaaa = curdistrack(curridx);
                     [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
                        out(j).corr(p).r(kk) = r(2);
                        out(j).corr(p).p(kk) = pVal(2);
