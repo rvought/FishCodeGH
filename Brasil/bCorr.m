@@ -156,7 +156,7 @@ for j=1:length(data) % For each recording session
  
                     if length(curridx) > 25 % Half of the cutoff above
                     ddd = max(curridx)
-                    fff =length(curdFs)
+                    fff =length(curdistrack)
                     [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
                        out(j).corr(p).r(kk) = r(2);
                        out(j).corr(p).p(kk) = pVal(2);
