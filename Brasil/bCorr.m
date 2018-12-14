@@ -93,7 +93,8 @@ for j=1:length(data) % For each recording session
             sharedidx = []; 
             FD = []; 
             Descartes =[];
-            dF = [];                
+            dF = []; 
+            curridx = [];
 
             sharedtims = intersect(data(j).fish(combos(p,1)).freq(firstfishtim,1), data(j).fish(combos(p,2)).freq(secondfishtim,1));
             
@@ -154,7 +155,7 @@ for j=1:length(data) % For each recording session
                 for kk = 1:stepz
 length(sharedtims)
                     curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
-                    
+                   length(curridx) 
                     if length(curridx) > 25 % Half of the cutoff above
                     
                     [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
