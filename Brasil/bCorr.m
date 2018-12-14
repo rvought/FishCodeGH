@@ -124,8 +124,8 @@ for j=1:length(data) % For each recording session
                 
                 % Calculate Correlations
                 
-                
-                
+                stepsize = 10; % How many seconds to move forward
+                analtime = 100 % Window for correlation analysis
                 
                 
                 
