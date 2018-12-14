@@ -29,8 +29,10 @@ n2 = histogram2(A,B,L);
 n2values = n2.Values ./ sum(n2.Values)
 out=sum(minf(n2values, na' * nb)); 
 
+na' * nb
+
 % -----------------------
-function y=minf(pab,papb)
+function y=minf(pab, papb)
  I = find(papb > 1e-12 & pab > 1e-12); % function support 
 % y = pab(I) .* log2(pab(I) ./ papb(I));
 papb = papb(papb > 1e-12 & pab > 1e-12);
