@@ -125,7 +125,7 @@ for j=1:length(data) % For each recording session
                 % Calculate Correlations
                 
                 stepsize = 10; % How many seconds to move forward
-                analtime = 100; % Window for correlation analysis in seconds-+
+                analtime = 200; % Window for correlation analysis in seconds-+
                 stepz = (max(sharedtims) - analtime) / stepsize;
                 out(j).corr(p).Fs = 1/stepsize;                
                 
@@ -145,22 +145,25 @@ for j=1:length(data) % For each recording session
                     
                     aa = xcorr(curdistrack, curdFs);
                     
-                    
+                    out(j).corr(p).xcorr(kk) = max(abs(aa));
                     
                 end
                 
                 
                 
-                end
+                end % Had enough samples to be worth analysis
             end % Fish might be interacting
            
            
             end % Did we share time in this epoch?
             end % Did we share time in this epoch?
             
+            figure(3); subplot(311); plot(out(j).corr(p).r)
+            figure(3); subplot(312); plot(out(j).corr(p).MIs)
+            figure(3); subplot(313); plot(out(j).corr(p).xcorr)
+            
         end % For this pair of fish
-        
-        
+                
         
     end % If we have more than one fish
     
