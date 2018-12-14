@@ -25,17 +25,12 @@ na = na/sum(na);
 nb = hist(B(:),L); 
 nb = nb/sum(nb);
 
-foobar = na' * nb
-
-
 n2 = histogram2(A,B,L); 
-n2values = n2.Values ./ sum(n2.Values)
+n2values = n2.Values ./ sum(n2.Values);
 out=sum(minf(n2values, na' * nb)); 
 
 % -----------------------
 function y=minf(pab, papb)
- I = find(papb > 1e-12 & pab > 1e-12); % function support 
-% y = pab(I) .* log2(pab(I) ./ papb(I));
 papbx = papb(papb > 1e-12 & pab > 1e-12);
 pabx = pab(papb > 1e-12 & pab > 1e-12);
 y = pabx .* log2(pabx ./ papbx);
