@@ -114,6 +114,8 @@ for j=1:length(data) % For each recording session
                         Descartes(yy) = pdist(XY);
                                         
                 end
+                
+                length(sharedidx)
                                 
                 out(j).pair(p).dFmean = mean(dF);
                 out(j).pair(p).dFvar = var(dF);
