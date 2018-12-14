@@ -137,7 +137,7 @@ for j=1:length(data) % For each recording session
                 % Calculate Correlations
                 
                 stepsize = 10; % How many seconds to move forward
-                analtime = 200; % Window for correlation analysis in seconds
+                analtime = 100; % Window for correlation analysis in seconds
                 stepz = (max(sharedtims) - analtime) / stepsize;
                 out(j).corr(p).Fs = 1/stepsize; 
                 startimothy = min(sharedtims);
