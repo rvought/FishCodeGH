@@ -1,5 +1,5 @@
 function out = mi(A,B,varargin) 
-%MI Determines the mutual information of two images or signals
+% MI Determines the mutual information of two images or signals
 %
 %   I=mi(A,B)   Mutual information of A and B, using 256 bins for
 %   histograms
