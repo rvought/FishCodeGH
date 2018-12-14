@@ -84,7 +84,7 @@ for j=1:length(data) % For each recording session
                 
             clear FD Descartes dF ;                
 
-            sharedtims = intersect(in(j).c(combos(p,1)).tim(firstfishtim), in(j).c(combos(p,2)).tim(secondfishtim));
+            sharedtims = intersect(data(j).fish(combos(p,1)).freq(firstfishtim,1), data(j).fish(combos(p,2)).freq(secondfishtim,1));
             
             if ~isempty(sharedtims) % FISH MIGHT BE INTERACTING!!!!!!
                 
