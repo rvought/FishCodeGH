@@ -147,7 +147,7 @@ for j=1:length(data) % For each recording session
                
                 for kk = 1:stepz
 
-                    curridx = sharedidx(sharedtims > startim & sharedtims < stepsize*kk);
+                    curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
                     length(curridx)
                     
                    [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
