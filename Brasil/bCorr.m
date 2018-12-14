@@ -1,6 +1,5 @@
 function out = bCorr(data, rango)
 
-
 startim = rango(1); endtim = rango(2);
 
 if length(data) == 1
@@ -64,80 +63,79 @@ for j=1:length(data) % For each recording session
         subplot(122); plot(out(j).fish(ff).mFreq, out(j).fish(ff).mfiltVel, '.', 'MarkerSize', 20)
 
     end
-
     
-%     
-%     %% PAIRWISE INTERACTIONS BETWEEN FISH
-%     
-%     if numfish > 1 % If we have more than one fish
-%     
-%         combos = combnk(1:numfish, 2); % All pairwise combinations of fish
-%         
-%         for p = 1:length(combos) % For each pair of fish
-%             
-%             out(j).pair(p).fishnums = combos(p,:); % Save the output combo
-%             
-%             % DO BOTH FISH APPEAR DURING THIS EPOCH AND OVERLAP IN TIME?
-%             
-%                 firstfishtim =  find(in(j).c(combos(p,1)).tim > startim & in(j).c(combos(p,1)).tim < endtim); 
-%             if ~isempty(firstfishtim)  
-%                 secondfishtim = find(in(j).c(combos(p,2)).tim > startim & in(j).c(combos(p,2)).tim < endtim); 
-%             if ~isempty(secondfishtim)
-%                 
-%             clear FD sharedtims Descartes dF ;                
-% 
-%             sharedtims = intersect(in(j).c(combos(p,1)).tim(firstfishtim), in(j).c(combos(p,2)).tim(secondfishtim));
-%             
-%             if ~isempty(sharedtims) % FISH MIGHT BE INTERACTING!!!!!!
-%                 if length(sharedtims) > 50
-% 
-%                 
-%                 for yy = 1:length(sharedtims)
-%                     
-%                     % What is the dF?                    
-%                         dF(yy) = abs(in(j).c(combos(p,1)).freq(in(j).c(combos(p,1)).tim == sharedtims(yy)) - ...
-%                             in(j).c(combos(p,2)).freq(in(j).c(combos(p,2)).tim == sharedtims(yy)) );                    
-%                     
-%                     % How far apart are they?
-%                         XY(1,1) = in(j).c(combos(p,1)).tx(in(j).c(combos(p,1)).tim == sharedtims(yy));
-%                         XY(2,1) = in(j).c(combos(p,1)).ty(in(j).c(combos(p,1)).tim == sharedtims(yy));
-%                         XY(1,2) = in(j).c(combos(p,2)).tx(in(j).c(combos(p,2)).tim == sharedtims(yy));
-%                         XY(2,2) = in(j).c(combos(p,2)).ty(in(j).c(combos(p,2)).tim == sharedtims(yy));
-%                         
-%                         Descartes(yy) = pdist(XY);
-%                                         
-%                 end
-%                                 
-%                 out(j).pair(p).dFmean = mean(dF);
-%                 out(j).pair(p).dFvar = var(dF);
-%                 out(j).pair(p).meanDist = mean(Descartes);
-%                 out(j).pair(p).varDist = var(Descartes);
-%                 
-%                 out(j).pair(p).sharedtims = sharedtims;
-%                 out(j).pair(p).descartes = Descartes;
-%                 out(j).pair(p).dF = dF;
-%                 
-%                         % maxlen = min([length(dF), length(Descartes)]);
-%                         if abs(length(dF) - length(Descartes)) > 0; fprintf('Yowza!'); end
-%                 FD(:,1) = dF;
-%                 FD(:,2) = Descartes;
-%                 [out(j).pair(p).covDistdF, out(j).pair(p).covDistdFpval] = corrcoef(FD);
-%                 
-%                 end
-%             end % Fish might be interacting
-%            
-%            
-%             end % Did we share time in this epoch?
-%             end % Did we share time in this epoch?
-%             
-%         end % For this pair of fish
-%         
-%         
-%         
-%     end % If we have more than one fish
-%     
-%     
-%     
+    
+    %% PAIRWISE INTERACTIONS BETWEEN FISH
+    
+    if numfish > 1 % If we have more than one fish
+    
+        combos = combnk(1:numfish, 2); % All pairwise combinations of fish
+        
+        for p = 1:length(combos) % For each pair of fish
+            
+            out(j).pair(p).fishnums = combos(p,:); % Save the output combo
+            
+            % DO BOTH FISH APPEAR DURING THIS EPOCH AND OVERLAP IN TIME?
+            
+              firstfishtim =  find(data(j).fish(combos(p,1)).freq(:,1) > startim & data(j).fish(combos(p,1)).freq(:,1) < endtim); 
+            if ~isempty(firstfishtim)  
+              secondfishtim = find(data(j).fish(combos(p,2)).freq(:,1) > startim & data(j).fish(combos(p,2)).freq(:,1) < endtim); 
+            if ~isempty(secondfishtim)
+                
+            clear FD Descartes dF ;                
+
+            sharedtims = intersect(in(j).c(combos(p,1)).tim(firstfishtim), in(j).c(combos(p,2)).tim(secondfishtim));
+            
+            if ~isempty(sharedtims) % FISH MIGHT BE INTERACTING!!!!!!
+                
+                if length(sharedtims) > 50 % MEETS MINIMUM NUMBER OF SAMPLES (THIS NEEDS TO BE EDITABLE)
+                
+                for yy = length(sharedtims):-1:1
+                    
+                    % What is the dF?                    
+                        dF(yy) = abs(data(j).fish(combos(p,1)).freq(data(j).fish(combos(p,1)).freq(:,1) == sharedtims(yy),2) - ...
+                            data(j).fish(combos(p,2)).freq(data(j).fish(combos(p,2)).freq(:,1) == sharedtims(yy),2) );                    
+                    
+                    % How far apart are they?
+                        XY(1,1) = data(j).fish(combos(p,1)).x(data(j).fish(combos(p,1)).freq(:,1) == sharedtims(yy));
+                        XY(2,1) = data(j).fish(combos(p,1)).y(data(j).fish(combos(p,1)).freq(:,1) == sharedtims(yy));
+                        XY(1,2) = data(j).fish(combos(p,2)).x(data(j).fish(combos(p,2)).freq(:,1) == sharedtims(yy));
+                        XY(2,2) = data(j).fish(combos(p,2)).y(data(j).fish(combos(p,2)).freq(:,1) == sharedtims(yy));
+                        
+                        Descartes(yy) = pdist(XY);
+                                        
+                end
+                                
+                out(j).pair(p).dFmean = mean(dF);
+                out(j).pair(p).dFvar = var(dF);
+                out(j).pair(p).meanDist = mean(Descartes);
+                out(j).pair(p).varDist = var(Descartes);
+                
+                out(j).pair(p).sharedtims = sharedtims;
+                out(j).pair(p).descartes = Descartes;
+                out(j).pair(p).dF = dF;
+                
+                        % maxlen = min([length(dF), length(Descartes)]);
+                        if abs(length(dF) - length(Descartes)) > 0; fprintf('Yowza!'); end
+                FD(:,1) = dF;
+                FD(:,2) = Descartes;
+                [out(j).pair(p).covDistdF, out(j).pair(p).covDistdFpval] = corrcoef(FD);
+                
+                end
+            end % Fish might be interacting
+           
+           
+            end % Did we share time in this epoch?
+            end % Did we share time in this epoch?
+            
+        end % For this pair of fish
+        
+        
+        
+    end % If we have more than one fish
+    
+    
+    
     
     
     
