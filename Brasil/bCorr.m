@@ -125,10 +125,29 @@ for j=1:length(data) % For each recording session
                 % Calculate Correlations
                 
                 stepsize = 10; % How many seconds to move forward
-                analtime = 100 % Window for correlation analysis
+                analtime = 100; % Window for correlation analysis in seconds-+
+                stepz = (max(sharedtims) - analtime) / stepsize;
+                out(j).corr(p).Fs = 1/stepsize;                
                 
+                % Get rid of NaNs from the data (fillmissing linear) and
+                % subtract the means for clean crosscorrelation analyses
                 
-                
+                curdistrack = fillmissing(Descartes, 'linear') - mean(fillmissing(Descartes, 'linear'));
+                curdFs = fillmissing(dF, 'linear') - mean(fillmissing(dF, 'linear'));                
+               
+                for kk = 1:stepz
+                    
+                   [r, pVal] = corrcoef(curdistrack, curdFs); 
+                       out(j).corr(p).r(kk) = r(2);
+                       out(j).corr(p).p(kk) = pVal(2);
+                       
+                    out(j).corr(p).MIs(kk) = mi(curdistrack, curdFs) / analtime;
+                    
+                    aa = xcorr(curdistrack, curdFs);
+                    
+                    
+                    
+                end
                 
                 
                 
