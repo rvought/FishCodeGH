@@ -7,9 +7,16 @@ if length(data) == 1
     subplot(211); hold on; xlabel('Samples'); ylabel('Velocity');
     subplot(212); hold on; xlabel('Time, s'); ylabel('EOD Frequency Hz'); ylim([200 500]);
 end
+
 figure(2); clf;
 subplot(121); hold on; xlabel('Mean EOD Frequency, Hz'); ylabel('EOD variance, Hz');
 subplot(122); hold on; xlabel('Mean EOD Frequency, Hz'); ylabel('Mean velocity');
+
+figure(3); clf;
+subplot(311); hold on; xlabel('Samples'); ylabel('Correlation R');
+subplot(312); hold on; xlabel('Samples'); ylabel('Mutual Information');
+subplot(313); hold on; xlabel('Samples'); ylabel('Cross Correlation peak');
+
 
 for j=1:length(data) % For each recording session
     
