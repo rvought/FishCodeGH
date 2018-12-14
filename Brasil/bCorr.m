@@ -148,14 +148,15 @@ for j=1:length(data) % For each recording session
                 for kk = 1:stepz
 
                     curridx = sharedidx(sharedtims > startim & sharedtims < stepsize*kk);
+                    length(curridx)
                     
                    [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
                        out(j).corr(p).r(kk) = r(2);
                        out(j).corr(p).p(kk) = pVal(2);
                        
-                    out(j).corr(p).MIs(kk) = mi(curdistrack, curdFs) / analtime;
+                    out(j).corr(p).MIs(kk) = mi(curdistrack(curridx), curdFs(curridx)) / analtime;
                     
-                    aa = xcorr(curdistrack, curdFs);
+                    aa = xcorr(curdistrack(curridx), curdFs(curridx));
                     
                     [~, idx] = max(abs(aa));
                     out(j).corr(p).xcorr(kk) = aa(idx);
