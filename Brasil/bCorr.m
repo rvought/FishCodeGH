@@ -140,7 +140,7 @@ for j=1:length(data) % For each recording session
                 analtime = 200; % Window for correlation analysis in seconds
                 stepz = (max(sharedtims) - analtime) / stepsize;
                 out(j).corr(p).Fs = 1/stepsize; 
-                startim = min(sharedtims);
+                startimothy = min(sharedtims);
                 
                 % Get rid of NaNs from the data (fillmissing linear) and
                 % subtract the means for clean crosscorrelation analyses
@@ -150,7 +150,7 @@ for j=1:length(data) % For each recording session
                
                 for kk = 1:stepz
 
-                    curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
+                    curridx = sharedidx(sharedtims > startimothy & sharedtims < startimothy+analtime);
  
                     if length(curridx) > 25 % Half of the cutoff above
                     [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
@@ -166,7 +166,7 @@ for j=1:length(data) % For each recording session
                     out(j).corr(p).xcorrtime(kk) = 2*idx/length(aa);
                     end
                     
-                    startim = startim + stepsize;
+                    startimothy = startimothy + stepsize;
                     
                 end
                                 
