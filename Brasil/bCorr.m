@@ -89,7 +89,7 @@ for j=1:length(data) % For each recording session
               secondfishtim = find(data(j).fish(combos(p,2)).freq(:,1) > startim & data(j).fish(combos(p,2)).freq(:,1) < endtim); 
             if ~isempty(secondfishtim)
                 
-            clear FD Descartes dF ;                
+            clear sharedidx FD Descartes dF;                
 
             sharedtims = intersect(data(j).fish(combos(p,1)).freq(firstfishtim,1), data(j).fish(combos(p,2)).freq(secondfishtim,1));
             
@@ -145,7 +145,7 @@ for j=1:length(data) % For each recording session
                 curdistrack = fillmissing(Descartes, 'linear') - mean(fillmissing(Descartes, 'linear'));
                 curdFs = fillmissing(dF, 'linear') - mean(fillmissing(dF, 'linear'));                
                
-                for kk = 1:stepz
+                for kk = 1:stepz-1
 
                     curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
                     
