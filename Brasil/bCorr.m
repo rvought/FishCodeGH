@@ -89,7 +89,11 @@ for j=1:length(data) % For each recording session
               secondfishtim = find(data(j).fish(combos(p,2)).freq(:,1) > startim & data(j).fish(combos(p,2)).freq(:,1) < endtim); 
             if ~isempty(secondfishtim)
                 
-            clear sharedtims sharedidx FD Descartes dF;                
+            sharedtims = []; 
+            sharedidx = []; 
+            FD = []; 
+            Descartes =[];
+            dF = [];                
 
             sharedtims = intersect(data(j).fish(combos(p,1)).freq(firstfishtim,1), data(j).fish(combos(p,2)).freq(secondfishtim,1));
             
