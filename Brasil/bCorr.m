@@ -177,9 +177,9 @@ length(sharedtims)
             end % Did we share time in this epoch?
             end % Did we share time in this epoch?
             
-            figure(3); subplot(311); plot(out(j).corr(p).r)
-            figure(3); subplot(312); plot(out(j).corr(p).MIs)
-            figure(3); subplot(313); plot(out(j).corr(p).xcorr)
+            figure(3); subplot(311); plot(out(j).corr(p).r, '*-')
+            figure(3); subplot(312); plot(out(j).corr(p).MIs, '*-')
+            figure(3); subplot(313); plot(out(j).corr(p).xcorr, '*-')
             
         end % For this pair of fish
                 
