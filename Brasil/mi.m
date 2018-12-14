@@ -33,6 +33,6 @@ out=sum(minf(n2values, na' * nb));
 function y=minf(pab,papb)
 I = find(papb > 1e-12 & pab > 1e-12); % function support 
 max(I)
-length(pab)
-length(papb)
+length(pab')
+length(papb')
 y = pab(I) .* log2(pab(I) ./ papb(I));
