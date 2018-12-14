@@ -25,11 +25,12 @@ na = na/sum(na);
 nb = hist(B(:),L); 
 nb = nb/sum(nb);
 
+foobar = na' * nb
+
+
 n2 = histogram2(A,B,L); 
 n2values = n2.Values ./ sum(n2.Values)
 out=sum(minf(n2values, na' * nb)); 
-
-foobar = na' * nb
 
 % -----------------------
 function y=minf(pab, papb)
