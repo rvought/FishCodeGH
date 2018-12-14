@@ -24,8 +24,8 @@ na = na/sum(na);
 nb = hist(B(:),L); 
 nb = nb/sum(nb);
 n2 = histogram2(A,B,L); 
-n2 = n2.values/sum(n2.values(:));
-I=sum(minf(n2.values,na'*nb)); 
+n2 = n2.Values/sum(n2.Values(:));
+I=sum(minf(n2.Values,na'*nb)); 
 
 % -----------------------
 function y=minf(pab,papb)
