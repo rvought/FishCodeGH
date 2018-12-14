@@ -179,7 +179,7 @@ for j=1:length(data) % For each recording session
             
             figure(3); subplot(311); plot(out(j).corr(p).r, '*-')
             figure(3); subplot(312); plot(out(j).corr(p).MIs, '*-')
-            figure(3); subplot(313); plot(out(j).corr(p).xcorr, '*-')
+            figure(3); subplot(313); plot(abs(out(j).corr(p).r), '*-')
             
         end % For this pair of fish
                 
