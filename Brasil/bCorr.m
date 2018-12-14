@@ -81,7 +81,7 @@ for j=1:length(data) % For each recording session
         for p = 1:length(combos) % For each pair of fish
             
             out(j).pair(p).fishnums = combos(p,:); % Save the output combo
-            
+            combos(p,:)
             % DO BOTH FISH APPEAR DURING THIS EPOCH AND OVERLAP IN TIME?
             
               firstfishtim =  find(data(j).fish(combos(p,1)).freq(:,1) > startim & data(j).fish(combos(p,1)).freq(:,1) < endtim); 
