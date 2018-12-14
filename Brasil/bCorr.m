@@ -155,7 +155,7 @@ for j=1:length(data) % For each recording session
                 for kk = 1:stepz
 length(sharedtims)
                     curridx = sharedidx(sharedtims > startim & sharedtims < startim+analtime);
-                   length(curridx) 
+length(curridx) 
                     if length(curridx) > 25 % Half of the cutoff above
                     
                     [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
