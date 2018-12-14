@@ -121,6 +121,17 @@ for j=1:length(data) % For each recording session
                 FD(:,2) = Descartes;
                 [out(j).pair(p).covDistdF, out(j).pair(p).covDistdFpval] = corrcoef(FD);
                 
+                
+                % Calculate Correlations
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 end
             end % Fish might be interacting
            
