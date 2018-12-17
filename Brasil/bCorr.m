@@ -41,6 +41,7 @@ for j=1:length(data) % For each recording session
         
         for vv = 2:length(cts)
             if cts(vv)-cts(vv-1) == 1 % ONLY TAKE DATA WHERE WE HAVE CONSECUTIVE SAMPLES!!!!
+                
                 X(1,1) = data(j).fish(ff).x(cts(vv-1)); % First X
                 X(2,1) = data(j).fish(ff).y(cts(vv-1)); % First Y
                 X(1,2) = data(j).fish(ff).x(cts(vv));   % Second X
@@ -51,16 +52,21 @@ for j=1:length(data) % For each recording session
                 
             end
         end
-                
-        out(j).fish(ff).mVel = mean(vel);
-        out(j).fish(ff).mfiltVel = mean(medfilt1(vel,5));
-        out(j).fish(ff).totalDist = sum(dist);
-        out(j).fish(ff).totalfiltDist = sum(medfilt1(dist,5));
+        
+        % Some basic (and probably not very useful) measurements
+        
+            out(j).fish(ff).mVel = mean(vel);
+            out(j).fish(ff).mfiltVel = mean(medfilt1(vel,5));
+            out(j).fish(ff).totalDist = sum(dist);
+            out(j).fish(ff).totalfiltDist = sum(medfilt1(dist,5));
 
+        % If we only did one location, make a plot of the raw data    
         if length(data) == 1
-        figure(1);
-        subplot(211); plot(medfilt1(vel,5), 'LineWidth', 2);
-        subplot(212); plot(data(j).fish(ff).freq(cts,1), data(j).fish(ff).freq(cts,2), 'LineWidth', 2)
+            figure(1);
+            subplot(211); plot(data(j).fish(ff).freq(cts,1), data(j).fish(ff).freq(cts,2), 'LineWidth', 2)
+            subplot(223); plot(data(j).fish(ff).x(cts), data(j).fish(ff).y(cts), '*');
+            subplot(224); plot(medfilt1(vel,5), 'LineWidth', 1.5);
+
         end
         
         figure(2);
