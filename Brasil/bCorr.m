@@ -4,8 +4,9 @@ startim = rango(1); endtim = rango(2);
 
 if length(data) == 1
     figure(1); clf; 
-    subplot(211); hold on; xlabel('Samples'); ylabel('Frequency, Hz');
-    subplot(224); hold on; xlabel('Time, s'); ylabel('EOD Frequency Hz'); ylim([200 500]);
+    subplot(211); hold on; xlabel('Time, s'); ylabel('Frequency, Hz');
+    subplot(223); hold on; xlabel('cm'); ylabel('cm'); 
+    subplot(224); hold on; xlabel('Samples'); ylabel('Velocity'); 
 end
 
 figure(2); clf;
