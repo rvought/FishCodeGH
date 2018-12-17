@@ -62,7 +62,8 @@ for j=1:length(data) % For each recording session
 
         % If we only did one location, make a plot of the raw data    
         if length(data) == 1
-            figure(1);
+            figure(1);clf;
+            
             subplot(211); plot(data(j).fish(ff).freq(cts,1), data(j).fish(ff).freq(cts,2), 'LineWidth', 2)
             subplot(223); plot(data(j).fish(ff).x(cts), data(j).fish(ff).y(cts), '*');
             subplot(224); plot(medfilt1(vel,5), 'LineWidth', 1.5);
