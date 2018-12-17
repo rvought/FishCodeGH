@@ -180,8 +180,7 @@ for j=1:length(data) % For each recording session
                       out(j).corr(p).ddxcorrtime(kk) = 2*idx/length(aa);
                     
                     % PEARSON CORRELATION COEFICIENT, EOD vs EOD
-                    [r, pVal] = corrcoef(data(j).fish(combos(p,1)).freq(curridx,2) - mean(combos(p,1)).freq(curridx,2), ...
-                        data(j).fish(combos(p,2)).freq(curridx,2) - mean(data(j).fish(combos(p,2)).freq(curridx,2)) );
+                    [r, pVal] = corrcoef(data(j).fish(combos(p,1)).freq(curridx,2) - mean(combos(p,1)).freq(curridx,2), data(j).fish(combos(p,2)).freq(curridx,2) - mean(data(j).fish(combos(p,2)).freq(curridx,2)) );
                         out(j).corr(p).ffr(kk) = r(2);
                         out(j).corr(p).ffp(kk) = pVal(2);
 
