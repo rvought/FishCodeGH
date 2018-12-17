@@ -132,7 +132,7 @@ for j=1:length(data) % For each recording session
                 out(j).pair(p).sharedtims = sharedtims;
                 out(j).pair(p).descartes = Descartes;
                 out(j).pair(p).dF = dF;
-                
+                                
                         if abs(length(dF) - length(Descartes)) > 0; fprintf('Yowza!'); end
                         
                 FD(:,1) = dF;
@@ -152,7 +152,7 @@ for j=1:length(data) % For each recording session
                 % subtract the means for clean crosscorrelation analyses
                 
                 curdistrack = fillmissing(Descartes, 'linear') - mean(fillmissing(Descartes, 'linear'));
-                curdFs = fillmissing(dF, 'linear') - mean(fillmissing(dF, 'linear'));                
+                curdFs = fillmissing(dF, 'linear') - mean(fillmissing(dF, 'linear'));                      
                
                 for kk = 1:stepz
 
@@ -162,18 +162,34 @@ for j=1:length(data) % For each recording session
                         
                     % PEARSON CORRELATION COEFICIENT, dF versus distance    
                     [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
-                       out(j).corr(p).r(kk) = r(2);
-                       out(j).corr(p).p(kk) = pVal(2);
+                       out(j).corr(p).ddr(kk) = r(2);
+                       out(j).corr(p).ddp(kk) = pVal(2);
                     
                     % MUTUAL INFORMATION, dF versus distance
-                    out(j).corr(p).MIs(kk) = mi(curdistrack(curridx), curdFs(curridx)) / analtime;
+                    out(j).corr(p).ddMIs(kk) = mi(curdistrack(curridx), curdFs(curridx)) / analtime;
                     
                     % CROSS CORRELATION, dF versus distance
                     aa = xcorr(curdistrack(curridx), curdFs(curridx));
+                      [~, idx] = max(abs(aa));
+                      out(j).corr(p).ddxcorr(kk) = aa(idx);
+                      out(j).corr(p).ddxcorrtime(kk) = 2*idx/length(aa);
                     
-                    [~, idx] = max(abs(aa));
-                    out(j).corr(p).xcorr(kk) = aa(idx);
-                    out(j).corr(p).xcorrtime(kk) = 2*idx/length(aa);
+                    % PEARSON CORRELATION COEFICIENT, EOD vs EOD
+                    [r, pVal] = corrcoef(data(j).fish(combos(p,1)).freq(curridx,2) - mean(combos(p,1)).freq(curridx,2), ...
+                        data(j).fish(combos(p,2)).freq(curridx,2) - mean(data(j).fish(combos(p,2)).freq(curridx,2)) );
+                        out(j).corr(p).ffr(kk) = r(2);
+                        out(j).corr(p).ffp(kk) = pVal(2);
+
+                    % MUTUAL INFORMATION, EOD versus EOD
+                    out(j).corr(p).ffMIs(kk) = mi(data(j).fish(combos(p,1)).freq(curridx,2), data(j).fish(combos(p,2)).freq(curridx,2)) / analtime;
+                    
+                    % CROSS CORRELATION, dF versus distance
+                    aa = xcorr(data(j).fish(combos(p,1)).freq(curridx,2) - mean(combos(p,1)).freq(curridx,2), ...
+                        data(j).fish(combos(p,2)).freq(curridx,2) - mean(data(j).fish(combos(p,2)).freq(curridx,2)) );
+                      [~, idx] = max(abs(aa));
+                      out(j).corr(p).ddxcorr(kk) = aa(idx);
+                      out(j).corr(p).ddxcorrtime(kk) = 2*idx/length(aa);
+
                     end
                     
                     startimothy = startimothy + stepsize;
