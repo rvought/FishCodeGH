@@ -14,9 +14,14 @@ subplot(121); hold on; xlabel('Mean EOD Frequency, Hz'); ylabel('EOD variance, H
 subplot(122); hold on; xlabel('Mean EOD Frequency, Hz'); ylabel('Mean velocity');
 
 figure(3); clf;
-subplot(311); hold on; xlabel('Samples'); ylabel('Correlation R');
-subplot(312); hold on; xlabel('Samples'); ylabel('Mutual Information');
-subplot(313); hold on; xlabel('Samples'); ylabel('Cross Correlation peak');
+subplot(311); hold on; xlabel('Samples'); ylabel('Correlation R Dist dF');
+subplot(312); hold on; xlabel('Samples'); ylabel('Mutual Information Dist dF');
+subplot(313); hold on; xlabel('Samples'); ylabel('Cross Correlation peak Dist dF');
+
+figure(4); clf;
+subplot(311); hold on; xlabel('Samples'); ylabel('Correlation R EODs');
+subplot(312); hold on; xlabel('Samples'); ylabel('Mutual Information EODs');
+subplot(313); hold on; xlabel('Samples'); ylabel('Cross Correlation peak EODs');
 
 
 for j=1:length(data) % For each recording session
@@ -203,9 +208,13 @@ for j=1:length(data) % For each recording session
             end % Did we share time in this epoch?
             end % Did we share time in this epoch?
             
-            figure(3); subplot(311); plot(out(j).corr(p).r, '*-')
-            figure(3); subplot(312); plot(out(j).corr(p).MIs, '*-')
-            figure(3); subplot(313); plot(abs(out(j).corr(p).r), '*-')
+            figure(3); subplot(311); plot(out(j).corr(p).ddr, '*-')
+            figure(3); subplot(312); plot(out(j).corr(p).ddMIs, '*-')
+            figure(3); subplot(313); plot(abs(out(j).corr(p).ddxcorr), '*-')
+            
+            figure(4); subplot(311); plot(out(j).corr(p).ffr, '*-')
+            figure(4); subplot(312); plot(out(j).corr(p).ffMIs, '*-')
+            figure(4); subplot(313); plot(abs(out(j).corr(p).ffxcorr), '*-')
             
         end % For this pair of fish
                 
