@@ -105,8 +105,8 @@ for j=1:length(data) % For each recording session
             if ~isempty(sharedtims) % FISH MIGHT BE INTERACTING!!!!!!
                 
                 if length(sharedtims) > 50 % MEETS MINIMUM NUMBER OF SAMPLES (THIS NEEDS TO BE EDITABLE)
-                length(sharedtims)
-                for yy = length(sharedtims):-1:1
+
+                    for yy = length(sharedtims):-1:1
                                         
                     sharedidx(yy) = find(data(j).fish(combos(p,1)).freq(:,1) == sharedtims(yy));
                     
