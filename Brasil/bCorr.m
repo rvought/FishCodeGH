@@ -183,12 +183,12 @@ for j=1:length(data) % For each recording session
                     % MUTUAL INFORMATION, EOD versus EOD
                     out(j).corr(p).ffMIs(kk) = mi(data(j).fish(combos(p,1)).freq(curridx,2), data(j).fish(combos(p,2)).freq(curridx,2)) / analtime;
                     
-                    % CROSS CORRELATION, dF versus distance
+                    % CROSS CORRELATION, EOD vs EOD
                     aa = xcorr(data(j).fish(combos(p,1)).freq(curridx,2) - mean(combos(p,1)).freq(curridx,2), ...
                         data(j).fish(combos(p,2)).freq(curridx,2) - mean(data(j).fish(combos(p,2)).freq(curridx,2)) );
                       [~, idx] = max(abs(aa));
-                      out(j).corr(p).ddxcorr(kk) = aa(idx);
-                      out(j).corr(p).ddxcorrtime(kk) = 2*idx/length(aa);
+                      out(j).corr(p).ffxcorr(kk) = aa(idx);
+                      out(j).corr(p).ffxcorrtime(kk) = 2*idx/length(aa);
 
                     end
                     
