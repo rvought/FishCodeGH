@@ -181,8 +181,8 @@ for j=1:length(data) % For each recording session
                     
                     % PEARSON CORRELATION COEFICIENT, EOD vs EOD
                     
-                    firstEOD = data(j).fish(combos(p,1)).freq(curridx,2);
-                    secondEOD = data(j).fish(combos(p,2)).freq(curridx,2);
+                    firstEOD = fillmissing(data(j).fish(combos(p,1)).freq(curridx,2), 'linear');
+                    secondEOD = fillmissing(data(j).fish(combos(p,2)).freq(curridx,2), 'linear');
                     
                     [r, pVal] = corrcoef(firstEOD - mean(firstEOD), secondEOD - mean(secondEOD) );
                         out(j).corr(p).ffr(kk) = r(2);
