@@ -66,7 +66,6 @@ for j=1:length(data) % For each recording session
             subplot(211); plot(data(j).fish(ff).freq(cts,1), data(j).fish(ff).freq(cts,2), 'LineWidth', 2)
             subplot(223); plot(data(j).fish(ff).x(cts), data(j).fish(ff).y(cts), '*');
             subplot(224); plot(medfilt1(vel,5), 'LineWidth', 1.5);
-
         end
         
         figure(2);
