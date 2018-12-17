@@ -134,7 +134,7 @@ for j=1:length(data) % For each recording session
                 [out(j).pair(p).covDistdF, out(j).pair(p).covDistdFpval] = corrcoef(FD);
                 
                 
-                % Calculate Correlations
+                % Calculate Correlations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                 
                 stepsize = 5; % How many seconds to move forward
                 analtime = 20; % Window for correlation analysis in seconds
@@ -153,12 +153,16 @@ for j=1:length(data) % For each recording session
                     curridx = sharedidx(sharedtims > startimothy & sharedtims < startimothy+analtime);
  
                     if length(curridx) > 25 % Half of the cutoff above
+                        
+                    % PEARSON CORRELATION COEFICIENT, dF versus distance    
                     [r, pVal] = corrcoef(curdistrack(curridx), curdFs(curridx)); 
                        out(j).corr(p).r(kk) = r(2);
                        out(j).corr(p).p(kk) = pVal(2);
-                       
+                    
+                    % MUTUAL INFORMATION, dF versus distance
                     out(j).corr(p).MIs(kk) = mi(curdistrack(curridx), curdFs(curridx)) / analtime;
                     
+                    % CROSS CORRELATION, dF versus distance
                     aa = xcorr(curdistrack(curridx), curdFs(curridx));
                     
                     [~, idx] = max(abs(aa));
