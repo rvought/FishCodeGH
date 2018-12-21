@@ -8,7 +8,8 @@ for j=1:maxfish
    
     idx = find(allfish == j);
     
-    corsum(j).ddr = zeros(1,length(in.corr(1).ddr));
+    corsum(j).ffr = zeros(1,length(in.corr(1).ffr));
+%    corsum(j).ddr = zeros(1,length(in.corr(1).ddr));
         
     for k=1:length(idx)
         
@@ -23,15 +24,20 @@ for j=1:maxfish
         end
        
         figure(j); 
-            subplot(311); hold on; plot(in.corr(curdx).ddr)
-            subplot(312); hold on; plot(in.corr(curdx).ddMIs)
-            subplot(313); hold on; plot(in.corr(curdx).ddxcorr)
+            subplot(311); hold on; plot(in.corr(curdx).ffr)
+            subplot(312); hold on; plot(in.corr(curdx).ffMIs)
+            subplot(313); hold on; plot(in.corr(curdx).ffxcorr)
+%             subplot(311); hold on; plot(in.corr(curdx).ddr)
+%             subplot(312); hold on; plot(in.corr(curdx).ddMIs)
+%             subplot(313); hold on; plot(in.corr(curdx).ddxcorr)
             
-            corsum(j).ddr = corsum(j).ddr + abs(in.corr(curdx).ddr);
+            corsum(j).ffr = corsum(j).ffr + abs(in.corr(curdx).ddr);
+%            corsum(j).ddr = corsum(j).ddr + abs(in.corr(curdx).ddr);
         
     end
     
-    figure(j); subplot(311); plot(corsum(j).ddr/max(corsum(j).ddr), 'k-', 'LineWidth', 2);
+    figure(j); subplot(311); plot(corsum(j).ffr/max(corsum(j).ffr), 'k-', 'LineWidth', 2);
+%     figure(j); subplot(311); plot(corsum(j).ddr/max(corsum(j).ddr), 'k-', 'LineWidth', 2);
     
 end
 
