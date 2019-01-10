@@ -44,7 +44,7 @@ end
 
 objposvel = length(find(in.objvel>0));
 objnegvel = length(find(in.objvel<0));
-objposratio = objposvel/objnegvel;
+objpvelratio = objposvel/objnegvel;
 
 out.VSI = (posvel-negvel)/(posvel+negvel);
 
@@ -81,7 +81,17 @@ fprintf('\n')
 
 
 
-out.velratio = objposratio;
+out.velratio = objvelratio;
 out.accratio = objaccratio;
+fprintf('Velocity ratio=')
+fprintf(num2str(objvelratio))
+fprintf('\n')
+
+fprintf('Acceleration ratio')
+fprintf(num2str(objaccratio))
+fprintf('\n')
+
+
+
 end
 
