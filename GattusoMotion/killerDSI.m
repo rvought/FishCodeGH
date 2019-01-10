@@ -72,12 +72,14 @@ objposacc = length(find(in.objacc>0));
 objnegacc = length(find(in.objacc<0));
 objaccratio = objposacc/objnegacc;
 
+out.ASI = (posacc-negacc)/(posacc+negacc);
+
 %out.ASI = (posacc-negacc)/max([posacc negacc]);
 fprintf('ASI=')
 fprintf(num2str(out.ASI))
 fprintf('\n')
 
-out.ASI = (posacc-negacc)/(posacc+negacc);
+
 
 out.velratio = objposratio;
 out.accratio = objaccratio;

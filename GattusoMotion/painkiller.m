@@ -11,7 +11,7 @@ function out = painkiller(data)
     
      %% calculating DSI and nDSI (must come after the heat and histo because need the output of the heatmaps)
      DSI = killerDSI(hotstuff);
-     nDSI = objDSI(hotstuff);  %%this will be done for the size that is selected for the heatmaps and histograms
+%      nDSI = objDSI(hotstuff);  %%this will be done for the size that is selected for the heatmaps and histograms
      
      %% completing the STA
      spiketa = sta(hotstuff.spikes, hotstuff.objpos, hotstuff.Fs); 
