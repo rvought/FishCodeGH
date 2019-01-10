@@ -39,7 +39,7 @@ for kk = 1:length(in.vel)
     end
 end  
 
-out.VSI = (posvel-negvel)/(posvel+negvel);
+
 %out.VSI = (posvel-negvel)/max([posvel negvel]);
 fprintf('VSI=')
 fprintf(num2str(out.VSI))
@@ -47,6 +47,10 @@ fprintf('\n')
 
 objposvel = length(find(in.objvel>0));
 objnegvel = length(find(in.objvel<0));
+objratio = objposvel/objnegvel;
+
+out.VSI = (posvel-negvel)/(posvel+negvel);
+
 %Acceleration
  
 posacc = 0;
