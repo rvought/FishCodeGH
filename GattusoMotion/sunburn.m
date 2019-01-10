@@ -126,16 +126,16 @@ subplot(233); hold on, g = histcounts(secondorder, soedges); plot(soedges(1:end-
 xlabel('Acceleration'); ylabel('Time Percentage'); legend('Spikes', 'Stimulus'); % axis([-5*10^(-5), 5*10^(-5), 0, 0.005])
 
 for kk = 1:length(a)
-    %posad(kk) = (d(kk)/sum(d))-(a(kk)/sum(a));
-    posad(kk) = (a(kk)/sum(a))/(d(kk)/sum(d));
+    posad(kk) = (d(kk)/sum(d))-(a(kk)/sum(a));
+%     posad(kk) = (a(kk)/sum(a))/(d(kk)/sum(d));
 end
 for jj = 1:length(b)
-    %velbf(jj) = (f(jj)/sum(f))-(b(jj)/sum(b));
-    velbf(jj) = (b(jj)/sum(b))/(f(jj)/sum(f));
+    velbf(jj) = (f(jj)/sum(f))-(b(jj)/sum(b));
+%     velbf(jj) = (b(jj)/sum(b))/(f(jj)/sum(f));
 end
 for mm = 1:length(c)
-    %acccg(mm) = (g(mm)/sum(g))-(c(mm)/sum(c));
-    acccg(mm) = (c(mm)/sum(c))/(g(mm)/sum(g));
+    acccg(mm) = (g(mm)/sum(g))-(c(mm)/sum(c));
+%     acccg(mm) = (c(mm)/sum(c))/(g(mm)/sum(g));
 end
 
 subplot(234); plot(stimedges(1:end-1), 1 * posad, 'k', 'LineWidth', 2); xlabel('Spikes-Stimulus : Position');
