@@ -58,8 +58,7 @@ for mm = 1:length(in.acc)
        posacc = posacc+1;
     end
 end  
-alow = sum(lowacc)/length(lowacc);
-ahigh = sum(negacc)/length(negacc);
+
 out.ASI = (ahigh-abs(alow))/(ahigh+abs(alow));
 fprintf('ASI=')
 fprintf(num2str(out.ASI))
