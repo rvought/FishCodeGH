@@ -5,7 +5,7 @@ function out = painkiller(data)
     %% creating histograms and heatmaps
     hotstuff = sunburn(data);
     
-    % in order to call data forms that are made in the creation of the
+    %e in order to call data forms that are made in the creation of the
     % heatmaps and histograms, call out.heathist and you have the options
     % posvel, tmpPV, accvel, tmpAV, pos, vel, and acc
     
