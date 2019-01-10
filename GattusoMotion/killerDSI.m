@@ -70,5 +70,8 @@ out.ASI = (posacc-negacc)/(posacc+negacc);
 fprintf('ASI=')
 fprintf(num2str(out.ASI))
 fprintf('\n')
+
+objposacc = length(find(in.objacc>0));
+objnegacc = length(find(in.objacc<0));
 end
 
