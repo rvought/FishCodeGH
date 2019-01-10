@@ -60,6 +60,7 @@ for mm = 1:length(in.acc)
 end  
 
 out.ASI = (posacc-negacc)/(postacc+negacc);
+%out.ASI = (posacc-negacc)/max([posacc negacc]);
 fprintf('ASI=')
 fprintf(num2str(out.ASI))
 fprintf('\n')
