@@ -40,7 +40,7 @@ out.objvel = firstorder;
 out.objacc = secondorder;
 
 cpos = []; cvel = []; cacc = [];
-for ss = length(spikes):-1:1;    
+for ss = length(spikes):-1:1;    %looking for the time when the spikes occured
     tt = find(tim(1:end-2) < spikes(ss) & tim(1:end-2) > spikes(ss) - buff);
     cpos(ss) = mean(position(tt));
     cvel(ss) = mean(firstorder(tt)); %does not like when you select an even number of options*****
