@@ -47,9 +47,9 @@ fprintf('\n')
 
 objposvel = length(find(in.objvel>0));
 objnegvel = length(find(in.objvel<0));
-objratio = objposvel/objnegvel;
+objposratio = objposvel/objnegvel;
 
-out.VSI = objratio*(posvel-negvel)/(posvel+negvel);
+out.VSI = objposratio*(posvel-negvel)/(posvel+negvel);
 
 %Acceleration
  
@@ -65,7 +65,7 @@ for mm = 1:length(in.acc)
     end
 end  
 
-out.ASI = (posacc-negacc)/(posacc+negacc);
+
 %out.ASI = (posacc-negacc)/max([posacc negacc]);
 fprintf('ASI=')
 fprintf(num2str(out.ASI))
@@ -73,5 +73,8 @@ fprintf('\n')
 
 objposacc = length(find(in.objacc>0));
 objnegacc = length(find(in.objacc<0));
+objaccratio = objposacc/objnegacc;
+
+out.ASI = objaccratio*(posacc-negacc)/(posacc+negacc);
 end
 
