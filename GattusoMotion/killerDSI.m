@@ -45,6 +45,8 @@ fprintf('VSI=')
 fprintf(num2str(out.VSI))
 fprintf('\n')
 
+objposvel = length(find(in.objvel>0));
+objnegvel = length(find(in.objvel<0));
 %Acceleration
  
 posacc = 0;
