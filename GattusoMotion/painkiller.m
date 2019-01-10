@@ -20,6 +20,6 @@ function out = painkiller(data)
 out.ISI = ISI;
 out.hotstuff = hotstuff;
 out.DSI = DSI;
-out.nDSI = nDSI;
+% out.nDSI = nDSI;
 out.sta = spiketa;
 end 
