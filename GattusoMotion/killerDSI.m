@@ -35,12 +35,11 @@ for kk = 1:length(in.vel)
         negvel = negvel+1;
     end
     if in.vel(kk) > 0.002
-        posvel = posvel + 1;
+        posvel = posvel+1;
     end
 end  
-vlow = sum(negvel)/length(negvel);
-vhigh = sum(posvel)/length(posvel);
-out.VSI = (vhigh-abs(vlow))/(vhigh+abs(vlow));
+
+out.VSI = (posvel-negvel)/(posvel+
 fprintf('VSI=')
 fprintf(num2str(out.VSI))
 fprintf('\n')
