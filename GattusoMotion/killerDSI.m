@@ -9,14 +9,14 @@ highrange = [];
 
 for jj = 1:length(in.pos)
     if in.pos(jj) < -0.1
-        lowrange = [lowrange in.pos(jj)];
+        lowrange = [lowrange in.pos(jj)]; %should be 
     end
     if in.pos(jj) > 0.1
         highrange = [highrange in.pos(jj)];
     end
 end  
 dlow = sum(lowrange)/length(lowrange);
-dhigh = sum(highrange)/length(highrange);
+dhigh = sum(highrange)/length(highrange); %WHAT?
 out.DSI = (dhigh-abs(dlow))/(dhigh+abs(dlow));
 fprintf('DSI=')
 fprintf(num2str(out.DSI));
