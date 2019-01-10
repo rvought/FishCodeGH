@@ -39,7 +39,8 @@ for kk = 1:length(in.vel)
     end
 end  
 
-out.VSI = (posvel-negvel)/(posvel+
+out.VSI = (posvel-negvel)/(posvel+negvel);
+%out.VSI = (posvel-negvel)/max([posvel negvel]);
 fprintf('VSI=')
 fprintf(num2str(out.VSI))
 fprintf('\n')
