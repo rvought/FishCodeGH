@@ -49,7 +49,7 @@ objposvel = length(find(in.objvel>0));
 objnegvel = length(find(in.objvel<0));
 objratio = objposvel/objnegvel;
 
-out.VSI = (posvel-negvel)/(posvel+negvel);
+out.VSI = objratio*(posvel-negvel)/(posvel+negvel);
 
 %Acceleration
  
