@@ -4,20 +4,21 @@ function out = killerDSI(in)
 
 
 %Direction
-lowrange = [];
-highrange = [];
+tail = 0;
+head = 0;
 
 for jj = 1:length(in.pos)
     if in.pos(jj) < -0.1
-        lowrange = [lowrange in.pos(jj)]; %should be 
+        tail = tail+1;
     end
     if in.pos(jj) > 0.1
-        highrange = [highrange in.pos(jj)];
+        head = head + 1;
     end
 end  
-dlow = sum(lowrange)/length(lowrange);
-dhigh = sum(highrange)/length(highrange); %WHAT?
-out.DSI = (dhigh-abs(dlow))/(dhigh+abs(dlow));
+
+out.DSI = (head-tail)/(head+tail);
+%out.DSI = (head-tail)/max([head tail]); %if we wanted to use the max
+%instead of the sum
 fprintf('DSI=')
 fprintf(num2str(out.DSI));
 fprintf('\n')
