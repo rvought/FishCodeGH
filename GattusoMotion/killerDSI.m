@@ -55,7 +55,7 @@ for mm = 1:length(in.acc)
         negacc = negacc + 1;
     end
     if in.acc(mm) > 3E-6
-        negacc = [negacc in.acc(mm)];
+       posacc = posacc+1;
     end
 end  
 alow = sum(lowacc)/length(lowacc);
