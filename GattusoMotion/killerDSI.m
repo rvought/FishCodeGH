@@ -2,43 +2,44 @@
 function out = killerDSI(in)
 
 
-
-%Direction
-tail = 0;
-head = 0;
-
-for jj = 1:length(in.pos)
-    if in.pos(jj) < -0.1
-        tail = tail+1;
-    end
-    if in.pos(jj) > 0.1
-        head = head + 1;
-    end
-end  
-
-out.DSI = (head-tail)/(head+tail);
-%out.DSI = (head-tail)/max([head tail]); %if we wanted to use the max
-%instead of the sum
-fprintf('DSI=')
-fprintf(num2str(out.DSI));
-fprintf('\n')
+% 
+% %Direction
+% tail = 0;
+% head = 0;
+% 
+% for jj = 1:length(in.pos)
+%     if in.pos(jj) < -0.1
+%         tail = tail+1;
+%     end
+%     if in.pos(jj) > 0.1
+%         head = head + 1;
+%     end
+% end  
+% 
+% out.DSI = (head-tail)/(head+tail);
+% %out.DSI = (head-tail)/max([head tail]); %if we wanted to use the max
+% %instead of the sum
+% fprintf('DSI=')
+% fprintf(num2str(out.DSI));
+% fprintf('\n')
+% 
 
 
 %Velocity
 
-lowvel = [];
-highvel = [];
+negvel = 0;
+posvel = 0;
 
 for kk = 1:length(in.vel)
     if in.vel(kk) < -0.002
-        lowvel = [lowvel in.vel(kk)];
+        negvel = negvel+1;
     end
     if in.vel(kk) > 0.002
-        highvel = [highvel in.vel(kk)];
+        posvel = [posvel in.vel(kk)];
     end
 end  
-vlow = sum(lowvel)/length(lowvel);
-vhigh = sum(highvel)/length(highvel);
+vlow = sum(negvel)/length(negvel);
+vhigh = sum(posvel)/length(posvel);
 out.VSI = (vhigh-abs(vlow))/(vhigh+abs(vlow));
 fprintf('VSI=')
 fprintf(num2str(out.VSI))
