@@ -49,7 +49,7 @@ objposvel = length(find(in.objvel>0));
 objnegvel = length(find(in.objvel<0));
 objposratio = objposvel/objnegvel;
 
-out.VSI = objposratio*(posvel-negvel)/(posvel+negvel);
+out.VSI = (posvel-negvel)/(posvel+negvel);
 
 %Acceleration
  
@@ -75,6 +75,9 @@ objposacc = length(find(in.objacc>0));
 objnegacc = length(find(in.objacc<0));
 objaccratio = objposacc/objnegacc;
 
-out.ASI = objaccratio*(posacc-negacc)/(posacc+negacc);
+out.ASI = (posacc-negacc)/(posacc+negacc);
+
+out.velratio = objposratio;
+out.accratio = objaccratio;
 end
 
