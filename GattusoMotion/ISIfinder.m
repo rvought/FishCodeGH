@@ -6,7 +6,7 @@ cutoff = input('ISI cutoff');
 for kk = 1:length(neuron)
     for jj = 1:length(neuron(kk).s)
         if neuron(kk).s(jj).sizeDX == size
-        ISI = [ISI diff(neuron(kk).s(jj).st)']; 
+        ISI = [ISI diff(neuron(kk).s(jj).st)]; 
         end
     end
 end
