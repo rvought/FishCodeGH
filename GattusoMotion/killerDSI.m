@@ -40,16 +40,18 @@ for kk = 1:length(in.vel)
 end  
 
 
-%out.VSI = (posvel-negvel)/max([posvel negvel]);
-fprintf('VSI=')
-fprintf(num2str(out.VSI))
-fprintf('\n')
+
 
 objposvel = length(find(in.objvel>0));
 objnegvel = length(find(in.objvel<0));
 objposratio = objposvel/objnegvel;
 
 out.VSI = (posvel-negvel)/(posvel+negvel);
+
+%out.VSI = (posvel-negvel)/max([posvel negvel]);
+fprintf('VSI=')
+fprintf(num2str(out.VSI))
+fprintf('\n')
 
 %Acceleration
  
@@ -66,14 +68,14 @@ for mm = 1:length(in.acc)
 end  
 
 
+objposacc = length(find(in.objacc>0));
+objnegacc = length(find(in.objacc<0));
+objaccratio = objposacc/objnegacc;
+
 %out.ASI = (posacc-negacc)/max([posacc negacc]);
 fprintf('ASI=')
 fprintf(num2str(out.ASI))
 fprintf('\n')
-
-objposacc = length(find(in.objacc>0));
-objnegacc = length(find(in.objacc<0));
-objaccratio = objposacc/objnegacc;
 
 out.ASI = (posacc-negacc)/(posacc+negacc);
 
