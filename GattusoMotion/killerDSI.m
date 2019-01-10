@@ -59,7 +59,7 @@ for mm = 1:length(in.acc)
     end
 end  
 
-out.ASI = (ahigh-abs(alow))/(ahigh+abs(alow));
+out.ASI = (posacc-negacc)/(postacc+negacc);
 fprintf('ASI=')
 fprintf(num2str(out.ASI))
 fprintf('\n')
