@@ -47,19 +47,19 @@ fprintf('\n')
 
 %Acceleration
  
-lowacc = [];
-highacc = [];
+posacc = 0;
+negacc = 0;
 
 for mm = 1:length(in.acc)
     if in.acc(mm) < -3E-6
-        lowacc = [lowacc in.acc(mm)];
+        negacc = negacc + 1;
     end
     if in.acc(mm) > 3E-6
-        highacc = [highacc in.acc(mm)];
+        negacc = [negacc in.acc(mm)];
     end
 end  
 alow = sum(lowacc)/length(lowacc);
-ahigh = sum(highacc)/length(highacc);
+ahigh = sum(negacc)/length(negacc);
 out.ASI = (ahigh-abs(alow))/(ahigh+abs(alow));
 fprintf('ASI=')
 fprintf(num2str(out.ASI))
