@@ -14,7 +14,7 @@ oclrs = hsv(numcolors); % Colors for plotting up to numcolors different fishes
 
 fprintf('Finding sections of cleanly sampled position data. \n'); 
 
-for trk = length(data):-1:1;
+for trk = length(data):-1:1
     
 tsteps = diff(data(trk).tt); % Get the intervals
 
