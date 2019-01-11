@@ -22,7 +22,8 @@ end
 % Plot
 figure(1); clf; hold on; ylim(freqrange);
 figure(2); clf; hold on;
-set(gcf,'position',[[],[],200,200])
+wp=get(gcf,'Position');
+set(gcf, 'Position', [wp(1),wp(2),200,200])
 
 for j=1:length(in.fish)
     
