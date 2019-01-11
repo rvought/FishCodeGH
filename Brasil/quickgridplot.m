@@ -5,14 +5,14 @@ function out = quickgridplot(in, timrange, freqrange)
 
 if nargin < 2
     for k=length(in.fish):-1:1
-        maxtim(k) = in.fish(k).fish(end,1);
+        maxtim(k) = in.fish(k).freq(end,1);
     end
     timrange = [0 max(maxtim)];
 end
 if nargin < 3
     for k=length(in.fish):-1:1
-        maxfreq(k) = max(in.fish(k).fish(:,2));
-        minfreq(k) = min(in.fish(k).fish(:,2));
+        maxfreq(k) = max(in.fish(k).freq(:,2));
+        minfreq(k) = min(in.fish(k).freq(:,2));
     end
     freqrange = [min(minfreq)-50 max(maxfreq)+50];
 end
