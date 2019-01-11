@@ -1,8 +1,20 @@
-function out = quickgridplot(in, freqrange, timrange)
-% Usage: out = quickgridplot(in, freqrange, timrange)
+function out = quickgridplot(in, timrange, freqrange)
+% Usage: out = quickgridplot(in, timrange, freqrange)
 % This plots frequency and position of fish in a grid recording
 
-
+if nargin < 2
+    for k=1:length(in.fish)
+        maxtim(k) = in.fish(k).fish(end,1);
+    end
+    timrange = [0 max(maxtim)];
+end
+if nargin < 3
+    for k=1:length(in.fish)
+        maxfreq(k) = max(in.fish(k).fish(:,2));
+        minfreq(k) = min(in.fish(k).fish(:,2));
+    end
+    freqrange = [200 500];
+end
 
 % Frequency plot
 figure(1); clf; hold on; ylim(freqrange);
