@@ -3,7 +3,7 @@ function out = quickgridplot(in, timrange, freqrange)
 % This plots frequency and position of fish in a grid recording
 % Give this only one recording - e.g. cave(5)
 % timrange (e.g. [0 120]) and freqrange (e.g. [200 500]) are optional.
-
+nargin
 % Set default time and frequency ranges if not provided by user
 if nargin < 2
     for k=length(in.fish):-1:1
