@@ -10,8 +10,7 @@ figure(1); clf; hold on; ylim(freqrange);
 for j=1:length(in.fish)
     
     tt = find(in.fish(j).freq(:,1) > timrange(1) & in.fish(j).freq(:,1) < timrange(2));
-
-    plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '.', 'MarkerSize', 4);
+    plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '.', 'MarkerSize', 8);
     
     
 end
