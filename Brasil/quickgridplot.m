@@ -19,13 +19,17 @@ if nargin < 3
     freqrange = [min(minfreq)-50 max(maxfreq)+50];
 end
 
-% Plot
-figure(1); clf; hold on; ylim(freqrange);
+%% Plot
+
+% Set up the figures
+figure(1); clf; hold on; axis([timrange(1), timrange(2), freqrange(1), freqrange(2)]);
+
 figure(2); clf; hold on; axis([-150, 250, -250, 150]);
+% Make the overhead plot square
+    wp=get(gcf,'Position');
+    set(gcf, 'Position', [wp(1),wp(2),560,560])
 
-wp=get(gcf,'Position');
-set(gcf, 'Position', [wp(1),wp(2),560,560])
-
+% Plot the data
 for j=1:length(in.fish)
     
     tt = find(in.fish(j).freq(:,1) > timrange(1) & in.fish(j).freq(:,1) < timrange(2));
