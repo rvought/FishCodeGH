@@ -19,23 +19,30 @@ if nargin < 3
     freqrange = [min(minfreq)-50 max(maxfreq)+50];
 end
 
-% Frequency plot
+% Plot
 figure(1); clf; hold on; ylim(freqrange);
-
-for j=1:length(in.fish)
-    
-    tt = find(in.fish(j).freq(:,1) > timrange(1) & in.fish(j).freq(:,1) < timrange(2));
-    plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '.', 'MarkerSize', 8);
-        
-end
-
-% grid plot
 figure(2); clf; hold on;
 
 for j=1:length(in.fish)
     
     tt = find(in.fish(j).freq(:,1) > timrange(1) & in.fish(j).freq(:,1) < timrange(2));
+    
+    % Frequency plot
+    figure(1);
     plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '.', 'MarkerSize', 8);
+    
+    % Position plot
+    figure(2);
+    plot(in.fish(j).x(tt), in.fish(j).y(tt), '.', 'MarkerSize', 8);
+    
+        
+end
+
+% grid plot
+
+for j=1:length(in.fish)
+    
+    tt = find(in.fish(j).freq(:,1) > timrange(1) & in.fish(j).freq(:,1) < timrange(2));
         
 end
 
