@@ -23,7 +23,7 @@ end
 figure(1); clf; hold on; ylim(freqrange);
 figure(2); clf; hold on;
 wp=get(gcf,'Position');
-set(gcf, 'Position', [wp(1),wp(2),200,200])
+set(gcf, 'Position', [wp(1),wp(2),400,400])
 
 for j=1:length(in.fish)
     
