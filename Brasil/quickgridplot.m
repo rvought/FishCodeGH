@@ -2,7 +2,9 @@ function out = quickgridplot(in, timrange, freqrange)
 % Usage: out = quickgridplot(in, timrange, freqrange)
 % This plots frequency and position of fish in a grid recording
 % Give this only one recording - e.g. cave(5)
+% timrange (e.g. [0 120]) and freqrange (e.g. [200 500]) are optional.
 
+% Set default time and frequency ranges if not provided by user
 if nargin < 2
     for k=length(in.fish):-1:1
         maxtim(k) = in.fish(k).freq(end,1);
@@ -24,8 +26,17 @@ for j=1:length(in.fish)
     
     tt = find(in.fish(j).freq(:,1) > timrange(1) & in.fish(j).freq(:,1) < timrange(2));
     plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '.', 'MarkerSize', 8);
+        
+end
+
+% grid plot
+figure(2); clf; hold on;
+
+for j=1:length(in.fish)
     
-    
+    tt = find(in.fish(j).freq(:,1) > timrange(1) & in.fish(j).freq(:,1) < timrange(2));
+    plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '.', 'MarkerSize', 8);
+        
 end
 
 out = 1;
