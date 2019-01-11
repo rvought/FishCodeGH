@@ -13,7 +13,7 @@ if nargin < 3
         maxfreq(k) = max(in.fish(k).fish(:,2));
         minfreq(k) = min(in.fish(k).fish(:,2));
     end
-    freqrange = [200 500];
+    freqrange = [min(minfreq)-50 max(maxfreq)+50];
 end
 
 % Frequency plot
