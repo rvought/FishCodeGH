@@ -5,6 +5,14 @@ function out = quickgridplot(in, freqrange, timrange)
 
 
 % Frequency plot
-figure(1); clf;
+figure(1); clf; hold on; ylim(freqrange);
 
+for j=1:length(in.fish)
+    
+    tt = find(in.fish(j).freq(:,1) > timrange(1) & in.fish(j).freq(:,1) < timrange(2));
+
+    plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '-', 'LineWidth', 2);
+    
+    
+end
 
