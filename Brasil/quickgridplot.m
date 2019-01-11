@@ -21,7 +21,7 @@ end
 
 % Plot
 figure(1); clf; hold on; ylim(freqrange);
-figure(2); clf; hold on; axes([-150, 250, -250, 150]);
+figure(2); clf; hold on; axis([-150, 250, -250, 150]);
 
 wp=get(gcf,'Position');
 set(gcf, 'Position', [wp(1),wp(2),560,560])
