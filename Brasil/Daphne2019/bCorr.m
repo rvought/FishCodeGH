@@ -78,7 +78,7 @@ for j=1:length(data) % For each recording session
         % EOD variability against mean EODf
         subplot(121); plot(out(j).fish(ff).mFreq, out(j).fish(ff).vFreq, '.', 'MarkerSize', 20)
         % Mean velocity against mean EODf
-        subplot(122); plot(out(j).fish(ff).mFreq, out(j).fish(ff).mfiltVel, '.', 'MarkerSize', 20)
+        if length(vel) > 2; subplot(122); plot(out(j).fish(ff).mFreq, out(j).fish(ff).mfiltVel, '.', 'MarkerSize', 20); end
 
     end
     
