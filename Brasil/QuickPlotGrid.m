@@ -13,6 +13,10 @@ end
 
     figure(1); clf; hold on; % Frequency plot
     figure(2); clf; hold on; % Grid position plot
+    % Make the Grid position plot square
+        wp=get(gcf,'Position');
+        set(gcf, 'Position', [wp(1),wp(2),560,560])
+
 
 %% For each fish in the sample, plot frequency and xy plots
 for j = 1:length(in.fish)
