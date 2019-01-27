@@ -17,7 +17,7 @@ for j = 1:length(in.fish)
         end
    
    
-   figure(1); plot(in.fish(j).freq(:,1), in.fish(j).freq(:,2), '.', 'MarkerSize', 8); ylim(freqs);
+   figure(1); plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '.', 'MarkerSize', 8); ylim(freqs);
    figure(2); plot(in.fish(j).x(tt), in.fish(j).y(tt), '.', 'MarkerSize', 8);
     
 end
