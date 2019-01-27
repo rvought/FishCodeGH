@@ -53,8 +53,8 @@ for j=1:length(data) % For each recording session
                 X(1,2) = data(j).fish(ff).x(cts(vv));   % Second X
                 X(2,2) = data(j).fish(ff).y(cts(vv));   % Second Y
                 
-                dist(vv) = pdist(X);
-                vel(vv) = dist(vv) * (data(j).fish(ff).freq(cts(vv),1) - data(j).fish(ff).freq(cts(vv-1),1));
+                distnc(vv) = pdist(X);
+                vel(vv) = distnc(vv) * (data(j).fish(ff).freq(cts(vv),1) - data(j).fish(ff).freq(cts(vv-1),1));
                 
             end
         end
@@ -63,8 +63,8 @@ for j=1:length(data) % For each recording session
         
             if length(vel) > 2; out(j).fish(ff).mVel = mean(vel); 
             out(j).fish(ff).mfiltVel = mean(medfilt1(vel,5)); end;
-            out(j).fish(ff).totalDist = sum(dist);
-            out(j).fish(ff).totalfiltDist = sum(medfilt1(dist,5));
+            out(j).fish(ff).totalDist = sum(distnc);
+            out(j).fish(ff).totalfiltDist = sum(medfilt1(distnc,5));
 
         % If we only did one location, make a plot of the raw data    
         if length(data) == 1
