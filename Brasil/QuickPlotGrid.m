@@ -13,7 +13,7 @@ for j = 1:length(in.fish)
         
         if nargin == 3 % use only data in the range specified by the user
             uu = find(in.fish(j).freq(:,1) > tims(1) & in.fish(j).freq(:,1) < tims(2));
-            tt = union(tt, uu);
+            tt = intersect(tt, uu);
         end
    
    
