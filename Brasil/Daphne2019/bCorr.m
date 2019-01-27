@@ -44,7 +44,7 @@ for j=1:length(data) % For each recording session
         out(j).fish(ff).nFreq = length(cts);
 
         % Instantaneous distance and velocity of the fish
-        vel = [];
+        vel = []; distnc = [];
         for vv = 2:length(cts)
             if cts(vv)-cts(vv-1) == 1 % ONLY TAKE DATA WHERE WE HAVE CONSECUTIVE SAMPLES!!!!
                 
@@ -63,8 +63,8 @@ for j=1:length(data) % For each recording session
         
             if length(vel) > 2; out(j).fish(ff).mVel = mean(vel); 
             out(j).fish(ff).mfiltVel = mean(medfilt1(vel,5)); end;
-            out(j).fish(ff).totalDist = sum(distnc);
-            out(j).fish(ff).totalfiltDist = sum(medfilt1(distnc,5));
+            if length(distnc) > 2; out(j).fish(ff).totalDist = sum(distnc);
+            out(j).fish(ff).totalfiltDist = sum(medfilt1(distnc,5)); end;
 
         % If we only did one location, make a plot of the raw data    
         if length(data) == 1
