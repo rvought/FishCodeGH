@@ -14,7 +14,7 @@ end
     figure(1); clf; hold on; % Frequency plot
     figure(2); clf; hold on; % Grid position plot
 
-%% For each fish, plot frequency and xy plots
+%% For each fish in the sample, plot frequency and xy plots
 for j = 1:length(in.fish)
 
         tt = find(~isnan(in.fish(j).freq(:,2))); % all valid data
