@@ -1,5 +1,5 @@
 function QuickPlotGrid(in, freqs, tims)
-
+nargin
 if nargin == 1 
     freqs = [200 600];
 end    
