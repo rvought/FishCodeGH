@@ -1,17 +1,20 @@
 function QuickPlotGrid(in, freqs, tims)
 % Usage: QuickPlotGrid(in, freqs, tims)
-% where freqs and tims are optional. 
-% Freqs in Hz, 
+% Generates F1 with frequency traces and F2 with grid positions
+% freqs and tims are optional. 
+% Freqs in Hz, tims in seconds.
 
+%% Setup
 if nargin == 1 
     freqs = [200 600]; % Default frequency range for EODs
 end    
 
-freqs = sort(freqs);
+    freqs = sort(freqs);
 
-   figure(1); clf; hold on;
-   figure(2); clf; hold on;
-   
+    figure(1); clf; hold on; % Frequency plot
+    figure(2); clf; hold on; % Grid position plot
+
+%% For each fish, plot frequency and xy plots
 for j = 1:length(in.fish)
 
         tt = find(~isnan(in.fish(j).freq(:,2))); % all valid data
@@ -22,9 +25,8 @@ for j = 1:length(in.fish)
             tt = intersect(tt, uu);
         end
    
-   
    figure(1); plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '.', 'MarkerSize', 8); ylim(freqs);
    figure(2); plot(in.fish(j).x(tt), in.fish(j).y(tt), '.', 'MarkerSize', 8); 
-        axis([-200, 150, -100, 250]);
+        axis([-200, 150, -100, 250]); % May need adjustment
     
 end
