@@ -1,6 +1,6 @@
 function out = bCorr(data, rango)
 
-startim = rango(1); endtim = rango(2);
+startim = rango(1); endtim = rango(2); 
 
 if length(data) == 1
     figure(1); clf; 
@@ -44,7 +44,7 @@ for j=1:length(data) % For each recording session
         out(j).fish(ff).nFreq = length(cts);
 
         % Instantaneous distance and velocity of the fish
-        
+        vel = [];
         for vv = 2:length(cts)
             if cts(vv)-cts(vv-1) == 1 % ONLY TAKE DATA WHERE WE HAVE CONSECUTIVE SAMPLES!!!!
                 
@@ -61,8 +61,8 @@ for j=1:length(data) % For each recording session
         
         % Some basic (and probably not very useful) measurements
         
-            out(j).fish(ff).mVel = mean(vel);
-            out(j).fish(ff).mfiltVel = mean(medfilt1(vel,5));
+            if length(vel) > 2; out(j).fish(ff).mVel = mean(vel); 
+            out(j).fish(ff).mfiltVel = mean(medfilt1(vel,5)); end;
             out(j).fish(ff).totalDist = sum(dist);
             out(j).fish(ff).totalfiltDist = sum(medfilt1(dist,5));
 
