@@ -19,7 +19,7 @@ for p = length(combos):-1:1 % For each pair of fish
     % Need to get only data points for which we have a valid frequency reading
     ttf1 = find(~isnan(in.fish(combos(p,1)).freq(:,2))); % First fish of combo
     ttf2 = find(~isnan(in.fish(combos(p,2)).freq(:,2))); % Second fish of combo
-combos(p,1)
+
     F1(1,:) = in.fish(combos(p,1)).x(ttf1);
     F1(2,:) = in.fish(combos(p,1)).y(ttf1);
 
@@ -28,7 +28,8 @@ combos(p,1)
 
     out(p).f1h = hist3(F1', ctrs);
     out(p).f2h = hist3(F2', ctrs);
-    
+
+    clear F1 F2    
 end
 
 end
