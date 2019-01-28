@@ -6,8 +6,10 @@ function out = SpaceCorps(in)
     ctrs{1} = -150:5:250;
     ctrs{2} = -150:5:250;
 
+numfish = length(in.fish); % How many fish in this recording
 
-
+if numfish > 1 % We have more than one fish
+    
 combos = combnk(1:numfish, 2); % All pairwise combinations of fish
 
 for p = length(combos):-1:1 % For each pair of fish
@@ -29,3 +31,4 @@ for p = length(combos):-1:1 % For each pair of fish
     
 end
 
+end
