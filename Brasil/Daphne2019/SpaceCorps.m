@@ -10,6 +10,7 @@ numfish = length(in.fish); % How many fish in this recording
 
 for j = numfish:-1:1 % For each pair of fish
     F1(1,:) = in.fish(j).x(~isnan(in.fish(j).freq(:,2)));
+    F1(2,:) = in.fish(j).y(~isnan(in.fish(j).freq(:,2)));    
     out(j).f1h = hist3(F1', ctrs);
     clear F1
 end
