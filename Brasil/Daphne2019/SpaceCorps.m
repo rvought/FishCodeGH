@@ -1,4 +1,9 @@
 function out = SpaceCorps(in)
+% Usage out = SpaceCorps(in)
+% Find spatial relations between fish
+% Distance histograms, range overlap
+
+
 
 ttf2 = find(~isnan(in.fish(2).freq(:,2)));
 ttf3 = find(~isnan(in.fish(3).freq(:,2)));
