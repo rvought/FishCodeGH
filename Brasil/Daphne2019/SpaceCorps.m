@@ -1,11 +1,13 @@
 function out = SpaceCorps(in)
 
+ttf2 = find(~isnan(in.fish(2).freq(:,2)));
+ttf3 = find(~isnan(in.fish(3).freq(:,2)));
 
-F1(1,:) = in.fish(2).x;
-F1(2,:) = in.fish(2).y;
+F1(1,:) = in.fish(2).x(ttf2);
+F1(2,:) = in.fish(2).y(ttf2);
 
-F2(1,:) = in.fish(3).x;
-F2(2,:) = in.fish(3).y;
+F2(1,:) = in.fish(3).x(ttf3);
+F2(2,:) = in.fish(3).y(ttf3);
 
 ctrs{1} = -150:5:250;
 ctrs{2} = -150:5:250;
