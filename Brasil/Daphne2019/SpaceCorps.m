@@ -15,5 +15,5 @@ f2h = hist3(F2', ctrs);
 
 figure(1); clf; 
 subplot(121); surf(f1h); view(0,90);
-subplot(122); surf(f1h); view(0,90);
+subplot(122); surf(f2h); view(0,90);
 
