@@ -7,6 +7,7 @@ function out = SpaceCorps(in)
     ctrs{2} = -150:5:250;
 
 
+
 combos = combnk(1:numfish, 2); % All pairwise combinations of fish
 
 for p = length(combos):-1:1 % For each pair of fish
