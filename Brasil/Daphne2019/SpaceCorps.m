@@ -17,3 +17,5 @@ figure(1); clf;
 subplot(121); surf(f1h); view(0,90);
 subplot(122); surf(f2h); view(0,90);
 
+out = 1;
+
