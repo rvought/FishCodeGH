@@ -7,8 +7,8 @@ F1(2,:) = in.fish(2).y;
 F2(1,:) = in.fish(3).x;
 F2(2,:) = in.fish(3).y;
 
-ctrs{1} = -250:10:250;
-ctrs{2} = -250:10:250;
+ctrs{1} = -150:5:250;
+ctrs{2} = -150:5:250;
 
 f1h = hist3(F1', ctrs);
 f2h = hist3(F2', ctrs);
