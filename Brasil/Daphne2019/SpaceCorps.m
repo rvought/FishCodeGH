@@ -4,6 +4,8 @@ function out = SpaceCorps(in)
 % Distance histograms, range overlap
 
 
+combos = combnk(1:numfish, 2); % All pairwise combinations of fish
+
 
 ttf2 = find(~isnan(in.fish(2).freq(:,2)));
 ttf3 = find(~isnan(in.fish(3).freq(:,2)));
