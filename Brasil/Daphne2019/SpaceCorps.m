@@ -1,4 +1,4 @@
-function [out cmbs] = SpaceCorps(in)
+function [out, cmbs] = SpaceCorps(in)
 % Usage out = SpaceCorps(in)
 % Find spatial relations between fish
 % Distance histograms, range overlap
@@ -21,9 +21,7 @@ if numfish > 1 % We have more than one fish
     for p = length(combos):-1:1 % For each pair of fish
 
         cmbs(p).fishnums = combos(p,:); % Save the output combo
-        pdist(tmp(combos(p,1)).xy, tmp(combos(p,2)).xy)
-        
-        
+        cmbs(p).dist = pdist2(tmp(combos(p,1)).xy, tmp(combos(p,2)).xy);
 
     end
 
