@@ -14,6 +14,8 @@ for j = numfish:-1:1 % For each pair of fish
     out(j).f1h = hist3(tmp(j).xy', ctrs);
 end
 
+
+
 % if numfish > 1 % We have more than one fish
 %     
 % combos = combnk(1:numfish, 2); % All pairwise combinations of fish
