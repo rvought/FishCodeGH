@@ -22,8 +22,8 @@ if numfish > 1 % We have more than one fish
     for p = length(combos):-1:1 % For each pair of fish
 
         cmbs(p).fishnums = combos(p,:); % Save the output combo
-        tt = 
-        cmbs(p).dist = pdist2(tmp(combos(p,1)).xy(tt), tmp(combos(p,2)).xy(tt));
+        tt = intersect(tmp(combos(p,1)).valididx, tmp(combos(p,2)).valididx);
+        cmbs(p).dist = pdist2(tmp(combos(p,1)).xy(tt,:), tmp(combos(p,2)).xy(tt,:));
 
     end
 
