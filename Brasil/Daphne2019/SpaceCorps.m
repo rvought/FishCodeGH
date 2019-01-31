@@ -18,12 +18,19 @@ for j = numfish:-1:1 % For each fish
     tmp(j).xy(1,:) = in.fish(j).x(out(j).valididx);
     tmp(j).xy(2,:) = in.fish(j).y(out(j).valididx);  
 
-   % Spatial histogram
+    % Spatial histogram
     out(j).fhist = hist3(tmp(j).xy', ctrs);
-        
+    
+    % Prepare for the allhist later
+    out(j).allhist = zeros(1,length(dctrs));    
 end
 
 if numfish > 1 % We have more than one fish
+
+    % Compare spatial histograms (fish against all other fish)
+    
+    
+    
     
     combos = combnk(1:numfish, 2); % All pairwise combinations of fish
 
@@ -42,11 +49,26 @@ if numfish > 1 % We have more than one fish
         % Distance histogram for each pair of fish
         
             cmbs(p).dhist = hist(cmbs(p).dist, dctrs);
+            
+        % Assemble the histogram of distances of each fish to all others
         
-        % Compare spatial histograms
+            out(combos(p,1)).allhist = out(combos(p,1)).allhist + cmbs(p).dhist;        
+            out(combos(p,2)).allhist = out(combos(p,2)).allhist + cmbs(p).dhist;        
+                
         
+        % Compare spatial histograms (fish against each fish separately)
+        
+        
+            
         
 
-    end
+    end % Cycle through each pair of fish
 
-end
+%     for k = 1:numfish
+%        
+%         inters = 
+%         
+%     end
+    
+    
+end % If we have more than one fish
