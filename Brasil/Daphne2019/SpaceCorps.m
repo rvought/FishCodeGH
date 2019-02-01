@@ -1,7 +1,11 @@
-function [out, cmbs] = SpaceCorps(in)
+function [out, cmbs] = SpaceCorps(in, tims)
 % Usage out = SpaceCorps(in)
 % Find spatial relations between fish
 % Distance histograms, range overlap
+
+if nargin < 2
+    tims = [0 999999];
+end
 
 % Spatial centers for histogram
     ctrs{1} = -150:5:250;
@@ -14,7 +18,10 @@ numfish = length(in.fish); % How many fish in this recording
 
 for j = numfish:-1:1 % For each fish
     % Get valid data (check frequency data)
-    out(j).valididx = find(~isnan(in.fish(j).freq(:,2)));
+    
+    tr = in.fish(j).freq(:,1) > tims(1) & in.fish(j).freq(:,1) < tims(1);
+    
+    out(j).valididx = find(~isnan(in.fish(j).freq(tr,2)));
     tmp(j).xy(1,:) = in.fish(j).x(out(j).valididx);
     tmp(j).xy(2,:) = in.fish(j).y(out(j).valididx);  
 
