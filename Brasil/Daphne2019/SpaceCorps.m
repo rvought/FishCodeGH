@@ -36,7 +36,7 @@ for j = numfish:-1:1 % For each fish
         % Moves the same distance as the real fish, but random direction
         % from point to point.
     for rr = 2:length(out(j).valididx)
-        tmpXY(1,:) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))];
+        tmpXY(1,:) = [in.fish(j).x(out(j).valididx(rr-1)), in.fish(j).y(out(j).valididx(rr-1))];
         tmpXY(2,:) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))];
         tmpXY
         howfar = pdist(tmpXY); % How far did the real fish travel?
