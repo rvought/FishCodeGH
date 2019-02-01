@@ -36,6 +36,7 @@ for j = numfish:-1:1 % For each fish
         % Moves the same distance as the real fish, but random direction
         % from point to point.
     for rr = 2:length(out(j).valididx)
+        howfar = 
         rnd(j).xy(:,out(j).valididx(rr)) = [rand(1,1)*xscale rand(1,1)*yscale];
     end
     
