@@ -38,10 +38,13 @@ for j = numfish:-1:1 % For each fish
     for rr = 2:length(out(j).valididx)
         tmpXY(:,1) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))];
         tmpXY(:,2) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))];
-        howfar = pdist(tmpXY);
-        theta = 2*pi*rand(1);
-        rnd(j).xy(:,out(j).valididx(rr)) = [rand(1,1)*xscale rand(1,1)*yscale];
+        howfar = pdist(tmpXY); % How far did the real fish travel?
+        theta = 2*pi*rand(1,1); % Set a random direction for our artificial fish
+        rnd(j).xy(:,out(j).valididx(rr)) = [howfar*cos(theta), howfar*sin(theta)]; % random movement with the same distance as real
+%        rnd(j).xy(:,out(j).valididx(rr)) = [rand(1,1)*xscale rand(1,1)*yscale]; % Completely random points
     end
+    
+    out(j).rnd = rnd(j).xy;
     
     tmp(j).xy(1,:) = in.fish(j).x(out(j).valididx);
     tmp(j).xy(2,:) = in.fish(j).y(out(j).valididx);  
