@@ -39,7 +39,7 @@ for j = numfish:-1:1 % For each fish
         tmpXY(:,1) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))];
         tmpXY(:,2) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))];
         howfar = pdist(tmpXY);
-        
+        theta = 2*pi*rand(1);
         rnd(j).xy(:,out(j).valididx(rr)) = [rand(1,1)*xscale rand(1,1)*yscale];
     end
     
