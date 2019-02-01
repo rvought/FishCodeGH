@@ -19,6 +19,7 @@ numfish = length(in.fish); % How many fish in this recording
 for j = numfish:-1:1 % For each fish
     % Get valid data (check frequency data)
     
+    % tr is the data within our time range
     tr = in.fish(j).freq(:,1) > tims(1) & in.fish(j).freq(:,1) < tims(1);
     
     out(j).valididx = find(~isnan(in.fish(j).freq(tr,2)));
