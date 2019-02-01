@@ -1,4 +1,4 @@
-function [out, cmbs] = SpaceCorps(in, tims, casu)
+function [out, cmbs] = SpaceCorps(in, casu, tims)
 % Usage out = SpaceCorps(in)
 % Find spatial relations between fish
 % Distance histograms, range overlap
@@ -9,7 +9,7 @@ elseif casu ==2 % surface
     xscale = 275; yscale = 240;
 end
 
-if nargin < 2
+if nargin < 3
     tims = [0 999999];
 end
 
