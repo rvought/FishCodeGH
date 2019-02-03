@@ -1,4 +1,4 @@
-function SpacePlotter(in, casu, num)
+function SpacePlotter(in, num)
 
 figure(5); clf; 
 
