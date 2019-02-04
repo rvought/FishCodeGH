@@ -156,8 +156,8 @@ if numfish > 1 % We have more than one fish
         % Calculate the interfish-distance
         cmbs(p).dist = [];
         for jj = 1:length(idx1) % THERE HAS GOT TO BE A MORE EFFICIENT WAY OF DOING THIS...
-            cmbs(p).dist(jj) = pdist2(tmp(combos(p,1)).xy(:,idx1(jj))', tmp(combos(p,2)).xy(:,idx2(jj))');            
-            cmbs(p).randdist(jj) = pdist2(tmp(combos(p,1)).xy(:,idx1(jj))', tmp(combos(p,2)).xy(:,idx2(jj))');
+            cmbs(p).dist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(tmp(combos(p,1)).xy(:,idx1(jj))', tmp(combos(p,2)).xy(:,idx2(jj))');            
+            cmbs(p).randdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(tmp(combos(p,1)).xy(:,idx1(jj))', tmp(combos(p,2)).xy(:,idx2(jj))');
 
         end
         
@@ -191,10 +191,12 @@ figure(casu); clf;
 ax(1) = subplot(121); hold on;
     for z=1:length(in.fish)
         plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '.', 'MarkerSize', 8);
+%        plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '*-');
     end
 ax(2) = subplot(122); hold on;
     for z=1:length(out)
         plot(out(z).rndXY(1,out(z).valididx), out(z).rndXY(2,out(z).valididx), '.', 'MarkerSize', 8);
+%        plot(out(z).rndXY(1,out(z).valididx), out(z).rndXY(2,out(z).valididx), '*-');
     end
 linkaxes(ax, 'xy');    
 
