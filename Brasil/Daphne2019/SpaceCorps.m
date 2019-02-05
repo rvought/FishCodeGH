@@ -13,7 +13,7 @@ end
     tr = in.fish(1).freq(:,1) > tims(1) & in.fish(1).freq(:,1) < tims(2);
     
 % Constrains change in angle of random fish
-    constrainer = pi/4; % pi/2 (90 degrees) works great
+    constrainer = pi/2; % pi/2 (90 degrees) works great
     
 % OPTION 1: Loop to find bounding box fitted to the data
 xminedge = []; xscale = [];
