@@ -73,6 +73,9 @@ for j = numfish:-1:1 % For each fish
             deltatheta = constrainer * (rand(1,1) - 0.5); % Set a random change in direction for our artificial fish
         out(j).randtheta(1) = firstheta + deltatheta;
         
+        out(j).jigXY = out(j).rndXY; 
+        out(j).jiggletheta(1) = firstheta + deltatheta;
+        
     % Moves the same distance as the real fish, but with jiggled change in direction
     for rr = 2:length(out(j).valididx)
             tmpXY(1,:) = [in.fish(j).x(out(j).valididx(rr-1)), in.fish(j).y(out(j).valididx(rr-1))];
@@ -83,28 +86,35 @@ for j = numfish:-1:1 % For each fish
             
             if out(j).valididx(rr) - out(j).valididx(rr-1) == 1 % Contiguous data
                 
-                % OPTION 1: Use the previous random theta as seed for new angle
-                % out(j).randtheta(rr) = out(j).randtheta(rr-1) + deltatheta;
+                % OPTION 1: Random - Use the previous random theta as seed for new angle
+                out(j).randtheta(rr) = out(j).randtheta(rr-1) + deltatheta;
 
-                % OPTION 2: Jiggle the fish theta
+                % OPTION 2: Jiggled - Use the fish theta as seed for new angle
                 realtheta = atan2(tmpXY(2,2) - tmpXY(1,2), tmpXY(2,1) - tmpXY(1,1));            
-                out(j).randtheta(rr) = realtheta + deltatheta;
-                
-                
+                out(j).jiggletheta(rr) = realtheta + deltatheta;
                 
             else % We had a gap in the data  
                 
                 % Calculate the last real fish angle as seed for new angle
+                % We do this for both the random and jiggled data - This
+                % has very little impact on the outcomes. 
+                
                 realtheta = atan2(tmpXY(2,2) - tmpXY(1,2), tmpXY(2,1) - tmpXY(1,1));            
                 out(j).randtheta(rr) = realtheta + deltatheta;
+                out(j).jiggletheta(rr) = realtheta + deltatheta;
 
             end
 
-            % FINALLY - Movement with the same distance as real but jiggled angle        
+            % FINALLY - Movement with the same distance as real but with altered angles        
+            out(j).jigXY(:,out(j).valididx(rr)) = [out(j).jigXY(1,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*cos(out(j).jiggletheta(rr)), out(j).jigXY(2,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*sin(out(j).jiggletheta(rr))]; 
             out(j).rndXY(:,out(j).valididx(rr)) = [out(j).rndXY(1,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*cos(out(j).randtheta(rr)), out(j).rndXY(2,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*sin(out(j).randtheta(rr))]; 
                   
             % BUT... we don't want to randomly escape from the grid, so if we
-            % violate the boundaries, we 'reflect' back in
+            % violate the boundaries, we 'reflect' back in.  This is
+            % extremely rudimentary - there are many more elegant
+            % solutions.
+            
+            % Catch random exits
             if out(j).rndXY(1,end) < xminedge
                 out(j).rndXY(1,end) = xminedge + xminedge - out(j).rndXY(1,end);
             end
@@ -118,11 +128,23 @@ for j = numfish:-1:1 % For each fish
                 out(j).rndXY(2,end) = (yminedge + yscale) - (out(j).rndXY(2,end) - (yminedge + yscale));
             end
             
-            % And a copy of the original data, just for fun
+            % Catch jiggle exits
+            if out(j).jigXY(1,end) < xminedge
+                out(j).jigXY(1,end) = xminedge + xminedge - out(j).jigXY(1,end);
+            end
+            if out(j).jigXY(1,end) > xminedge + xscale
+                out(j).jigXY(1,end) = (xminedge + xscale) - (out(j).jigXY(1,end) - (xminedge + xscale));
+            end
+            if out(j).jigXY(2,end) < yminedge
+                out(j).jigXY(2,end) = yminedge + yminedge - out(j).jigXY(2,end);
+            end
+            if out(j).jigXY(2,end) > yminedge + yscale
+                out(j).jigXY(2,end) = (yminedge + yscale) - (out(j).jigXY(2,end) - (yminedge + yscale));
+            end
+            
+            % And a copy of the original data, just for plotting fun
             out(j).realXY(:,out(j).valididx(rr)) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))]; 
 
-            % Completely random points
-            % rnd(j).xy(:,out(j).valididx(rr)) = [rand(1,1)*xscale rand(1,1)*yscale]; 
     end
     
     %% Get statistics for each real and random fish
@@ -133,13 +155,18 @@ for j = numfish:-1:1 % For each fish
     rtmp(j).xy(1,:) = out(j).rndXY(1,out(j).valididx);
     rtmp(j).xy(2,:) = out(j).rndXY(2,out(j).valididx);  
 
+    jtmp(j).xy(1,:) = out(j).jigXY(1,out(j).valididx);
+    jtmp(j).xy(2,:) = out(j).jigXY(2,out(j).valididx);  
+
     % Spatial histogram
     out(j).realhist = hist3(tmp(j).xy', ctrs);
     out(j).randhist = hist3(rtmp(j).xy', ctrs);
+    out(j).jighist = hist3(jtmp(j).xy', ctrs);
     
     % Prepare for the allhist later
     out(j).allhist = zeros(1,length(dctrs));  
     out(j).allrandhist = zeros(1,length(dctrs));  
+    out(j).alljighist = zeros(1,length(dctrs));  
     
 end
 
@@ -160,25 +187,27 @@ if numfish > 1 % We have more than one fish
         [~, idx1, idx2] = intersect(out(combos(p,1)).valididx, out(combos(p,2)).valididx);
                
         % Calculate the interfish-distance
-        cmbs(p).dist = [];
+        
         for jj = 1:length(idx1) % THERE HAS GOT TO BE A MORE EFFICIENT WAY OF DOING THIS...
-            cmbs(p).dist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(tmp(combos(p,1)).xy(:,idx1(jj))', tmp(combos(p,2)).xy(:,idx2(jj))');            
-            cmbs(p).randdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(tmp(combos(p,1)).xy(:,idx1(jj))', tmp(combos(p,2)).xy(:,idx2(jj))');
-
+            cmbs(p).realdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(tmp(combos(p,1)).xy(:,idx1(jj))', tmp(combos(p,2)).xy(:,idx2(jj))');            
+            cmbs(p).randdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(rtmp(combos(p,1)).xy(:,idx1(jj))', rtmp(combos(p,2)).xy(:,idx2(jj))');
+            cmbs(p).jigdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(jtmp(combos(p,1)).xy(:,idx1(jj))', jtmp(combos(p,2)).xy(:,idx2(jj))');
         end
         
         % Distance histogram for each pair of fish
-        if length(cmbs(p).dist) > 1
-            cmbs(p).dhist = hist(cmbs(p).dist, dctrs);
+        if length(cmbs(p).realdist) > 1
+            cmbs(p).realhist = hist(cmbs(p).realdist, dctrs);
+            cmbs(p).randhist = hist(cmbs(p).randdist, dctrs);
+            cmbs(p).jighist = hist(cmbs(p).jigdist, dctrs);
         else
             cmbs(p).dhist = [];
         end
         
         % Assemble the histogram of distances of each fish to all others
         
-        if sum(cmbs(p).dhist) > 0
-            out(combos(p,1)).allhist = out(combos(p,1)).allhist + cmbs(p).dhist;        
-            out(combos(p,2)).allhist = out(combos(p,2)).allhist + cmbs(p).dhist;        
+        if sum(cmbs(p).realhist) > 0
+            out(combos(p,1)).allhist = out(combos(p,1)).allhist + cmbs(p).realhist;        
+            out(combos(p,2)).allhist = out(combos(p,2)).allhist + cmbs(p).realhist;        
         end
         
         % Compare spatial histograms (fish against each fish separately)
@@ -194,17 +223,39 @@ if numfish > 1 % We have more than one fish
 
 figure(casu); clf;
 
-ax(1) = subplot(121); hold on;
+ax(1) = subplot(131); hold on;
     for z=1:length(in.fish)
         plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '.', 'MarkerSize', 8);
 %        plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '*-');
     end
-ax(2) = subplot(122); hold on;
+ax(2) = subplot(132); hold on;
+    for z=1:length(out)
+        plot(out(z).jigXY(1,out(z).valididx), out(z).jigXY(2,out(z).valididx), '.', 'MarkerSize', 8);
+%        plot(out(z).jigXY(1,out(z).valididx), out(z).jigXY(2,out(z).valididx), '*-');
+    end
+ax(3) = subplot(133); hold on;
     for z=1:length(out)
         plot(out(z).rndXY(1,out(z).valididx), out(z).rndXY(2,out(z).valididx), '.', 'MarkerSize', 8);
 %        plot(out(z).rndXY(1,out(z).valididx), out(z).rndXY(2,out(z).valididx), '*-');
     end
 linkaxes(ax, 'xy');    
+
+figure(casu+2); clf;
+    axx(1) = subplot(131); hold on;  
+    for z=1:length(cmbs)
+        plot(cmbs(z).realhist);
+    end
+    axx(2) = subplot(132); hold on;  
+    for z=1:length(cmbs)
+        plot(cmbs(z).jighist);
+    end
+    axx(3) = subplot(133); hold on;  
+    for z=1:length(cmbs)
+        plot(cmbs(z).randhist);
+    end
+linkaxes(axx, 'xy');    
+    
+end
 
 
 
