@@ -5,7 +5,7 @@ function [out, cmbs] = SpaceCorps(in, casu, tims)
 
 %% Setup
 
-if nargin < 3
+if nargin < 3 % If the user did not specify the time frame, take the whole thing
     tims = [0 999999];
 end
 
@@ -13,7 +13,7 @@ end
     tr = in.fish(1).freq(:,1) > tims(1) & in.fish(1).freq(:,1) < tims(2);
     
 % Constrains change in angle of random fish
-    constrainer = pi/2; % 90 degrees
+    constrainer = pi/4; % pi/2 (90 degrees) works great
     
 % OPTION 1: Loop to find bounding box fitted to the data
 xminedge = []; xscale = [];
