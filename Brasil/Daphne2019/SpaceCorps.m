@@ -83,9 +83,15 @@ for j = numfish:-1:1 % For each fish
             
             if out(j).valididx(rr) - out(j).valididx(rr-1) == 1 % Contiguous data
                 
-                % Use the previous random theta as seed for new angle
-                out(j).randtheta(rr) = out(j).randtheta(rr-1) + deltatheta;
-                                    
+                % OPTION 1: Use the previous random theta as seed for new angle
+                % out(j).randtheta(rr) = out(j).randtheta(rr-1) + deltatheta;
+
+                % OPTION 2: Jiggle the fish theta
+                realtheta = atan2(tmpXY(2,2) - tmpXY(1,2), tmpXY(2,1) - tmpXY(1,1));            
+                out(j).randtheta(rr) = realtheta + deltatheta;
+                
+                
+                
             else % We had a gap in the data  
                 
                 % Calculate the last real fish angle as seed for new angle
