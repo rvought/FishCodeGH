@@ -1,6 +1,7 @@
 function [out, cmbs] = SpaceCorps(in, casu, tims)
 % Usage out = SpaceCorps(in)
-% Find spatial relations between fish
+% Find spatial relations between fish and compare to 'jiggled' and 'randomized'
+% distributions.
 % Distance histograms, range overlap
 
 %% Setup
@@ -12,10 +13,10 @@ end
 % tr is the data within our time range
     tr = in.fish(1).freq(:,1) > tims(1) & in.fish(1).freq(:,1) < tims(2);
     
-% Constrains change in angle of random fish
-    constrainer = pi/2; % pi/2 (90 degrees) works great
+% Constrains change in angle for jiggling and for the randomized fish
+    constrainer = pi/2; % pi/2 (90 degrees) works great (converted to +/- below)
     
-% OPTION 1: Loop to find bounding box fitted to the data
+% OPTION 1: Loop to find bounding box fitted to the spatial extent of data
 xminedge = []; xscale = [];
 yminedge = []; yscale = [];
 
@@ -29,7 +30,7 @@ yminedge = []; yscale = [];
     xscale = xscale + abs(xminedge);
     yscale = yscale + abs(yminedge);
 
-% OPTION 2: Use preset bounding boxes    
+% OPTION 2: Use preset bounding boxes set by us   
 % if casu == 1 % cave
 %     xminedge = -150; xscale = 400; 
 %     yminedge = -150; yscale = 275;
@@ -39,14 +40,12 @@ yminedge = []; yscale = [];
 %     yminedge = -100; yscale = 275;
 % end
 
-% Spatial centers for histogram
+% Spatial centers for histogram (10cm boxes that extend 20cm beyond edges)
     ctrs{1} = xminedge-20:10:xscale+xminedge+20;
     ctrs{2} = yminedge-20:10:yscale+yminedge+20;
 
 % Distance centers for histogram
-    dctrs = 1:10:500;
-
-    
+    dctrs = 1:10:500;    
     
 numfish = length(in.fish); % How many fish in this recording
 
@@ -58,17 +57,18 @@ for j = numfish:-1:1 % For each fish
     out(j).xbounds = [xminedge xminedge+xscale];
     out(j).ybounds = [yminedge yminedge+yscale];
     
-    % Get valid data (check frequency data)            
+    % Get valid data (check frequency data to omit NaNs)            
     out(j).valididx = find(~isnan(in.fish(j).freq(tr,2)));
     
-    %% Generate corresponding random fish
-        % Starts at a random spot within the grid
+    %% Generate corresponding jiggled and random fish
+        % OPTION: Starts at a random spot within the grid
         %  rnd(j).xy(:,out(j).valididx(1)) = [rand(1,1)*xscale rand(1,1)*yscale];
-        % Starts with random angle
         
-        % Starts at the same spot as the real fish in the grid but with
+        % Both randome and jiggled start at the same spot as the real fish in the grid but with
         % jiggled angle
+        
         out(j).rndXY(:,out(j).valididx(1)) = [in.fish(j).x(out(j).valididx(1)) in.fish(j).y(out(j).valididx(1))];
+        
             firstheta = atan2(in.fish(j).y(out(j).valididx(2)) - in.fish(j).y(out(j).valididx(1)), in.fish(j).x(out(j).valididx(2)) - in.fish(j).x(out(j).valididx(1)));
             deltatheta = constrainer * (rand(1,1) - 0.5); % Set a random change in direction for our artificial fish
         out(j).randtheta(1) = firstheta + deltatheta;
@@ -76,30 +76,34 @@ for j = numfish:-1:1 % For each fish
         out(j).jigXY = out(j).rndXY; 
         out(j).jiggletheta(1) = firstheta + deltatheta;
         
-    % Moves the same distance as the real fish, but with jiggled change in direction
+    % Cycle for every valid data point in original recording
+    % Both jiggled and random fish move the same distance as the real fish, but with jiggled change in direction
     for rr = 2:length(out(j).valididx)
+            % Put the fish positions into a convenient format and calculate
+            % the distance and angle of the real fish 
             tmpXY(1,:) = [in.fish(j).x(out(j).valididx(rr-1)), in.fish(j).y(out(j).valididx(rr-1))];
             tmpXY(2,:) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))];
             out(j).realhowfar(rr) = pdist(tmpXY); % How far did the real fish travel?
+            realtheta = atan2(tmpXY(2,2) - tmpXY(1,2), tmpXY(2,1) - tmpXY(1,1));            
 
             deltatheta = constrainer * (rand(1,1) - 0.5); % Set a random change in direction for our artificial fish
             
             if out(j).valididx(rr) - out(j).valididx(rr-1) == 1 % Contiguous data
                 
-                % OPTION 1: Random - Use the previous random theta as seed for new angle
+                % Variant 1: Random - Use the previous random theta as seed for new angle
                 out(j).randtheta(rr) = out(j).randtheta(rr-1) + deltatheta;
 
-                % OPTION 2: Jiggled - Use the fish theta as seed for new angle
-                realtheta = atan2(tmpXY(2,2) - tmpXY(1,2), tmpXY(2,1) - tmpXY(1,1));            
+                % Variant 2: Jiggled - Use the fish theta as seed for new angle
                 out(j).jiggletheta(rr) = realtheta + deltatheta;
                 
             else % We had a gap in the data  
                 
+                % The "GAP" calculation isn't technically necessary but was
+                % an issue I explored.
                 % Calculate the last real fish angle as seed for new angle
                 % We do this for both the random and jiggled data - This
                 % has very little impact on the outcomes. 
                 
-                realtheta = atan2(tmpXY(2,2) - tmpXY(1,2), tmpXY(2,1) - tmpXY(1,1));            
                 out(j).randtheta(rr) = realtheta + deltatheta;
                 out(j).jiggletheta(rr) = realtheta + deltatheta;
 
@@ -148,7 +152,8 @@ for j = numfish:-1:1 % For each fish
     end
     
     %% Get statistics for each real and random fish
-    
+
+    % Put the data into a convenient format for analysis
     tmp(j).xy(1,:) = in.fish(j).x(out(j).valididx);
     tmp(j).xy(2,:) = in.fish(j).y(out(j).valididx);  
     
@@ -158,7 +163,7 @@ for j = numfish:-1:1 % For each fish
     jtmp(j).xy(1,:) = out(j).jigXY(1,out(j).valididx);
     jtmp(j).xy(2,:) = out(j).jigXY(2,out(j).valididx);  
 
-    % Spatial histogram
+    % Spatial histogram (Heat map from above) for each fish
     out(j).realhist = hist3(tmp(j).xy', ctrs);
     out(j).randhist = hist3(rtmp(j).xy', ctrs);
     out(j).jighist = hist3(jtmp(j).xy', ctrs);
@@ -171,19 +176,14 @@ for j = numfish:-1:1 % For each fish
 end
 
 if numfish > 1 % We have more than one fish
-
-    % Compare spatial histograms (fish against all other fish)
-    %
-    %
-    %
     
     combos = combnk(1:numfish, 2); % All pairwise combinations of fish
 
     for p = length(combos):-1:1 % For each pair of fish
 
-        cmbs(p).fishnums = combos(p,:); % Save the output combo
+        cmbs(p).fishnums = combos(p,:); % Save the identities of the fish to the output structure.
         
-        % Get only entries for which we have data for both fish
+        % Get only entries for which we have data for both fish (shared indices)
         [~, idx1, idx2] = intersect(out(combos(p,1)).valididx, out(combos(p,2)).valididx);
                
         % Calculate the interfish-distance
@@ -200,7 +200,7 @@ if numfish > 1 % We have more than one fish
             cmbs(p).randhist = hist(cmbs(p).randdist, dctrs);
             cmbs(p).jighist = hist(cmbs(p).jigdist, dctrs);
         else
-            cmbs(p).dhist = [];
+            fprintf('This should never happen.');
         end
         
         % Assemble the histogram of distances of each fish to all others
@@ -208,6 +208,13 @@ if numfish > 1 % We have more than one fish
         if sum(cmbs(p).realhist) > 0
             out(combos(p,1)).allhist = out(combos(p,1)).allhist + cmbs(p).realhist;        
             out(combos(p,2)).allhist = out(combos(p,2)).allhist + cmbs(p).realhist;        
+            
+            out(combos(p,1)).allrandhist = out(combos(p,1)).allrandhist + cmbs(p).randhist;        
+            out(combos(p,2)).allrandhist = out(combos(p,2)).allrandhist + cmbs(p).randhist;        
+            
+            out(combos(p,1)).alljighist = out(combos(p,1)).alljighist + cmbs(p).jighist;        
+            out(combos(p,2)).alljighist = out(combos(p,2)).alljighist + cmbs(p).jighist;        
+                        
         end
         
         % Compare spatial histograms (fish against each fish separately)
