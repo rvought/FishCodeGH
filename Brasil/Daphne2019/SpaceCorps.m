@@ -53,18 +53,25 @@ numfish = length(in.fish); % How many fish in this recording
 
 for j = numfish:-1:1 % For each fish
     
+    
     % Record the size of the box for analysis
     out(j).xbounds = [xminedge xminedge+xscale];
     out(j).ybounds = [yminedge yminedge+yscale];
+    % Record the centers of the bins for plotting.
+    out(j).ctrs = ctrs;
     
     % Get valid data (check frequency data to omit NaNs)            
     out(j).valididx = find(~isnan(in.fish(j).freq(tr,2)));
+    
+    if ~isempty(out(j).valididx) % Make sure that we have any data before proceding
+%    if sum(out(j).valididx) > 0 
+    
     
     %% Generate corresponding jiggled and random fish
         % OPTION: Starts at a random spot within the grid
         %  rnd(j).xy(:,out(j).valididx(1)) = [rand(1,1)*xscale rand(1,1)*yscale];
         
-        % Both randome and jiggled start at the same spot as the real fish in the grid but with
+        % Both random and jiggled start at the same spot as the real fish in the grid but with
         % jiggled angle
         
         out(j).rndXY(:,out(j).valididx(1)) = [in.fish(j).x(out(j).valididx(1)) in.fish(j).y(out(j).valididx(1))];
@@ -151,7 +158,7 @@ for j = numfish:-1:1 % For each fish
 
     end
     
-    %% Get statistics for each real and random fish
+    %% Prepare data for analysis for each real and jiggled and random fish
 
     % Put the data into a convenient format for analysis
     tmp(j).xy(1,:) = in.fish(j).x(out(j).valididx);
@@ -173,8 +180,11 @@ for j = numfish:-1:1 % For each fish
     out(j).allrandhist = zeros(1,length(dctrs));  
     out(j).alljighist = zeros(1,length(dctrs));  
     
-end
+    end % If we have data for the current fish
+end % Cycle through each fish
 
+
+%% Cycle through pairs of fish
 if numfish > 1 % We have more than one fish
     
     combos = combnk(1:numfish, 2); % All pairwise combinations of fish
@@ -195,12 +205,12 @@ if numfish > 1 % We have more than one fish
         end
         
         % Distance histogram for each pair of fish
-        if length(cmbs(p).realdist) > 1
+        if length(cmbs(p).realdist) > 1 % Then we have data for this fish
             cmbs(p).realhist = hist(cmbs(p).realdist, dctrs);
             cmbs(p).randhist = hist(cmbs(p).randdist, dctrs);
             cmbs(p).jighist = hist(cmbs(p).jigdist, dctrs);
-        else
-            fprintf('This should never happen.');
+        else % We don't have data for this particular fish
+            fprintf('This happens. \n ');
         end
         
         % Assemble the histogram of distances of each fish to all others
@@ -216,13 +226,14 @@ if numfish > 1 % We have more than one fish
             out(combos(p,2)).alljighist = out(combos(p,2)).alljighist + cmbs(p).jighist;        
                         
         end
+
         
         % Compare spatial histograms (fish against each fish separately)
         
+            % Simple sums of overlap
         
-            
         
-
+        
     end % Cycle through each pair of fish
 
 
@@ -232,18 +243,24 @@ figure(casu); clf;
 
 ax(1) = subplot(131); hold on;
     for z=1:length(in.fish)
+        if ~isempty(out(z).valididx)
         plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '.', 'MarkerSize', 8);
 %        plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '*-');
+        end
     end
 ax(2) = subplot(132); hold on;
     for z=1:length(out)
+        if ~isempty(out(z).valididx)
         plot(out(z).jigXY(1,out(z).valididx), out(z).jigXY(2,out(z).valididx), '.', 'MarkerSize', 8);
 %        plot(out(z).jigXY(1,out(z).valididx), out(z).jigXY(2,out(z).valididx), '*-');
+        end
     end
 ax(3) = subplot(133); hold on;
     for z=1:length(out)
+        if ~isempty(out(z).valididx)
         plot(out(z).rndXY(1,out(z).valididx), out(z).rndXY(2,out(z).valididx), '.', 'MarkerSize', 8);
 %        plot(out(z).rndXY(1,out(z).valididx), out(z).rndXY(2,out(z).valididx), '*-');
+        end
     end
 linkaxes(ax, 'xy');    
 
@@ -262,10 +279,12 @@ figure(casu+2); clf;
     end
 linkaxes(axx, 'xy');    
     
-end
-
-
-
 end % If we have more than one fish
+
+%% Analyses
+
+
+
+
 
 

@@ -1,12 +1,15 @@
-function QuickPlotGrid(in, freqs, tims)
+function QuickPlotGrid(in, idx, freqs, tims)
 % Usage: QuickPlotGrid(in, freqs, tims)
 % Generates F1 with frequency traces and F2 with grid positions
 % freqs and tims are optional. 
 % Freqs in Hz, tims in seconds.
 
 %% Setup
-if nargin == 1 
-    freqs = [200 600]; % Default frequency range for EODs
+if nargin < 2 
+    idx = 1:length(in.fish); % Default is show all fish
+end    
+if nargin < 3 
+    freqs = [250 500]; % Default frequency range for EODs
 end    
 
     freqs = sort(freqs);
@@ -19,18 +22,18 @@ end
 
 
 %% For each fish in the sample, plot frequency and xy plots
-for j = 1:length(in.fish)
+for j = 1:length(idx)
 
-        tt = find(~isnan(in.fish(j).freq(:,2))); % all valid data
+        tt = find(~isnan(in.fish(idx(j)).freq(:,2))); % all valid data
         
-        if nargin == 3 % use only data in the range specified by the user
+        if nargin == 4 % use only data in the range specified by the user
             tims = sort(tims);
-            uu = find(in.fish(j).freq(:,1) > tims(1) & in.fish(j).freq(:,1) < tims(2));
+            uu = find(in.fish(idx(j)).freq(:,1) > tims(1) & in.fish(idx(j)).freq(:,1) < tims(2));
             tt = intersect(tt, uu);
         end
    
-   figure(1); plot(in.fish(j).freq(tt,1), in.fish(j).freq(tt,2), '.', 'MarkerSize', 8); ylim(freqs);
-   figure(2); plot(in.fish(j).x(tt), in.fish(j).y(tt), '.', 'MarkerSize', 8); 
+   figure(1); plot(in.fish(idx(j)).freq(tt,1), in.fish(idx(j)).freq(tt,2), '.', 'MarkerSize', 8); ylim(freqs);
+   figure(2); plot(in.fish(idx(j)).x(tt), in.fish(idx(j)).y(tt), '.', 'MarkerSize', 8); 
         axis([-200, 150, -100, 250]); % May need adjustment
     
 end
