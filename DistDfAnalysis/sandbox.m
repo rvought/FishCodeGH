@@ -554,9 +554,39 @@ pause;
 end
 
 %%
-addpath('corrgram')
 
-nWindow = round(round(600/dt)/2)*2;
+c = 5;
+
+nFish = length(cave(c).fish);
+t = cave(c).t;
+nTimes = length(t);
+
+% Pairwise states
+C = nchoosek(1:nFish,2);
+nPairs = size(C,1);
+[dist,df] = deal(zeros(nTimes,nPairs));
+for k = 1:nPairs
+    dist(:,k) = sqrt((cave(c).fish(C(k,1)).x - cave(c).fish(C(k,2)).x).^2 + (cave(c).fish(C(k,1)).y - cave(c).fish(C(k,2)).y).^2);
+    df(:,k) = cave(c).fish(C(k,1)).freq(:,2) - cave(c).fish(C(k,2)).freq(:,2);
+end
+dist(isnan(df)) = NaN;
+
+mmnorm = @(x) ( x - repmat(min(x),size(x,1),1) ) ./ ( repmat(max(x),size(x,1),1) - repmat(min(x),size(x,1),1) );
+dt = mean(diff(cave(1).t));
+winInterval = 15; % seconds
+winLength = round(winInterval/dt);
+
+mean_dist = highpass(smoothdata(dist,'movmean',winLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
+mean_df = highpass(smoothdata(df,'movmean',winLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
+
+
+
+%%
+
+nWindow = round(round(60/dt)/2)*2;
+
+pairLags = cell(nPairs,1);
+
 for k = 1:nPairs    
 %     try
         clf;
@@ -572,26 +602,72 @@ for k = 1:nPairs
             end
             
             fprintf('\n\nPair %d',k);
-            subplot(2,1,1), hold on;
+            subplot(3,1,1), hold on;
             title(sprintf('Pair %d: Fish %d-Fish%d',k,C(k,1),C(k,2)));
-            plot(df_norm);
-            plot(dist_norm);
+            plot(t,df_norm);
+            plot(t,dist_norm);
+            xlim([t(1),t(end)]);
+            grid on;
             hold off;
 
-            DST = buffer(dist_norm,nWindow,nWindow-1,'nodelay');
-            DF = buffer(df_norm,nWindow,nWindow-1,'nodelay');
+            DST = mmnorm(buffer(dist_norm,nWindow,nWindow-1,'nodelay'));
+            DF = mmnorm(buffer(df_norm,nWindow,nWindow-1,'nodelay'));
+            T = buffer(t,nWindow,nWindow-1,'nodelay');
             
-            lag = zeros(size(DST,2),1);
+            [lag,maxr] = deal(zeros(size(DST,2),1));
             for j = 1:size(DST,2)
-                [r,l] = xcorr(DST(:,j),DF(:,j));
-                [~,maxidx] = max(abs(r));
+                [r,l] = xcorr(DST(:,j),DF(:,j),'unbiased',round(30/dt));
+%                   [r,l,bounds] = crosscorr(DST(:,j),DF(:,j));
+                
+%                 clf;
+%                 subplot(2,1,1), hold on;
+%                 plot(T(:,j),DST(:,j),'b');
+%                 plot(T(:,j),DF(:,j),'r');
+%                 hold off;
+%                 
+%                 subplot(2,1,2), hold on;
+%                 plot(l*dt,r,'k');
+%                 hold off;
+                
+                [maxr(j),maxidx] = max(r);
                 lag(j) = l(maxidx)*dt;
+                
+%                 lag(j)
+%                 pause;
             end
+            pairLags{k} = lag;
             
-            subplot(2,1,2), hold on;
-            plot(lag)
+            subplot(3,1,2), hold on;
+%             lag(abs(lag)>45) = NaN;
+%             lag(maxr<0.4) = NaN;
+            plot(mean(T),lag)
+            xlim([t(1),t(end)]);
+            grid on;
+            hold off;
+            
+            subplot(3,1,3), hold on;
+%             lag(abs(lag)>45) = NaN;
+%             lag(maxr<0.4) = NaN;
+            plot(mean(T),maxr)
+            xlim([t(1),t(end)]);
+            grid on;
             hold off;
             
 %     end
 pause;
+end
+pairLags = [horzcat(pairLags{:})];
+
+%%
+
+crange = [-1,1];
+nWindows = size(pairLags,1);
+
+for j = 1:nWindows
+    clf, hold on;
+    for k = 1:nPairs
+        rectangle('Position',[C(k,1),C(k,2),1,1],'FaceColor',vals2colormap(R(j,k),'jet',crange))
+    end
+    hold off;
+    pause;
 end
