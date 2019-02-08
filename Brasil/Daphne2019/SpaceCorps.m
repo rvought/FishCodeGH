@@ -41,6 +41,8 @@ yminedge = []; yscale = [];
 % end
 
 % Spatial centers for histogram (10cm boxes that extend 20cm beyond edges)
+% The boxes are identical size, although the overall region (defined by
+% minedge and scale values) are not the same from recording to recording.
     ctrs{1} = xminedge-20:10:xscale+xminedge+20;
     ctrs{2} = yminedge-20:10:yscale+yminedge+20;
 
