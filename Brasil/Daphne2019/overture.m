@@ -8,20 +8,25 @@ else
    fishlist = 1:numfish;
 end
 
-    combos = combnk(fishlist, 2); % All pairwise combinations of fish
+out(1).overlap = []; out(1).overfish = [];
+
+    combos = combnk(fishlist, 2)
+    % All pairwise combinations of fish
 
     for p = numfish:-1:1 % For each fish
 
         for n = length(combos) % For each pair of fish
 
-            if ~isempty(combos(:,n) == p)
+            if ~isempty(find([combos(:,n)] == p, 1))
                 
-            out(p).combo(n).diffhist = in(fishlist(combos(1,n))).realhist - in(fishlist(combos(1,n))).realhist;
+            out(p).combo(n).diffhist = in(fishlist(combos(1,n))).realhist - in(fishlist(combos(2,n))).realhist;
             
-            if fishlist(combos(1,n) == p
-                overlapfishone = 1 - (sum(diffhist(diffhist > 0)) / sum(sum(in(1).realhist)));
+            if fishlist(combos(1,n)) == p
+                out(p).overlap(end+1) = 1 - (sum(out(p).combo(n).diffhist(out(p).combo(n).diffhist > 0)) / sum(sum(in(fishlist(combos(1,n))).realhist)));
+                out(p).overfish(end+1) = fishlist(combos(2,n));
             else
-            overlapfishtwo = 1 - (sum(diffhist(diffhist < 0)) / sum(sum(in(2).realhist)));
+                out(p).overlap(end+1) = 1 - abs((sum(out(p).combo(n).diffhist(out(p).combo(n).diffhist < 0)) / sum(sum(in(fishlist(combos(2,n))).realhist))));
+                out(p).overfish(end+1) = fishlist(combos(1,n));
             end
             
             end
