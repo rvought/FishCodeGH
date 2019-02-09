@@ -1,8 +1,12 @@
 function out = overture(in, fishlist)
 % Calculates the overlap in movements for all pairs of fish
 
-numfish = length(fishlist);
-
+if nargin == 2
+   numfish = length(fishlist);
+else
+   numfish = length(in);
+   fishlist = 1:numfish;
+end
     combos = combnk(1:numfish, 2); % All pairwise combinations of fish
 
     for p = length(fishlist):-1:1 % For each pair of fish
