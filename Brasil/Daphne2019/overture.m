@@ -17,7 +17,7 @@ out(1).overlap = []; out(1).overfish = [];
         for n = 1:length(combos) % For each pair of fish
             
             if ~isempty(find(combos(n,:) == p, 1))
-                
+                combos(n,:)
             out(p).combo(n).diffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist;
             
             if fishlist(combos(n,1)) == p
