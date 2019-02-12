@@ -17,28 +17,28 @@ end
     constrainer = pi/2; % pi/2 (90 degrees) works great (converted to +/- below)
     
 % OPTION 1: Loop to find bounding box fitted to the spatial extent of data
-% xminedge = []; xscale = [];
-% yminedge = []; yscale = [];
-% 
-%     for bb = 1:length(in.fish)
-%             xminedge = min([xminedge, min(in.fish(bb).x)]);
-%             yminedge = min([yminedge, min(in.fish(bb).y)]);
-%             xscale = max([xscale, max(in.fish(bb).x)]);
-%             yscale = max([yscale, max(in.fish(bb).y)]);        
-%     end    
-%     
-%     xscale = xscale + abs(xminedge);
-%     yscale = yscale + abs(yminedge);
+xminedge = []; xscale = [];
+yminedge = []; yscale = [];
+
+    for bb = 1:length(in.fish)
+            xminedge = min([xminedge, min(in.fish(bb).x)]);
+            yminedge = min([yminedge, min(in.fish(bb).y)]);
+            xscale = max([xscale, max(in.fish(bb).x)]);
+            yscale = max([yscale, max(in.fish(bb).y)]);        
+    end    
+    
+    xscale = xscale + abs(xminedge);
+    yscale = yscale + abs(yminedge);
 
 % OPTION 2: Use preset bounding boxes set by us   
-if casu == 1 % cave
-    xminedge = -150; xscale = 400; 
-    yminedge = -175; yscale = 275;
-end
-if casu == 2 % surface
-    xminedge = -150; xscale = 300;  
-    yminedge = -100; yscale = 275;
-end
+% if casu == 1 % cave
+%     xminedge = -150; xscale = 400; 
+%     yminedge = -175; yscale = 275;
+% end
+% if casu == 2 % surface
+%     xminedge = -150; xscale = 300;  
+%     yminedge = -100; yscale = 275;
+% end
 
 % Spatial centers for 2D histogram (XXcm boxes that extend 20cm beyond edges)
 % The boxes are identical size, although the overall region (defined by
