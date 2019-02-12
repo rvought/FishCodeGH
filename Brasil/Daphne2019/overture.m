@@ -13,14 +13,14 @@ out(1).overlap = []; out(1).overfish = [];
 combos = combnk(fishlist, 2); % All pairwise combinations of fish
     
     for p = numfish:-1:1 % For each fish
-
         
         % Do the self comparisons - Self-Jiggled and Self-Randomized
         
         out(p).selfjighist = in(fishlist(p)).realhist - in(fishlist(p)).jighist;
         out(p).selfjig = 1 - (sum(out(p).selfjighist(out(p).selfjighist > 0)) / sum(sum(in(fishlist(p)).realhist)));
+        
         out(p).selfrndhist = in(fishlist(p)).realhist - in(fishlist(p)).randhist;
-        out(p).selfnd = 1 - (sum(out(p).selfrndhist(out(p).selfjighist > 0)) / sum(sum(in(fishlist(p)).realhist)));
+        out(p).selfrnd = 1 - (sum(out(p).selfrndhist(out(p).selfjighist > 0)) / sum(sum(in(fishlist(p)).realhist)));
               
         
         for n = 1:length(combos) % For each pair of fish
