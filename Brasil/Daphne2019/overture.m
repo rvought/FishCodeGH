@@ -8,7 +8,7 @@ else
    fishlist = 1:numfish;
 end
 
-out(1).overlap = []; out(1).overfish = []; plt.alloverlaps = [];
+out(1).overlap = []; out(1).overfishnums = []; plt.alloverlaps = [];
 
 combos = combnk(fishlist, 2); % All pairwise combinations of fish
     
