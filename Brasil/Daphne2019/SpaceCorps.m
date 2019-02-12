@@ -33,7 +33,7 @@ end
 % OPTION 2: Use preset bounding boxes set by us   
 if casu == 1 % cave
     xminedge = -150; xscale = 400; 
-    yminedge = -175; yscale = 250;
+    yminedge = -175; yscale = 275;
 end
 if casu == 2 % surface
     xminedge = -150; xscale = 300;  
