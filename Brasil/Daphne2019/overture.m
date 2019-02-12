@@ -31,10 +31,14 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
                 % matrices have same dimensions
 
                 out(p).combo(n).diffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist;
+                out(p).combo(n).diffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist;
+                out(p).combo(n).diffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist;
             
             if fishlist(combos(n,1)) == p
-                out(p).overlap(end+1) = 1 - (sum(out(p).combo(n).diffhist(out(p).combo(n).diffhist > 0)) / sum(sum(in(fishlist(combos(n,1))).realhist)));
                 out(p).overfishnums(end+1) = fishlist(combos(n,2));
+                out(p).realoverlap(end+1) = 1 - (sum(out(p).combo(n).diffhist(out(p).combo(n).diffhist > 0)) / sum(sum(in(fishlist(combos(n,1))).realhist)));
+                out(p).jigoverlap(end+1) = 1 - (sum(out(p).combo(n).diffhist(out(p).combo(n).diffhist > 0)) / sum(sum(in(fishlist(combos(n,1))).realhist)));
+                out(p).rndoverlap(end+1) = 1 - (sum(out(p).combo(n).diffhist(out(p).combo(n).diffhist > 0)) / sum(sum(in(fishlist(combos(n,1))).realhist)));
             else
                 out(p).overlap(end+1) = 1 - abs((sum(out(p).combo(n).diffhist(out(p).combo(n).diffhist < 0)) / sum(sum(in(fishlist(combos(n,2))).realhist))));
                 out(p).overfishnums(end+1) = fishlist(combos(n,1));
@@ -43,6 +47,7 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
             end
         end
         
+        plt.alloverlaps = [plt.alloverlaps, out(p).overlap];        
         plt.alloverlaps = [plt.alloverlaps, out(p).overlap];        
         
     end % For each fish
