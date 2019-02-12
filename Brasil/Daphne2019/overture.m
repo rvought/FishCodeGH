@@ -9,7 +9,7 @@ else
 end
 
 out(1).overfishnums = []; 
-out(1).realoverlap = []; out(1).jigoverlap = []; out(1).randoverlap = []; 
+out(1).realoverlap = []; out(1).jigoverlap = []; out(1).rndoverlap = []; 
 plt.realoverlaps = []; plt.jigoverlaps = []; plt.randoverlaps = [];
 
 combos = combnk(fishlist, 2); % All pairwise combinations of fish
