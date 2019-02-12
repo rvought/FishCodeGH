@@ -66,5 +66,5 @@ lms = 0:0.1:1;
 figure(5); clf; histogram(plt.alloverlaps, 'BinEdges', lms);
 
 figure(6); clf;
-subplot(211); histogram([out.selfjig], 'BinEdges', lms)
-subplot(212); histogram([out.selfrnd], 'BinEdges', lms)
+subplot(211); histogram([plt.jigoverlaps], 'BinEdges', lms)
+subplot(212); histogram([plt.randoverlaps], 'BinEdges', lms)
