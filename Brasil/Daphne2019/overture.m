@@ -50,6 +50,8 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
     
 %% Plot
 
+lms = 0:0.1:1;
+
 figure(5); clf; hist(plt.alloverlaps);
 
 figure(6); clf;
