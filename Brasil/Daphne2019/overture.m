@@ -1,4 +1,4 @@
-function out = overture(in, fishlist)
+function [out, plt] = overture(in, fishlist)
 % Calculates the overlap in movements for all pairs of fish
 
 if nargin == 2
@@ -8,7 +8,7 @@ else
    fishlist = 1:numfish;
 end
 
-out(1).overlap = []; out(1).overfish = [];
+out(1).overlap = []; out(1).overfish = []; plt.alloverlaps = [];
 
 combos = combnk(fishlist, 2); % All pairwise combinations of fish
     
@@ -34,15 +34,23 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
             
             if fishlist(combos(n,1)) == p
                 out(p).overlap(end+1) = 1 - (sum(out(p).combo(n).diffhist(out(p).combo(n).diffhist > 0)) / sum(sum(in(fishlist(combos(n,1))).realhist)));
-                out(p).overfish(end+1) = fishlist(combos(n,2));
+                out(p).overfishnums(end+1) = fishlist(combos(n,2));
             else
                 out(p).overlap(end+1) = 1 - abs((sum(out(p).combo(n).diffhist(out(p).combo(n).diffhist < 0)) / sum(sum(in(fishlist(combos(n,2))).realhist))));
-                out(p).overfish(end+1) = fishlist(combos(n,1));
+                out(p).overfishnums(end+1) = fishlist(combos(n,1));
             end
             
             end
         end
-    end
+        
+        plt.alloverlaps = [plt.alloverlaps, out(p).overlap];        
+        
+    end % For each fish
     
     
+%% Plot
 
+figure(5); hist(plt.alloverlaps);
+
+figure(6); subplot(211); hist([out.selfjig])
+figure(6); subplot(212); hist([out.selfrnd])
