@@ -31,7 +31,7 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
                 % matrices have same dimensions
 
                 out(p).combo(n).diffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist;
-                out(p).combo(n).diffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist;
+                out(p).combo(n).diffhist = in(fishlist(combos(n,1))).jighist - in(fishlist(combos(n,2))).jighist;
                 out(p).combo(n).diffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist;
             
             if fishlist(combos(n,1)) == p
