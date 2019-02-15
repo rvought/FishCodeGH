@@ -1,6 +1,7 @@
 function [out, plt] = overture(in, fishlist)
 % Calculates the overlap in movements for all pairs of fish
 
+%% Preparations
 if nargin == 2
    numfish = length(fishlist);
 else
@@ -13,7 +14,8 @@ out(1).realoverlap = []; out(1).jigoverlap = []; out(1).rndoverlap = [];
 plt.realoverlaps = []; plt.jigoverlaps = []; plt.randoverlaps = [];
 
 combos = combnk(fishlist, 2); % All pairwise combinations of fish
-    
+
+%% Analysis
     for p = numfish:-1:1 % For each fish
         
         % Do the self comparisons - Self-Jiggled and Self-Randomized
