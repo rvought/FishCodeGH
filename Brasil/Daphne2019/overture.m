@@ -34,7 +34,9 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
 
                 % Need a check to ensure input is not empty and that
                 % matrices have same dimensions
-
+                
+                if ~isempty(in(fishlist(combos(n,1))).realhist) && ~isempty(in(fishlist(combos(n,2))).realhist)
+                
                 % This generates the comparison matrices: fish 1's histogram - fish 2's histogram
                 out(p).combo(n).realdiffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist; 
                 out(p).combo(n).jigdiffhist = in(fishlist(combos(n,1))).jighist - in(fishlist(combos(n,2))).jighist;
@@ -59,7 +61,9 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
                 out(p).rndoverlap(end+1) = 1 - abs((sum(out(p).combo(n).randiffhist(out(p).combo(n).randiffhist < 0)) / sum(sum(in(fishlist(combos(n,2))).randhist))));
             end
             
+                end
             end
+            
         end
         
         
