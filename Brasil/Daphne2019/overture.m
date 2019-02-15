@@ -25,8 +25,7 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
         
         out(p).selfrndhist = in(fishlist(p)).realhist - in(fishlist(p)).randhist;
         out(p).selfrnd = 1 - (sum(out(p).selfrndhist(out(p).selfjighist > 0)) / sum(sum(in(fishlist(p)).realhist)));
-              
-        
+                      
         for n = 1:length(combos) % For each pair of fish
             
             if ~isempty(find(combos(n,:) == p, 1)) % Use only cases with focal fish in it (p)
@@ -34,10 +33,16 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
                 % Need a check to ensure input is not empty and that
                 % matrices have same dimensions
 
-                out(p).combo(n).realdiffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist;
+                % This generates the comparison matrices: fish 1's histogram - fish 2's histogram
+                out(p).combo(n).realdiffhist = in(fishlist(combos(n,1))).realhist - in(fishlist(combos(n,2))).realhist; 
                 out(p).combo(n).jigdiffhist = in(fishlist(combos(n,1))).jighist - in(fishlist(combos(n,2))).jighist;
                 out(p).combo(n).randiffhist = in(fishlist(combos(n,1))).randhist - in(fishlist(combos(n,2))).randhist;
-            
+
+                % If our focal fish p is either one of the pair, we add the data for the fish.
+                % Overlap is relative to your own distribution histogram (Overlap / self)
+                % In this way, comparison fish1 versus fish2 may not be
+                % identical.
+                % This could be handled more efficiently!!
             if fishlist(combos(n,1)) == p
                 out(p).overfishnums(end+1) = fishlist(combos(n,2));
 
@@ -55,6 +60,10 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
             end
         end
         
+        
+       % For convenience, we make a list with all of the overlaps from all
+       % of the fish.
+       
         plt.realoverlaps = [plt.realoverlaps, out(p).realoverlap];        
         plt.jigoverlaps = [plt.jigoverlaps, out(p).jigoverlap];        
         plt.randoverlaps = [plt.randoverlaps, out(p).rndoverlap];        
