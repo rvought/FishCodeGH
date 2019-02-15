@@ -43,9 +43,10 @@ yminedge = []; yscale = [];
 % Spatial centers for 2D histogram (XXcm boxes that extend 20cm beyond edges)
 % The boxes are identical size, although the overall region (defined by
 % minedge and scale values) are not the same from recording to recording.
-XX = 50;
-    ctrs{1} = xminedge-20:XX:xscale+xminedge+20;
-    ctrs{2} = yminedge-20:XX:yscale+yminedge+20;
+howmanybins = 10;
+binsiz = (xminedge+20 + abs(xminedge-20)) / howmanybins;
+    ctrs{1} = xminedge-20:binsiz:xscale+xminedge+20;
+    ctrs{2} = yminedge-20:binsiz:yscale+yminedge+20;
 
 % Distance bins between pairs of fish for histogram
     dctrs = 1:10:500;    
