@@ -18,6 +18,8 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
 %% Analysis
     for p = numfish:-1:1 % For each fish
         
+        figure(20+p); clf; surf(in(fishlist(p)).realhist); view(0,90);
+        
         % Do the self comparisons - Self-Jiggled and Self-Randomized
         
         out(p).selfjighist = in(fishlist(p)).realhist - in(fishlist(p)).jighist;
