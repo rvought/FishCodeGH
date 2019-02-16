@@ -77,8 +77,7 @@ for j = numfish:-1:1 % For each fish
     
     if ~isempty(out(j).valididx) % Make sure that we have any data before proceding
 %    if sum(out(j).valididx) > 0 
-    
-    
+        
     %% Generate corresponding jiggled and random fish
         % OPTION: Starts at a random spot within the grid
         %  rnd(j).xy(:,out(j).valididx(1)) = [rand(1,1)*xscale rand(1,1)*yscale];
