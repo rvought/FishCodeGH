@@ -11,11 +11,13 @@ function out = mi(A,B,varargin)
 %   jfd, 15-11-2006
 %        01-09-2009, added case of non-double images
 %        24-08-2011, speed improvements by Andrew Hill
+
 if nargin>=3
     L=varargin{1};
 else
     L=256;
 end
+
 A=double(A); 
 B=double(B); 
      
