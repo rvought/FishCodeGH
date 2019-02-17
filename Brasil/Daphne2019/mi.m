@@ -27,7 +27,8 @@ na = na/sum(na);
 nb = hist(B(:),L); 
 nb = nb/sum(nb);
 
-figure(27); n2 = histogram2(A,B,L); 
+figure(27); 
+n2 = histogram2(A,B,L); 
 n2values = n2.Values ./ sum(n2.Values);
 out=sum(minf(n2values, na' * nb)); 
 close(27)
