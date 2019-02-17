@@ -4,6 +4,7 @@ function [out stats] = Pele(cave, srf)
 
 % Let's do two sections of 500 seconds
 
+out = MajorTom(cave(1), [0 500]);
 
 
 
