@@ -34,6 +34,6 @@ for j = 1:length(idx)
    
    figure(1); plot(in.fish(idx(j)).freq(tt,1), in.fish(idx(j)).freq(tt,2), '.', 'MarkerSize', 8); ylim(freqs);
    figure(2); plot(in.fish(idx(j)).x(tt), in.fish(idx(j)).y(tt), '.', 'MarkerSize', 8); 
-        axis([-200, 150, -100, 250]); % May need adjustment
+        axis([-200, 250, -200, 250]); % May need adjustment
     
 end
