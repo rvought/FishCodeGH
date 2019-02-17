@@ -1,23 +1,30 @@
-function [out stats] = Pele(cave, srf)
+function [fish pairs stats] = Pele(cave, srf)
+
+
+
 
 %% cave 1, 1 fish, 1000 seconds
 
 % Let's do two sections of 500 seconds
 
-out = MajorTom(cave(1), [0 500]);
-
-
+    fish(1) = MajorTom(cave(1), [0 500]);
+    fish(2) = MajorTom(cave(1), [500 1000]);
 
 %% cave 2, 1 fish, 900 seconds
 
+    fish(3) = MajorTom(cave(2), [0 450]);
+    fish(4) = MajorTom(cave(2), [450 900]);
 
 %% cave 3, 7 fish, good recordings of all fish through over 1200 seconds
 
-    [tmpOUT, tmpCMBS] = SpaceCorps(cave(1), 1, [0 600]);
-    [sa, sq] = overture(tmpOUT);
+    fish(5) = MajorTom(cave(3), [0 600]);
+    fish(6) = MajorTom(cave(3), [600 1200]);
 
-    [tmpOUT, tmpCMBS] = SpaceCorps(cave(1), 1, [600 1200]);
-    [sa, sq] = overture(tmpOUT);
+%     [tmpOUT, tmpCMBS] = SpaceCorps(cave(1), 1, [0 600]);
+%     [sa, sq] = overture(tmpOUT);
+% 
+%     [tmpOUT, tmpCMBS] = SpaceCorps(cave(1), 1, [600 1200]);
+%     [sa, sq] = overture(tmpOUT);
 
 
 
@@ -38,6 +45,8 @@ out = MajorTom(cave(1), [0 500]);
 
 %% cave 9, 1 fish, over 1000 seconds
 
+    fish(7) = MajorTom(cave(9), [0 500]);
+    fish(8c) = MajorTom(cave(9), [500 1000]);
 
 
 %% cave 10, 3 fish, over 900 seconds
@@ -81,6 +90,13 @@ out = MajorTom(cave(1), [0 500]);
 
 %% surface 5, 24 fish, over 1100 seconds
 
+
+
+%% Stats for single fish
+
+figure(1); clf; 
+    subplot(121); plot([fish.meanfreq], '-*'); ylim([200 600]);
+    subplot(122); plot([fish.varfreq], '-*'); ylim([0 2]);
 
 
 
