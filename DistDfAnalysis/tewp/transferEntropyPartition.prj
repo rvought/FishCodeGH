@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.coder" plugin-version="R2018b">
-  <configuration file="/mnt/WinData/repos/FishCodeGH/DistDfAnalysis/tewp/transferEntropyPartition.prj" location="/mnt/WinData/repos/FishCodeGH/DistDfAnalysis/tewp" name="transferEntropyPartition" target="target.unifiedcoder" target-name="MATLAB Coder">
+  <configuration build-checksum="4009995287" file="/Users/manusmad/repos/FishCodeGH/DistDfAnalysis/tewp/transferEntropyPartition.prj" location="/Users/manusmad/repos/FishCodeGH/DistDfAnalysis/tewp" name="transferEntropyPartition" target="target.unifiedcoder" target-name="MATLAB Coder">
     <profile key="profile.mex">
       <param.BuiltInstrumentedMex>false</param.BuiltInstrumentedMex>
       <param.RanInstrumentedMex>false</param.RanInstrumentedMex>
@@ -8,14 +8,14 @@
       <param.BuildFolder>option.BuildFolder.Project</param.BuildFolder>
       <param.SpecifiedBuildFolder />
       <param.SearchPaths />
-      <param.ResponsivenessChecks>false</param.ResponsivenessChecks>
+      <param.ResponsivenessChecks>true</param.ResponsivenessChecks>
       <param.ExtrinsicCalls>true</param.ExtrinsicCalls>
-      <param.IntegrityChecks>false</param.IntegrityChecks>
+      <param.IntegrityChecks>true</param.IntegrityChecks>
       <param.SaturateOnIntegerOverflow>true</param.SaturateOnIntegerOverflow>
       <param.GlobalDataSyncMethod>option.GlobalDataSyncMethod.SyncAlways</param.GlobalDataSyncMethod>
       <param.EnableVariableSizing>true</param.EnableVariableSizing>
       <param.DynamicMemoryAllocation>option.DynamicMemoryAllocation.Threshold</param.DynamicMemoryAllocation>
-      <param.DynamicMemoryAllocationThreshold>2147483647</param.DynamicMemoryAllocationThreshold>
+      <param.DynamicMemoryAllocationThreshold>65536</param.DynamicMemoryAllocationThreshold>
       <param.RowMajor>option.RowMajor.ColumnMajor</param.RowMajor>
       <param.HighlightPotentialRowMajorIssues>true</param.HighlightPotentialRowMajorIssues>
       <param.PreserveArrayDimensions>false</param.PreserveArrayDimensions>
@@ -28,11 +28,11 @@
       <param.EnableDebugging>false</param.EnableDebugging>
       <param.GenerateReport>true</param.GenerateReport>
       <param.LaunchReport>false</param.LaunchReport>
-      <param.ReportPotentialDifferences>true</param.ReportPotentialDifferences>
+      <param.ReportPotentialDifferences>false</param.ReportPotentialDifferences>
       <param.DefaultTestFile />
       <param.MergeInstrumentationResults>false</param.MergeInstrumentationResults>
       <param.VerificationMode>option.VerificationMode.None</param.VerificationMode>
-      <param.VerificationStatus>option.VerificationStatus.FailedInference</param.VerificationStatus>
+      <param.VerificationStatus>option.VerificationStatus.Passed</param.VerificationStatus>
       <param.EnableMexProfiling>false</param.EnableMexProfiling>
       <var.BuiltWithMexProfiling>false</var.BuiltWithMexProfiling>
       <param.CustomSourceCode />
@@ -52,15 +52,15 @@
       <param.InlineThreshold>10</param.InlineThreshold>
       <param.InlineThresholdMax>200</param.InlineThresholdMax>
       <param.InlineStackLimit>4000</param.InlineStackLimit>
-      <param.EnableMemcpy>false</param.EnableMemcpy>
+      <param.EnableMemcpy>true</param.EnableMemcpy>
       <param.MemcpyThreshold>64</param.MemcpyThreshold>
-      <param.EnableOpenMP>false</param.EnableOpenMP>
-      <param.InitFltsAndDblsToZero>false</param.InitFltsAndDblsToZero>
+      <param.EnableOpenMP>true</param.EnableOpenMP>
+      <param.InitFltsAndDblsToZero>true</param.InitFltsAndDblsToZero>
       <param.ConstantInputs>option.ConstantInputs.CheckValues</param.ConstantInputs>
-      <param.EnableCRICodeCoverage>false</param.EnableCRICodeCoverage>
+      <param.EnableCRICodeCoverage>true</param.EnableCRICodeCoverage>
       <param.EnableJIT>false</param.EnableJIT>
       <param.EnableJITSilentBailOut>false</param.EnableJITSilentBailOut>
-      <param.CheckForIssuesJIT>false</param.CheckForIssuesJIT>
+      <param.CheckForIssuesJIT>true</param.CheckForIssuesJIT>
       <unset>
         <param.BuiltInstrumentedMex />
         <param.RanInstrumentedMex />
@@ -124,7 +124,7 @@
       </unset>
     </profile>
     <profile key="profile.c">
-      <param.grt.GenCodeOnly>true</param.grt.GenCodeOnly>
+      <param.grt.GenCodeOnly>false</param.grt.GenCodeOnly>
       <param.WorkingFolder>option.WorkingFolder.Project</param.WorkingFolder>
       <param.SpecifiedWorkingFolder />
       <param.BuildFolder>option.BuildFolder.Project</param.BuildFolder>
@@ -136,7 +136,7 @@
       <param.LoopUnrollThreshold>5</param.LoopUnrollThreshold>
       <param.EnableVariableSizing>true</param.EnableVariableSizing>
       <param.DynamicMemoryAllocation>option.DynamicMemoryAllocation.Threshold</param.DynamicMemoryAllocation>
-      <param.DynamicMemoryAllocationThreshold>2147483647</param.DynamicMemoryAllocationThreshold>
+      <param.DynamicMemoryAllocationThreshold>65536</param.DynamicMemoryAllocationThreshold>
       <param.RowMajor>option.RowMajor.ColumnMajor</param.RowMajor>
       <param.HighlightPotentialRowMajorIssues>true</param.HighlightPotentialRowMajorIssues>
       <param.PreserveArrayDimensions>false</param.PreserveArrayDimensions>
@@ -171,7 +171,7 @@
       <param.GenerateCodeReplacementReport>false</param.GenerateCodeReplacementReport>
       <param.HighlightPotentialDataTypeIssues>false</param.HighlightPotentialDataTypeIssues>
       <param.LaunchReport>false</param.LaunchReport>
-      <param.ReportPotentialDifferences>true</param.ReportPotentialDifferences>
+      <param.ReportPotentialDifferences>false</param.ReportPotentialDifferences>
       <param.SILDebugging>false</param.SILDebugging>
       <param.SILPILCheckConstantInputs>true</param.SILPILCheckConstantInputs>
       <param.SILPILSyncGlobalData>true</param.SILPILSyncGlobalData>
@@ -189,7 +189,7 @@
       <param.CustomSource />
       <param.CustomLibrary />
       <param.PostCodeGenCommand />
-      <param.TargetLangStandard>C++03 (ISO)</param.TargetLangStandard>
+      <param.TargetLangStandard>C99 (ISO)</param.TargetLangStandard>
       <param.CodeReplacementLibrary>None</param.CodeReplacementLibrary>
       <param.DeprecatedCRLFlag />
       <param.SameHardware>true</param.SameHardware>
@@ -263,18 +263,18 @@
       <param.InlineThresholdMax>200</param.InlineThresholdMax>
       <param.InlineStackLimit>4000</param.InlineStackLimit>
       <param.EnableStrengthReduction>false</param.EnableStrengthReduction>
-      <param.EnableMemcpy>false</param.EnableMemcpy>
+      <param.EnableMemcpy>true</param.EnableMemcpy>
       <param.MemcpyThreshold>64</param.MemcpyThreshold>
-      <param.EnableOpenMP>false</param.EnableOpenMP>
-      <param.InitFltsAndDblsToZero>false</param.InitFltsAndDblsToZero>
+      <param.EnableOpenMP>true</param.EnableOpenMP>
+      <param.InitFltsAndDblsToZero>true</param.InitFltsAndDblsToZero>
       <param.GenerateNonFiniteFilesIfUsed>true</param.GenerateNonFiniteFilesIfUsed>
-      <param.PassStructByReference>false</param.PassStructByReference>
+      <param.PassStructByReference>true</param.PassStructByReference>
       <param.CustomLAPACKCallback />
       <param.CustomFFTCallback />
       <param.CustomBLASCallback />
       <param.GenerateDefaultInSwitch>false</param.GenerateDefaultInSwitch>
       <param.EnableTraceability>true</param.EnableTraceability>
-      <param.UseECoderFeatures>true</param.UseECoderFeatures>
+      <param.UseECoderFeatures>false</param.UseECoderFeatures>
       <param.psCustomPrjState />
       <param.psCustomProjectFile />
       <param.psCheckConfValue />
@@ -284,6 +284,7 @@
       <param.psQuickConfValue />
       <param.psOutputFolder />
       <unset>
+        <param.grt.GenCodeOnly />
         <param.WorkingFolder />
         <param.SpecifiedWorkingFolder />
         <param.BuildFolder />
@@ -772,18 +773,20 @@
         <param.hdl.GenerateXSGBlock />
       </unset>
     </profile>
-    <param.objective>option.objective.gpu</param.objective>
-    <param.WorkflowStep>verifyCompatibility</param.WorkflowStep>
+    <param.objective>option.objective.c</param.objective>
+    <param.WorkflowStep>workflowSummary</param.WorkflowStep>
     <param.TestSnippets>
-      <item>transferEntropyPartition(x,y,0,10)</item>
+      <item>transferEntropyPartition_mex(X,Y,1,1)
+transferEntropyPartition_mex(X,Y,1,1)
+transferEntropyPartition(X,Y,1,1)</item>
     </param.TestSnippets>
     <param.DefaultImportExportVariable>config</param.DefaultImportExportVariable>
     <param.ExternalFcnMajority>column</param.ExternalFcnMajority>
     <param.UseGlobals>option.UseGlobals.No</param.UseGlobals>
-    <param.outputfile>${PROJECT_ROOT}/codegen/lib/transferEntropyPartition/transferEntropyPartition.a</param.outputfile>
+    <param.outputfile>${PROJECT_ROOT}/transferEntropyPartition_mex.mexmaci64</param.outputfile>
     <param.version>R2012a</param.version>
-    <param.HasECoderFeatures>true</param.HasECoderFeatures>
-    <param.HasGpuCoder>true</param.HasGpuCoder>
+    <param.HasECoderFeatures>false</param.HasECoderFeatures>
+    <param.HasGpuCoder>false</param.HasGpuCoder>
     <var.HasNeuralNetworkToolbox>true</var.HasNeuralNetworkToolbox>
     <param.mex.mainhtml />
     <param.grt.mainhtml />
@@ -795,57 +798,60 @@
     <param.AutoInferUnboundedSizeThreshold>2048</param.AutoInferUnboundedSizeThreshold>
     <param.EnableFixedPointStep>false</param.EnableFixedPointStep>
     <param.EnableScreener>true</param.EnableScreener>
-    <param.AnnotationChecksum />
+    <param.AnnotationChecksum>709861905</param.AnnotationChecksum>
     <var.LegacyTarget />
     <var.MirrorOnOpen>false</var.MirrorOnOpen>
     <param.FixedPointEnabled>false</param.FixedPointEnabled>
     <var.redirectedInputTypeData />
-    <var.DismissScreener>true</var.DismissScreener>
+    <var.DismissScreener>false</var.DismissScreener>
     <param.unifiedParamStorage />
-    <var.gc.lastOutputRoot />
-    <var.gc.lastOutputType />
-    <var.gc.preBuildChecksum />
+    <var.gc.lastOutputRoot>codegen/mex/transferEntropyPartition</var.gc.lastOutputRoot>
+    <var.gc.lastOutputType>MEX_FILE</var.gc.lastOutputType>
+    <var.gc.preBuildChecksum>4009995287</var.gc.preBuildChecksum>
     <var.cfi.lastOutputRoot>codegen/mex/transferEntropyPartition</var.cfi.lastOutputRoot>
-    <var.cfi.preBuildChecksum>1476783559</var.cfi.preBuildChecksum>
+    <var.cfi.preBuildChecksum>1208567992</var.cfi.preBuildChecksum>
+    <var.lastCfiTestSnippet>transferEntropyPartition_mex(X,Y,1,1)
+transferEntropyPartition_mex(X,Y,1,1)
+transferEntropyPartition(X,Y,1,1)</var.lastCfiTestSnippet>
     <var.outdatedOnRestore>false</var.outdatedOnRestore>
-    <var.lastUserSourceChecksum />
-    <var.sourceSetState>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;sourceModel&gt;&lt;primarySourceFiles&gt;&lt;file&gt;/mnt/WinData/repos/FishCodeGH/DistDfAnalysis/tewp/DVpartition3D.m&lt;/file&gt;&lt;file&gt;/mnt/WinData/repos/FishCodeGH/DistDfAnalysis/tewp/transferEntropyPartition.m&lt;/file&gt;&lt;/primarySourceFiles&gt;&lt;fixedPointSourceFiles/&gt;&lt;fixedPointSourceRegistered&gt;false&lt;/fixedPointSourceRegistered&gt;&lt;fixedPointSourceSelected&gt;false&lt;/fixedPointSourceSelected&gt;&lt;/sourceModel&gt;</var.sourceSetState>
+    <var.lastUserSourceChecksum>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;checksum&gt;&lt;includedFiles&gt;&lt;file&gt;/Users/manusmad/repos/FishCodeGH/DistDfAnalysis/tewp/DVpartition3D.m&lt;/file&gt;&lt;file&gt;/Users/manusmad/repos/FishCodeGH/DistDfAnalysis/tewp/transferEntropyPartition.m&lt;/file&gt;&lt;/includedFiles&gt;&lt;value&gt;2082272671&lt;/value&gt;&lt;/checksum&gt;</var.lastUserSourceChecksum>
+    <var.sourceSetState>&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;sourceModel&gt;&lt;primarySourceFiles&gt;&lt;file&gt;/Users/manusmad/repos/FishCodeGH/DistDfAnalysis/tewp/DVpartition3D.m&lt;/file&gt;&lt;file&gt;/Users/manusmad/repos/FishCodeGH/DistDfAnalysis/tewp/transferEntropyPartition.m&lt;/file&gt;&lt;/primarySourceFiles&gt;&lt;fixedPointSourceFiles/&gt;&lt;fixedPointSourceRegistered&gt;false&lt;/fixedPointSourceRegistered&gt;&lt;fixedPointSourceSelected&gt;false&lt;/fixedPointSourceSelected&gt;&lt;/sourceModel&gt;</var.sourceSetState>
     <param.forceMexBuild>false</param.forceMexBuild>
     <param.NoDefaultJIT>false</param.NoDefaultJIT>
     <param.configImportActive>false</param.configImportActive>
-    <var.isGpuCoder>true</var.isGpuCoder>
-    <var.notGpuCoder>false</var.notGpuCoder>
+    <var.isGpuCoder>false</var.isGpuCoder>
+    <var.notGpuCoder>true</var.notGpuCoder>
     <var.boundToGui>true</var.boundToGui>
     <param.mex.outputfile>transferEntropyPartition_mex</param.mex.outputfile>
     <param.grt.outputfile>transferEntropyPartition</param.grt.outputfile>
-    <param.artifact>option.target.artifact.lib</param.artifact>
-    <param.outputfile>${PROJECT_ROOT}/codegen/lib/transferEntropyPartition/transferEntropyPartition.a</param.outputfile>
-    <param.gpu.Enabled>true</param.gpu.Enabled>
+    <param.artifact>option.target.artifact.mex</param.artifact>
+    <param.outputfile>${PROJECT_ROOT}/transferEntropyPartition_mex.mexmaci64</param.outputfile>
+    <param.gpu.Enabled>false</param.gpu.Enabled>
     <param.gpu.KernelNamePrefix />
     <param.gpu.SelectCudaDevice>-1</param.gpu.SelectCudaDevice>
-    <param.gpu.MallocMode>discrete</param.gpu.MallocMode>
+    <param.gpu.MallocMode />
     <param.gpu.MallocThreshold>200</param.gpu.MallocThreshold>
     <param.gpu.StackLimitPerThread>1024</param.gpu.StackLimitPerThread>
-    <param.gpu.EnableCUBLAS>true</param.gpu.EnableCUBLAS>
-    <param.gpu.EnableCUSOLVER>true</param.gpu.EnableCUSOLVER>
-    <param.gpu.EnableCUFFT>true</param.gpu.EnableCUFFT>
+    <param.gpu.EnableCUBLAS>false</param.gpu.EnableCUBLAS>
+    <param.gpu.EnableCUSOLVER>false</param.gpu.EnableCUSOLVER>
+    <param.gpu.EnableCUFFT>false</param.gpu.EnableCUFFT>
     <param.gpu.Benchmarking>false</param.gpu.Benchmarking>
-    <param.gpu.SafeBuild>true</param.gpu.SafeBuild>
-    <param.gpu.ComputeCapability>3.5</param.gpu.ComputeCapability>
+    <param.gpu.SafeBuild>false</param.gpu.SafeBuild>
+    <param.gpu.ComputeCapability />
     <param.gpu.CustomComputeCapability />
     <param.gpu.CompilerFlags />
-    <var.checkIssuesGpu>true</var.checkIssuesGpu>
-    <var.hasGpu>true</var.hasGpu>
+    <var.checkIssuesGpu>false</var.checkIssuesGpu>
+    <var.hasGpu>false</var.hasGpu>
     <var.isDeepLearningForMatlabCoderEnabled>true</var.isDeepLearningForMatlabCoderEnabled>
-    <param.deeplearning.TargetLib>option.deeplearning.targetlibrary.cudnn</param.deeplearning.TargetLib>
-    <var.hideTensorRT>true</var.hideTensorRT>
+    <param.deeplearning.TargetLib>option.deeplearning.targetlibrary.none</param.deeplearning.TargetLib>
+    <var.hideTensorRT>false</var.hideTensorRT>
     <var.hasMatlabDeepLearningSupportPackage>true</var.hasMatlabDeepLearningSupportPackage>
     <var.hasGpuDeepLearningSupportPackage>true</var.hasGpuDeepLearningSupportPackage>
     <param.tensorrt.DataType>option.tensorrt.datatype.fp32</param.tensorrt.DataType>
     <param.tensorrt.DataPath />
     <param.tensorrt.NumCalibrationBatches>1</param.tensorrt.NumCalibrationBatches>
     <param.cudnn.AutoTuning>true</param.cudnn.AutoTuning>
-    <param.TargetLang>option.TargetLang.CPP</param.TargetLang>
+    <param.TargetLang>option.TargetLang.C</param.TargetLang>
     <param.EnableAutoExtrinsicCalls>true</param.EnableAutoExtrinsicCalls>
     <param.UsePreconditions>false</param.UsePreconditions>
     <param.FeatureFlags />
@@ -893,6 +899,7 @@
     <var.FixedPointAnalysisMode>option.FixedPointAnalysisMode.Sim</var.FixedPointAnalysisMode>
     <param.FixedPointUseDesignRanges>false</param.FixedPointUseDesignRanges>
     <unset>
+      <param.objective />
       <param.DefaultImportExportVariable />
       <param.ExternalFcnMajority />
       <param.UseGlobals />
@@ -911,17 +918,13 @@
       <param.AutoInferUnboundedSizeThreshold />
       <param.EnableFixedPointStep />
       <param.EnableScreener />
-      <param.AnnotationChecksum />
       <var.LegacyTarget />
       <var.MirrorOnOpen />
       <param.FixedPointEnabled />
       <var.redirectedInputTypeData />
+      <var.DismissScreener />
       <param.unifiedParamStorage />
-      <var.gc.lastOutputRoot />
-      <var.gc.lastOutputType />
-      <var.gc.preBuildChecksum />
       <var.outdatedOnRestore />
-      <var.lastUserSourceChecksum />
       <param.forceMexBuild />
       <param.NoDefaultJIT />
       <param.configImportActive />
@@ -929,6 +932,7 @@
       <var.notGpuCoder />
       <param.mex.outputfile />
       <param.grt.outputfile />
+      <param.artifact />
       <param.gpu.Enabled />
       <param.gpu.KernelNamePrefix />
       <param.gpu.SelectCudaDevice />
@@ -943,9 +947,11 @@
       <param.gpu.ComputeCapability />
       <param.gpu.CustomComputeCapability />
       <param.gpu.CompilerFlags />
+      <var.checkIssuesGpu />
       <var.hasGpu />
       <var.isDeepLearningForMatlabCoderEnabled />
       <param.deeplearning.TargetLib />
+      <var.hideTensorRT />
       <var.hasMatlabDeepLearningSupportPackage />
       <var.hasGpuDeepLearningSupportPackage />
       <param.tensorrt.DataType />
@@ -1001,7 +1007,7 @@
     </unset>
     <fileset.entrypoints>
       <file custom-data-expanded="false" value="${PROJECT_ROOT}/transferEntropyPartition.m">
-        <Marker>1550011176790</Marker>
+        <Marker>1550415139819</Marker>
       </file>
     </fileset.entrypoints>
     <fileset.testbench />
@@ -1015,10 +1021,10 @@
           <idpTable>
             <type typeId="0">
               <Class>double</Class>
-              <Size>5948 x 1</Size>
+              <Size>:inf x 1</Size>
               <Value />
               <InitialValue />
-              <UserDefined>false</UserDefined>
+              <UserDefined>true</UserDefined>
               <Complex>false</Complex>
               <Sparse>false</Sparse>
             </type>
@@ -1036,49 +1042,19 @@
       </file>
     </fileset.inputtypes>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}/codegen/lib/transferEntropyPartition" name="transferEntropyPartition.a" optional="false">/mnt/WinData/repos/FishCodeGH/DistDfAnalysis/tewp/codegen/lib/transferEntropyPartition/transferEntropyPartition.a</file>
+      <file location="/Users/manusmad/repos/FishCodeGH/DistDfAnalysis/tewp" name="transferEntropyPartition_mex.mexmaci64" optional="false">/Users/manusmad/repos/FishCodeGH/DistDfAnalysis/tewp/transferEntropyPartition_mex.mexmaci64</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>/media/manusmad/UbuntuData/MATLAB/R2018b</root>
+      <root>/Applications/MATLAB_R2018b.app</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
-        <toolbox name="embeddedcoder" />
-        <toolbox name="gpucoder" />
-        <toolbox name="fixedpoint" />
-        <toolbox name="matlabhdlcoder" />
-        <toolbox name="polyspacebugfinder" />
         <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
         <matlabcoder>
           <enabled>true</enabled>
         </matlabcoder>
-      </toolbox>
-      <toolbox>
-        <embeddedcoder>
-          <enabled>true</enabled>
-        </embeddedcoder>
-      </toolbox>
-      <toolbox>
-        <gpucoder>
-          <enabled>true</enabled>
-        </gpucoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
-      </toolbox>
-      <toolbox>
-        <matlabhdlcoder>
-          <enabled>true</enabled>
-        </matlabhdlcoder>
-      </toolbox>
-      <toolbox>
-        <polyspacebugfinder>
-          <enabled>true</enabled>
-        </polyspacebugfinder>
       </toolbox>
       <toolbox>
         <neuralnetwork>
@@ -1088,17 +1064,17 @@
     </matlab>
     <platform>
       <unix>true</unix>
-      <mac>false</mac>
+      <mac>true</mac>
       <windows>false</windows>
       <win2k>false</win2k>
       <winxp>false</winxp>
       <vista>false</vista>
-      <linux>true</linux>
+      <linux>false</linux>
       <solaris>false</solaris>
-      <osver>4.15.0-45-generic</osver>
+      <osver>10.14.2</osver>
       <os32>false</os32>
       <os64>true</os64>
-      <arch>glnxa64</arch>
+      <arch>maci64</arch>
       <matlab>true</matlab>
     </platform>
   </configuration>

@@ -63,16 +63,37 @@ Yt(IX)=1:Nt;
 partitions=DVpartition3D(Xpat,Ypat,Yt,1,Nt,1,Nt,1,Nt);
 nPar=length(partitions);
 
-dimPar = ([partitions.Xmax] - [partitions.Xmin] + 1)';
+nPat = length(Xpat);
+[B,C] = deal(zeros(1,nPat));
+[dimPar,t] = deal(zeros(nPar,1));
+for i = 1:nPar
+    dimPar(i) = partitions(i).Xmax - partitions(i).Xmin + 1;
+    a = partitions(i).N/Nt;
+    
+    for j = 1:nPat
+        B(j) = double(Xpat(j)>=partitions(i).Xmin & Xpat(j)<=partitions(i).Xmax & Ypat(j)>=partitions(i).Ymin & Ypat(j)<=partitions(i).Ymax);
+        C(j) = double(Yt(j)>=partitions(i).Zmin & Yt(j)<=partitions(i).Zmax & Ypat(j)>=partitions(i).Ymin & Ypat(j)<=partitions(i).Ymax);
+    end
+    b = sum(B)/Nt;
+    c = sum(C)/Nt;
 
-[B,C] = deal(zeros(1,length(partitions)));
-for i=1:length(partitions)
-    B(i)=sum(Xpat>=partitions(i).Xmin & Xpat<=partitions(i).Xmax & Ypat>=partitions(i).Ymin & Ypat<=partitions(i).Ymax)/Nt;
-    C(i)=sum(Yt>=partitions(i).Zmin & Yt<=partitions(i).Zmax & Ypat>=partitions(i).Ymin & Ypat<=partitions(i).Ymax)/Nt;
+    d = (partitions(i).Ymax - partitions(i).Ymin+1)/Nt;    
+    
+    t(i)= a*log2((a*d)/(b*c));
 end
 
-A = [partitions.N]/Nt;
-D = ([partitions.Ymax] - [partitions.Ymin]+1)/Nt;
-T = nansum(A.*log2((A.*D)./(B.*C)));
+T = sum(t);
+
+% dimPar = ([partitions.Xmax] - [partitions.Xmin] + 1)';
+% 
+% [B,C] = deal(zeros(1,nPar));
+% for i=1:nPar
+%     B(i)=sum(Xpat>=partitions(i).Xmin & Xpat<=partitions(i).Xmax & Ypat>=partitions(i).Ymin & Ypat<=partitions(i).Ymax)/Nt;
+%     C(i)=sum(Yt>=partitions(i).Zmin & Yt<=partitions(i).Zmax & Ypat>=partitions(i).Ymin & Ypat<=partitions(i).Ymax)/Nt;
+% end
+% 
+% A = [partitions.N]/Nt;
+% D = ([partitions.Ymax] - [partitions.Ymin]+1)/Nt;
+% T = nansum(A.*log2((A.*D)./(B.*C)));
 
 

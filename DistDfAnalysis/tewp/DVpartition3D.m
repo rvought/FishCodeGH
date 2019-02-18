@@ -54,7 +54,16 @@ Zdiv=floor(mean([Zmin Zmax]));
 N=[sum(Xsub<=Xdiv & Ysub<=Ydiv & Zsub<=Zdiv) sum(Xsub>Xdiv & Ysub<=Ydiv & Zsub<=Zdiv) sum(Xsub<=Xdiv & Ysub>Ydiv & Zsub<=Zdiv) sum(Xsub>Xdiv & Ysub>Ydiv & Zsub<=Zdiv) ...
     sum(Xsub<=Xdiv & Ysub<=Ydiv & Zsub>Zdiv) sum(Xsub>Xdiv & Ysub<=Ydiv & Zsub>Zdiv) sum(Xsub<=Xdiv & Ysub>Ydiv & Zsub>Zdiv) sum(Xsub>Xdiv & Ysub>Ydiv & Zsub>Zdiv)];
 T=sum((mean(N)-N).^2)./mean(N);  % has been corrected to include a normalization factor in the denominator
-partitions=struct('Xmin',{},'Xmax',{},'Ymin',{},'Ymax',{},'Zmin',{},'Zmax',{},'N',{});
+
+partitions = struct('Xmin',{},'Xmax',{},'Ymin',{},'Ymax',{},'Zmin',{},'Zmax',{},'N',{});
+coder.varsize('partitions');
+coder.varsize('partitions.Xmin');
+coder.varsize('partitions.Xmax');
+coder.varsize('partitions.Ymin');
+coder.varsize('partitions.Ymax');
+coder.varsize('partitions.Zmin');
+coder.varsize('partitions.Zmax');
+coder.varsize('partitions.N');
 
 if T>icdf('chi2',1-alpha,7) && Xmax~=Xmin && Ymax~=Ymin && Zmax~=Zmin
     if N(1)~=0
@@ -82,12 +91,6 @@ if T>icdf('chi2',1-alpha,7) && Xmax~=Xmin && Ymax~=Ymin && Zmax~=Zmin
         partitions=[partitions DVpartition3D(X,Y,Z,Xdiv+1,Xmax,Ydiv+1,Ymax,Zdiv+1,Zmax)];
     end
 elseif sum(idx)~=0
-    partitions(1).Xmin=Xmin;
-    partitions(1).Xmax=Xmax;
-    partitions(1).Ymin=Ymin;
-    partitions(1).Ymax=Ymax;
-    partitions(1).Zmin=Zmin;
-    partitions(1).Zmax=Zmax;
-    partitions(1).N=sum(idx);
+    partitions = [partitions struct('Xmin',Xmin,'Xmax',Xmax,'Ymin',Ymin,'Ymax',Ymax,'Zmin',Zmin,'Zmax',Zmax,'N',sum(idx))];
 end
 

@@ -32,7 +32,7 @@ dist(isnan(df)) = NaN;
 dist = fillmissing(dist,'spline');
 df = fillmissing(df,'spline');
 
-smoothInterval = 15; % seconds
+smoothInterval = 30; % seconds
 smoothLength = round(smoothInterval/dt);
 
 dist = smoothdata(dist,'movmean',smoothLength,'omitnan');
@@ -41,9 +41,9 @@ df = smoothdata(df,'movmean',smoothLength,'omitnan');
 % dist = highpass(smoothdata(dist,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 % df = highpass(smoothdata(df,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 %%
-windowInterval = 60; % seconds
+windowInterval = 100; % seconds
 windowLength = round(windowInterval/dt);
-percOverlap = 95;
+percOverlap = 90;
 overlapLength = floor(windowLength*percOverlap/100);
 
 [DST,DF] = deal([]);
@@ -54,24 +54,29 @@ end
 T = buffer(t,windowLength,overlapLength,'nodelay');
 
 nWindows = size(DST,2)-1;
-maxDelay = round(windowLength*0.9);
+maxDelay = round(windowLength*0.25);
 
 %%
 
 
 [TE_DST_DF,TE_DF_DST] = deal(zeros(nWindows,maxDelay,nPairs));
-
+tic;
+TE = zeros(nWindows,maxDelay);
 parfor c = 1:nPairs
+    c
     for k = 1:nWindows
         for j = 1:maxDelay
     %         TE(k,j) = transferEntropyKDE(squeeze(DST(:,k,c)),squeeze(DF(:,k,c)),j,0,20,1);
-            TE_DST_DF(k,j,c) = transferEntropyPartition(squeeze(DST(:,k,c)),squeeze(DF(:,k,c)),0,j);
-            TE_DF_DST(k,j,c) = transferEntropyPartition(squeeze(DF(:,k,c)),squeeze(DST(:,k,c)),0,j);
+%             TE(k,j) = transferEntropyPartition_mex(squeeze(DST(:,k,c)),squeeze(DF(:,k,c)),j,1);
+
+            TE_DST_DF(k,j,c) = transferEntropyPartition_mex(squeeze(DST(:,k,c)),squeeze(DF(:,k,c)),j,1);    
+            TE_DF_DST(k,j,c) = transferEntropyPartition_mex(squeeze(DF(:,k,c)),squeeze(DST(:,k,c)),j,1);
         end
     end
 end
+toc;
 
-save te_results2 TE_DST_DF TE_DF_DST
+save te_results TE_DST_DF TE_DF_DST
 
 %%
 
@@ -80,12 +85,14 @@ save te_results2 TE_DST_DF TE_DF_DST
 % mean_dist = highpass(smoothdata(dist,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 % mean_df = highpass(smoothdata(df,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 
-[M,D] = deal(zeros(nWindows,nPairs));
+[M_DST_DF,D_DST_DF,M_DF_DST,D_DF_DST] = deal(zeros(nWindows,nPairs));
 for c = 1:nPairs
-%     [M(:,c),idx] = max(smoothdata(squeeze(TE_DST_DF(:,:,c))','movmean',smoothLength/4));
-%     D(:,c) = idx*dt;
-    [M(:,c),idx] = max(smoothdata(squeeze(TE_DF_DST(:,:,c))','movmean',smoothLength/4));
-    D(:,c) = idx*dt;
+%     [M_DST_DF(:,c),idx] = max(smoothdata(squeeze(TE_DST_DF(:,:,c))','movmean',smoothLength/4));
+    [M_DST_DF(:,c),idx] = max(squeeze(TE_DST_DF(:,:,c))');
+    D_DST_DF(:,c) = idx*dt;
+    
+    [M_DF_DST(:,c),idx] = max(squeeze(TE_DF_DST(:,:,c))');
+    D_DF_DST(:,c) = idx*dt;
 end
 
 for c = 1:nPairs
@@ -95,13 +102,14 @@ for c = 1:nPairs
     plot(t,mmnorm(dist(:,c)));
     plot(t,mmnorm(df(:,c)));
 
-    plot(mean(T(:,1:end-1)),mmnorm(D(:,c)),'.');
-    plot(mean(T(:,1:end-1)),mmnorm(M(:,c)));
+%     plot(mean(T(:,1:end-1)),mmnorm(D(:,c)),'.-');
+    plot(mean(T(:,1:end-1)),(M_DST_DF(:,c)));
+    plot(mean(T(:,1:end-1)),(M_DF_DST(:,c)));
     
 %     plot(mean(T(:,1:end-1)),mmnorm(D2(:,c)),'.');
 %     plot(mean(T(:,1:end-1)),mmnorm(M2(:,c)));
 
-    legend('Dist','DF','delay1','Max_TE1','delay2','Max_TE2');
+    legend('Dist','DF','M-DST-DF','M-DF-DST');%,'delay2','Max_TE2');
     hold off;
     pause;
 end
