@@ -43,7 +43,7 @@ df = smoothdata(df,'movmean',smoothLength,'omitnan');
 %%
 windowInterval = 100; % seconds
 windowLength = round(windowInterval/dt);
-percOverlap = 90;
+percOverlap = 99;
 overlapLength = floor(windowLength*percOverlap/100);
 
 [DST,DF] = deal([]);
@@ -62,8 +62,9 @@ maxDelay = round(windowLength*0.25);
 [TE_DST_DF,TE_DF_DST] = deal(zeros(nWindows,maxDelay,nPairs));
 tic;
 TE = zeros(nWindows,maxDelay);
-parfor c = 1:nPairs
+for c = 1%:nPairs
     c
+    tic;
     for k = 1:nWindows
         for j = 1:maxDelay
     %         TE(k,j) = transferEntropyKDE(squeeze(DST(:,k,c)),squeeze(DF(:,k,c)),j,0,20,1);
@@ -73,10 +74,11 @@ parfor c = 1:nPairs
             TE_DF_DST(k,j,c) = transferEntropyPartition_mex(squeeze(DF(:,k,c)),squeeze(DST(:,k,c)),j,1);
         end
     end
+    toc;
 end
 toc;
 
-save te_results TE_DST_DF TE_DF_DST
+% save te_results TE_DST_DF TE_DF_DST
 
 %%
 
@@ -95,21 +97,33 @@ for c = 1:nPairs
     D_DF_DST(:,c) = idx*dt;
 end
 
-for c = 1:nPairs
+DE = M_DST_DF - M_DF_DST;
+
+for c = 1%:nPairs
     clf, hold on;
     title(sprintf('Pair %d: %d<->%d',c,C(c,1),C(c,2)));
 
-    plot(t,mmnorm(dist(:,c)));
-    plot(t,mmnorm(df(:,c)));
+%     plot(t,mmnorm(dist(:,c)));
+%     plot(t,mmnorm(df(:,c)));
 
-%     plot(mean(T(:,1:end-1)),mmnorm(D(:,c)),'.-');
-    plot(mean(T(:,1:end-1)),(M_DST_DF(:,c)));
-    plot(mean(T(:,1:end-1)),(M_DF_DST(:,c)));
+    plot(mean(T),mmnorm(mean(DST(:,:,1))));
+    plot(mean(T),mmnorm(mean(DF(:,:,1))));
+
+    plot(mean(T(:,1:end-1)),M_DST_DF(:,c));
+    plot(mean(T(:,1:end-1)),M_DF_DST(:,c));
     
-%     plot(mean(T(:,1:end-1)),mmnorm(D2(:,c)),'.');
-%     plot(mean(T(:,1:end-1)),mmnorm(M2(:,c)));
+    plot(mean(T(:,1:end-1)),DE);
+%     plot(mean(T(:,1:end-1)),(M_DF_DST(:,c)));
+    
+%     plot(mean(T(:,1:end-1)),squeeze(TE_DST_DF(:,1,c))');
 
-    legend('Dist','DF','M-DST-DF','M-DF-DST');%,'delay2','Max_TE2');
+%     plot(mean(T(:,1:end-1)),mmnorm(D_DST_DF(:,c)),'.-');
+%     plot(mean(T(:,1:end-1)),mmnorm(D_DF_DST(:,c)),'.-');
+
+    plot(xlim,[0,0],'--k');
+    legend('Dist','DF','TE-DST-DF','TE-DF-DST','Difference');
+    grid on
+
     hold off;
     pause;
 end
