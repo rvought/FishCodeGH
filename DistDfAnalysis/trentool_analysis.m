@@ -41,10 +41,11 @@ df = smoothdata(df,'movmean',smoothLength,'omitnan');
 % dist = highpass(smoothdata(dist,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 % df = highpass(smoothdata(df,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 %%
-windowInterval = 100; % seconds
+windowInterval = 60; % seconds
 windowLength = round(windowInterval/dt);
-percOverlap = 99;
-overlapLength = floor(windowLength*percOverlap/100);
+% percOverlap = 99;
+% overlapLength = floor(windowLength*percOverlap/100);
+overlapLength = windowLength-1;
 
 [DST,DF] = deal([]);
 for k = 1:nPairs
@@ -54,15 +55,15 @@ end
 T = buffer(t,windowLength,overlapLength,'nodelay');
 
 nWindows = size(DST,2)-1;
-maxDelay = round(windowLength*0.25);
+maxDelay = round(windowLength*0.5);
 
 %%
 
 
 [TE_DST_DF,TE_DF_DST] = deal(zeros(nWindows,maxDelay,nPairs));
 tic;
-TE = zeros(nWindows,maxDelay);
-for c = 1%:nPairs
+% TE = zeros(nWindows,maxDelay);
+parfor c = 1:nPairs
     c
     tic;
     for k = 1:nWindows
@@ -78,7 +79,16 @@ for c = 1%:nPairs
 end
 toc;
 
-% save te_results TE_DST_DF TE_DF_DST
+save cave5_te_results TE_DST_DF TE_DF_DST
+
+%%
+
+
+for c = 1:nPairs
+    TE1(c) = transferEntropyPartition_mex(dist(:,c),df(:,c),1,1);
+    TE2(c) = transferEntropyPartition_mex(df(:,c),dist(:,c),1,1);
+end
+
 
 %%
 
@@ -99,21 +109,23 @@ end
 
 DE = M_DST_DF - M_DF_DST;
 
-for c = 1%:nPairs
+for c = 1:nPairs
     clf, hold on;
     title(sprintf('Pair %d: %d<->%d',c,C(c,1),C(c,2)));
 
-%     plot(t,mmnorm(dist(:,c)));
-%     plot(t,mmnorm(df(:,c)));
+    plot(t,mmnorm(dist(:,c)));
+    plot(t,mmnorm(df(:,c)));
 
-    plot(mean(T),mmnorm(mean(DST(:,:,1))));
-    plot(mean(T),mmnorm(mean(DF(:,:,1))));
+%     plot(mean(T),mmnorm(mean(DST(:,:,c))));
+%     plot(mean(T),mmnorm(mean(DF(:,:,c))));
 
     plot(mean(T(:,1:end-1)),M_DST_DF(:,c));
-    plot(mean(T(:,1:end-1)),M_DF_DST(:,c));
+    plot(mean(T(:,1:end-1)),mmnorm(D_DST_DF(:,c)));
     
-    plot(mean(T(:,1:end-1)),DE);
-%     plot(mean(T(:,1:end-1)),(M_DF_DST(:,c)));
+%     plot(mean(T(:,1:end-1)),M_DF_DST(:,c));
+%     plot(mean(T(:,1:end-1)),DE(:,c));
+
+    %     plot(mean(T(:,1:end-1)),(M_DF_DST(:,c)));
     
 %     plot(mean(T(:,1:end-1)),squeeze(TE_DST_DF(:,1,c))');
 
@@ -121,12 +133,55 @@ for c = 1%:nPairs
 %     plot(mean(T(:,1:end-1)),mmnorm(D_DF_DST(:,c)),'.-');
 
     plot(xlim,[0,0],'--k');
-    legend('Dist','DF','TE-DST-DF','TE-DF-DST','Difference');
+    legend('Dist','DF','TE-DST-DF');%,'TE-DF-DST','Difference');
     grid on
 
     hold off;
     pause;
 end
+
+%%
+
+clf, hold on;
+for c = 1:nPairs
+
+    plot(mean(DF(:,1:end-1,c)),M_DST_DF(:,c),'.b');
+%     plot(mean(DF(:,1:end-1,c)),M_DF_DST(:,c),'.r');
+    
+%     plot(mean(DST(:,1:end-1,c)),M_DST_DF(:,c),'.b');
+%     plot(mean(DST(:,1:end-1,c)),M_DF_DST(:,c),'.r');
+    
+%     plot3(mean(DST(:,1:end-1,c)),mean(DF(:,1:end-1,c)),M_DST_DF(:,c),'.b')
+%     plot3(mean(DST(:,1:end-1,c)),mean(DF(:,1:end-1,c)),M_DF_DST(:,c),'.r')
+end
+hold off;
+
+%%
+
+meanInfo = zeros(nFish,1);
+varInfo = zeros(nFish,1);
+for f = 1:nFish
+    idxPair = find(sum(C==f,2));
+    TE = M_DST_DF(:,idxPair);
+
+    clf, hold on;
+    plot(mean(T(:,1:end-1)),TE);
+
+    plot(mean(T(:,1:end-1)),mean(TE,2) + std(TE,[],2),'-k');
+    plot(mean(T(:,1:end-1)),mean(TE,2) - std(TE,[],2),'-k');
+    hold off;
+    
+    meanInfo(f) = mean(TE(:));
+    varInfo(f) = mean(std(TE,[],2));
+    title(sprintf('Fish %d',f));
+
+    pause;
+end
+
+
+%%
+
+
 
 %%
 
@@ -142,7 +197,6 @@ for j = 1:nWindows
     hold off;
     pause;
 end
-
 %%
 
 % crange = [-1,1];
