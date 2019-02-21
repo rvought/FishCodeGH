@@ -41,11 +41,11 @@ df = smoothdata(df,'movmean',smoothLength,'omitnan');
 % dist = highpass(smoothdata(dist,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 % df = highpass(smoothdata(df,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 %%
-windowInterval = 60; % seconds
+windowInterval = 250; % seconds
 windowLength = round(windowInterval/dt);
-% percOverlap = 99;
-% overlapLength = floor(windowLength*percOverlap/100);
-overlapLength = windowLength-1;
+percOverlap = 90;
+overlapLength = floor(windowLength*percOverlap/100);
+% overlapLength = windowLength-1;
 
 [DST,DF] = deal([]);
 for k = 1:nPairs
@@ -55,31 +55,35 @@ end
 T = buffer(t,windowLength,overlapLength,'nodelay');
 
 nWindows = size(DST,2)-1;
+
 maxDelay = round(windowLength*0.5);
+delayInt = round(5/dt); % Every 5 s;
+delays = (1:delayInt:maxDelay);
+nDelays = length(delays);
 
 %%
 
 
-[TE_DST_DF,TE_DF_DST] = deal(zeros(nWindows,maxDelay,nPairs));
+[TE_DST_DF,TE_DF_DST] = deal(zeros(nWindows,nDelays,nPairs));
 tic;
 % TE = zeros(nWindows,maxDelay);
 parfor c = 1:nPairs
     c
     tic;
     for k = 1:nWindows
-        for j = 1:maxDelay
+        for j = 1:nDelays
     %         TE(k,j) = transferEntropyKDE(squeeze(DST(:,k,c)),squeeze(DF(:,k,c)),j,0,20,1);
 %             TE(k,j) = transferEntropyPartition_mex(squeeze(DST(:,k,c)),squeeze(DF(:,k,c)),j,1);
 
-            TE_DST_DF(k,j,c) = transferEntropyPartition_mex(squeeze(DST(:,k,c)),squeeze(DF(:,k,c)),j,1);    
-            TE_DF_DST(k,j,c) = transferEntropyPartition_mex(squeeze(DF(:,k,c)),squeeze(DST(:,k,c)),j,1);
+            TE_DST_DF(k,j,c) = transferEntropyPartition_mex(squeeze(DST(:,k,c)),squeeze(DF(:,k,c)),delays(j),1);    
+            TE_DF_DST(k,j,c) = transferEntropyPartition_mex(squeeze(DF(:,k,c)),squeeze(DST(:,k,c)),delays(j),1);
         end
     end
     toc;
 end
 toc;
 
-save cave5_te_results TE_DST_DF TE_DF_DST
+save cave5_te_results2 TE_DST_DF TE_DF_DST
 
 %%
 
@@ -120,10 +124,10 @@ for c = 1:nPairs
 %     plot(mean(T),mmnorm(mean(DF(:,:,c))));
 
     plot(mean(T(:,1:end-1)),M_DST_DF(:,c));
-    plot(mean(T(:,1:end-1)),mmnorm(D_DST_DF(:,c)));
+%     plot(mean(T(:,1:end-1)),mmnorm(D_DST_DF(:,c)));
     
-%     plot(mean(T(:,1:end-1)),M_DF_DST(:,c));
-%     plot(mean(T(:,1:end-1)),DE(:,c));
+    plot(mean(T(:,1:end-1)),M_DF_DST(:,c));
+    plot(mean(T(:,1:end-1)),DE(:,c));
 
     %     plot(mean(T(:,1:end-1)),(M_DF_DST(:,c)));
     
@@ -145,10 +149,10 @@ end
 clf, hold on;
 for c = 1:nPairs
 
-    plot(mean(DF(:,1:end-1,c)),M_DST_DF(:,c),'.b');
+%     plot(mean(DF(:,1:end-1,c)),M_DST_DF(:,c),'.b');
 %     plot(mean(DF(:,1:end-1,c)),M_DF_DST(:,c),'.r');
     
-%     plot(mean(DST(:,1:end-1,c)),M_DST_DF(:,c),'.b');
+    plot(mean(DST(:,1:end-1,c)),M_DST_DF(:,c),'.b');
 %     plot(mean(DST(:,1:end-1,c)),M_DF_DST(:,c),'.r');
     
 %     plot3(mean(DST(:,1:end-1,c)),mean(DF(:,1:end-1,c)),M_DST_DF(:,c),'.b')
