@@ -54,8 +54,8 @@ yminedge = []; yscale = [];
 
     % Use stand centers for all of the data (extend well beyond limits of
     % possible fish positions)
-    ctrs{1} = -300:100:300;
-    ctrs{2} = -300:100:300;
+    ctrs{1} = -300:75:300;
+    ctrs{2} = -300:75:300;
 
     
     
