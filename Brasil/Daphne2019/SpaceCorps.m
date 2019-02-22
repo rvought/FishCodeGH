@@ -6,6 +6,10 @@ function [out, cmbs] = SpaceCorps(in, casu, tims)
 
 %% Setup
 
+
+
+
+
 if nargin < 3 % If the user did not specify the time frame, take the whole thing
     tims = [0 999999];
 end
@@ -52,10 +56,14 @@ yminedge = []; yscale = [];
 %     qwer = ctrs{1}
 %     asdf = ctrs{2}
 
-    % Use stand centers for all of the data (extend well beyond limits of
-    % possible fish positions)
-    ctrs{1} = -300:75:300;
-    ctrs{2} = -300:75:300;
+% THE CRITICAL PARAMETER (sort of...)
+% Use standard centers for all of the data (extend well beyond limits of
+% possible fish positions)
+
+BoxLen = 50; % We've tried 50, 60, 75, 100.
+    ctrs{1} = -300:BoxLen:300;
+    ctrs{2} = -300:BoxLen:300;
+
 
     
     
