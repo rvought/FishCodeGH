@@ -178,6 +178,7 @@ for j = numfish:-1:1 % For each fish
             out(j).realXY(:,out(j).valididx(rr)) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))]; 
 
     end
+
     
     %% Prepare data for analysis for each real and jiggled and random fish
 
@@ -203,6 +204,7 @@ for j = numfish:-1:1 % For each fish
     
     end % If we have data for the current fish
 end % Cycle through each fish
+
 
 
 %% Cycle through pairs of fish
