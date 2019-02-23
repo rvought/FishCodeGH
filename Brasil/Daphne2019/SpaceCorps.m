@@ -6,10 +6,6 @@ function [out, cmbs] = SpaceCorps(in, casu, tims)
 
 %% Setup
 
-
-
-
-
 if nargin < 3 % If the user did not specify the time frame, take the whole thing
     tims = [0 999999];
 end
@@ -60,12 +56,9 @@ yminedge = []; yscale = [];
 % Use standard centers for all of the data (extend well beyond limits of
 % possible fish positions)
 
-BoxLen = 50; % We've tried 50, 60, 75, 100.
+BoxLen = 50; % We've tried 50, 60, 75, 100. This is in cm.
     ctrs{1} = -300:BoxLen:300;
     ctrs{2} = -300:BoxLen:300;
-
-
-    
     
 % Distance bins between pairs of fish for histogram
     dctrs = 1:10:500;    
@@ -76,10 +69,11 @@ numfish = length(in.fish); % How many fish in this recording
 
 for j = numfish:-1:1 % For each fish    
     
-    % Record the size of the box for analysis
+    % Record the size of the box for analysis (Calculated above)
     out(j).xbounds = [xminedge xminedge+xscale];
     out(j).ybounds = [yminedge yminedge+yscale];
-    % Record the centers of the bins for plotting.
+    
+    % Record the centers of the bins for analysis (Determined above)
     out(j).ctrs = ctrs;
     
     % Get valid data (check frequency data to omit NaNs)            
