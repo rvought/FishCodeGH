@@ -79,28 +79,29 @@ for j = numfish:-1:1 % For each fish
     % Get valid data (check frequency data to omit NaNs)            
     out(j).valididx = find(~isnan(in.fish(j).freq(tr,2)));
     
-    if ~isempty(out(j).valididx) % Make sure that we have any data before proceding
-%    if sum(out(j).valididx) > 0 
+    if ~isempty(out(j).valididx) % Make sure that we have data before proceding
         
     %% Generate corresponding jiggled and random fish
-        % OPTION: Starts at a random spot within the grid
-        %  rnd(j).xy(:,out(j).valididx(1)) = [rand(1,1)*xscale rand(1,1)*yscale];
         
-        % Both random and jiggled start at the same spot as the real fish in the grid but with
-        % jiggled angle
+        % Both random and jiggled start at the same spot as the real fish in the grid 
         
-        out(j).rndXY(:,out(j).valididx(1)) = [in.fish(j).x(out(j).valididx(1)) in.fish(j).y(out(j).valididx(1))];
+        out(j).rndXY(:,out(j).valididx(1)) = [in.fish(j).x(out(j).valididx(1)) in.fish(j).y(out(j).valididx(1))]; % First XY for randome
+
+        % Both random and jiggled fish have a jiggled initial theta
         
             firstheta = atan2(in.fish(j).y(out(j).valididx(2)) - in.fish(j).y(out(j).valididx(1)), in.fish(j).x(out(j).valididx(2)) - in.fish(j).x(out(j).valididx(1)));
             deltatheta = constrainer * (rand(1,1) - 0.5); % Set a random change in direction for our artificial fish
-        out(j).randtheta(1) = firstheta + deltatheta;
+
+        out(j).randtheta(1) = firstheta + deltatheta; % First theta for Random
         
+        % Copy into the jiggle data
         out(j).jigXY = out(j).rndXY; 
-        out(j).jiggletheta(1) = firstheta + deltatheta;
+        out(j).jiggletheta(1) = out(j).randtheta(1);
         
     % Cycle for every valid data point in original recording
     % Both jiggled and random fish move the same distance as the real fish, but with jiggled change in direction
     for rr = 2:length(out(j).valididx)
+        
             % Put the fish positions into a convenient format and calculate
             % the distance and angle of the real fish 
             tmpXY(1,:) = [in.fish(j).x(out(j).valididx(rr-1)), in.fish(j).y(out(j).valididx(rr-1))];
@@ -131,7 +132,8 @@ for j = numfish:-1:1 % For each fish
 
             end
 
-            % FINALLY - Movement with the same distance as real but with altered angles        
+            % FINALLY - Movement with the same distance as real but with altered angles (next XY position)
+            
             out(j).jigXY(:,out(j).valididx(rr)) = [out(j).jigXY(1,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*cos(out(j).jiggletheta(rr)), out(j).jigXY(2,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*sin(out(j).jiggletheta(rr))]; 
             out(j).rndXY(:,out(j).valididx(rr)) = [out(j).rndXY(1,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*cos(out(j).randtheta(rr)), out(j).rndXY(2,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*sin(out(j).randtheta(rr))]; 
                   
