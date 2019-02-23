@@ -137,12 +137,12 @@ for j = numfish:-1:1 % For each fish
             out(j).jigXY(:,out(j).valididx(rr)) = [out(j).jigXY(1,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*cos(out(j).jiggletheta(rr)), out(j).jigXY(2,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*sin(out(j).jiggletheta(rr))]; 
             out(j).rndXY(:,out(j).valididx(rr)) = [out(j).rndXY(1,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*cos(out(j).randtheta(rr)), out(j).rndXY(2,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*sin(out(j).randtheta(rr))]; 
                   
-            % BUT... we don't want to randomly escape from the grid, so if we
+            % BUT... we don't want to wander out of the grid, so if we
             % violate the boundaries, we 'reflect' back in.  This is
             % extremely rudimentary - there are many more elegant
             % solutions.
             
-            % Catch random exits
+            % Catch 'random' exits
             if out(j).rndXY(1,end) < xminedge
                 out(j).rndXY(1,end) = xminedge + xminedge - out(j).rndXY(1,end);
             end
@@ -156,7 +156,7 @@ for j = numfish:-1:1 % For each fish
                 out(j).rndXY(2,end) = (yminedge + yscale) - (out(j).rndXY(2,end) - (yminedge + yscale));
             end
             
-            % Catch jiggle exits
+            % Catch 'jiggle' exits
             if out(j).jigXY(1,end) < xminedge
                 out(j).jigXY(1,end) = xminedge + xminedge - out(j).jigXY(1,end);
             end
@@ -170,7 +170,7 @@ for j = numfish:-1:1 % For each fish
                 out(j).jigXY(2,end) = (yminedge + yscale) - (out(j).jigXY(2,end) - (yminedge + yscale));
             end
             
-            % And a copy of the original data, just for plotting fun
+            % And a copy of the original data is put into the structure, just for plotting fun
             out(j).realXY(:,out(j).valididx(rr)) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))]; 
 
     end
@@ -199,6 +199,7 @@ for j = numfish:-1:1 % For each fish
     out(j).alljighist = zeros(1,length(dctrs));  
     
     end % If we have data for the current fish
+
 end % Cycle through each fish
 
 
