@@ -33,10 +33,16 @@ for j = length(feesh):-1:1 % For each fish
 
    for k = 2:length(idx)
    % Find only consecutive data 
-    if ~isnan(in.fish(j).freq(idx-1,2)) && ~isnan(in.fish(j).freq(idx,2))
+    if ~isnan(in.fish(j).freq(idx(k)-1,2)) && ~isnan(in.fish(j).freq(idx(k),2))
         % Calculate distance
-        
-    end    
+            tmpXY(1,:) = [in.fish(j).x(idx(k)-1), in.fish(j).y(idx(k)-1)];
+            tmpXY(2,:) = [in.fish(j).x(idx(k)), in.fish(j).yidx(k)];
+            
+            out(j).pdist(kk) = pdist(tmpXY); % How far did the real fish travel?
+            out(j).pdistim(kk) = in.fish(j).freq(idx(k),2);
+    end 
+   end
+   
 end
 
 
