@@ -34,7 +34,7 @@ for j = length(feesh):-1:1 % For each fish
    for k = 2:length(idx)
    % Find only consecutive data 
     if ~isnan(in.fish(j).freq(idx-1,2)) && ~isnan(in.fish(j).freq(idx,2))
-        
+        % Calculate distance
         
     end    
 end
