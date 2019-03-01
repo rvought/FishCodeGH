@@ -39,7 +39,7 @@ for j = length(feesh):-1:1 % For each fish
             tmpXY(2,:) = [in.fish(j).x(idx(k)), in.fish(j).y(idx(k))];
             
             out(j).pdist(k) = pdist(tmpXY); % How far did the real fish travel?
-            out(j).pdistim(k) = in.fish(j).freq(idx(k),2);
+            out(j).pdistim(k) = in.fish(j).freq(idx(k),1);
     end 
    end
    
