@@ -27,7 +27,17 @@ end
 % We want to use only sequential data (no missing samples)
 % We want to avoid data in which the position of the fish is poorly estimated.
 
+for j = length(feesh):-1:1 % For each fish
 
+   idx = find(in.fish(j).freq(:,1) > tim(1) & in.fish(j).freq(:,1) < tim(2)); % Indices for the time range we want
+
+   for k = 2:length(idx)
+   % Find only consecutive data 
+    if ~isnan(in.fish(j).freq(idx-1,2)) && ~isnan(in.fish(j).freq(idx,2))
+        
+        
+    end    
+end
 
 
 
