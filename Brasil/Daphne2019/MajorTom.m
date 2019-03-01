@@ -36,7 +36,7 @@ for j = length(feesh):-1:1 % For each fish
     if ~isnan(in.fish(j).freq(idx(k)-1,2)) && ~isnan(in.fish(j).freq(idx(k),2))
         % Calculate distance
             tmpXY(1,:) = [in.fish(j).x(idx(k)-1), in.fish(j).y(idx(k)-1)];
-            tmpXY(2,:) = [in.fish(j).x(idx(k)), in.fish(j).yidx(k)];
+            tmpXY(2,:) = [in.fish(j).x(idx(k)), in.fish(j).y(idx(k)];
             
             out(j).pdist(kk) = pdist(tmpXY); % How far did the real fish travel?
             out(j).pdistim(kk) = in.fish(j).freq(idx(k),2);
