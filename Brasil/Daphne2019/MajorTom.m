@@ -21,7 +21,7 @@ for j = length(feesh):-1:1 % For each fish
    out(j).numfish = length(feesh);
     
 end
-figure(7); clf; hold on;
+figure(7); clf; 
 %% Movement distance and velocity
 
 % We want to use only sequential data (no missing samples)
@@ -43,8 +43,9 @@ for j = length(feesh):-1:1 % For each fish
     end 
    end
 
-   figure(7); plot(out(j).pdistim)
-   
+   ax(1) = subplot(211); hold on; plot(out(j).pdist, '.-')
+   ax(2) = subplot(212); hold on; plot(diff(out(j).pdist), '.-')
+   linkaxes(ax, 'x')
 end
 
 
