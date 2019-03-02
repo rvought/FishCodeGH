@@ -1,4 +1,4 @@
-function [fish pairs stats] = Pele(cave, srf)
+function [fish, pairs, stts] = Pele(cave, srf)
 
 
 %% Fish Amplitudes
@@ -18,12 +18,18 @@ for j=1:length(cave)
     end
 end
 
-stats.Amp.mSurfaceAmp = mean(SurfaceAmps(SurfaceAmps < OutlierLevel));
-stats.Amp.mCaveAmp = mean(CaveAmps(CaveAmps < OutlierLevel));
+stts.Amp.meanSurfaceAmp = mean(SurfaceAmps(SurfaceAmps < OutlierLevel));
+stts.Amp.meanCaveAmp = mean(CaveAmps(CaveAmps < OutlierLevel));
+stts.Amp.stdSurfaceAmp = std(SurfaceAmps(SurfaceAmps < OutlierLevel));
+stts.Amp.stdCaveAmp = std(CaveAmps(CaveAmps < OutlierLevel));
 
-[stats.Amp.H,stats.Amp.P,stats.Amp.CI,stats.Amp.STATS] = ttest2(CaveAmps(CaveAmps < OutlierLevel), SurfaceAmps(SurfaceAmps <OutlierLevel));
+[stts.Amp.H,stts.Amp.P,stts.Amp.CI,stts.Amp.STATS] = ttest2(CaveAmps(CaveAmps < OutlierLevel), SurfaceAmps(SurfaceAmps <OutlierLevel));
 
-fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stats.Amp.P);
+fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stts.Amp.P);
+fprintf('Cave mean & std %1.4f %1.4f \n', stts.Amp.meanCaveAmp, stts.Amp.stdCaveAmp);
+fprintf('Surface mean & std %1.4f %1.4f \n', stts.Amp.meanSurfaceAmp, stts.Amp.stdSurfaceAmp);
+
+
 figure(1); clf;
     ctrs = 0:0.0001:0.004;
     ax(1) = subplot(211); histogram(CaveAmps(CaveAmps < OutlierLevel),ctrs); 
