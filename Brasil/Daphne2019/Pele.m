@@ -3,6 +3,8 @@ function [fish pairs stats] = Pele(cave, srf)
 
 %% Fish Amplitudes
 
+OutlierLevel = 0.005;
+
 CaveAmps = []; SurfaceAmps = []; 
 
 for j=1:length(srf) 
@@ -15,7 +17,10 @@ for j=1:length(cave)
         CaveAmps(end+1) = cave(j).fish(k).dipStrength; 
     end
 end
-mSurfaceAmpl = mean
+
+stats.Amp.mSurfaceAmp = mean(SurfaceAmps(SurfaceAmps < 0.005));
+stats.Amp.mCaveAmp = mean(CaveAmps(CaveAmps < 0.005));
+
 
 
 
