@@ -1,6 +1,6 @@
 function stts = bFishAmpComparo(cfish, sfish)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% Usage: stts = bFishAmpComparo(cfish, sfish) 
+% For use with the 2016 Brasil Cave and Surface data
 
 OutlierLevel = 0.005;
 
