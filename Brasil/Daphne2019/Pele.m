@@ -26,6 +26,9 @@ stats.Amp.mCaveAmp = mean(CaveAmps(CaveAmps < OutlierLevel));
 fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stats.Amp.P);
 figure(1); clf;
 
+subplot(211); histogram(CaveAmps,ctrs); subplot(212); histogram(SurfaceAmps(SurfaceAmps < 0.005), ctrs);
+
+
 
 %% cave 1, 1 fish, 1000 seconds
 
