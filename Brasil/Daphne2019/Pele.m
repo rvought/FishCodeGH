@@ -1,45 +1,6 @@
 function [fish, pairs, stts] = Pele(cave, srf)
 
 
-%% Fish Amplitudes
-
-OutlierLevel = 0.005;
-
-CaveAmps = []; SurfaceAmps = []; 
-
-for j=1:length(srf) 
-    for k=1:length(srf(j).fish) 
-        SurfaceAmps(end+1) = srf(j).fish(k).dipStrength; 
-    end
-end
-for j=1:length(cave)
-    for k=1:length(cave(j).fish)
-        CaveAmps(end+1) = cave(j).fish(k).dipStrength; 
-    end
-end
-
-stts.Amp.meanSurfaceAmp = mean(SurfaceAmps(SurfaceAmps < OutlierLevel));
-stts.Amp.meanCaveAmp = mean(CaveAmps(CaveAmps < OutlierLevel));
-stts.Amp.stdSurfaceAmp = std(SurfaceAmps(SurfaceAmps < OutlierLevel));
-stts.Amp.stdCaveAmp = std(CaveAmps(CaveAmps < OutlierLevel));
-
-[stts.Amp.H,stts.Amp.P,stts.Amp.CI,stts.Amp.STATS] = ttest2(CaveAmps(CaveAmps < OutlierLevel), SurfaceAmps(SurfaceAmps <OutlierLevel));
-
-fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stts.Amp.P);
-fprintf('Cave mean & std %1.4f %1.4f \n', stts.Amp.meanCaveAmp, stts.Amp.stdCaveAmp);
-fprintf('Surface mean & std %1.4f %1.4f \n', stts.Amp.meanSurfaceAmp, stts.Amp.stdSurfaceAmp);
-
-
-figure(1); clf;
-    ctrs = 0:0.0001:0.004;
-    ax(1) = subplot(211); histogram(CaveAmps(CaveAmps < OutlierLevel),ctrs); 
-        text(0.002,20, 'CaveFish EOD dipole Strengths');
-    ax(2) = subplot(212); histogram(SurfaceAmps(SurfaceAmps < OutlierLevel), ctrs);
-        text(0.002,20, 'Surface Fish EOD dipole Strengths');
-    linkaxes(ax, 'xy');
-    xlim([0 0.004]);
-
-
 
 %% cave 1, 1 fish, 1000 seconds
 
