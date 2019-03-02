@@ -1,4 +1,4 @@
-function stts = bFishAmpComparo(cfish,sfish)
+function stts = bFishAmpComparo(cfish, sfish)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
