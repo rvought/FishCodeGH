@@ -28,7 +28,7 @@ figure(1); clf;
     ctrs = 0:0.0001:0.004;
     ax(1) = subplot(211); histogram(CaveAmps(CaveAmps < OutlierLevel),ctrs); 
     ax(2) = subplot(212); histogram(SurfaceAmps(SurfaceAmps < OutlierLevel), ctrs);
-    linkaxes(ax, 'x');
+    linkaxes(ax, 'xy');
     xlim([0 0.004]);
 
 
