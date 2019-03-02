@@ -25,8 +25,11 @@ stats.Amp.mCaveAmp = mean(CaveAmps(CaveAmps < OutlierLevel));
 
 fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stats.Amp.P);
 figure(1); clf;
-
-subplot(211); histogram(CaveAmps,ctrs); subplot(212); histogram(SurfaceAmps(SurfaceAmps < 0.005), ctrs);
+    ctrs = 0:0.0001:0.004;
+    ax(1) = subplot(211); histogram(CaveAmps(CaveAmps < OutlierLevel),ctrs); 
+    ax(2) = subplot(212); histogram(SurfaceAmps(SurfaceAmps < OutlierLevel), ctrs);
+    linkaxes(ax, 'x');
+    xlim([0 0.004]);
 
 
 
