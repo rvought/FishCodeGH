@@ -27,9 +27,9 @@ fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stats.A
 figure(1); clf;
     ctrs = 0:0.0001:0.004;
     ax(1) = subplot(211); histogram(CaveAmps(CaveAmps < OutlierLevel),ctrs); 
-        text(2,20, 'CaveFish EOD dipole Strengths');
+        text(0.002,20, 'CaveFish EOD dipole Strengths');
     ax(2) = subplot(212); histogram(SurfaceAmps(SurfaceAmps < OutlierLevel), ctrs);
-        text(2,20, 'Surface Fish EOD dipole Strengths');
+        text(0.002,20, 'Surface Fish EOD dipole Strengths');
     linkaxes(ax, 'xy');
     xlim([0 0.004]);
 
