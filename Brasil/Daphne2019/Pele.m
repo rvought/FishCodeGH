@@ -21,7 +21,9 @@ end
 stats.Amp.mSurfaceAmp = mean(SurfaceAmps(SurfaceAmps < 0.005));
 stats.Amp.mCaveAmp = mean(CaveAmps(CaveAmps < 0.005));
 
+[stats.Amp.H,stats.Amp.P,stats.Amp.CI,stats.Amp.STATS] = ttest2(CaveAmps(CaveAmps < 0.005), SurfaceAmps(SurfaceAmps < 0.005));
 
+fprintf('Amplitudes between cave and surface pVal %
 
 
 %% cave 1, 1 fish, 1000 seconds
