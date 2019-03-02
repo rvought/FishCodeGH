@@ -18,12 +18,12 @@ for j=1:length(cave)
     end
 end
 
-stats.Amp.mSurfaceAmp = mean(SurfaceAmps(SurfaceAmps < 0.005));
-stats.Amp.mCaveAmp = mean(CaveAmps(CaveAmps < 0.005));
+stats.Amp.mSurfaceAmp = mean(SurfaceAmps(SurfaceAmps < OutlierLevel));
+stats.Amp.mCaveAmp = mean(CaveAmps(CaveAmps < OutlierLevel));
 
-[stats.Amp.H,stats.Amp.P,stats.Amp.CI,stats.Amp.STATS] = ttest2(CaveAmps(CaveAmps < 0.005), SurfaceAmps(SurfaceAmps < 0.005));
+[stats.Amp.H,stats.Amp.P,stats.Amp.CI,stats.Amp.STATS] = ttest2(CaveAmps(CaveAmps < OutlierLevel), SurfaceAmps(SurfaceAmps <OutlierLevel));
 
-fprintf('Amplitudes between cave and surface pVal = %1.4f \n', stats.Amp.P);
+fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stats.Amp.P);
 
 
 %% cave 1, 1 fish, 1000 seconds
