@@ -25,9 +25,9 @@ stts.stdCaveAmp = std(CaveAmps(CaveAmps < OutlierLevel));
 
 [stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps(CaveAmps < OutlierLevel), SurfaceAmps(SurfaceAmps <OutlierLevel));
 
-    fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stts.Amp.P);
-    fprintf('Cave mean & std %1.4f %1.4f \n', stts.Amp.meanCaveAmp*100, stts.Amp.stdCaveAmp*100);
-    fprintf('Surface mean & std %1.4f %1.4f \n', stts.Amp.meanSurfaceAmp*100, stts.Amp.stdSurfaceAmp*100);
+    fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stts.P);
+    fprintf('Cave mean & std %1.4f %1.4f \n', stts.Amp.meanCaveAmp*100, stts.stdCaveAmp*100);
+    fprintf('Surface mean & std %1.4f %1.4f \n', stts.meanSurfaceAmp*100, stts.stdSurfaceAmp*100);
 
 
 figure(1); clf;
