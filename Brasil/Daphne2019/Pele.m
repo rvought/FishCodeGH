@@ -24,6 +24,7 @@ stats.Amp.mCaveAmp = mean(CaveAmps(CaveAmps < OutlierLevel));
 [stats.Amp.H,stats.Amp.P,stats.Amp.CI,stats.Amp.STATS] = ttest2(CaveAmps(CaveAmps < OutlierLevel), SurfaceAmps(SurfaceAmps <OutlierLevel));
 
 fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stats.Amp.P);
+figure(1); clf;
 
 
 %% cave 1, 1 fish, 1000 seconds
