@@ -1,6 +1,10 @@
 function [fish pairs stats] = Pele(cave, srf)
 
 
+%% Fish Amplitudes
+
+for j=1:length(srf); for k=1:length(srf(j).fish); SurfaceAmps(end+1) = srf(j).fish(k).dipStrength; end; end;
+
 
 
 %% cave 1, 1 fish, 1000 seconds
