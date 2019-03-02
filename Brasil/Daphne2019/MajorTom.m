@@ -43,6 +43,8 @@ for j = length(feesh):-1:1 % For each fish
     end 
    end
    
+   out(j).totaldist = sum(out(j).pdist);
+   
 end
 
 
