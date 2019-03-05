@@ -134,9 +134,7 @@ for j = smp % For every stimulus that our user asked to examine
                 
                 stims(curdx).dur = Xs(2) - Xs(1);
                 
-                
-                
-                
+                                
                 curdx = curdx + 1;
                
                 
