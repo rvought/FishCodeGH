@@ -55,7 +55,7 @@ out.cvel = cvel;
 out.cacc = cacc;
 
 
-thresh = 0.0001;fi
+thresh = 0.0001;
 goodpoints = find(abs(av(:,1)) < thresh); 
 pv = pv(goodpoints,:);
 av = av(goodpoints,:);
