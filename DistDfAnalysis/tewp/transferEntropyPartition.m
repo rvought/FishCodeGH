@@ -52,11 +52,11 @@ end
 
 % ordinal sampling (ranking)
 Nt=length(Xpat);
-[~,IX]=sort(Xpat);
+[~,IX]=sortrows(Xpat);
 Xpat(IX)=1:Nt;
-[~,IX]=sort(Ypat);
+[~,IX]=sortrows(Ypat);
 Ypat(IX)=1:Nt;
-[~,IX]=sort(Yt);
+[~,IX]=sortrows(Yt);
 Yt(IX)=1:Nt;
 
 % compute transfer entropy

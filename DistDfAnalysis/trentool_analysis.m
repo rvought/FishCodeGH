@@ -7,12 +7,15 @@ addpath('tewp');
 
 load CaveDataRev2018a.mat
 
+% load SurfaceDataRev2018a.mat
+% cave = srf;
+
 mmnorm = @(x) ( x - repmat(min(x),size(x,1),1) ) ./ ( repmat(max(x),size(x,1),1) - repmat(min(x),size(x,1),1) );
 
 
 %% Compute dfs and distances
 
-c = 5;
+c = 2;
 
 nFish = length(cave(c).fish);
 t = cave(c).t;
@@ -27,10 +30,12 @@ for k = 1:nPairs
     dist(:,k) = sqrt((cave(c).fish(C(k,1)).x - cave(c).fish(C(k,2)).x).^2 + (cave(c).fish(C(k,1)).y - cave(c).fish(C(k,2)).y).^2);
     df(:,k) = abs(cave(c).fish(C(k,1)).freq(:,2) - cave(c).fish(C(k,2)).freq(:,2));
 end
-dist(isnan(df)) = NaN;
 
-dist = fillmissing(dist,'spline');
-df = fillmissing(df,'spline');
+nanIdx = isnan(df);
+dist(nanIdx) = NaN;
+
+% dist = fillmissing(dist,'spline');
+% df = fillmissing(df,'spline');
 
 smoothInterval = 30; % seconds
 smoothLength = round(smoothInterval/dt);
@@ -38,10 +43,13 @@ smoothLength = round(smoothInterval/dt);
 dist = smoothdata(dist,'movmean',smoothLength,'omitnan');
 df = smoothdata(df,'movmean',smoothLength,'omitnan');
 
+dist = fillmissing(dist,'nearest');
+df = fillmissing(df,'nearest');
+
 % dist = highpass(smoothdata(dist,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 % df = highpass(smoothdata(df,'movmean',smoothLength,'omitnan'),0.001,1/dt,'ImpulseResponse','iir');
 %%
-windowInterval = 250; % seconds
+windowInterval = 200; % seconds
 windowLength = round(windowInterval/dt);
 percOverlap = 90;
 overlapLength = floor(windowLength*percOverlap/100);
@@ -57,7 +65,7 @@ T = buffer(t,windowLength,overlapLength,'nodelay');
 nWindows = size(DST,2)-1;
 
 maxDelay = round(windowLength*0.5);
-delayInt = round(5/dt); % Every 5 s;
+delayInt = round(1/dt); % Every 1 s;
 delays = (1:delayInt:maxDelay);
 nDelays = length(delays);
 
@@ -83,7 +91,8 @@ parfor c = 1:nPairs
 end
 toc;
 
-save cave5_te_results2 TE_DST_DF TE_DF_DST
+dataset = 'srf2';
+save srf2_te_results dataset TE_DST_DF TE_DF_DST
 
 %%
 
@@ -152,7 +161,7 @@ for c = 1:nPairs
 %     plot(mean(DF(:,1:end-1,c)),M_DST_DF(:,c),'.b');
 %     plot(mean(DF(:,1:end-1,c)),M_DF_DST(:,c),'.r');
     
-    plot(mean(DST(:,1:end-1,c)),M_DST_DF(:,c),'.b');
+%     plot(mean(DST(:,1:end-1,c)),M_DST_DF(:,c),'.b');
 %     plot(mean(DST(:,1:end-1,c)),M_DF_DST(:,c),'.r');
     
 %     plot3(mean(DST(:,1:end-1,c)),mean(DF(:,1:end-1,c)),M_DST_DF(:,c),'.b')
