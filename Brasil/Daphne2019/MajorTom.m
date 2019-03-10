@@ -43,8 +43,8 @@ for j = length(feesh):-1:1 % For each fish
             out(j).pdist(k) = pdist(tmpXY); % How far did the real fish travel?
             out(j).pdistim(k) = in.fish(j).freq(idx(k),1);
             
-            out(j).x(:,k-1) = [in.fish(j).x(idx(k-1)), in.fish(j).x(idx(k))];
-            out(j).y(:,k-1) = [in.fish(j).y(idx(k-1)), in.fish(j).y(idx(k))];
+            out(j).x(k-1,:) = [in.fish(j).x(idx(k-1)), in.fish(j).x(idx(k))];
+            out(j).y(k-1,:) = [in.fish(j).y(idx(k-1)), in.fish(j).y(idx(k))];
     end 
    end
    
@@ -60,7 +60,7 @@ fsh = 1;
 clrs = hot(100);
 for p = 1:length(out(fsh).pdist)
     curcol = max([1, round(100*(out(fsh).pdist(p) / max(out(fsh).pdist)))]);
-    plot(out(fsh).x(:,p), out(fsh).y(:,p), 'Color', clrs(curcol,:));
+    plot(out(fsh).x(p,:), out(fsh).y(p,:), 'Color', clrs(curcol,:));
 end
 
 end
