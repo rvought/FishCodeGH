@@ -31,6 +31,9 @@ for j = length(feesh):-1:1 % For each fish
 
    idx = find(in.fish(j).freq(:,1) > tim(1) & in.fish(j).freq(:,1) < tim(2)); % Indices for the time range we want
 
+   out(j).x(1) = in.fish(j).x(idx(1));
+   out(j).y(1) = in.fish(j).y(idx(1));
+   
    for k = 2:length(idx)
    % Find only consecutive data 
     if ~isnan(in.fish(j).freq(idx(k)-1,2)) && ~isnan(in.fish(j).freq(idx(k),2))
@@ -40,13 +43,19 @@ for j = length(feesh):-1:1 % For each fish
             
             out(j).pdist(k) = pdist(tmpXY); % How far did the real fish travel?
             out(j).pdistim(k) = in.fish(j).freq(idx(k),1);
+            
+            out(j).x(k) = in.fish(j).x(idx(k));
+            out(j).y(k) = in.fish(j).y(idx(k));
     end 
    end
-
+   
    ax(1) = subplot(211); hold on; plot(out(j).pdist, '.-')
    ax(2) = subplot(212); hold on; plot(diff(out(j).pdist), '.-')
    linkaxes(ax, 'x')
 end
+
+
+% Useful code
 
 
 
