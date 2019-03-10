@@ -62,7 +62,7 @@ end
 fsh = 1;
 clrs = hot(100);
 for p = 1:length(out(fsh).x)-1
-    curcol = min([1, round(100*(out(fsh).pdist(p) / max(out(fsh).pdist)))]);
+    curcol = max([1, round(100*(out(fsh).pdist(p) / max(out(fsh).pdist)))]);
     plot([out(fsh).x(p), out(fsh).x(p+1)], [out(fsh).y(p), out(fsh).y(p+1)], 'Color', clrs(curcol,:));
 end
 
