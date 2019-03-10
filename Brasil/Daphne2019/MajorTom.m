@@ -55,7 +55,7 @@ end
 
 
 % Useful code
-
+figure(10); clf; hold on;
 fsh = 1;
 clrs = hot(100);
 for p = 1:length(out(fsh).pdist)
