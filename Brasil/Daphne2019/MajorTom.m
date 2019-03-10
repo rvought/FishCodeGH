@@ -32,9 +32,6 @@ figure(7); clf;
 for j = length(feesh):-1:1 % For each fish
 
    idx = find(in.fish(j).freq(:,1) > tim(1) & in.fish(j).freq(:,1) < tim(2)); % Indices for the time range we want
-
-   out(j).x(1) = in.fish(j).x(idx(1));
-   out(j).y(1) = in.fish(j).y(idx(1));
    
    for k = 2:length(idx)
    % Find only consecutive data 
