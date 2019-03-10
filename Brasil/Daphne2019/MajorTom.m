@@ -22,6 +22,8 @@ for j = length(feesh):-1:1 % For each fish
     
 end
 figure(7); clf; 
+
+
 %% Movement distance and velocity
 
 % We want to use only sequential data (no missing samples)
@@ -57,6 +59,13 @@ end
 
 % Useful code
 
+fsh = 1;
+clrs = hot(100);
+for p = 1:length(out(fsh).x)-1
+    plot([out(fsh).x(p), out(fsh).x(p+1)], [out(fsh).y(p), out(fsh).y(p+1)], ...
+        'Color', clrs(round(100*(out(fsh).pdist(k)/max(out(fsh).pdist))),:));
+end
 
+end
 
 
