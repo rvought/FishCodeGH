@@ -44,7 +44,7 @@ Y=Y(:)';
 Nt=length(X);
 [B,IX]=sort(X);
 X(IX)=1:Nt;
-[B,IX]=sort(Y);
+[~,IX]=sort(Y);
 Y(IX)=1:Nt;
 
 % quantize X and Y according to fixed, equally-spaced bins

@@ -43,10 +43,23 @@ yminedge = []; yscale = [];
 % Spatial centers for 2D histogram (XXcm boxes that extend 20cm beyond edges)
 % The boxes are identical size, although the overall region (defined by
 % minedge and scale values) are not the same from recording to recording.
-XX = 50;
-    ctrs{1} = xminedge-20:XX:xscale+xminedge+20;
-    ctrs{2} = yminedge-20:XX:yscale+yminedge+20;
+% howmanybins = 8;
+% xbinsiz = (xscale+xminedge+20 + abs(xminedge-20)) / howmanybins;
+% ybinsiz = (yscale+yminedge+20 + abs(yminedge-20)) / howmanybins;
+%     ctrs{1} = xminedge-20:xbinsiz:xscale+xminedge+20;
+%     ctrs{2} = yminedge-20:ybinsiz:yscale+yminedge+20;
+% 
+%     qwer = ctrs{1}
+%     asdf = ctrs{2}
 
+% THE CRITICAL PARAMETER (sort of...)
+% Use standard centers for all of the data (extend well beyond limits of
+% possible fish positions)
+
+BoxLen = 50; % We've tried 50, 60, 75, 100. This is in cm.
+    ctrs{1} = -300:BoxLen:300;
+    ctrs{2} = -300:BoxLen:300;
+    
 % Distance bins between pairs of fish for histogram
     dctrs = 1:10:500;    
     
@@ -56,38 +69,39 @@ numfish = length(in.fish); % How many fish in this recording
 
 for j = numfish:-1:1 % For each fish    
     
-    % Record the size of the box for analysis
+    % Record the size of the box for analysis (Calculated above)
     out(j).xbounds = [xminedge xminedge+xscale];
     out(j).ybounds = [yminedge yminedge+yscale];
-    % Record the centers of the bins for plotting.
+    
+    % Record the centers of the bins for analysis (Determined above)
     out(j).ctrs = ctrs;
     
     % Get valid data (check frequency data to omit NaNs)            
     out(j).valididx = find(~isnan(in.fish(j).freq(tr,2)));
     
-    if ~isempty(out(j).valididx) % Make sure that we have any data before proceding
-%    if sum(out(j).valididx) > 0 
-    
-    
+    if ~isempty(out(j).valididx) % Make sure that we have data before proceding
+        
     %% Generate corresponding jiggled and random fish
-        % OPTION: Starts at a random spot within the grid
-        %  rnd(j).xy(:,out(j).valididx(1)) = [rand(1,1)*xscale rand(1,1)*yscale];
         
-        % Both random and jiggled start at the same spot as the real fish in the grid but with
-        % jiggled angle
+        % Both random and jiggled start at the same spot as the real fish in the grid 
         
-        out(j).rndXY(:,out(j).valididx(1)) = [in.fish(j).x(out(j).valididx(1)) in.fish(j).y(out(j).valididx(1))];
+        out(j).rndXY(:,out(j).valididx(1)) = [in.fish(j).x(out(j).valididx(1)) in.fish(j).y(out(j).valididx(1))]; % First XY for randome
+
+        % Both random and jiggled fish have a jiggled initial theta
         
             firstheta = atan2(in.fish(j).y(out(j).valididx(2)) - in.fish(j).y(out(j).valididx(1)), in.fish(j).x(out(j).valididx(2)) - in.fish(j).x(out(j).valididx(1)));
             deltatheta = constrainer * (rand(1,1) - 0.5); % Set a random change in direction for our artificial fish
-        out(j).randtheta(1) = firstheta + deltatheta;
+
+        out(j).randtheta(1) = firstheta + deltatheta; % First theta for Random
         
+        % Copy into the jiggle data
         out(j).jigXY = out(j).rndXY; 
-        out(j).jiggletheta(1) = firstheta + deltatheta;
+        out(j).jiggletheta(1) = out(j).randtheta(1);
         
     % Cycle for every valid data point in original recording
     % Both jiggled and random fish move the same distance as the real fish, but with jiggled change in direction
     for rr = 2:length(out(j).valididx)
+        
             % Put the fish positions into a convenient format and calculate
             % the distance and angle of the real fish 
             tmpXY(1,:) = [in.fish(j).x(out(j).valididx(rr-1)), in.fish(j).y(out(j).valididx(rr-1))];
@@ -118,16 +132,17 @@ for j = numfish:-1:1 % For each fish
 
             end
 
-            % FINALLY - Movement with the same distance as real but with altered angles        
+            % FINALLY - Movement with the same distance as real but with altered angles (next XY position)
+            
             out(j).jigXY(:,out(j).valididx(rr)) = [out(j).jigXY(1,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*cos(out(j).jiggletheta(rr)), out(j).jigXY(2,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*sin(out(j).jiggletheta(rr))]; 
             out(j).rndXY(:,out(j).valididx(rr)) = [out(j).rndXY(1,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*cos(out(j).randtheta(rr)), out(j).rndXY(2,out(j).valididx(rr-1)) + out(j).realhowfar(rr)*sin(out(j).randtheta(rr))]; 
                   
-            % BUT... we don't want to randomly escape from the grid, so if we
+            % BUT... we don't want to wander out of the grid, so if we
             % violate the boundaries, we 'reflect' back in.  This is
             % extremely rudimentary - there are many more elegant
             % solutions.
             
-            % Catch random exits
+            % Catch 'random' exits
             if out(j).rndXY(1,end) < xminedge
                 out(j).rndXY(1,end) = xminedge + xminedge - out(j).rndXY(1,end);
             end
@@ -141,7 +156,7 @@ for j = numfish:-1:1 % For each fish
                 out(j).rndXY(2,end) = (yminedge + yscale) - (out(j).rndXY(2,end) - (yminedge + yscale));
             end
             
-            % Catch jiggle exits
+            % Catch 'jiggle' exits
             if out(j).jigXY(1,end) < xminedge
                 out(j).jigXY(1,end) = xminedge + xminedge - out(j).jigXY(1,end);
             end
@@ -155,10 +170,11 @@ for j = numfish:-1:1 % For each fish
                 out(j).jigXY(2,end) = (yminedge + yscale) - (out(j).jigXY(2,end) - (yminedge + yscale));
             end
             
-            % And a copy of the original data, just for plotting fun
+            % And a copy of the original data is put into the structure, just for plotting fun
             out(j).realXY(:,out(j).valididx(rr)) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))]; 
 
     end
+
     
     %% Prepare data for analysis for each real and jiggled and random fish
 
@@ -183,7 +199,9 @@ for j = numfish:-1:1 % For each fish
     out(j).alljighist = zeros(1,length(dctrs));  
     
     end % If we have data for the current fish
+
 end % Cycle through each fish
+
 
 
 %% Cycle through pairs of fish
