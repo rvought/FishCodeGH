@@ -16,9 +16,8 @@ mmnorm = @(x) ( x - repmat(min(x),size(x,1),1) ) ./ ( repmat(max(x),size(x,1),1)
 
 data.trial = {};
 data.time = {};
-meta.dataset = [];
-meta.pair = [];
-meta.window = [];
+[meta.dataset,meta.pair,meta.window,meta.df,meta.ddf,meta.dist,meta.ddist] = deal([]);
+
 for j = 1:(nCave + nSrf)
     if j <= nCave
         dat = cave(j);
@@ -60,18 +59,30 @@ for j = 1:(nCave + nSrf)
         percOverlap = 90;
         overlapLength = floor(windowLength*percOverlap/100);
         
-        T = buffer(t(1:end-1),windowLength,overlapLength,'nodelay');
+%         T = buffer(t(1:end-1),windowLength,overlapLength,'nodelay');
+        T = (1:windowLength)*dt;
         for k = 1:nPairs
+            DST = buffer(dist(:,k),windowLength,overlapLength,'nodelay');
+            DF = buffer(df(:,k),windowLength,overlapLength,'nodelay');
+            
             DDST = buffer(ddist(:,k),windowLength,overlapLength,'nodelay');
             DDF = buffer(ddf(:,k),windowLength,overlapLength,'nodelay');
             
             for w = 1:(size(DDST,2)-1)
-                data.time = [data.time,T(:,w)'];
+%                 data.time = [data.time,T(:,w)'];
+                data.time = [data.time,T];
                 data.trial = [data.trial,[DDST(:,w),DDF(:,w)]'];
                 
                 meta.dataset = [meta.dataset,j];
                 meta.pair = [meta.pair,k];
                 meta.window = [meta.window,w];
+                meta.dist = [meta.dist,nanmean(DST(:,w))];
+                meta.ddist = [meta.ddist,nanmean(DDST(:,w))];
+                meta.df = [meta.df,nanmean(DF(:,w))];
+                meta.ddf = [meta.ddf,nanmean(DDF(:,w))];
+                
+%                 [r,lag] = xcorr(mmnorm(DST(:,w)),mmnorm(DF(:,30)),'coeff');
+%                 [~,i] = max(abs(r));
             end
         end
     end
@@ -119,6 +130,8 @@ cfgTEP.repPred        = 100;      % size(data.trial{1,1},2)*(3/4);
 cfgTEP.flagNei = 'Mass' ;           % neigbour analyse type
 cfgTEP.sizeNei = 4;                 % neigbours to analyse
 
+% use ensemble method
+cfgTEP.ensemblemethod = 'no';
 
 % define cfg for TEsurrogatestats_ensemble.m
 cfgTESS = [];
@@ -146,7 +159,10 @@ load TGA_results;
 
 %%
 act = squeeze(TGA_results.ACT.actvalue(:,2,:));
-teIdx = find(act>=0 & act<=100);
+teIdx = act>=0 & act<=100;
+
+TE = NaN(size(teIdx));
+TE(teIdx) = TGA_results.TEmat;
 
 d = 3;
 p = 10;
@@ -155,12 +171,74 @@ idx = meta.dataset==d & meta.pair==p;
 time = data.time(idx);
 trial = data.trial(idx);
 
-t = cellfun(@(x) mean(x),time);
+% t = cellfun(@(x) mean(x),time);
 ddist = cellfun(@(x) mean(x(1,:)),trial);
 ddf = cellfun(@(x) mean(x(2,:)),trial);
+t = (1:length(ddist))*(windowLength-overlapLength)*dt;
 
 clf, hold on
-plot(t,mmnorm(ddist));
-plot(t,mmnorm(ddf));
-plot(t,TGA_results.TEmat(teIdx(idx)));
+plot(t,mmnorm(meta.dist(idx)));
+plot(t,mmnorm(meta.df(idx)));
+plot(t,TE(idx));
+hold off;
+
+%%
+
+clf, hold on
+for d = 1:(nCave + nSrf)
+    if d <= nCave
+        dat = cave(d);
+    else
+        dat = srf(d-nCave);
+    end
+    
+    nFish = dat.nFish;
+    freq = nanmean([dat.fish.freq]);
+    freq = freq(2:2:end);
+    
+    vel = nanmean(sqrt(diff([dat.fish.x]).^2 + diff([dat.fish.y]).^2 + diff([dat.fish.z]).^2));
+    if nFish>1
+        C = nchoosek(1:nFish,2);
+        nPairs = size(C,1);
+        
+        te_pair = zeros(nPairs,1);
+        for p = 1:nPairs
+            idx = meta.dataset==d & meta.pair==p;
+            te_pair(p) = nanmean(TE(idx));
+        end
+
+        te_fish = zeros(nFish,1);
+        te_fish_var = zeros(nFish,1);
+        for f = 1:nFish
+            fishIdx = find(sum(C==f,2));
+            te_fish(f) = nanmean(te_pair(fishIdx));
+            te_fish_var(f) = nanstd(te_pair(fishIdx));
+            
+%             plot(freq(f),te_pair(fishIdx),'.');
+        end
+        
+        if d<=nCave
+            col = 'r';
+        else
+            col = 'b';
+        end
+        
+        subplot(3,1,1), hold on;
+            plot(freq,te_fish,'.','Color',col);
+        subplot(3,1,2), hold on;
+            plot(freq,te_fish_var,'.','Color',col);
+        subplot(3,1,3), hold on;
+            plot(freq,te_fish./te_fish_var,'.','Color',col);
+
+%         plot(freq,vel,'.','Color',col);
+%         plot(vel,te_fish,'.','Color',col);
+%         plot(vel,te_fish_var,'.','Color',col);
+%         plot(vel,te_fish./te_fish_var,'.','Color',col);
+    end
+end
+
+% subplot(3,1,1), grid on;
+% subplot(3,1,2), grid on;
+% subplot(3,1,3), grid on;
+
 hold off;

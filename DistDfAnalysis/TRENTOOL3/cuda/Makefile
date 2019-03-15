@@ -1,6 +1,7 @@
 
 #MEX=/usr/local/matlab2007a/bin/mex
-MEX=/usr/local/MATLAB/R2013b/bin/mex
+#MEX=/usr/local/MATLAB/R2013b/bin/mex
+MEX=/usr/local/MATLAB/R2018b/bin/mex
 
 
 
@@ -22,7 +23,8 @@ CUDA_LIB_PATH   ?= $(CUDA_PATH)/lib
 CUDA_BIN_PATH   ?= $(CUDA_PATH)/bin
 
 # Common binaries
-NVCC            ?= $(CUDA_BIN_PATH)/nvcc
+#NVCC            ?= $(CUDA_BIN_PATH)/nvcc
+NVCC            ?= nvcc
 GCC             ?= g++
 
 # Extra user flags
@@ -37,11 +39,13 @@ GENCODE_SM20    := -gencode arch=compute_20,code=sm_20
 GENCODE_SM30    := -gencode arch=compute_30,code=sm_30
 #Mario
 GENCODE_SM35	:= -gencode arch=compute_35,code=sm_35
+GENCODE_SM61	:= -gencode arch=compute_61,code=sm_61
 
 ifeq ($(nocache),1)
 	GENCODE_FLAGS	:=  $(GENCODE_SM10)
 else
-	GENCODE_FLAGS   :=  $(GENCODE_SM20) $(GENCODE_SM30) $(GENCODE_SM35)
+	#GENCODE_FLAGS   :=  $(GENCODE_SM20) $(GENCODE_SM30) $(GENCODE_SM35)
+	GENCODE_FLAGS   :=  $(GENCODE_SM61)
 endif
 
 
