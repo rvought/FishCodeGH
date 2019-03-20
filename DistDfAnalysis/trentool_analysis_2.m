@@ -12,13 +12,14 @@ nSrf = length(srf);
 
 mmnorm = @(x) ( x - repmat(min(x),size(x,1),1) ) ./ ( repmat(max(x),size(x,1),1) - repmat(min(x),size(x,1),1) );
 
-%%
+%% Create data pairs for TRENTOOL
 
 data.trial = {};
 data.time = {};
 [meta.dataset,meta.pair,meta.window,meta.df,meta.ddf,meta.dist,meta.ddist] = deal([]);
 
 for j = 1:(nCave + nSrf)
+    % Use both cave and surface data
     if j <= nCave
         dat = cave(j);
         dataType = 'cave';
@@ -28,7 +29,7 @@ for j = 1:(nCave + nSrf)
     end
     
     nFish = length(dat.fish);
-    if nFish>1
+    if nFish>1  % analyze if there is at least one pair
         t = dat.t;
         nTimes = length(t);
         dt = mean(diff(t));
@@ -45,15 +46,26 @@ for j = 1:(nCave + nSrf)
         nanIdx = isnan(df);
         dist(nanIdx) = NaN;
 
+        % Smooth distance and df
         smoothInterval = 30; % seconds
         smoothLength = round(smoothInterval/dt);
-
         dist = smoothdata(dist,'movmean',smoothLength,'omitnan');
         df = smoothdata(df,'movmean',smoothLength,'omitnan');
 
+        % Compute and smooth derivatives
         ddist = diff(dist);
         ddf = diff(df);
+      
+        ddist_abs = abs(ddist);
+        ddf_abs = abs(ddf);
         
+        ddist = smoothdata(ddist,'movmean',smoothLength,'omitnan');
+        ddf = smoothdata(ddf,'movmean',smoothLength,'omitnan');
+        
+        ddist_abs = smoothdata(ddist_abs,'movmean',smoothLength,'omitnan');
+        ddf_abs = smoothdata(ddf_abs,'movmean',smoothLength,'omitnan');
+        
+        % Window and create data pairs
         windowInterval = 200; % seconds
         windowLength = round(windowInterval/dt);
         percOverlap = 90;
@@ -68,18 +80,25 @@ for j = 1:(nCave + nSrf)
             DDST = buffer(ddist(:,k),windowLength,overlapLength,'nodelay');
             DDF = buffer(ddf(:,k),windowLength,overlapLength,'nodelay');
             
+            DDST_ABS = buffer(ddist_abs(:,k),windowLength,overlapLength,'nodelay');
+            DDF_ABS = buffer(ddf_abs(:,k),windowLength,overlapLength,'nodelay');
+            
             for w = 1:(size(DDST,2)-1)
 %                 data.time = [data.time,T(:,w)'];
                 data.time = [data.time,T];
-                data.trial = [data.trial,[DDST(:,w),DDF(:,w)]'];
+                data.trial = [data.trial,[DST(:,w),DF(:,w),DDST(:,w),DDF(:,w),DDST_ABS(:,w),DDF_ABS(:,w)]'];
                 
                 meta.dataset = [meta.dataset,j];
                 meta.pair = [meta.pair,k];
                 meta.window = [meta.window,w];
+                
                 meta.dist = [meta.dist,nanmean(DST(:,w))];
                 meta.ddist = [meta.ddist,nanmean(DDST(:,w))];
+                meta.ddist_abs = [meta.ddist,nanmean(DDST_ABS(:,w))];
+                
                 meta.df = [meta.df,nanmean(DF(:,w))];
                 meta.ddf = [meta.ddf,nanmean(DDF(:,w))];
+                meta.ddf_abs = [meta.ddf,nanmean(DDF_ABS(:,w))];
                 
 %                 [r,lag] = xcorr(mmnorm(DST(:,w)),mmnorm(DF(:,30)),'coeff');
 %                 [~,i] = max(abs(r));
@@ -88,7 +107,7 @@ for j = 1:(nCave + nSrf)
     end
 end
 
-data.label = {'ddist','ddf'};
+data.label = {'dist','df','ddist','ddf','ddist_abs','ddf_abs'};
 data.fsample = 1/mean(diff(dat.t));
 
 
@@ -104,11 +123,16 @@ cfgTEP = [];
 
 % data
 cfgTEP.toi                 = [min(data.time{1,1}),max(data.time{1,1})]; % time of interest
-cfgTEP.sgncmb              = {'ddist' 'ddf'};  % channels to be analyzed
+cfgTEP.sgncmb              = {'ddist','ddf';...
+                            'ddf','ddist';...
+                            'ddist_abs','ddf_abs';...
+                            'ddf_abs','ddist_abs';...
+                            };  % channels to be analyzed
+
 
 % scanning of interaction delays u
 cfgTEP.predicttimemin_u    = 0;      % minimum u to be scanned (ms)
-cfgTEP.predicttimemax_u    = 30000;	  % maximum u to be scanned  (ms)
+cfgTEP.predicttimemax_u    = 60000;	  % maximum u to be scanned  (ms)
 cfgTEP.predicttimestepsize = 1000; 	  % time steps between u's to be scanned
 
 % estimator
@@ -116,7 +140,7 @@ cfgTEP.TEcalctype  = 'VW_ds'; % use the new TE estimator (Wibral, 2013)
 
 % ACT estimation and constraints on allowed ACT(autocorelation time)
 cfgTEP.actthrvalue = 100;   % threshold for ACT
-cfgTEP.maxlag      = round(100/dt); % samples
+cfgTEP.maxlag      = windowLength; % samples
 cfgTEP.minnrtrials = 15;   % minimum acceptable number of trials
 
 % optimizing embedding
@@ -145,13 +169,32 @@ cfgTESS.numpermutation = 5e4;
 cfgTESS.shifttesttype  ='TEshift>TE';
 cfgTESS.surrogatetype  = 'trialshuffling';
 
+% don't calculate MI additionally to TE
+cfgTESS.MIcalc = 0;
+
+% GPU specifications
+% cfgTESS.GPUmemsize     = 11172;
+% cfgTESS.numthreads     = 1024;
+% cfgTESS.maxgriddim     = 65535;
+% 
+% % surrogate testing
+% cfgTESS.tail           = 1;
+% cfgTESS.surrogatetype  = 'trialperm';
+% cfgTESS.numpermutation = 100;
+% 
+% % volume conduction
+% cfgTESS.extracond      = 'Faes_Method';
+% cfgTESS.shifttest      = 'no';
+
 % results file name
-cfgTESS.fileidout  = strcat(OutputDataPath,'all_windowed');
+cfgTESS.fileidout  = strcat(OutputDataPath,'all_channels_windowed');
 
 % calculation - scan over specified values for u
+tic;
+trentool_result = InteractionDelayReconstruction_calculate_custom(cfgTEP,cfgTESS,data);
+toc;
 
-TGA_results = InteractionDelayReconstruction_calculate(cfgTEP,cfgTESS,data);
-
+save(cfgTESS.fileidout,'trentool_result','meta');
 
 %%
 
@@ -160,12 +203,17 @@ load TGA_results;
 %%
 act = squeeze(TGA_results.ACT.actvalue(:,2,:));
 teIdx = act>=0 & act<=100;
-
 TE = NaN(size(teIdx));
 TE(teIdx) = TGA_results.TEmat;
 
-d = 3;
-p = 10;
+
+% act = squeeze(TGA_results2.ACT.actvalue(:,2,:));
+% teIdx = act>=0 & act<=100;
+% TE2 = NaN(size(teIdx));
+% TE2(teIdx) = TGA_results2.TEmat;
+
+d = 4;
+p = 9;
 
 idx = meta.dataset==d & meta.pair==p;
 time = data.time(idx);
@@ -180,6 +228,10 @@ clf, hold on
 plot(t,mmnorm(meta.dist(idx)));
 plot(t,mmnorm(meta.df(idx)));
 plot(t,TE(idx));
+% plot(t,TE2(idx));
+% plot(t,mmnorm(meta.sens(idx)));
+% plot(t(1:end-1),mmnorm(abs(diff(meta.dist(idx)))./abs(diff(meta.df(idx)))));
+legend('Dist','Df','TE','TE2')
 hold off;
 
 %%
@@ -222,13 +274,14 @@ for d = 1:(nCave + nSrf)
         else
             col = 'b';
         end
-        
-        subplot(3,1,1), hold on;
-            plot(freq,te_fish,'.','Color',col);
-        subplot(3,1,2), hold on;
-            plot(freq,te_fish_var,'.','Color',col);
-        subplot(3,1,3), hold on;
-            plot(freq,te_fish./te_fish_var,'.','Color',col);
+%         
+% %         subplot(3,1,1), hold on;
+%             plot(freq,te_fish,'.','Color',col);
+%         subplot(3,1,2), hold on;
+%             plot(freq,te_fish_var,'.','Color',col);
+%         subplot(3,1,3), hold on;
+%             plot(freq,te_fish./te_fish_var,'.','Color',col);
+%             plot(te_fish,te_fish_var,'.','Color',col);
 
 %         plot(freq,vel,'.','Color',col);
 %         plot(vel,te_fish,'.','Color',col);
@@ -240,5 +293,5 @@ end
 % subplot(3,1,1), grid on;
 % subplot(3,1,2), grid on;
 % subplot(3,1,3), grid on;
-
+grid on;
 hold off;
