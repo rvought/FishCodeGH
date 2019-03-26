@@ -15,7 +15,7 @@ data.trial = {};
 data.time = {};
 [meta.dataset,meta.pair,meta.window,meta.df,meta.ddf,meta.dist,meta.ddist] = deal([]);
 
-[dist_all,df_all,ddist_all,ddf_all,ddist_abs_all,ddf_abs_all] = deal(cell(nCave+nSrf,1));
+[freq_all,dist_all,df_all,ddist_all,ddf_all,ddist_abs_all,ddf_abs_all] = deal(cell(nCave+nSrf,1));
 
 nFish_all = zeros(nCave+nSrf,1);
 
@@ -31,6 +31,11 @@ for j = 1:(nCave + nSrf)
     
     nFish = length(dat.fish);
     nFish_all(j) = nFish;
+    
+    for k = 1:nFish
+        freq_all{j} = [dat.fish.freq];
+        freq_all{j} = freq_all{j}(:,2:2:end);
+    end
 
     if nFish>1  % analyze if there is at least one pair
         t = dat.t;
@@ -508,21 +513,161 @@ fprintf('\nProbability of %f that the relative frequency speeds are from the sam
 %% Distance vs df plots
 
 clf, hold on;
+plot(dist_fish_cave,df_fish_cave,'.b')
+plot(dist_fish_srf,df_fish_srf,'.r')
+
+grid on;
+
+xlabel('Distance');
+ylabel('Df');
+hold off;
+
+%% Distance vs df plots - change
+
+clf, hold on;
 plot(ddist_fish_cave,ddf_fish_cave,'.b')
 plot(ddist_fish_srf,ddf_fish_srf,'.r')
 
 grid on;
 
+xlabel('Change in distance');
+ylabel('Change in frequency');
 hold off;
 
-%%
+%% Distance vs df plot - abs change
 clf, hold on;
 
-plot(ddist_abs_fish_cave,ddf_abs_fish_cave,'.b')
-plot(ddist_abs_fish_srf,ddf_abs_fish_srf,'.r')
+plot(ddist_abs_fish_cave,ddf_abs_fish_cave,'.b','MarkerSize',5)
 
+px = linspace(0,max(ddist_abs_fish_cave),10);
+p = polyfit(ddist_abs_fish_cave,ddf_abs_fish_cave,1);
+py = polyval(p,px);
+[R_ddist_df_abs_cave,pVal_ddist_df_abs_cave] = corrcoef(ddist_abs_fish_cave,ddf_abs_fish_cave);
+fprintf('\nr = %.2f, n = %d, df = %d, p = %.3e',R_ddist_df_abs_cave(2,1),length(ddist_abs_fish_cave),length(ddist_abs_fish_cave)-2,pVal_ddist_df_abs_cave(2,1));
+plot(px,py,'-b');
+
+
+plot(ddist_abs_fish_srf,ddf_abs_fish_srf,'.r','MarkerSize',5)
+
+px = linspace(0,max(ddist_abs_fish_srf),10);
+p = polyfit(ddist_abs_fish_srf,ddf_abs_fish_srf,1);
+py = polyval(p,px);
+[R_ddist_df_abs_srf,pVal_ddist_df_abs_srf] = corrcoef(ddist_abs_fish_srf,ddf_abs_fish_srf);
+fprintf('\nr = %.2f, n = %d, df = %d, p = %.3e',R_ddist_df_abs_srf(2,1),length(ddist_abs_fish_srf),length(ddist_abs_fish_srf)-2,pVal_ddist_df_abs_srf(2,1));
+plot(px,py,'-r');
+
+
+grid on;
+xlabel('Relative speed');
+ylabel('Relative frequency speed');
 
 hold off;
+
+%% Shuffling statistics between r values
+
+X = [ddist_abs_fish_cave,ddist_abs_fish_srf];
+Y = [ddf_abs_fish_cave,ddf_abs_fish_srf];
+
+plot(X,Y,'.');
+
+l1 = length(ddist_abs_fish_cave);
+l2 = length(ddist_abs_fish_srf);
+L = l1+l2;
+
+N = 10000;
+R_rand = zeros(N,1);
+for n = 1:N
+    idx = randsample(L,l1);
+    
+    R = corrcoef(X(idx),Y(idx));
+    R_rand(n) = R(2,1);
+end
+
+clf;
+subplot(2,1,1);
+hold on;
+
+histogram(R_rand,100);
+plot(R_ddist_df_abs_cave(2,1),0,'*r');
+
+legend('','Cave R value');
+title('Shuffled R values for Cave fish');
+xlabel('R values');
+ylabel('Counts');
+
+hold off;
+
+N = 10000;
+R_rand = zeros(N,1);
+for n = 1:N
+    idx = randsample(L,l2);
+    
+    R = corrcoef(X(idx),Y(idx));
+    R_rand(n) = R(2,1);
+end
+
+subplot(2,1,2);
+hold on;
+
+histogram(R_rand,100);
+plot(R_ddist_df_abs_cave(2,1),0,'*r');
+
+legend('','Surface R value');
+title('Shuffled R values for Surface fish');
+xlabel('R values');
+ylabel('Counts');
+
+%% Frequency 
+
+[freq_fish_cave,freq_fish_srf] = deal([]);
+for j = 1:(nCave+nSrf)
+    nFish = nFish_all(j);
+  
+    if nFish>2
+        if j<=nCave
+            freq_fish_cave = [freq_fish_cave,nanmean(freq_all{j})];
+        else
+            freq_fish_srf = [freq_fish_srf,nanmean(freq_all{j})];
+        end        
+    end
+end
+
+max_val = max([freq_fish_cave,freq_fish_srf]);
+edges = linspace(0,max_val,50);
+
+clf;
+hold on;
+
+histogram(freq_fish_cave,edges);
+histogram(freq_fish_srf,edges);
+
+legend('Cave','Surface');
+xlabel('Frequency (Hz)');
+ylabel('Fish')
+title('Frequency - cave vs surface');
+hold off;
+
+[h_fish_freq,p_fish_freq,ks2stat_fish_freq] = kstest2(freq_fish_cave,freq_fish_srf);
+fprintf('\nProbability of %f that the frequencies are from the same distribution',p_fish_freq);
+
+%% Frequency vs distance
+
+clf, hold on;
+
+plot(freq_fish_cave,dist_fish_cave,'.b');
+plot(freq_fish_srf,dist_fish_srf,'.r');
+
+hold off;
+
+%% Frequency vs Df
+
+clf, hold on;
+
+plot(freq_fish_cave,df_fish_cave,'.b');
+plot(freq_fish_srf,df_fish_srf,'.r');
+
+hold off;
+
 
 %% Run TRENTOOL analysis
 
@@ -532,6 +677,7 @@ resultFolderName = '~/Google Drive/trentool_results';
 load(fullfile(resultFolderName,'all_channels_windowed.mat'));
 trentool_result = [trentool_result{:}];
 
+load(fullfile(resultFolderName,'TEpermtest.mat'));
 
 %%
 
@@ -542,7 +688,6 @@ n_u = length(u_in_ms);
 
 channelPairs = TEprepare(1).channelcombilabel;
 
-% channelPairs = channelPairs(:,1:2)'; % REMOVE LATER
 nChannelPairs = size(channelPairs,1);
 
 nWindows =  size(TEprepare(1).ACT,3);
