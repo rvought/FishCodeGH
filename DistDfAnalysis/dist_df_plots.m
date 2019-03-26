@@ -669,6 +669,24 @@ plot(freq_fish_srf,df_fish_srf,'.r');
 hold off;
 
 
+%% Demonstration that Freq vs Df in not a real phenomenon
+
+N = 50;
+foo = randn(N,1)*100 + 400;
+
+C = nchoosek(1:N,2);
+
+comb = abs(foo(C(:,1))-foo(C(:,2)));
+
+bar = zeros(N,1);
+for k = 1:N
+    idx = find(sum(C==k,2));
+    bar(k) = mean(comb(idx));
+end
+
+plot(foo,bar,'.');
+
+
 %% Run TRENTOOL analysis
 
 %%
