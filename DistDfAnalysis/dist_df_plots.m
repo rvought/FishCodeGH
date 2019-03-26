@@ -252,17 +252,17 @@ fprintf('\nProbability of %f that the relative speeds are from the same distribu
 ddf_abs_pair_cave = cellfun(@(x) nanmean(x),ddf_abs_all(1:nCave),'UniformOutput',false);
 ddf_abs_pair_cave = [ddf_abs_pair_cave{:}];
 
-ddf_pair_srf = cellfun(@(x) nanmean(x),ddf_abs_all(nCave+1:end),'UniformOutput',false);
-ddf_pair_srf = [ddf_pair_srf{:}];
+ddf_abs_pair_srf = cellfun(@(x) nanmean(x),ddf_abs_all(nCave+1:end),'UniformOutput',false);
+ddf_abs_pair_srf = [ddf_abs_pair_srf{:}];
 
-max_val = max([ddf_abs_pair_cave,ddf_pair_srf]);
+max_val = max([ddf_abs_pair_cave,ddf_abs_pair_srf]);
 edges = linspace(0,max_val,100);
 
 clf;
 hold on;
 
 histogram(ddf_abs_pair_cave,edges);
-histogram(ddf_pair_srf,edges);
+histogram(ddf_abs_pair_srf,edges);
 
 legend('Cave','Surface');
 xlabel('Relative frequency speed (Hz)');
@@ -270,7 +270,7 @@ ylabel('Pairs')
 title('Relative frequency speed - cave vs surface');
 hold off;
 
-[h_ddf_abs,p_ddf_abs,ks2stat_ddf_abs] = kstest2(ddf_abs_pair_cave,ddf_pair_srf);
+[h_ddf_abs,p_ddf_abs,ks2stat_ddf_abs] = kstest2(ddf_abs_pair_cave,ddf_abs_pair_srf);
 fprintf('\nProbability of %f that the relative frequency speeds are from the same distribution',p_ddf_abs);
 
 
@@ -690,7 +690,8 @@ plot(foo,bar,'.');
 %% Run TRENTOOL analysis
 
 %%
-resultFolderName = '~/Google Drive/trentool_results';
+% resultFolderName = '~/Google Drive/trentool_results';
+resultFolderName = './results';
 
 load(fullfile(resultFolderName,'all_channels_windowed.mat'));
 trentool_result = [trentool_result{:}];
@@ -728,9 +729,231 @@ end
 
 %%
 
+[TEmax,uIdx] = max(TE,[],1);
 
-% TEmax = zeros(
+TEmax = squeeze(TEmax)';
+uIdx = squeeze(uIdx)';
 
+idx = TEmax<=0;
+TEmax(idx) = NaN;
+uIdx(idx) = NaN;
+
+
+%% TE comparison Cave <-> Surface pairs
+
+[TE_pair_cave,TE_pair_srf] = deal([]);
+
+for j = 1:(nCave+nSrf)
+    nFish = nFish_all(j);
+  
+    if nFish>2
+        C = nchoosek(1:nFish,2);
+        
+        nPairs = size(C,1);
+        
+        for p = 1:nPairs
+            idx = meta.dataset==j & meta.pair==p;
+            
+            if j<=nCave
+                TE_pair_cave = [TE_pair_cave;nanmean(TEmax(idx,:))];
+            else
+                TE_pair_srf = [TE_pair_srf;nanmean(TEmax(idx,:))];
+            end
+        end
+    end
+end
+
+clf;
+for k = 1:nChannelPairs
+    subplot(nChannelPairs,1,k);
+    hold on    
+    
+    max_val = max([TE_pair_cave(:,k);TE_pair_srf(:,k)]);
+    edges = linspace(0,max_val,50);
+
+    histogram(TE_pair_cave(:,k),edges);
+    histogram(TE_pair_srf(:,k),edges);
+
+    legend('Cave','Surface');
+    xlabel('TE');
+    ylabel('Pairs')
+    title(channelLabels{k},'Interpreter','none');
+    hold off;
+end
+
+%% TE comparison Cave <-> Surface Fish
+
+[TE_fish_cave,TE_fish_srf] = deal([]);
+
+for j = 1:(nCave+nSrf)
+    nFish = nFish_all(j);
+  
+    if nFish>2
+        C = nchoosek(1:nFish,2);
+        
+        nPairs = size(C,1);
+        
+        for f = 1:nFish
+            fishIdx = find(sum(C==f,2));
+            
+            idx = meta.dataset==j & ismember(meta.pair,fishIdx);
+            
+            if j<=nCave
+                TE_fish_cave = [TE_fish_cave;nanmean(TEmax(idx,:))];
+            else
+                TE_fish_srf = [TE_fish_srf;nanmean(TEmax(idx,:))];
+            end
+        end
+    end
+end
+
+clf;
+for k = 1:nChannelPairs
+    subplot(nChannelPairs,1,k);
+    hold on    
+    
+    max_val = max([TE_fish_cave(:,k);TE_fish_srf(:,k)]);
+    edges = linspace(0,max_val,50);
+
+    histogram(TE_fish_cave(:,k),edges);
+    histogram(TE_fish_srf(:,k),edges);
+
+    legend('Cave','Surface');
+    xlabel('TE');
+    ylabel('Fish')
+    title(channelLabels{k},'Interpreter','none');
+    hold off;
+end
+
+%% TE vs Distance
+
+clf;
+for k = 1:nChannelPairs
+    subplot(nChannelPairs,1,k);
+    hold on 
+    
+    plot(dist_fish_cave,TE_fish_cave(:,k),'.b');
+    plot(dist_fish_srf,TE_fish_srf(:,k),'.r');
+    
+    xlabel('Distance');
+    ylabel('TE')
+    title(channelLabels{k},'Interpreter','none');
+    
+    hold off 
+end
+
+%% TE vs DF
+
+clf;
+for k = 1:nChannelPairs
+    subplot(nChannelPairs,1,k);
+    hold on 
+    
+    plot(df_fish_cave,TE_fish_cave(:,k),'.b');
+    plot(df_fish_srf,TE_fish_srf(:,k),'.r');
+    
+    xlabel('DF');
+    ylabel('TE')
+    title(channelLabels{k},'Interpreter','none');
+    
+    hold off 
+end
+
+%% TE vs Change in Distance
+
+clf;
+for k = 1:nChannelPairs
+    subplot(nChannelPairs,1,k);
+    hold on 
+    
+    plot(ddist_fish_cave,TE_fish_cave(:,k),'.b');
+    plot(ddist_fish_srf,TE_fish_srf(:,k),'.r');
+    
+    xlabel('Change in Distance');
+    ylabel('TE')
+    title(channelLabels{k},'Interpreter','none');
+    
+    hold off 
+end
+
+%% TE vs Change in DF
+
+clf;
+for k = 1:nChannelPairs
+    subplot(nChannelPairs,1,k);
+    hold on 
+    
+    plot(ddf_fish_cave,TE_fish_cave(:,k),'.b');
+    plot(ddf_fish_srf,TE_fish_srf(:,k),'.r');
+    
+    xlabel('Change in DF');
+    ylabel('TE')
+    title(channelLabels{k},'Interpreter','none');
+    
+    hold off 
+end
+
+%% TE vs Relative Speed
+
+clf;
+for k = 1:nChannelPairs
+    subplot(nChannelPairs,1,k);
+    hold on 
+    
+    plot(ddist_abs_fish_cave,TE_fish_cave(:,k),'.b');
+    plot(ddist_abs_fish_srf,TE_fish_srf(:,k),'.r');
+    
+    xlabel('Relative Speed');
+    ylabel('TE')
+    title(channelLabels{k},'Interpreter','none');
+    
+    hold off 
+end
+
+%% TE vs Change in Relative frequency speed
+
+clf;
+for k = 1:nChannelPairs
+    subplot(nChannelPairs,1,k);
+    hold on 
+    
+    plot(ddf_abs_fish_cave,TE_fish_cave(:,k),'.b');
+    plot(ddf_abs_fish_srf,TE_fish_srf(:,k),'.r');
+    
+    xlabel('Change in Relative Frequency Speed');
+    ylabel('TE')
+    title(channelLabels{k},'Interpreter','none');
+    
+    hold off 
+end
+
+%% All three variables
+
+clf, hold on;
+plot3(ddist_abs_fish_cave,ddf_abs_fish_cave,TE_fish_cave(:,3),'.b','MarkerSize',5)
+plot3(ddist_abs_fish_srf,ddf_abs_fish_srf,TE_fish_srf(:,3),'.r','MarkerSize',5)
+
+xlabel('Relative speed');
+ylabel('Relative frequency speed');
+zlabel('TE');
+grid on;
+hold off;
+
+%%
+
+TE_dir_cave = TE_fish_cave(:,3)-TE_fish_cave(:,4);
+TE_dir_srf = TE_fish_srf(:,3)-TE_fish_srf(:,4);
+
+edges = linspace(min([TE_dir_cave;TE_dir_srf]),max([TE_dir_cave;TE_dir_srf]),20);
+
+clf, hold on;
+histogram(TE_dir_cave,edges);
+histogram(TE_dir_srf,edges);
+
+xlabel('TE bias in the dist -> df direction');
+ylabel('Fish');
+
+hold off;
 
 %%
 
