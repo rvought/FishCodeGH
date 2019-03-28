@@ -1,4 +1,4 @@
-function [fish, sa, sq, spadata] = Pele(cave, srf)
+function [fish, sa, sq, spadat] = Pele(cave, srf)
 
 
 
@@ -140,10 +140,10 @@ tmp = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
 %% surface 4, 22 fish, over 600 seconds
 
 % TUBE FISH, index 11, 16, 20
-tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
+tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]);
     for j=1:length(tmp); fish(end+1) = tmp(j); end
     
-    [spadat(4).dat, ~] = SpaceCorps(srf(4), 2);
+    [spadat(4).dat, ~] = SpaceCorps(srf(4), 2, [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]);
     [sa(4).sa, sq(4).sq] = overture(spadat(4).dat);
 
 
