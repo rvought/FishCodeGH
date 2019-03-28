@@ -1,4 +1,4 @@
-function [fish, sa, sq] = Pele(cave, srf)
+function [fish, sa, sq, spadata] = Pele(cave, srf)
 
 
 
@@ -20,8 +20,10 @@ fish(2) = MajorTom(cave(2));
 
 %% cave 3, 7 fish, good recordings of all fish through over 1200 seconds
 
+curlen = length(fish);
+
 tmp = MajorTom(cave(3));
-    for j=1:length(tmp); fish(end+1) = tmp(j); end
+    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
 
 %     fish(5) = MajorTom(cave(3), [0 600]);
 %     fish(6) = MajorTom(cave(3), [600 1200]);
@@ -36,20 +38,46 @@ tmp = MajorTom(cave(3));
 
 %% cave 4, 7 fish, good recordings of all fish through over 1200 seconds
 
+curlen = length(fish);
+
 tmp = MajorTom(cave(4));
-    for j=1:length(tmp); fish(end+1) = tmp(j); end
+    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
     
     [spadat(2).dat, ~] = SpaceCorps(cave(4), 1);
     [sa(2).sa, sq(2).sq] = overture(spadat(2).dat);
 
 
 %% cave 5, 7 fish, good recordings of all fish through over 1200 seconds
+curlen = length(fish);
+
+tmp = MajorTom(cave(5));
+    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+    
+    [spadat(3).dat, ~] = SpaceCorps(cave(5), 1);
+    [sa(3).sa, sq(3).sq] = overture(spadat(3).dat);
 
 
 %% cave 6, 8 fish, good recordings of all fish through over 1200 seconds LOTS OF SOCIAL
 
+curlen = length(fish);
+
+tmp = MajorTom(cave(6));
+    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+    
+    [spadat(4).dat, ~] = SpaceCorps(cave(6), 1);
+    [sa(4).sa, sq(4).sq] = overture(spadat(4).dat);
+
+
 
 %% cave 7, 7 fish, some gaps over 900 seconds
+
+curlen = length(fish);
+
+tmp = MajorTom(cave(7));
+    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+    
+    [spadat(5).dat, ~] = SpaceCorps(cave(7), 1);
+    [sa(5).sa, sq(5).sq] = overture(spadat(5).dat);
 
 
 %% cave 8, 10 fish, some gaps over 1300 seconds, lovely data
@@ -57,8 +85,13 @@ tmp = MajorTom(cave(4));
 
 %% cave 9, 1 fish, over 1000 seconds
 
-%     fish(7) = MajorTom(cave(9), [0 500]);
-%     fish(8c) = MajorTom(cave(9), [500 1000]);
+curlen = length(fish);
+
+tmp = MajorTom(cave(9));
+    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+    
+    [spadat(6).dat, ~] = SpaceCorps(cave(9), 1);
+    [sa(6).sa, sq(6).sq] = overture(spadat(6).dat);
 
 
 %% cave 10, 3 fish, over 900 seconds
@@ -82,11 +115,15 @@ tmp = MajorTom(cave(4));
 %% surface 1, 12 fish, over 600 seconds
 
 % TUBE FISH, index 7, 9, 11
+
+curlen = length(fish)
+
 tmp = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
-    for j=1:length(tmp); fish(end+1) = tmp(j); end
+    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+
     
-    [spadat(3).dat, ~] = SpaceCorps(srf(1), 2);
-    [sa(3).sa, sq(3).sq] = overture(spadat(3).dat);
+    [spadat(7).dat, ~] = SpaceCorps(srf(1), 1);
+    [sa(7).sa, sq(7).sq] = overture(spadat(7).dat);
 
 
 %% surface 2, 21 fish, over 1000 seconds
