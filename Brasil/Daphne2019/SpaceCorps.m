@@ -267,9 +267,9 @@ if numfish > 1 % We have more than one fish
 figure(casu); clf;
 
 ax(1) = subplot(131); hold on;
-    for z=1:length(in.fish)
+    for z=1:length(feesh)
         if ~isempty(out(z).valididx)
-        plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '.', 'MarkerSize', 8);
+        plot(in.fish(feesh(z)).x(out(z).valididx), in.fish(feesh(z)).y(out(z).valididx), '.', 'MarkerSize', 8);
 %        plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '*-');
         end
     end
