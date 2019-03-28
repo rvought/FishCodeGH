@@ -122,7 +122,7 @@ tmp = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
     for j=1:length(tmp); fish(j+curlen) = tmp(j); end
 
     
-    [spadat(7).dat, ~] = SpaceCorps(srf(1), 1);
+    [spadat(7).dat, ~] = SpaceCorps(srf(1), 1, [1 2 3 4 5 6 8 10 12]);
     [sa(7).sa, sq(7).sq] = overture(spadat(7).dat);
 
 
