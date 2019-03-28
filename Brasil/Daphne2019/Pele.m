@@ -100,6 +100,10 @@ fish(5) = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]
 %% surface 4, 22 fish, over 600 seconds
 
 % TUBE FISH, index 11, 16, 20
+fish(6) = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
+
+    [spadat(4), cmbs(4)] = SpaceCorps(srf(4), 2);
+    [sa(4), sq(4)] = overture(spadat(4));
 
 
 %% surface 5, 24 fish, over 1100 seconds
@@ -108,9 +112,9 @@ fish(5) = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]
 
 %% Stats for single fish
 
-figure(1); clf; 
-    subplot(121); plot([fish.meanfreq], '-*'); ylim([200 600]);
-    subplot(122); plot([fish.varfreq], '-*'); ylim([0 2]);
+% figure(1); clf; 
+%     subplot(121); plot([fish.meanfreq], '-*'); ylim([200 600]);
+%     subplot(122); plot([fish.varfreq], '-*'); ylim([0 2]);
 
 
 
