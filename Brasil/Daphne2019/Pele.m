@@ -13,13 +13,17 @@ fish(1) = MajorTom(cave(1));
 
 %% cave 2, 1 fish, 900 seconds
 
-    fish(3) = MajorTom(cave(2), [0 450]);
-    fish(4) = MajorTom(cave(2), [450 900]);
+fish(2) = MajorTom(cave(2));
+
+%     fish(3) = MajorTom(cave(2), [0 450]);
+%     fish(4) = MajorTom(cave(2), [450 900]);
 
 %% cave 3, 7 fish, good recordings of all fish through over 1200 seconds
 
-    fish(5) = MajorTom(cave(3), [0 600]);
-    fish(6) = MajorTom(cave(3), [600 1200]);
+fish(3) = MajorTom(cave(3));
+
+%     fish(5) = MajorTom(cave(3), [0 600]);
+%     fish(6) = MajorTom(cave(3), [600 1200]);
 
     [spadat(1), cmbs(1)] = SpaceCorps(cave(1), 1);
     [sa(1), sq(1)] = overture(spadat(1));
@@ -31,6 +35,10 @@ fish(1) = MajorTom(cave(1));
 
 %% cave 4, 7 fish, good recordings of all fish through over 1200 seconds
 
+fish(4) = MajorTom(cave(4));
+
+    [spadat(2), cmbs(2)] = SpaceCorps(cave(4), 1);
+    [sa(2), sq(2)] = overture(spadat(2));
 
 
 %% cave 5, 7 fish, good recordings of all fish through over 1200 seconds
