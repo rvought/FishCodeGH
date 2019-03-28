@@ -20,7 +20,8 @@ fish(2) = MajorTom(cave(2));
 
 %% cave 3, 7 fish, good recordings of all fish through over 1200 seconds
 
-fish(3) = MajorTom(cave(3));
+tmp = MajorTom(cave(3));
+    for j=1:length(tmp); fish(end+1) = tmp(j); end;
 
 %     fish(5) = MajorTom(cave(3), [0 600]);
 %     fish(6) = MajorTom(cave(3), [600 1200]);
