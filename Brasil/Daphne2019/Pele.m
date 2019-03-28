@@ -26,8 +26,8 @@ tmp = MajorTom(cave(3));
 %     fish(5) = MajorTom(cave(3), [0 600]);
 %     fish(6) = MajorTom(cave(3), [600 1200]);
 
-    [spadat(1), ~] = SpaceCorps(cave(3), 1);
-    [sa(1), sq(1)] = overture(spadat(1));
+    [spadat(1).dat, ~] = SpaceCorps(cave(3), 1);
+    [sa(1).sa, sq(1).sq] = overture(spadat(1).dat);
 
 %     [tmpOUT, tmpCMBS] = SpaceCorps(cave(1), 1, [600 1200]);
 %     [sa, sq] = overture(tmpOUT);
@@ -39,8 +39,8 @@ tmp = MajorTom(cave(3));
 tmp = MajorTom(cave(4));
     for j=1:length(tmp); fish(end+1) = tmp(j); end
     
-    [spadat(2), cmbs(2)] = SpaceCorps(cave(4), 1);
-    [sa(2), sq(2)] = overture(spadat(2));
+    [spadat(2).dat, ~] = SpaceCorps(cave(4), 1);
+    [sa(2).sa, sq(2).sq] = overture(spadat(2).dat);
 
 
 %% cave 5, 7 fish, good recordings of all fish through over 1200 seconds
@@ -85,8 +85,8 @@ tmp = MajorTom(cave(4));
 tmp = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
     for j=1:length(tmp); fish(end+1) = tmp(j); end
     
-    [spadat(3), cmbs(3)] = SpaceCorps(srf(1), 2);
-    [sa(3), sq(3)] = overture(spadat(3));
+    [spadat(3).dat, ~] = SpaceCorps(srf(1), 2);
+    [sa(3).sa, sq(3).sq] = overture(spadat(3).dat);
 
 
 %% surface 2, 21 fish, over 1000 seconds
@@ -106,8 +106,8 @@ tmp = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
 tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
     for j=1:length(tmp); fish(end+1) = tmp(j); end
     
-    [spadat(4), cmbs(4)] = SpaceCorps(srf(4), 2);
-    [sa(4), sq(4)] = overture(spadat(4));
+    [spadat(4).dat, ~] = SpaceCorps(srf(4), 2);
+    [sa(4).sa, sq(4).sq] = overture(spadat(4).dat);
 
 
 %% surface 5, 24 fish, over 1100 seconds
