@@ -26,7 +26,7 @@ tmp = MajorTom(cave(3));
 %     fish(5) = MajorTom(cave(3), [0 600]);
 %     fish(6) = MajorTom(cave(3), [600 1200]);
 
-    [spadat(1), ~] = SpaceCorps(cave(1), 1);
+    [spadat(1), ~] = SpaceCorps(cave(3), 1);
     [sa(1), sq(1)] = overture(spadat(1));
 
 %     [tmpOUT, tmpCMBS] = SpaceCorps(cave(1), 1, [600 1200]);
