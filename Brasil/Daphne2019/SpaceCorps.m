@@ -1,4 +1,4 @@
-function [out, cmbs] = SpaceCorps(in, casu, tims)
+function [out, cmbs] = SpaceCorps(in, casu, fishies, tims)
 % Usage out = SpaceCorps(in)
 % Find spatial relations between fish and compare to 'jiggled' and 'randomized'
 % distributions.
@@ -6,9 +6,14 @@ function [out, cmbs] = SpaceCorps(in, casu, tims)
 
 %% Setup
 
-if nargin < 3 % If the user did not specify the time frame, take the whole thing
+if nargin < 4 % If the user did not specify the time frame, take the whole thing
     tims = [0 999999];
 end
+
+if nargin < 3 % If the user did not specify specific fish, use them all
+    tims = [0 999999];
+end
+
 
 % tr is the data within our time range
     tr = in.fish(1).freq(:,1) > tims(1) & in.fish(1).freq(:,1) < tims(2);
