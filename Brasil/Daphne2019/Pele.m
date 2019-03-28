@@ -4,10 +4,12 @@ function [fish, pairs, stts] = Pele(cave, srf)
 
 %% cave 1, 1 fish, 1000 seconds
 
+fish(1) = MajorTom(cave(1));
+
 % Let's do two sections of 500 seconds
 
-    fish(1) = MajorTom(cave(1), [0 500]);
-    fish(2) = MajorTom(cave(1), [500 1000]);
+%     fish(1) = MajorTom(cave(1), [0 500]);
+%     fish(2) = MajorTom(cave(1), [500 1000]);
 
 %% cave 2, 1 fish, 900 seconds
 
@@ -19,15 +21,16 @@ function [fish, pairs, stts] = Pele(cave, srf)
     fish(5) = MajorTom(cave(3), [0 600]);
     fish(6) = MajorTom(cave(3), [600 1200]);
 
-%     [tmpOUT, tmpCMBS] = SpaceCorps(cave(1), 1, [0 600]);
-%     [sa, sq] = overture(tmpOUT);
-% 
+    [spadat(1), cmbs(1)] = SpaceCorps(cave(1), 1);
+    [sa(1), sq(1)] = overture(spadat(1));
+
 %     [tmpOUT, tmpCMBS] = SpaceCorps(cave(1), 1, [600 1200]);
 %     [sa, sq] = overture(tmpOUT);
 
 
 
 %% cave 4, 7 fish, good recordings of all fish through over 1200 seconds
+
 
 
 %% cave 5, 7 fish, good recordings of all fish through over 1200 seconds
