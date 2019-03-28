@@ -1,4 +1,4 @@
-function [fish, pairs, stts] = Pele(cave, srf)
+function [fish, sa, sq] = Pele(cave, srf)
 
 
 
@@ -21,7 +21,7 @@ fish(2) = MajorTom(cave(2));
 %% cave 3, 7 fish, good recordings of all fish through over 1200 seconds
 
 tmp = MajorTom(cave(3));
-    for j=1:length(tmp); fish(end+1) = tmp(j); end;
+    for j=1:length(tmp); fish(end+1) = tmp(j); end
 
 %     fish(5) = MajorTom(cave(3), [0 600]);
 %     fish(6) = MajorTom(cave(3), [600 1200]);
@@ -36,8 +36,9 @@ tmp = MajorTom(cave(3));
 
 %% cave 4, 7 fish, good recordings of all fish through over 1200 seconds
 
-fish(4) = MajorTom(cave(4));
-
+tmp = MajorTom(cave(4));
+    for j=1:length(tmp); fish(end+1) = tmp(j); end
+    
     [spadat(2), cmbs(2)] = SpaceCorps(cave(4), 1);
     [sa(2), sq(2)] = overture(spadat(2));
 
@@ -81,8 +82,9 @@ fish(4) = MajorTom(cave(4));
 %% surface 1, 12 fish, over 600 seconds
 
 % TUBE FISH, index 7, 9, 11
-fish(5) = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
-
+tmp = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
+    for j=1:length(tmp); fish(end+1) = tmp(j); end
+    
     [spadat(3), cmbs(3)] = SpaceCorps(srf(1), 2);
     [sa(3), sq(3)] = overture(spadat(3));
 
@@ -101,8 +103,9 @@ fish(5) = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]
 %% surface 4, 22 fish, over 600 seconds
 
 % TUBE FISH, index 11, 16, 20
-fish(6) = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
-
+tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
+    for j=1:length(tmp); fish(end+1) = tmp(j); end
+    
     [spadat(4), cmbs(4)] = SpaceCorps(srf(4), 2);
     [sa(4), sq(4)] = overture(spadat(4));
 
