@@ -212,7 +212,7 @@ end % Cycle through each fish
 %% Cycle through pairs of fish
 if numfish > 1 % We have more than one fish
     
-    combos = combnk(length(out), 2); % All pairwise combinations of fish
+    combos = combnk(1:length(out), 2); % All pairwise combinations of fish
 
     for p = length(combos):-1:1 % For each pair of fish
 
