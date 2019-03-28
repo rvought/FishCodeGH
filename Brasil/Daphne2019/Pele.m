@@ -80,7 +80,7 @@ fish(4) = MajorTom(cave(4));
 %% surface 1, 12 fish, over 600 seconds
 
 % TUBE FISH, index 7, 9, 11
-fish(5) = MajorTom(srf(1));
+fish(5) = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
 
     [spadat(3), cmbs(3)] = SpaceCorps(srf(1), 2);
     [sa(3), sq(3)] = overture(spadat(3));
