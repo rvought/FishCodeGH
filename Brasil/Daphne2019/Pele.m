@@ -55,8 +55,8 @@ fish(4) = MajorTom(cave(4));
 
 %% cave 9, 1 fish, over 1000 seconds
 
-    fish(7) = MajorTom(cave(9), [0 500]);
-    fish(8c) = MajorTom(cave(9), [500 1000]);
+%     fish(7) = MajorTom(cave(9), [0 500]);
+%     fish(8c) = MajorTom(cave(9), [500 1000]);
 
 
 %% cave 10, 3 fish, over 900 seconds
@@ -80,6 +80,10 @@ fish(4) = MajorTom(cave(4));
 %% surface 1, 12 fish, over 600 seconds
 
 % TUBE FISH, index 7, 9, 11
+fish(5) = MajorTom(srf(1));
+
+    [spadat(3), cmbs(3)] = SpaceCorps(srf(1), 2);
+    [sa(3), sq(3)] = overture(spadat(3));
 
 
 %% surface 2, 21 fish, over 1000 seconds
