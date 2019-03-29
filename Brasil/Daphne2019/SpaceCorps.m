@@ -230,7 +230,7 @@ if numfish > 1 % We have more than one fish
         end
         
         % Distance histogram for each pair of fish
-        if length(cmbs(p).realhist) > 1 % Then we have data for this fish
+        if length(cmbs(p).realdist) > 1 % Then we have data for this fish
             cmbs(p).realhist = hist(cmbs(p).realdist, dctrs);
             cmbs(p).randhist = hist(cmbs(p).randdist, dctrs);
             cmbs(p).jighist = hist(cmbs(p).jigdist, dctrs);
