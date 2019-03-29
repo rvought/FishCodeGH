@@ -220,7 +220,7 @@ if numfish > 1 % We have more than one fish
         
         % Get only entries for which we have data for both fish (shared indices)
         [~, idx1, idx2] = intersect(out(combos(p,1)).valididx, out(combos(p,2)).valididx);
-               
+        if ~isempty(idx1) && ~isempty(idx2)       
         % Calculate the interfish-distance
         
         for jj = 1:length(idx1) % THERE HAS GOT TO BE A MORE EFFICIENT WAY OF DOING THIS...
@@ -239,7 +239,7 @@ if numfish > 1 % We have more than one fish
         end
         
         % Assemble the histogram of distances of each fish to all others
-        if length(cmbs(p).realdist) > 1
+        
         if sum(cmbs(p).realhist) > 0
             out(combos(p,1)).allhist = out(combos(p,1)).allhist + cmbs(p).realhist;        
             out(combos(p,2)).allhist = out(combos(p,2)).allhist + cmbs(p).realhist;        
@@ -251,6 +251,7 @@ if numfish > 1 % We have more than one fish
             out(combos(p,2)).alljighist = out(combos(p,2)).alljighist + cmbs(p).jighist;        
                         
         end
+        
         end
         
         % Compare spatial histograms (fish against each fish separately)
