@@ -233,9 +233,22 @@ tmp = MajorTom(srf(5), [0 srf(5).fish(1).freq(end,1)]);
 %     subplot(122); plot([fish.varfreq], '-*'); ylim([0 2]);
 
 CaveRealOver = []; SurfRealOver = [];
+CaveRandOver = []; SurfRandOver = [];
 
-for j=1:CaveANA
-   
-    CaveRealOver = [CaveRealOver sq(j).sq.
-    
+for j=1:CaveANA   
+    CaveRealOver = [CaveRealOver sq(j).sq.realoverlaps];
+    CaveRandOver = [CaveRandOver sq(j).sq.randoverlaps];    
 end
+for j=CaveAna+1:length(sq)
+    SurfRealOver = [SurfRealOver sq(j).sq.realoverlaps];
+    SurfRandOver = [SurfRandOver sq(j).sq.randoverlaps];        
+end
+
+lms = 0:0.05:1;
+figure(27); clf;
+    subplot(221); histogram(CaveRealOver, 'BinEdges', lms);
+    subplot(222); histogram(CaveRandOver, 'BinEdges', lms);
+    subplot(223); histogram(SurfRealOver, 'BinEdges', lms);
+    subplot(224); histogram(SurfRandOver, 'BinEdges', lms);
+
+
