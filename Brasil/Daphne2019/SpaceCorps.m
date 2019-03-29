@@ -239,7 +239,7 @@ if numfish > 1 % We have more than one fish
         end
         
         % Assemble the histogram of distances of each fish to all others
-        
+        if length(cmbs(p).realdist) > 1
         if sum(cmbs(p).realhist) > 0
             out(combos(p,1)).allhist = out(combos(p,1)).allhist + cmbs(p).realhist;        
             out(combos(p,2)).allhist = out(combos(p,2)).allhist + cmbs(p).realhist;        
@@ -251,7 +251,7 @@ if numfish > 1 % We have more than one fish
             out(combos(p,2)).alljighist = out(combos(p,2)).alljighist + cmbs(p).jighist;        
                         
         end
-
+        end
         
         % Compare spatial histograms (fish against each fish separately)
         
