@@ -162,7 +162,7 @@ tmp = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [1 2 3 4 5 6 8 10 12]);
 tmp = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [7 9 11]);
     for j=1:length(tmp); tubular(j) = tmp(j); end    
     
-    [spadat(11).dat, ~] = SpaceCorps(srf(1), 1, [1 2 3 4 5 6 8 10 12]);
+    [spadat(11).dat, ~] = SpaceCorps(srf(1), 2, [1 2 3 4 5 6 8 10 12]);
     [sa(11).sa, sq(11).sq] = overture(spadat(11).dat);
 
 
@@ -179,7 +179,7 @@ tmp = MajorTom(srf(2), [0 srf(2).fish(1).freq(end,1)], [11 18 19]);
     for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
     
     
-     [spadat(12).dat, ~] = SpaceCorps(srf(2), 1, [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17 20 21]);
+     [spadat(12).dat, ~] = SpaceCorps(srf(2), 2, [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17 20 21]);
      [sa(12).sa, sq(12).sq] = overture(spadat(12).dat);
 
 
@@ -196,7 +196,7 @@ tmp = MajorTom(srf(3), [0 srf(3).fish(1).freq(end,1)], [22 28]);
     for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
     
     
-    [spadat(13).dat, ~] = SpaceCorps(srf(3), 1, [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 29 30 31]);
+    [spadat(13).dat, ~] = SpaceCorps(srf(3), 2, [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 29 30 31]);
     [sa(13).sa, sq(13).sq] = overture(spadat(13).dat);
 
 
@@ -212,7 +212,7 @@ tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [11 16 20]);
     for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
     
     
-    [spadat(14).dat, ~] = SpaceCorps(srf(4), 1, [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]);
+    [spadat(14).dat, ~] = SpaceCorps(srf(4), 2, [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]);
     [sa(14).sa, sq(14).sq] = overture(spadat(14).dat);
 
 
@@ -221,7 +221,7 @@ curlen = length(fish);
 tmp = MajorTom(srf(5), [0 srf(5).fish(1).freq(end,1)]);
     for j=1:length(tmp); fish(j+curlen) = tmp(j); end
 
-    [spadat(15).dat, ~] = SpaceCorps(srf(5), 1);
+    [spadat(15).dat, ~] = SpaceCorps(srf(5), 2);
     [sa(15).sa, sq(15).sq] = overture(spadat(15).dat);
 
 
