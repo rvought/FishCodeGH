@@ -217,6 +217,12 @@ tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [11 16 20]);
 
 
 %% surface 5, 24 fish, over 1100 seconds
+curlen = length(fish);
+tmp = MajorTom(srf(5), [0 srf(5).fish(1).freq(end,1)]);
+    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+
+    [spadat(15).dat, ~] = SpaceCorps(srf(5), 1);
+    [sa(15).sa, sq(15).sq] = overture(spadat(15).dat);
 
 
 
@@ -226,5 +232,10 @@ tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [11 16 20]);
 %     subplot(121); plot([fish.meanfreq], '-*'); ylim([200 600]);
 %     subplot(122); plot([fish.varfreq], '-*'); ylim([0 2]);
 
+CaveRealOver = []; SurfRealOver = [];
 
-
+for j=1:CaveANA
+   
+    CaveRealOver = [CaveRealOver sq(j).sq.
+    
+end
