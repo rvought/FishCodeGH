@@ -239,7 +239,7 @@ for j=1:CaveANA
     CaveRealOver = [CaveRealOver sq(j).sq.realoverlaps];
     CaveRandOver = [CaveRandOver sq(j).sq.randoverlaps];    
 end
-for j=CaveAna+1:length(sq)
+for j=CaveANA+1:length(sq)
     SurfRealOver = [SurfRealOver sq(j).sq.realoverlaps];
     SurfRandOver = [SurfRandOver sq(j).sq.randoverlaps];        
 end
