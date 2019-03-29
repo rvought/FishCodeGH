@@ -200,15 +200,20 @@ tmp = MajorTom(srf(3), [0 srf(3).fish(1).freq(end,1)], [11 18 19]);
     [sa(13).sa, sq(13).sq] = overture(spadat(13).dat);
 
 
-%% surface 4, 22 fish, over 600 seconds
+%% surface 4, 22 fish, over 600 seconds [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]
 
 % TUBE FISH, index 11, 16, 20
 curlen = length(fish);
 tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]);
     for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+
+curlen = length(tubular);
+tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [11 16 20]);
+    for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
     
-    [spadat(7).dat, ~] = SpaceCorps(srf(4), 2, [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]);
-    [sa(7).sa, sq(7).sq] = overture(spadat(7).dat);
+    
+    [spadat(14).dat, ~] = SpaceCorps(srf(4), 1, [1 2 3 4 5 6 8 10 12]);
+    [sa(14).sa, sq(14).sq] = overture(spadat(14).dat);
 
 
 %% surface 5, 24 fish, over 1100 seconds
