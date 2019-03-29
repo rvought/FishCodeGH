@@ -1,4 +1,4 @@
-function [fish, sa, sq, spadat] = Pele(cave, srf)
+function [fish, sa, sq, spadat, tubular] = Pele(cave, srf)
 
 
 
@@ -179,8 +179,8 @@ tmp = MajorTom(srf(2), [0 srf(2).fish(1).freq(end,1)], [11 18 19]);
     for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
     
     
-%     [spadat(12).dat, ~] = SpaceCorps(srf(2), 1, [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17 20 21]);
-%     [sa(12).sa, sq(12).sq] = overture(spadat(12).dat);
+     [spadat(12).dat, ~] = SpaceCorps(srf(2), 1, [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17 20 21]);
+     [sa(12).sa, sq(12).sq] = overture(spadat(12).dat);
 
 
 %% surface 3, 31 fish, over 600 seconds
@@ -188,16 +188,16 @@ tmp = MajorTom(srf(2), [0 srf(2).fish(1).freq(end,1)], [11 18 19]);
 % TUBE FISH, index 22, 28, MISHMASH @ 385 Hz
 
 curlen = length(fish);
-tmp = MajorTom(srf(3), [0 srf(3).fish(1).freq(end,1)], [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17 20 21]);
+tmp = MajorTom(srf(3), [0 srf(3).fish(1).freq(end,1)], [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 29 30 31]);
     for j=1:length(tmp); fish(j+curlen) = tmp(j); end
 
 curlen = length(tubular);
-tmp = MajorTom(srf(3), [0 srf(3).fish(1).freq(end,1)], [11 18 19]);
+tmp = MajorTom(srf(3), [0 srf(3).fish(1).freq(end,1)], [22 28]);
     for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
     
     
-    [spadat(12).dat, ~] = SpaceCorps(srf(3), 1, [1 2 3 4 5 6 8 10 12]);
-    [sa(12).sa, sq(12).sq] = overture(spadat(12).dat);
+    [spadat(13).dat, ~] = SpaceCorps(srf(3), 1, [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 29 30 31]);
+    [sa(13).sa, sq(13).sq] = overture(spadat(13).dat);
 
 
 %% surface 4, 22 fish, over 600 seconds [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]
@@ -212,7 +212,7 @@ tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [11 16 20]);
     for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
     
     
-    [spadat(14).dat, ~] = SpaceCorps(srf(4), 1, [1 2 3 4 5 6 8 10 12]);
+    [spadat(14).dat, ~] = SpaceCorps(srf(4), 1, [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]);
     [sa(14).sa, sq(14).sq] = overture(spadat(14).dat);
 
 
