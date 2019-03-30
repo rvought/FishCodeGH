@@ -687,7 +687,7 @@ subplot(2,1,2);
 hold on;
 
 histogram(R_rand,100);
-plot(R_ddist_df_abs_cave(2,1),0,'*r');
+% plot(R_ddist_df_abs_cave(2,1),0,'*r');
 
 legend('','Surface R value');
 title('Shuffled R values for Surface fish');
