@@ -767,8 +767,8 @@ plot(foo,bar,'.');
 %% Run TRENTOOL analysis
 
 %%
-resultFolderName = '~/Google Drive/trentool_results';
-% resultFolderName = './results';
+% resultFolderName = '~/Google Drive/trentool_results';
+resultFolderName = '/Users/Shared/Data/Brasil/trentool_results';
 
 load(fullfile(resultFolderName,'all_channels_windowed.mat'));
 trentool_result = [trentool_result{:}];
