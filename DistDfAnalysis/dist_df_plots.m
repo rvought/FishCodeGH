@@ -665,7 +665,7 @@ subplot(2,1,1);
 hold on;
 
 histogram(R_rand,100);
-plot(R_ddist_df_abs_cave(2,1),0,'*r');
+% plot(R_ddist_df_abs_cave(2,1),0,'*r');
 
 legend('','Cave R value');
 title('Shuffled R values for Cave fish');
