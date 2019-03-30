@@ -1,4 +1,4 @@
-% Load Tracked Data
+%% Load Tracked Data
 dataFolderName = '.';
 
 load(fullfile(dataFolderName,'CaveDataRev2018a.mat'));
@@ -13,7 +13,9 @@ mmnorm = @(x) ( x - repmat(min(x),size(x,1),1) ) ./ ( repmat(max(x),size(x,1),1)
 
 data.trial = {};
 data.time = {};
-[meta.dataset,meta.pair,meta.window,meta.df,meta.ddf,meta.dist,meta.ddist] = deal([]);
+[meta.dataset,meta.pair,meta.fish1,meta.fish2,...
+    meta.window,meta.df,meta.ddf,meta.ddf_abs,...
+    meta.dist,meta.ddist,meta.ddist_abs] = deal([]);
 
 [freq_all,dist_all,df_all,ddist_all,ddf_all,ddist_abs_all,ddf_abs_all] = deal(cell(nCave+nSrf,1));
 
@@ -107,28 +109,128 @@ for j = 1:(nCave + nSrf)
                 
                 meta.dataset = [meta.dataset,j];
                 meta.pair = [meta.pair,k];
+                meta.fish1 = [meta.fish1,C(k,1)];
+                meta.fish2 = [meta.fish2,C(k,2)];
                 meta.window = [meta.window,w];
                 
                 meta.dist = [meta.dist,nanmean(DST(:,w))];
                 meta.ddist = [meta.ddist,nanmean(DDST(:,w))];
-                meta.ddist_abs = [meta.ddist,nanmean(DDST_ABS(:,w))];
+                meta.ddist_abs = [meta.ddist_abs,nanmean(DDST_ABS(:,w))];
                 
                 meta.df = [meta.df,nanmean(DF(:,w))];
                 meta.ddf = [meta.ddf,nanmean(DDF(:,w))];
-                meta.ddf_abs = [meta.ddf,nanmean(DDF_ABS(:,w))];
+                meta.ddf_abs = [meta.ddf_abs,nanmean(DDF_ABS(:,w))];
+                
+                if nanmean(DDF_ABS(:,w))<0
+                    error;
+                end
             end
         end
     end
 end
 
-%% Comparison of computed variables between cave and srf
+%% Compute sensitivity and correlation values
 
-%% For each pair - distance
+[sens,sens_abs,maxr,maxr_abs,lag,lag_abs] = deal(zeros(length(data.trial),1));
+for k = 1:length(data.trial)
+    sens(k) = nanmean(data.trial{k}(3,:)./data.trial{k}(4,:));
+    sens_abs(k) = nanmean(data.trial{k}(5,:)./data.trial{k}(6,:));
+    
+    [r,l] = xcorr(data.trial{k}(3,:),data.trial{k}(4,:));
+    [maxr(k),idx] = max(abs(r));
+    lag(k) = l(idx);
+    
+    [r,l] = xcorr(data.trial{k}(5,:),data.trial{k}(6,:));
+    [maxr_abs(k),idx] = max(abs(r));
+    lag_abs(k) = l(idx);
+end
+
+%% Example of low-df behavior, Cave fish
+% There is only one pair where the df is kinda small (<5) and that is a crossing pair 
+idx = meta.df<5 & meta.dataset<=nCave;
+dataset = unique(meta.dataset(idx));
+pair = unique(meta.pair(idx));
+time = [0,60];
+
+dat = cave(dataset);
+C = nchoosek(1:dat.nFish,2);
+
+timeIdx = dat.t>time(1) & dat.t<time(2);
+
+clf, hold on;
+
+plot(dat.t(timeIdx),dat.fish(C(pair,1)).freq(timeIdx,2));
+plot(dat.t(timeIdx),dat.fish(C(pair,2)).freq(timeIdx,2));
+
+title('Single low-df example in cave fish, crossing pair');
+xlabel('Time (s)');
+ylabel('Frequency (Hz)');
+hold off;
+
+%% Example of low-df behavior, Surface fish
+
+idx = meta.df<3 & meta.dataset>nCave;
+
+% Choose the pair with the largest number of windows
+longestIdx = mode(meta.dataset(idx) + 1i*meta.pair(idx));
+dataset = real(longestIdx);
+pair = imag(longestIdx);
+time = [0,dat.t(end)];
+
+dat = srf(dataset-nCave);
+C = nchoosek(1:dat.nFish,2);
+
+timeIdx = dat.t>time(1) & dat.t<time(2);
+
+clf, hold on;
+
+plot(dat.t(timeIdx),dat.fish(C(pair,1)).freq(timeIdx,2));
+plot(dat.t(timeIdx),dat.fish(C(pair,2)).freq(timeIdx,2));
+
+title('Longest low-df example in surface fish');
+xlabel('Time (s)');
+ylabel('Frequency (Hz)');
+hold off;
+
+%% Compute mean values for each pair
+
 dist_pair_cave = cellfun(@(x) nanmean(x),dist_all(1:nCave),'UniformOutput',false);
 dist_pair_cave = [dist_pair_cave{:}];
 
 dist_pair_srf = cellfun(@(x) nanmean(x),dist_all(nCave+1:end),'UniformOutput',false);
 dist_pair_srf = [dist_pair_srf{:}];
+
+df_pair_cave = cellfun(@(x) nanmean(x),df_all(1:nCave),'UniformOutput',false);
+df_pair_cave = [df_pair_cave{:}];
+
+df_pair_srf = cellfun(@(x) nanmean(x),df_all(nCave+1:end),'UniformOutput',false);
+df_pair_srf = [df_pair_srf{:}];
+
+ddist_pair_cave = cellfun(@(x) nanmean(x),ddist_all(1:nCave),'UniformOutput',false);
+ddist_pair_cave = [ddist_pair_cave{:}];
+
+ddist_pair_srf = cellfun(@(x) nanmean(x),ddist_all(nCave+1:end),'UniformOutput',false);
+ddist_pair_srf = [ddist_pair_srf{:}];
+
+ddf_pair_cave = cellfun(@(x) nanmean(x),ddf_all(1:nCave),'UniformOutput',false);
+ddf_pair_cave = [ddf_pair_cave{:}];
+
+ddf_pair_srf = cellfun(@(x) nanmean(x),ddf_all(nCave+1:end),'UniformOutput',false);
+ddf_pair_srf = [ddf_pair_srf{:}];
+
+ddist_abs_pair_cave = cellfun(@(x) nanmean(x),ddist_abs_all(1:nCave),'UniformOutput',false);
+ddist_abs_pair_cave = [ddist_abs_pair_cave{:}];
+
+ddist_abs_pair_srf = cellfun(@(x) nanmean(x),ddist_abs_all(nCave+1:end),'UniformOutput',false);
+ddist_abs_pair_srf = [ddist_abs_pair_srf{:}];
+
+ddf_abs_pair_cave = cellfun(@(x) nanmean(x),ddf_abs_all(1:nCave),'UniformOutput',false);
+ddf_abs_pair_cave = [ddf_abs_pair_cave{:}];
+
+ddf_abs_pair_srf = cellfun(@(x) nanmean(x),ddf_abs_all(nCave+1:end),'UniformOutput',false);
+ddf_abs_pair_srf = [ddf_abs_pair_srf{:}];
+
+%% For each pair - Distance
 
 max_val = max([dist_pair_cave,dist_pair_srf]);
 edges = linspace(0,max_val,100);
@@ -145,15 +247,10 @@ ylabel('Pairs')
 title('Distance - cave vs surface');
 hold off;
 
-[h_dist,p_dist,ks2stat_dist] = kstest2(dist_pair_cave,dist_pair_srf);
-fprintf('\nProbability of %f that the distances are from the same distribution',p_dist);
+p = compareDistributions(dist_pair_cave,dist_pair_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each pair - df
-df_pair_cave = cellfun(@(x) nanmean(x),df_all(1:nCave),'UniformOutput',false);
-df_pair_cave = [df_pair_cave{:}];
-
-df_pair_srf = cellfun(@(x) nanmean(x),df_all(nCave+1:end),'UniformOutput',false);
-df_pair_srf = [df_pair_srf{:}];
 
 max_val = max([df_pair_cave,df_pair_srf]);
 edges = linspace(0,max_val,100);
@@ -170,18 +267,14 @@ ylabel('Pairs')
 title('Df - cave vs surface');
 hold off;
 
-[h_df,p_df,ks2stat_df] = kstest2(df_pair_cave,df_pair_srf);
-fprintf('\nProbability of %f that the dfs are from the same distribution',p_df);
+p = compareDistributions(df_pair_cave,df_pair_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each pair - change in distance
-ddist_pair_cave = cellfun(@(x) nanmean(x),ddist_all(1:nCave),'UniformOutput',false);
-ddist_pair_cave = [ddist_pair_cave{:}];
-
-ddist_pair_srf = cellfun(@(x) nanmean(x),ddist_all(nCave+1:end),'UniformOutput',false);
-ddist_pair_srf = [ddist_pair_srf{:}];
 
 max_val = max([ddist_pair_cave,ddist_pair_srf]);
-edges = linspace(0,max_val,100);
+min_val = min([ddist_pair_cave,ddist_pair_srf]);
+edges = linspace(min_val,max_val,100);
 
 clf;
 hold on;
@@ -195,18 +288,14 @@ ylabel('Pairs')
 title('Change in Distance - cave vs surface');
 hold off;
 
-[h_ddist,p_ddist,ks2stat_ddist] = kstest2(ddist_pair_cave,ddist_pair_srf);
-fprintf('\nProbability of %f that the change in distances are from the same distribution',p_ddist);
+p = compareDistributions(ddist_pair_cave,ddist_pair_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each pair - change in df
-ddf_pair_cave = cellfun(@(x) nanmean(x),ddf_all(1:nCave),'UniformOutput',false);
-ddf_pair_cave = [ddf_pair_cave{:}];
-
-ddf_pair_srf = cellfun(@(x) nanmean(x),ddf_all(nCave+1:end),'UniformOutput',false);
-ddf_pair_srf = [ddf_pair_srf{:}];
 
 max_val = max([ddf_pair_cave,ddf_pair_srf]);
-edges = linspace(0,max_val,100);
+min_val = min([ddf_pair_cave,ddf_pair_srf]);
+edges = linspace(min_val,max_val,100);
 
 clf;
 hold on;
@@ -220,15 +309,10 @@ ylabel('Pairs')
 title('Change in Df - cave vs surface');
 hold off;
 
-[h_ddf,p_ddf,ks2stat_ddf] = kstest2(ddf_pair_cave,ddf_pair_srf);
-fprintf('\nProbability of %f that the change in dfs are from the same distribution',p_ddf);
+p = compareDistributions(ddf_pair_cave,ddf_pair_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each pair - relative speed
-ddist_abs_pair_cave = cellfun(@(x) nanmean(x),ddist_abs_all(1:nCave),'UniformOutput',false);
-ddist_abs_pair_cave = [ddist_abs_pair_cave{:}];
-
-ddist_abs_pair_srf = cellfun(@(x) nanmean(x),ddist_abs_all(nCave+1:end),'UniformOutput',false);
-ddist_abs_pair_srf = [ddist_abs_pair_srf{:}];
 
 max_val = max([ddist_abs_pair_cave,ddist_abs_pair_srf]);
 edges = linspace(0,max_val,100);
@@ -245,15 +329,10 @@ ylabel('Pairs')
 title('Relative speed - cave vs surface');
 hold off;
 
-[h_ddist_abs,p_ddist_abs,ks2stat_ddist_abs] = kstest2(ddist_abs_pair_cave,ddist_abs_pair_srf);
-fprintf('\nProbability of %f that the relative speeds are from the same distribution',p_ddist_abs);
+p = compareDistributions(ddist_abs_pair_cave,ddist_abs_pair_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each pair - relative frequency speed
-ddf_abs_pair_cave = cellfun(@(x) nanmean(x),ddf_abs_all(1:nCave),'UniformOutput',false);
-ddf_abs_pair_cave = [ddf_abs_pair_cave{:}];
-
-ddf_abs_pair_srf = cellfun(@(x) nanmean(x),ddf_abs_all(nCave+1:end),'UniformOutput',false);
-ddf_abs_pair_srf = [ddf_abs_pair_srf{:}];
 
 max_val = max([ddf_abs_pair_cave,ddf_abs_pair_srf]);
 edges = linspace(0,max_val,100);
@@ -270,15 +349,89 @@ ylabel('Pairs')
 title('Relative frequency speed - cave vs surface');
 hold off;
 
-[h_ddf_abs,p_ddf_abs,ks2stat_ddf_abs] = kstest2(ddf_abs_pair_cave,ddf_abs_pair_srf);
-fprintf('\nProbability of %f that the relative frequency speeds are from the same distribution',p_ddf_abs);
+p = compareDistributions(ddf_abs_pair_cave,ddf_abs_pair_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
+
+%% For each pair - relative speed split by direction
+
+max_val = max([ddist_abs_pair_cave,ddist_abs_pair_srf]);
+edges = linspace(0,max_val,100);
+
+clf;
+subplot(2,1,1)
+hold on;
+
+histogram(ddist_abs_pair_cave(ddist_pair_cave<0),edges,'FaceColor','b');
+histogram(ddist_abs_pair_cave(ddist_pair_cave>0),edges,'FaceColor','c');
+
+legend('Moving closer','Moving further');
+ylabel('Pairs');
+title('Cave');
+hold off;
 
 
-%% STATS FOR EACH FISH
+subplot(2,1,2);
+hold on;
+histogram(ddist_abs_pair_srf(ddist_pair_srf<0),edges,'FaceColor','r');
+histogram(ddist_abs_pair_srf(ddist_pair_srf>0),edges,'FaceColor','m');
 
-%% For each fish - distance
+title('Surface');
+legend('Moving closer','Moving further');
+xlabel('Relative speed');
+ylabel('Pairs')
+hold off;
 
-[dist_fish_cave,dist_fish_srf] = deal([]);
+p = compareDistributions(ddist_abs_pair_cave(ddist_pair_cave<0),ddist_abs_pair_cave(ddist_pair_cave>0));
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
+
+p = compareDistributions(ddist_abs_pair_srf(ddist_pair_srf<0),ddist_abs_pair_srf(ddist_pair_srf>0));
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
+
+%% For each pair - relative speed split by direction
+
+max_val = max([ddf_abs_pair_cave,ddf_abs_pair_srf]);
+edges = linspace(0,max_val,100);
+
+clf;
+subplot(2,1,1)
+hold on;
+
+histogram(ddf_abs_pair_cave(ddist_pair_cave<0),edges,'FaceColor','b');
+histogram(ddf_abs_pair_cave(ddist_pair_cave>0),edges,'FaceColor','c');
+
+legend('Moving closer','Moving further');
+ylabel('Pairs');
+title('Cave');
+hold off;
+
+
+subplot(2,1,2);
+hold on;
+histogram(ddf_abs_pair_srf(ddist_pair_srf<0),edges,'FaceColor','r');
+histogram(ddf_abs_pair_srf(ddist_pair_srf>0),edges,'FaceColor','m');
+
+legend('Moving closer','Moving further');
+xlabel('Relative frquency speed');
+ylabel('Pairs')
+title('Surface');
+hold off;
+
+
+p = compareDistributions(ddf_abs_pair_cave(ddist_pair_cave<0),ddf_abs_pair_cave(ddist_pair_cave>0));
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
+
+p = compareDistributions(ddf_abs_pair_srf(ddist_pair_srf<0),ddf_abs_pair_srf(ddist_pair_srf>0));
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
+
+%% Compute mean values for each fish
+
+[dist_fish_cave,dist_fish_srf,...
+df_fish_cave,df_fish_srf,...
+ddist_fish_cave,ddist_fish_srf,...
+ddf_fish_cave,ddf_fish_srf,...
+ddist_abs_fish_cave,ddist_abs_fish_srf,...
+ddf_abs_fish_cave,ddf_abs_fish_srf] = deal([]);
+
 for j = 1:(nCave+nSrf)
     nFish = nFish_all(j);
   
@@ -290,12 +443,24 @@ for j = 1:(nCave+nSrf)
 
             if j<=nCave
                 dist_fish_cave = [dist_fish_cave,nanmean(nanmean(dist_all{j}(:,fishIdx)))];
+                df_fish_cave = [df_fish_cave,nanmean(nanmean(df_all{j}(:,fishIdx)))];
+                ddist_fish_cave = [ddist_fish_cave,nanmean(nanmean(ddist_all{j}(:,fishIdx)))];
+                ddf_fish_cave = [ddf_fish_cave,nanmean(nanmean(ddf_all{j}(:,fishIdx)))];
+                ddist_abs_fish_cave = [ddist_abs_fish_cave,nanmean(nanmean(ddist_abs_all{j}(:,fishIdx)))];
+                ddf_abs_fish_cave = [ddf_abs_fish_cave,nanmean(nanmean(ddf_abs_all{j}(:,fishIdx)))];
             else
                 dist_fish_srf = [dist_fish_srf,nanmean(nanmean(dist_all{j}(:,fishIdx)))];
+                df_fish_srf = [df_fish_srf,nanmean(nanmean(df_all{j}(:,fishIdx)))];
+                ddist_fish_srf = [ddist_fish_srf,nanmean(nanmean(ddist_all{j}(:,fishIdx)))];
+                ddf_fish_srf = [ddf_fish_srf,nanmean(nanmean(ddf_all{j}(:,fishIdx)))];
+                ddist_abs_fish_srf = [ddist_abs_fish_srf,nanmean(nanmean(ddist_abs_all{j}(:,fishIdx)))];
+                ddf_abs_fish_srf = [ddf_abs_fish_srf,nanmean(nanmean(ddf_abs_all{j}(:,fishIdx)))];
             end
         end
     end
 end
+
+%% For each fish - distance
 
 max_val = max([dist_fish_cave,dist_fish_srf]);
 edges = linspace(0,max_val,50);
@@ -312,29 +477,10 @@ ylabel('Pairs')
 title('Distance - cave vs surface');
 hold off;
 
-[h_fish_dist,p_fish_dist,ks2stat_fish_dist] = kstest2(dist_fish_cave,dist_fish_srf);
-fprintf('\nProbability of %f that the distances are from the same distribution',p_fish_dist);
+p = compareDistributions(dist_fish_cave,dist_fish_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each fish - df
-
-[df_fish_cave,df_fish_srf] = deal([]);
-for j = 1:(nCave+nSrf)
-    nFish = nFish_all(j);
-  
-    if nFish>2
-        C = nchoosek(1:nFish,2);
-
-        for f = 1:nFish
-            fishIdx = find(sum(C==f,2));
-
-            if j<=nCave
-                df_fish_cave = [df_fish_cave,nanmean(nanmean(df_all{j}(:,fishIdx)))];
-            else
-                df_fish_srf = [df_fish_srf,nanmean(nanmean(df_all{j}(:,fishIdx)))];
-            end
-        end
-    end
-end
 
 max_val = max([df_fish_cave,df_fish_srf]);
 edges = linspace(0,max_val,50);
@@ -351,29 +497,10 @@ ylabel('Pairs')
 title('Df - cave vs surface');
 hold off;
 
-[h_fish_df,p_fish_df,ks2stat_fish_df] = kstest2(df_fish_cave,df_fish_srf);
-fprintf('\nProbability of %f that the dfs are from the same distribution',p_fish_df);
+p = compareDistributions(df_fish_cave,df_fish_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each fish - change in distance
-
-[ddist_fish_cave,ddist_fish_srf] = deal([]);
-for j = 1:(nCave+nSrf)
-    nFish = nFish_all(j);
-  
-    if nFish>2
-        C = nchoosek(1:nFish,2);
-
-        for f = 1:nFish
-            fishIdx = find(sum(C==f,2));
-
-            if j<=nCave
-                ddist_fish_cave = [ddist_fish_cave,nanmean(nanmean(ddist_all{j}(:,fishIdx)))];
-            else
-                ddist_fish_srf = [ddist_fish_srf,nanmean(nanmean(ddist_all{j}(:,fishIdx)))];
-            end
-        end
-    end
-end
 
 max_val = max([ddist_fish_cave,ddist_fish_srf]);
 edges = linspace(0,max_val,50);
@@ -390,29 +517,10 @@ ylabel('Fish')
 title('Change in Distance - cave vs surface');
 hold off;
 
-[h_fish_ddist,p_fish_ddist,ks2stat_fish_ddist] = kstest2(ddist_fish_cave,ddist_fish_srf);
-fprintf('\nProbability of %f that the change in distances are from the same distribution',p_fish_ddist);
+p = compareDistributions(ddist_fish_cave,ddist_fish_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each fish - change in df
-
-[ddf_fish_cave,ddf_fish_srf] = deal([]);
-for j = 1:(nCave+nSrf)
-    nFish = nFish_all(j);
-  
-    if nFish>2
-        C = nchoosek(1:nFish,2);
-
-        for f = 1:nFish
-            fishIdx = find(sum(C==f,2));
-
-            if j<=nCave
-                ddf_fish_cave = [ddf_fish_cave,nanmean(nanmean(ddf_all{j}(:,fishIdx)))];
-            else
-                ddf_fish_srf = [ddf_fish_srf,nanmean(nanmean(ddf_all{j}(:,fishIdx)))];
-            end
-        end
-    end
-end
 
 max_val = max([ddf_fish_cave,ddf_fish_srf]);
 edges = linspace(0,max_val,50);
@@ -429,29 +537,10 @@ ylabel('Fish')
 title('Change in Df - cave vs surface');
 hold off;
 
-[h_fish_ddf,p_fish_ddf,ks2stat_fish_ddf] = kstest2(ddf_fish_cave,ddf_fish_srf);
-fprintf('\nProbability of %f that the dfs are from the same distribution',p_fish_ddf);
+p = compareDistributions(ddf_fish_cave,ddf_fish_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each fish - relative speed
-
-[ddist_abs_fish_cave,ddist_abs_fish_srf] = deal([]);
-for j = 1:(nCave+nSrf)
-    nFish = nFish_all(j);
-  
-    if nFish>2
-        C = nchoosek(1:nFish,2);
-
-        for f = 1:nFish
-            fishIdx = find(sum(C==f,2));
-
-            if j<=nCave
-                ddist_abs_fish_cave = [ddist_abs_fish_cave,nanmean(nanmean(ddist_abs_all{j}(:,fishIdx)))];
-            else
-                ddist_abs_fish_srf = [ddist_abs_fish_srf,nanmean(nanmean(ddist_abs_all{j}(:,fishIdx)))];
-            end
-        end
-    end
-end
 
 max_val = max([ddist_abs_fish_cave,ddist_abs_fish_srf]);
 edges = linspace(0,max_val,50);
@@ -468,29 +557,10 @@ ylabel('Fish')
 title('Relative speed - cave vs surface');
 hold off;
 
-[h_fish_ddist_abs,p_fish_ddist_abs,ks2stat_fish_ddist_abs] = kstest2(ddist_abs_fish_cave,ddist_abs_fish_srf);
-fprintf('\nProbability of %f that the change in distances are from the same distribution',p_fish_ddist_abs);
+p = compareDistributions(ddist_abs_fish_cave,ddist_abs_fish_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% For each fish - relative frequency speed
-
-[ddf_abs_fish_cave,ddf_abs_fish_srf] = deal([]);
-for j = 1:(nCave+nSrf)
-    nFish = nFish_all(j);
-  
-    if nFish>2
-        C = nchoosek(1:nFish,2);
-
-        for f = 1:nFish
-            fishIdx = find(sum(C==f,2));
-
-            if j<=nCave
-                ddf_abs_fish_cave = [ddf_abs_fish_cave,nanmean(nanmean(ddf_abs_all{j}(:,fishIdx)))];
-            else
-                ddf_abs_fish_srf = [ddf_abs_fish_srf,nanmean(nanmean(ddf_abs_all{j}(:,fishIdx)))];
-            end
-        end
-    end
-end
 
 max_val = max([ddf_abs_fish_cave,ddf_abs_fish_srf]);
 edges = linspace(0,max_val,50);
@@ -507,14 +577,14 @@ ylabel('Fish')
 title('Relative frequency speed - cave vs surface');
 hold off;
 
-[h_fish_ddf_abs,p_fish_ddf_abs,ks2stat_fish_ddf_abs] = kstest2(ddf_abs_fish_cave,ddf_abs_fish_srf);
-fprintf('\nProbability of %f that the relative frequency speeds are from the same distribution',p_fish_ddf_abs);
+p = compareDistributions(ddf_abs_fish_cave,ddf_abs_fish_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% Distance vs df plots
 
 clf, hold on;
-plot(dist_fish_cave,df_fish_cave,'.b')
-plot(dist_fish_srf,df_fish_srf,'.r')
+plot(dist_fish_cave,df_fish_cave,'.b','MarkerSize',10)
+plot(dist_fish_srf,df_fish_srf,'.r','MarkerSize',10)
 
 grid on;
 
@@ -525,8 +595,8 @@ hold off;
 %% Distance vs df plots - change
 
 clf, hold on;
-plot(ddist_fish_cave,ddf_fish_cave,'.b')
-plot(ddist_fish_srf,ddf_fish_srf,'.r')
+plot(ddist_fish_cave,ddf_fish_cave,'.b','MarkerSize',10)
+plot(ddist_fish_srf,ddf_fish_srf,'.r','MarkerSize',10)
 
 grid on;
 
@@ -537,24 +607,31 @@ hold off;
 %% Distance vs df plot - abs change
 clf, hold on;
 
-plot(ddist_abs_fish_cave,ddf_abs_fish_cave,'.b','MarkerSize',5)
+% plot(ddist_abs_fish_cave,ddf_abs_fish_cave,'.b','MarkerSize',10)
 
-px = linspace(0,max(ddist_abs_fish_cave),10);
-p = polyfit(ddist_abs_fish_cave,ddf_abs_fish_cave,1);
-py = polyval(p,px);
-[R_ddist_df_abs_cave,pVal_ddist_df_abs_cave] = corrcoef(ddist_abs_fish_cave,ddf_abs_fish_cave);
-fprintf('\nr = %.2f, n = %d, df = %d, p = %.3e',R_ddist_df_abs_cave(2,1),length(ddist_abs_fish_cave),length(ddist_abs_fish_cave)-2,pVal_ddist_df_abs_cave(2,1));
-plot(px,py,'-b');
+plot(ddist_abs_fish_cave(ddist_fish_cave<0),ddf_abs_fish_cave(ddist_fish_cave<0),'.b','MarkerSize',10)
+plot(ddist_abs_fish_cave(ddist_fish_cave>0),ddf_abs_fish_cave(ddist_fish_cave>0),'ob','MarkerSize',3)
 
 
-plot(ddist_abs_fish_srf,ddf_abs_fish_srf,'.r','MarkerSize',5)
+% px = linspace(0,max(ddist_abs_fish_cave),10);
+% p = polyfit(ddist_abs_fish_cave,ddf_abs_fish_cave,1);
+% py = polyval(p,px);
+% [R_ddist_df_abs_cave,pVal_ddist_df_abs_cave] = corrcoef(ddist_abs_fish_cave,ddf_abs_fish_cave);
+% fprintf('\nr = %.2f, n = %d, df = %d, p = %.3e',R_ddist_df_abs_cave(2,1),length(ddist_abs_fish_cave),length(ddist_abs_fish_cave)-2,pVal_ddist_df_abs_cave(2,1));
+% plot(px,py,'-b');
 
-px = linspace(0,max(ddist_abs_fish_srf),10);
-p = polyfit(ddist_abs_fish_srf,ddf_abs_fish_srf,1);
-py = polyval(p,px);
-[R_ddist_df_abs_srf,pVal_ddist_df_abs_srf] = corrcoef(ddist_abs_fish_srf,ddf_abs_fish_srf);
-fprintf('\nr = %.2f, n = %d, df = %d, p = %.3e',R_ddist_df_abs_srf(2,1),length(ddist_abs_fish_srf),length(ddist_abs_fish_srf)-2,pVal_ddist_df_abs_srf(2,1));
-plot(px,py,'-r');
+
+% plot(ddist_abs_fish_srf,ddf_abs_fish_srf,'.r','MarkerSize',10)
+
+plot(ddist_abs_fish_srf(ddist_fish_srf<0),ddf_abs_fish_srf(ddist_fish_srf<0),'.r','MarkerSize',10)
+plot(ddist_abs_fish_srf(ddist_fish_srf>0),ddf_abs_fish_srf(ddist_fish_srf>0),'or','MarkerSize',3)
+
+% px = linspace(0,max(ddist_abs_fish_srf),10);
+% p = polyfit(ddist_abs_fish_srf,ddf_abs_fish_srf,1);
+% py = polyval(p,px);
+% [R_ddist_df_abs_srf,pVal_ddist_df_abs_srf] = corrcoef(ddist_abs_fish_srf,ddf_abs_fish_srf);
+% fprintf('\nr = %.2f, n = %d, df = %d, p = %.3e',R_ddist_df_abs_srf(2,1),length(ddist_abs_fish_srf),length(ddist_abs_fish_srf)-2,pVal_ddist_df_abs_srf(2,1));
+% plot(px,py,'-r');
 
 
 grid on;
@@ -647,8 +724,8 @@ ylabel('Fish')
 title('Frequency - cave vs surface');
 hold off;
 
-[h_fish_freq,p_fish_freq,ks2stat_fish_freq] = kstest2(freq_fish_cave,freq_fish_srf);
-fprintf('\nProbability of %f that the frequencies are from the same distribution',p_fish_freq);
+p = compareDistributions(freq_fish_cave,freq_fish_srf);
+fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
 %% Frequency vs distance
 
@@ -690,13 +767,11 @@ plot(foo,bar,'.');
 %% Run TRENTOOL analysis
 
 %%
-% resultFolderName = '~/Google Drive/trentool_results';
-resultFolderName = './results';
+resultFolderName = '~/Google Drive/trentool_results';
+% resultFolderName = './results';
 
 load(fullfile(resultFolderName,'all_channels_windowed.mat'));
 trentool_result = [trentool_result{:}];
-
-load(fullfile(resultFolderName,'TEpermtest.mat'));
 
 %%
 
@@ -715,9 +790,7 @@ TE = nan(n_u,nChannelPairs,nWindows);
 
 for u = 1:n_u
     for c = 1:nChannelPairs
-        TE(u,c,TEprepare(u).trials{c,1}) = trentool_result(u).TEmat(c,1:TEprepare(u).nrtrials(c,1));
-        
-%         TE(u,c,TEprepare(u).trials{c,1}) = TEpermtest.TEmat_sur(c,1:TEprepare(u).nrtrials(c,1));
+        TE(u,c,TEprepare(u).trials{c,1}) = trentool_result(u).TEmat(c,1:TEprepare(u).nrtrials(c,1));        
     end
 end
 
@@ -729,19 +802,53 @@ end
 
 %%
 
-[TEmax,uIdx] = max(TE,[],1);
+[TEmax,TEmaxIdx] = max(TE,[],1);
 
 TEmax = squeeze(TEmax)';
-uIdx = squeeze(uIdx)';
+TEmaxIdx = squeeze(TEmaxIdx)';
 
 idx = TEmax<=0;
 TEmax(idx) = NaN;
-uIdx(idx) = NaN;
+TEmaxIdx(idx) = NaN;
+
+
+%% Examples of high-distance, high TE interactions
+idx = find(TEmax(:,3)>prctile(TEmax(:,3),95) & meta.dist'>prctile(meta.dist,95));
+
+for k = 1:length(idx)
+    clf;
+    
+    subplot(2,1,1);
+    plot(data.trial{idx(k)}(1,:));
+    title('Distance (cm)');
+    
+    subplot(2,1,2);
+    plot(data.trial{idx(k)}(2,:));
+    title('Df (Hz)');
+    pause;
+end
+
+
+%% Examples of high-df, high TE interactions
+idx = find(TEmax(:,3)>prctile(TEmax(:,3),95) & meta.df'>prctile(meta.df,95));
+
+for k = 1:length(idx)
+    clf;
+    
+    subplot(2,1,1);
+    plot(data.trial{idx(k)}(1,:));
+    title('Distance (cm)');
+    
+    subplot(2,1,2);
+    plot(data.trial{idx(k)}(2,:));
+    title('Df (Hz)');
+    pause;
+end
 
 
 %% TE comparison Cave <-> Surface pairs
 
-[TE_pair_cave,TE_pair_srf] = deal([]);
+[TE_pair_cave,TE_pair_srf,TE_pair_cave_std,TE_pair_srf_std] = deal([]);
 
 for j = 1:(nCave+nSrf)
     nFish = nFish_all(j);
@@ -756,8 +863,10 @@ for j = 1:(nCave+nSrf)
             
             if j<=nCave
                 TE_pair_cave = [TE_pair_cave;nanmean(TEmax(idx,:))];
+                TE_pair_cave_std = [TE_pair_cave_std;nanstd(TEmax(idx,:))];
             else
                 TE_pair_srf = [TE_pair_srf;nanmean(TEmax(idx,:))];
+                TE_pair_srf_std = [TE_pair_srf_std;nanstd(TEmax(idx,:))];
             end
         end
     end
@@ -781,9 +890,33 @@ for k = 1:nChannelPairs
     hold off;
 end
 
+%% Proportion of interacting windows for each fish
+p = prctile(TEmax(:,3),50);
+
+prop = [];
+for j = 1:(nCave+nSrf)
+    nFish = nFish_all(j);
+  
+    if nFish>2
+        C = nchoosek(1:nFish,2);
+        
+        nPairs = size(C,1);
+        
+        for f = 1:nFish
+            fishIdx = find(sum(C==f,2));
+            
+            idx = meta.dataset==j & ismember(meta.pair,fishIdx);
+            
+            prop = [prop,sum(TEmax(idx,3)>p)/sum(idx)];
+
+        end
+    end
+end 
+
 %% TE comparison Cave <-> Surface Fish
 
-[TE_fish_cave,TE_fish_srf] = deal([]);
+[TE_fish_cave,TE_fish_srf,...
+    TE_fish_cave_std,TE_fish_srf_std] = deal([]);
 
 for j = 1:(nCave+nSrf)
     nFish = nFish_all(j);
@@ -800,8 +933,10 @@ for j = 1:(nCave+nSrf)
             
             if j<=nCave
                 TE_fish_cave = [TE_fish_cave;nanmean(TEmax(idx,:))];
+                TE_fish_cave_std = [TE_fish_cave_std;nanstd(TEmax(idx,:))];
             else
                 TE_fish_srf = [TE_fish_srf;nanmean(TEmax(idx,:))];
+                TE_fish_srf_std = [TE_fish_srf_std;nanstd(TEmax(idx,:))];
             end
         end
     end
@@ -910,7 +1045,7 @@ for k = 1:nChannelPairs
     hold off 
 end
 
-%% TE vs Change in Relative frequency speed
+%% TE vs Relative frequency speed
 
 clf;
 for k = 1:nChannelPairs
@@ -920,12 +1055,109 @@ for k = 1:nChannelPairs
     plot(ddf_abs_fish_cave,TE_fish_cave(:,k),'.b');
     plot(ddf_abs_fish_srf,TE_fish_srf(:,k),'.r');
     
-    xlabel('Change in Relative Frequency Speed');
+    if k==nChannelPairs
+        xlabel('Relative Frequency Speed');
+    end
     ylabel('TE')
     title(channelLabels{k},'Interpreter','none');
     
     hold off 
 end
+
+%% TE vs Frequency
+
+clf;
+for k = 1:nChannelPairs
+    subplot(nChannelPairs,1,k);
+    hold on 
+    
+    plot(freq_fish_cave,TE_fish_cave(:,k),'.b');
+    plot(freq_fish_srf,TE_fish_srf(:,k),'.r');
+    
+    if k==nChannelPairs
+        xlabel('Relative Frequency Speed');
+    end
+    ylabel('TE')
+    title(channelLabels{k},'Interpreter','none');
+    
+    hold off 
+end
+
+%% All variables vs. TE of ddist_abs->ddf_abs
+
+vars = {'dist_fish','df_fish','ddist_fish','ddf_fish',...
+    'ddist_abs_fish','ddf_abs_fish','freq_fish'};
+
+clf;
+for k = 1:length(vars)
+    subplot(3,3,k);
+    hold on;
+
+    x = eval([vars{k},'_cave']);
+    x = x(:);
+    y = TE_fish_cave(:,3);
+    plot(x,y,'.b')
+
+    nanIdx = ~isnan(x) & ~isnan(y);
+    x = x(nanIdx);
+    y = y(nanIdx);
+
+    p = polyfit(x,y,1);
+    R_cave = corrcoef(x,y);
+    
+    plot(x,polyval(p,x),'-b')
+    
+    x = eval([vars{k},'_srf']);
+    x = x(:);
+    y = TE_fish_srf(:,3);
+    plot(x,y,'.r')
+
+    nanIdx = ~isnan(x) & ~isnan(y);
+    x = x(nanIdx);
+    y = y(nanIdx);
+
+    p = polyfit(x,y,1);
+    R_srf = corrcoef(x,y);
+    
+    plot(x,polyval(p,x),'-r')
+    title(sprintf('%s, R_c=%.2f, R_s=%.2f',vars{k},R_cave(2,1),R_srf(2,1)),'Interpreter','none');
+    hold off;
+end
+
+
+%% Poisson testing of TE (in progress)
+
+TE_cave = TEmax(meta.dataset<=nCave,3);
+TE_srf = TEmax(meta.dataset>nCave,3);
+
+N = 10000;
+L1 = size(TE_cave,1);
+L2 = size(TE_srf,1);
+l = 1000;
+[m1,s1,m2,s2] = deal(zeros(N,1));
+
+for n = 1:N
+    idx1 = randsample(L1,l);
+    m1(n) = nanmean(TE_cave(idx1));
+    s1(n) = nanstd(TE_cave(idx1));
+	
+    idx2 = randsample(L2,l);
+    m2(n) = nanmean(TE_srf(idx2));
+    s2(n) = nanstd(TE_srf(idx2));
+end
+
+clf;
+
+edges = linspace(0.6,1.2,30);
+subplot(2,1,1);
+hold on;
+
+histogram(m1./s1,edges,'Normalization','pdf');
+histogram(TE_fish_cave./TE_fish_cave_std,edges,'Normalization','pdf');
+
+
+hold off;
+
 
 %% All three variables
 
@@ -939,10 +1171,10 @@ zlabel('TE');
 grid on;
 hold off;
 
-%%
+%% TE bias - dist->df - df->dist
 
-TE_dir_cave = TE_fish_cave(:,3)-TE_fish_cave(:,4);
-TE_dir_srf = TE_fish_srf(:,3)-TE_fish_srf(:,4);
+TE_dir_cave = TE_fish_cave(:,1)-TE_fish_cave(:,2);
+TE_dir_srf = TE_fish_srf(:,1)-TE_fish_srf(:,2);
 
 edges = linspace(min([TE_dir_cave;TE_dir_srf]),max([TE_dir_cave;TE_dir_srf]),20);
 
@@ -950,12 +1182,31 @@ clf, hold on;
 histogram(TE_dir_cave,edges);
 histogram(TE_dir_srf,edges);
 
+legend('Cave','Surface');
 xlabel('TE bias in the dist -> df direction');
 ylabel('Fish');
 
 hold off;
 
-%%
+%% TE bias - dist_abs->df_abs - df_abs->dist_abs
+
+TE_dir_abs_cave = TE_fish_cave(:,3)-TE_fish_cave(:,4);
+TE_dir_abs_srf = TE_fish_srf(:,3)-TE_fish_srf(:,4);
+
+edges = linspace(min([TE_dir_abs_cave;TE_dir_abs_srf]),max([TE_dir_abs_cave;TE_dir_abs_srf]),20);
+
+clf, hold on;
+histogram(TE_dir_abs_cave,edges);
+histogram(TE_dir_abs_srf,edges);
+
+legend('Cave','Surface');
+xlabel('TE bias in the dist_abs -> df_abs direction');
+ylabel('Fish');
+
+hold off;
+
+
+%% JUNK BELOW THIS
 
 d = 3;
 p = 4;
@@ -1014,112 +1265,4 @@ hold on;
 plot(TEidx(:,1) - TEidx(:,2));
 plot(TEidx(:,3) - TEidx(:,4));
 % legend(channelLabels,'Interpreter','none');
-hold off;
-
-%%
-plot(squeeze(max(TE(:,2,idx))));
-
-
-% plot(t,TE(idx));
-% plot(t,TE2(idx));
-% plot(t,mmnorm(meta.sens(idx)));
-% plot(t(1:end-1),mmnorm(abs(diff(meta.dist(idx)))./abs(diff(meta.df(idx)))));
-% legend('Dist','Df','TE','TE2')
-hold off;
-
-%%
-
-act = squeeze(TGA_results.ACT.actvalue(:,2,:));
-teIdx = act>=0 & act<=100;
-TE = NaN(size(teIdx));
-TE(teIdx) = TGA_results.TEmat;
-
-
-% act = squeeze(TGA_results2.ACT.actvalue(:,2,:));
-% teIdx = act>=0 & act<=100;
-% TE2 = NaN(size(teIdx));
-% TE2(teIdx) = TGA_results2.TEmat;
-
-d = 4;
-p = 9;
-
-idx = meta.dataset==d & meta.pair==p;
-time = data.time(idx);
-trial = data.trial(idx);
-
-% t = cellfun(@(x) mean(x),time);
-ddist = cellfun(@(x) mean(x(1,:)),trial);
-ddf = cellfun(@(x) mean(x(2,:)),trial);
-t = (1:length(ddist))*(windowLength-overlapLength)*dt;
-
-clf, hold on
-plot(t,mmnorm(meta.dist(idx)));
-plot(t,mmnorm(meta.df(idx)));
-plot(t,TE(idx));
-% plot(t,TE2(idx));
-% plot(t,mmnorm(meta.sens(idx)));
-% plot(t(1:end-1),mmnorm(abs(diff(meta.dist(idx)))./abs(diff(meta.df(idx)))));
-legend('Dist','Df','TE','TE2')
-hold off;
-
-%%
-
-clf, hold on
-for d = 1:(nCave + nSrf)
-    if d <= nCave
-        dat = cave(d);
-    else
-        dat = srf(d-nCave);
-    end
-    
-    nFish = dat.nFish;
-    freq = nanmean([dat.fish.freq]);
-    freq = freq(2:2:end);
-    
-    vel = nanmean(sqrt(diff([dat.fish.x]).^2 + diff([dat.fish.y]).^2 + diff([dat.fish.z]).^2));
-    if nFish>1
-        C = nchoosek(1:nFish,2);
-        nPairs = size(C,1);
-        
-        te_pair = zeros(nPairs,1);
-        for p = 1:nPairs
-            idx = meta.dataset==d & meta.pair==p;
-            te_pair(p) = nanmean(TE(idx));
-        end
-
-        te_fish = zeros(nFish,1);
-        te_fish_var = zeros(nFish,1);
-        for f = 1:nFish
-            fishIdx = find(sum(C==f,2));
-            te_fish(f) = nanmean(te_pair(fishIdx));
-            te_fish_var(f) = nanstd(te_pair(fishIdx));
-            
-%             plot(freq(f),te_pair(fishIdx),'.');
-        end
-        
-        if d<=nCave
-            col = 'r';
-        else
-            col = 'b';
-        end
-%         
-% %         subplot(3,1,1), hold on;
-%             plot(freq,te_fish,'.','Color',col);
-%         subplot(3,1,2), hold on;
-%             plot(freq,te_fish_var,'.','Color',col);
-%         subplot(3,1,3), hold on;
-%             plot(freq,te_fish./te_fish_var,'.','Color',col);
-%             plot(te_fish,te_fish_var,'.','Color',col);
-
-%         plot(freq,vel,'.','Color',col);
-%         plot(vel,te_fish,'.','Color',col);
-%         plot(vel,te_fish_var,'.','Color',col);
-%         plot(vel,te_fish./te_fish_var,'.','Color',col);
-    end
-end
-
-% subplot(3,1,1), grid on;
-% subplot(3,1,2), grid on;
-% subplot(3,1,3), grid on;
-grid on;
 hold off;
