@@ -1,5 +1,5 @@
 %% Load Tracked Data
-dataFolderName = '/Users/Shared/Data/Brasil';
+dataFolderName = '~/Downloads';
 
 load(fullfile(dataFolderName,'CaveDataRev2018a.mat'));
 load(fullfile(dataFolderName,'SurfaceDataRev2018a.mat'));
