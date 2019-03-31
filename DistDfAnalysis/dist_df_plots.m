@@ -242,9 +242,12 @@ figure(3); clf;
 hold on;
 
 ch = histogram(dist_pair_cave,edges);
-    chcounts = ch.BinCounts; chx = ch.
+    chcounts = ch.BinCounts; chx = ch.BinEdges(2:end);
 sh = histogram(dist_pair_srf,edges);
+    shcounts = sh.BinCounts; shx = sh.BinEdges(2:end);
 
+figure(4); clf; hold on;
+plot(chx, chcounts); plot(shx, shcounts);    
 
 
 legend('Cave','Surface');
