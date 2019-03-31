@@ -836,11 +836,11 @@ for k = 1:length(idx)
     clf;
     
     subplot(2,1,1);
-    plot(data.trial{idx(k)}(1,:));
+    plot(data.trial{idx(k)}(1,:), '.-');
     title('Distance (cm)');
     
     subplot(2,1,2);
-    plot(data.trial{idx(k)}(2,:));
+    plot(data.trial{idx(k)}(2,:), '.-');
     title('Df (Hz)');
     pause;
 end
