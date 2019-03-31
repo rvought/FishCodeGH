@@ -186,8 +186,8 @@ timeIdx = dat.t>time(1) & dat.t<time(2);
 
 figure(2); clf, hold on;
 
-plot(dat.t(timeIdx),dat.fish(C(pair,1)).freq(timeIdx,2));
-plot(dat.t(timeIdx),dat.fish(C(pair,2)).freq(timeIdx,2));
+plot(dat.t(timeIdx),dat.fish(C(pair,1)).freq(timeIdx,2), 'LineWidth', 2);
+plot(dat.t(timeIdx),dat.fish(C(pair,2)).freq(timeIdx,2), 'LineWidth', 2);
 
 title('Longest low-df example in surface fish');
 xlabel('Time (s)');
