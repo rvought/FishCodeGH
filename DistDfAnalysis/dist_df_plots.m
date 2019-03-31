@@ -737,7 +737,7 @@ end
 max_val = max([freq_fish_cave,freq_fish_srf]);
 edges = linspace(0,max_val,50);
 
-clf;
+figure(11); clf;
 hold on;
 
 histogram(freq_fish_cave,edges);
