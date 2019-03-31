@@ -246,15 +246,20 @@ ch = histogram(dist_pair_cave,edges);
 sh = histogram(dist_pair_srf,edges);
     shcounts = sh.BinCounts; shx = sh.BinEdges(2:end);
 
+    legend('Cave','Surface');
+    xlabel('Distance');
+    ylabel('Pairs')
+    title('Distance - cave vs surface');
+    hold off;
+
 figure(4); clf; hold on;
 plot(chx, chcounts/max(chcounts)); plot(shx, shcounts/max(shcounts));    
 
-
-legend('Cave','Surface');
-xlabel('Distance');
-ylabel('Pairs')
-title('Distance - cave vs surface');
-hold off;
+    legend('Cave','Surface');
+    xlabel('Distance');
+    ylabel('Pairs')
+    title('Distance - cave vs surface');
+    hold off;
 
 p = compareDistributions(dist_pair_cave,dist_pair_srf);
 fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
@@ -264,17 +269,28 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 max_val = max([df_pair_cave,df_pair_srf]);
 edges = linspace(0,max_val,40);
 
-figure(5); clf;
-hold on;
+figure(5); clf; hold on;
 
-histogram(df_pair_cave,edges);
-histogram(df_pair_srf,edges);
+dFc = histogram(df_pair_cave,edges);
+    dFcounts = dFc.BinCounts; dFcx = dFc.BinEdges(2:end);
+dFs = histogram(df_pair_srf,edges);
+    dFscounts = dFs.BinCounts; dFsx = dFs.BinEdges(2:end);
 
-legend('Cave','Surface');
-xlabel('Df (Hz)');
-ylabel('Pairs')
-title('Df - cave vs surface');
-hold off;
+    legend('Cave','Surface');
+    xlabel('Df (Hz)');
+    ylabel('Pairs')
+    title('Df - cave vs surface');
+    hold off;
+
+figure(6); clf; hold on;
+plot(dFcx, dFcounts/max(dFcounts)); plot(dFsx, shcounts/max(dFscounts));    
+
+    legend('Cave','Surface');
+    xlabel('Df (Hz)');
+    ylabel('Pairs')
+    title('Df - cave vs surface');
+    hold off;
+
 
 p = compareDistributions(df_pair_cave,df_pair_srf);
 fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
