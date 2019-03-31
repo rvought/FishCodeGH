@@ -247,7 +247,7 @@ sh = histogram(dist_pair_srf,edges);
     shcounts = sh.BinCounts; shx = sh.BinEdges(2:end);
 
 figure(4); clf; hold on;
-plot(chx/max(chx), chcounts); plot(shx/max(shx), shcounts);    
+plot(chx, chcounts/max(chcounts)); plot(shx, shcounts/max(shcounts));    
 
 
 legend('Cave','Surface');
