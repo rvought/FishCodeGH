@@ -488,9 +488,9 @@ end
 %% For each fish - distance
 
 max_val = max([dist_fish_cave,dist_fish_srf]);
-edges = linspace(0,max_val,50);
+edges = linspace(0,max_val,20);
 
-clf;
+figure(7); clf;
 hold on;
 
 histogram(dist_fish_cave,edges);
@@ -510,7 +510,7 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 max_val = max([df_fish_cave,df_fish_srf]);
 edges = linspace(0,max_val,20);
 
-figure(7); clf;
+figure(8); clf;
 hold on;
 
 histogram(df_fish_cave,edges);
