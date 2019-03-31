@@ -238,7 +238,7 @@ ddf_abs_pair_srf = [ddf_abs_pair_srf{:}];
 max_val = max([dist_pair_cave,dist_pair_srf]);
 edges = linspace(0,max_val,100);
 
-clf;
+figure(3); clf;
 hold on;
 
 histogram(dist_pair_cave,edges);
