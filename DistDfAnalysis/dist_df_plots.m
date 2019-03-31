@@ -241,8 +241,10 @@ edges = linspace(0,max_val,100);
 figure(3); clf;
 hold on;
 
-histogram(dist_pair_cave,edges);
-histogram(dist_pair_srf,edges);
+ch = histogram(dist_pair_cave,edges);
+sh = histogram(dist_pair_srf,edges);
+
+
 
 legend('Cave','Surface');
 xlabel('Distance');
