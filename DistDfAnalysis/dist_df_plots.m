@@ -242,7 +242,7 @@ figure(3); clf;
 hold on;
 
 ch = histogram(dist_pair_cave,edges);
-    chcounts = ch.
+    chcounts = ch.BinCounts; chx = ch.
 sh = histogram(dist_pair_srf,edges);
 
 
