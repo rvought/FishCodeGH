@@ -81,8 +81,8 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
 
 lms = 0:0.05:1;
 
-figure(5); clf; histogram(plt.realoverlaps, 'BinEdges', lms);
+figure(5); clf; histogram(plt.realoverlaps, 'BinEdges', lms); title('RealOverlaps');
 
 figure(6); clf;
-subplot(211); histogram([plt.jigoverlaps], 'BinEdges', lms)
-subplot(212); histogram([plt.randoverlaps], 'BinEdges', lms)
+subplot(211); histogram([plt.jigoverlaps], 'BinEdges', lms); title('JiggledOverlaps');
+subplot(212); histogram([plt.randoverlaps], 'BinEdges', lms); title('RandomOverlaps');

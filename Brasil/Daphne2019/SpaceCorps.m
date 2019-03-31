@@ -1,4 +1,4 @@
-function [out, cmbs] = SpaceCorps(in, casu, tims)
+function [out, cmbs] = SpaceCorps(in, casu, feesh, tims)
 % Usage out = SpaceCorps(in)
 % Find spatial relations between fish and compare to 'jiggled' and 'randomized'
 % distributions.
@@ -6,9 +6,14 @@ function [out, cmbs] = SpaceCorps(in, casu, tims)
 
 %% Setup
 
-if nargin < 3 % If the user did not specify the time frame, take the whole thing
+if nargin < 4 % If the user did not specify the time frame, take the whole thing
     tims = [0 999999];
 end
+
+if nargin < 3 % If the user did not specify specific fish, use them all
+    feesh = 1:length(in.fish);
+end
+
 
 % tr is the data within our time range
     tr = in.fish(1).freq(:,1) > tims(1) & in.fish(1).freq(:,1) < tims(2);
@@ -20,11 +25,11 @@ end
 xminedge = []; xscale = [];
 yminedge = []; yscale = [];
 
-    for bb = 1:length(in.fish)
-            xminedge = min([xminedge, min(in.fish(bb).x)]);
-            yminedge = min([yminedge, min(in.fish(bb).y)]);
-            xscale = max([xscale, max(in.fish(bb).x)]);
-            yscale = max([yscale, max(in.fish(bb).y)]);        
+    for bb = 1:length(feesh)
+            xminedge = min([xminedge, min(in.fish(feesh(bb)).x)]);
+            yminedge = min([yminedge, min(in.fish(feesh(bb)).y)]);
+            xscale = max([xscale, max(in.fish(feesh(bb)).x)]);
+            yscale = max([yscale, max(in.fish(feesh(bb)).y)]);        
     end    
     
     xscale = xscale + abs(xminedge);
@@ -63,7 +68,7 @@ BoxLen = 50; % We've tried 50, 60, 75, 100. This is in cm.
 % Distance bins between pairs of fish for histogram
     dctrs = 1:10:500;    
     
-numfish = length(in.fish); % How many fish in this recording
+numfish = length(feesh); % How many fish in this recording
 
 %% Cycle through each fish
 
@@ -77,7 +82,7 @@ for j = numfish:-1:1 % For each fish
     out(j).ctrs = ctrs;
     
     % Get valid data (check frequency data to omit NaNs)            
-    out(j).valididx = find(~isnan(in.fish(j).freq(tr,2)));
+    out(j).valididx = find(~isnan(in.fish(feesh(j)).freq(tr,2)));
     
     if ~isempty(out(j).valididx) % Make sure that we have data before proceding
         
@@ -85,11 +90,11 @@ for j = numfish:-1:1 % For each fish
         
         % Both random and jiggled start at the same spot as the real fish in the grid 
         
-        out(j).rndXY(:,out(j).valididx(1)) = [in.fish(j).x(out(j).valididx(1)) in.fish(j).y(out(j).valididx(1))]; % First XY for randome
+        out(j).rndXY(:,out(j).valididx(1)) = [in.fish(feesh(j)).x(out(j).valididx(1)) in.fish(feesh(j)).y(out(j).valididx(1))]; % First XY for randome
 
         % Both random and jiggled fish have a jiggled initial theta
         
-            firstheta = atan2(in.fish(j).y(out(j).valididx(2)) - in.fish(j).y(out(j).valididx(1)), in.fish(j).x(out(j).valididx(2)) - in.fish(j).x(out(j).valididx(1)));
+            firstheta = atan2(in.fish(feesh(j)).y(out(j).valididx(2)) - in.fish(feesh(j)).y(out(j).valididx(1)), in.fish(feesh(j)).x(out(j).valididx(2)) - in.fish(feesh(j)).x(out(j).valididx(1)));
             deltatheta = constrainer * (rand(1,1) - 0.5); % Set a random change in direction for our artificial fish
 
         out(j).randtheta(1) = firstheta + deltatheta; % First theta for Random
@@ -104,8 +109,8 @@ for j = numfish:-1:1 % For each fish
         
             % Put the fish positions into a convenient format and calculate
             % the distance and angle of the real fish 
-            tmpXY(1,:) = [in.fish(j).x(out(j).valididx(rr-1)), in.fish(j).y(out(j).valididx(rr-1))];
-            tmpXY(2,:) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))];
+            tmpXY(1,:) = [in.fish(feesh(j)).x(out(j).valididx(rr-1)), in.fish(feesh(j)).y(out(j).valididx(rr-1))];
+            tmpXY(2,:) = [in.fish(feesh(j)).x(out(j).valididx(rr)), in.fish(feesh(j)).y(out(j).valididx(rr))];
             out(j).realhowfar(rr) = pdist(tmpXY); % How far did the real fish travel?
             realtheta = atan2(tmpXY(2,2) - tmpXY(1,2), tmpXY(2,1) - tmpXY(1,1));            
 
@@ -171,7 +176,7 @@ for j = numfish:-1:1 % For each fish
             end
             
             % And a copy of the original data is put into the structure, just for plotting fun
-            out(j).realXY(:,out(j).valididx(rr)) = [in.fish(j).x(out(j).valididx(rr)), in.fish(j).y(out(j).valididx(rr))]; 
+            out(j).realXY(:,out(j).valididx(rr)) = [in.fish(feesh(j)).x(out(j).valididx(rr)), in.fish(feesh(j)).y(out(j).valididx(rr))]; 
 
     end
 
@@ -179,8 +184,8 @@ for j = numfish:-1:1 % For each fish
     %% Prepare data for analysis for each real and jiggled and random fish
 
     % Put the data into a convenient format for analysis
-    tmp(j).xy(1,:) = in.fish(j).x(out(j).valididx);
-    tmp(j).xy(2,:) = in.fish(j).y(out(j).valididx);  
+    tmp(j).xy(1,:) = in.fish(feesh(j)).x(out(j).valididx);
+    tmp(j).xy(2,:) = in.fish(feesh(j)).y(out(j).valididx);  
     
     rtmp(j).xy(1,:) = out(j).rndXY(1,out(j).valididx);
     rtmp(j).xy(2,:) = out(j).rndXY(2,out(j).valididx);  
@@ -207,7 +212,7 @@ end % Cycle through each fish
 %% Cycle through pairs of fish
 if numfish > 1 % We have more than one fish
     
-    combos = combnk(1:numfish, 2); % All pairwise combinations of fish
+    combos = combnk(1:length(out), 2); % All pairwise combinations of fish
 
     for p = length(combos):-1:1 % For each pair of fish
 
@@ -215,7 +220,7 @@ if numfish > 1 % We have more than one fish
         
         % Get only entries for which we have data for both fish (shared indices)
         [~, idx1, idx2] = intersect(out(combos(p,1)).valididx, out(combos(p,2)).valididx);
-               
+        if ~isempty(idx1) && ~isempty(idx2)       
         % Calculate the interfish-distance
         
         for jj = 1:length(idx1) % THERE HAS GOT TO BE A MORE EFFICIENT WAY OF DOING THIS...
@@ -246,7 +251,8 @@ if numfish > 1 % We have more than one fish
             out(combos(p,2)).alljighist = out(combos(p,2)).alljighist + cmbs(p).jighist;        
                         
         end
-
+        
+        end
         
         % Compare spatial histograms (fish against each fish separately)
         
@@ -262,9 +268,9 @@ if numfish > 1 % We have more than one fish
 figure(casu); clf;
 
 ax(1) = subplot(131); hold on;
-    for z=1:length(in.fish)
+    for z=1:length(feesh)
         if ~isempty(out(z).valididx)
-        plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '.', 'MarkerSize', 8);
+        plot(in.fish(feesh(z)).x(out(z).valididx), in.fish(feesh(z)).y(out(z).valididx), '.', 'MarkerSize', 8);
 %        plot(in.fish(z).x(out(z).valididx), in.fish(z).y(out(z).valididx), '*-');
         end
     end

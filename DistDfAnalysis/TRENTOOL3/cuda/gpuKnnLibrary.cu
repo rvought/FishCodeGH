@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "helperfunctions.cu"
 
-extern "C" {
+extern "C++" {
 int cudaFindKnn(int* h_bf_indexes, float* h_bf_distances, float* h_pointset, float* h_query, int kth, int thelier, int nchunks, int pointdim, int signallength){
 	float *d_bf_pointset, *d_bf_query;
 	int *d_bf_indexes;
@@ -75,7 +75,7 @@ int cudaFindKnn(int* h_bf_indexes, float* h_bf_distances, float* h_pointset, flo
 }
 }
 
-extern "C" {
+extern "C++" {
 int cudaFindKnnSetGPU(int* h_bf_indexes, float* h_bf_distances, float* h_pointset, float* h_query, int kth, int thelier, int nchunks, int pointdim, int signallength, int deviceid){
 	float *d_bf_pointset, *d_bf_query;
 	int *d_bf_indexes;
@@ -154,7 +154,7 @@ int cudaFindKnnSetGPU(int* h_bf_indexes, float* h_bf_distances, float* h_pointse
  * Range search being radius a vector of length number points in queryset/pointset
  */
 
-extern "C" {
+extern "C++" {
 int cudaFindRSAll(int* h_bf_npointsrange, float* h_pointset, float* h_query, float* h_vecradius, int thelier, int nchunks, int pointdim, int signallength){
 	float *d_bf_pointset, *d_bf_query, *d_bf_vecradius;
 	int *d_bf_npointsrange;
@@ -220,7 +220,7 @@ int cudaFindRSAll(int* h_bf_npointsrange, float* h_pointset, float* h_query, flo
 }
 }
 
-extern "C" {
+extern "C++" {
 int cudaFindRSAllSetGPU(int* h_bf_npointsrange, float* h_pointset, float* h_query, float* h_vecradius, int thelier, int nchunks, int pointdim, int signallength, int deviceid){
 	float *d_bf_pointset, *d_bf_query, *d_bf_vecradius;
 	int *d_bf_npointsrange;

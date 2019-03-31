@@ -1,11 +1,8 @@
-function out = MajorTom(in, tim, thresh, feesh)
+function out = MajorTom(in, tim, feesh)
 % This generates stats on frequency and movement for each individual fish
 
-if nargin < 4
-    feesh = 1:length(in.fish);
-end
 if nargin < 3
-	thresh = 15;
+    feesh = 1:length(in.fish);
 end
 if nargin < 2
     tim(2) = in.fish(1).freq(end,1);
@@ -24,7 +21,7 @@ for j = length(feesh):-1:1 % For each fish
    out(j).numfish = length(feesh);
     
 end
-% figure(7); clf; 
+figure(7); clf; 
 
 
 %% Movement distance and velocity
@@ -43,42 +40,28 @@ for j = length(feesh):-1:1 % For each fish
             tmpXY(1,:) = [in.fish(j).x(idx(k)-1), in.fish(j).y(idx(k)-1)];
             tmpXY(2,:) = [in.fish(j).x(idx(k)), in.fish(j).y(idx(k))];
             
-            out(j).pdist(k-1) = pdist(tmpXY); % How far did the real fish travel?
-            out(j).pdistim(k-1) = in.fish(j).freq(idx(k),1);
+            out(j).pdist(k) = pdist(tmpXY); % How far did the real fish travel?
+            out(j).pdistim(k) = in.fish(j).freq(idx(k),1);
             
-            out(j).x(k-1,:) = [tmpXY(1,1), tmpXY(2,1)];
-            out(j).y(k-1,:) = [tmpXY(1,2); tmpXY(2,2)];
-    end
+            out(j).x(k-1,:) = [in.fish(j).x(idx(k-1)), in.fish(j).x(idx(k))];
+            out(j).y(k-1,:) = [in.fish(j).y(idx(k-1)), in.fish(j).y(idx(k))];
+    end 
    end
    
-%    ax(1) = subplot(211); hold on; plot(out(j).pdist, '.-')
-%    ax(2) = subplot(212); hold on; plot(diff(out(j).pdist), '.-')
-%    linkaxes(ax, 'x')
-end
-
-%% Mean velocity and variability
-
-for j = length(out):-1:1 % For each fish
-    
-   out(j).meanvel = mean(out(j).pdist(out(j).pdist > thresh)); 
-   out(j).varvel = var(out(j).pdist(out(j).pdist > thresh)); 
-    
+   ax(1) = subplot(211); hold on; plot(out(j).pdist, '.-')
+   ax(2) = subplot(212); hold on; plot(diff(out(j).pdist), '.-')
+   linkaxes(ax, 'x')
 end
 
 
 % Useful code
-% figure(10); clf; hold on;
-% thresh = 10;
-% fsh = 2;
-% clrs = cool(100);
-% for p = 1:length(out(fsh).pdist)
-%     curcol = max([1, round(100*(out(fsh).pdist(p) / max(out(fsh).pdist)))]);
-%     if out(fsh).pdist(p) > thresh
-%     plot(out(fsh).x(p,:), out(fsh).y(p,:), '.-', 'MarkerSize', 5, 'MarkerEdgeColor', 'k', 'Color', clrs(curcol,:));
-%     else
-%     plot(out(fsh).x(p,:), out(fsh).y(p,:), '.-', 'MarkerSize', 5, 'MarkerEdgeColor', 'k', 'Color', 'y');
-%     end
-% end
+figure(10); clf; hold on;
+fsh = 1;
+clrs = hsv(100);
+for p = 1:length(out(fsh).pdist)
+    curcol = max([1, round(100*(out(fsh).pdist(p) / max(out(fsh).pdist)))]);
+    plot(out(fsh).x(p,:), out(fsh).y(p,:), 'k-.', 'LineColor', clrs(curcol,:));
+end
 
 end
 
