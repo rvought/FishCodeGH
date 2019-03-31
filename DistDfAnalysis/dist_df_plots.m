@@ -192,6 +192,7 @@ plot(dat.t(timeIdx),dat.fish(C(pair,2)).freq(timeIdx,2));
 title('Longest low-df example in surface fish');
 xlabel('Time (s)');
 ylabel('Frequency (Hz)');
+ylim([320, 370]);
 hold off;
 
 %% Compute mean values for each pair
