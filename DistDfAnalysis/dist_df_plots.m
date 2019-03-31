@@ -619,7 +619,7 @@ hold off;
 
 %% Distance vs df plots - change
 
-clf, hold on;
+figure(10); clf, hold on;
 plot(ddist_fish_cave,ddf_fish_cave,'.b','MarkerSize',10)
 plot(ddist_fish_srf,ddf_fish_srf,'.r','MarkerSize',10)
 
