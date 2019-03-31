@@ -242,6 +242,7 @@ figure(3); clf;
 hold on;
 
 ch = histogram(dist_pair_cave,edges);
+    chcounts = ch.
 sh = histogram(dist_pair_srf,edges);
 
 
