@@ -157,7 +157,7 @@ C = nchoosek(1:dat.nFish,2);
 
 timeIdx = dat.t>time(1) & dat.t<time(2);
 
-clf, hold on;
+figure(1); clf, hold on;
 
 plot(dat.t(timeIdx),dat.fish(C(pair,1)).freq(timeIdx,2));
 plot(dat.t(timeIdx),dat.fish(C(pair,2)).freq(timeIdx,2));
@@ -165,6 +165,8 @@ plot(dat.t(timeIdx),dat.fish(C(pair,2)).freq(timeIdx,2));
 title('Single low-df example in cave fish, crossing pair');
 xlabel('Time (s)');
 ylabel('Frequency (Hz)');
+
+ylim([250, 350]);
 hold off;
 
 %% Example of low-df behavior, Surface fish
@@ -182,7 +184,7 @@ C = nchoosek(1:dat.nFish,2);
 
 timeIdx = dat.t>time(1) & dat.t<time(2);
 
-clf, hold on;
+figure(2); clf, hold on;
 
 plot(dat.t(timeIdx),dat.fish(C(pair,1)).freq(timeIdx,2));
 plot(dat.t(timeIdx),dat.fish(C(pair,2)).freq(timeIdx,2));
