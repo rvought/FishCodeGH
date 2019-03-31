@@ -264,7 +264,7 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 max_val = max([df_pair_cave,df_pair_srf]);
 edges = linspace(0,max_val,100);
 
-clf;
+figure(5); clf;
 hold on;
 
 histogram(df_pair_cave,edges);
