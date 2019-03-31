@@ -283,7 +283,7 @@ dFs = histogram(df_pair_srf,edges);
     hold off;
 
 figure(6); clf; hold on;
-plot(dFcx, dFcounts/max(dFcounts)); plot(dFsx, shcounts/max(dFscounts));    
+plot(dFcx, dFcounts/max(dFcounts)); plot(dFsx, dFscounts/max(dFscounts));    
 
     legend('Cave','Surface');
     xlabel('Df (Hz)');
