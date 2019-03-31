@@ -166,7 +166,7 @@ title('Single low-df example in cave fish, crossing pair');
 xlabel('Time (s)');
 ylabel('Frequency (Hz)');
 
-ylim([240, 320]);
+ylim([250, 300]);
 hold off;
 
 %% Example of low-df behavior, Surface fish
