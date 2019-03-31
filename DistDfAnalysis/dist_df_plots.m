@@ -756,8 +756,10 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 
 clf, hold on;
 
-plot(freq_fish_cave,dist_fish_cave,'.b');
-plot(freq_fish_srf,dist_fish_srf,'.r');
+% plot(freq_fish_cave,dist_fish_cave,'.b');
+% plot(freq_fish_srf,dist_fish_srf,'.r');
+plot(dist_fish_cave,freq_fish_cave,'.b');
+plot(dist_fish_srf,freq_fish_srf, '.r');
 
 hold off;
 
