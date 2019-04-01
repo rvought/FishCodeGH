@@ -26,7 +26,7 @@ stts.stdCaveAmp = std(CaveAmps(CaveAmps < OutlierLevel));
 % [stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps(CaveAmps < OutlierLevel), SurfaceAmps(SurfaceAmps <OutlierLevel));
 [stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps, SurfaceAmps);
 
-    figure(1); clf; subplot(211); plot(CaveAmps, '.', 'MarkerSize', 2); hold on; plot(SurfaceAmps, '.', 'MarkerSize', 2);
+    figure(1); clf; subplot(211); semilogy(CaveAmps, '.', 'MarkerSize', 2); hold on; plot(SurfaceAmps, '.', 'MarkerSize', 2);
 
     fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stts.P);
     fprintf('Cave mean & std %1.4f %1.4f \n', stts.meanCaveAmp*100, stts.stdCaveAmp*100);
