@@ -2,7 +2,10 @@ function stts = bFishAmpComparo(cfish, sfish)
 % Usage: stts = bFishAmpComparo(cfish, sfish) 
 % For use with the 2016 Brasil Cave and Surface data
 
-OutlierLevel = 0.005;
+% There are Contaminated / Bad readings in surface data
+% srf(1).fish(12), srf(2).fish(20), srf(3).fish(31), 
+% srf(4).fish(22), srf(5).fish(4), srf(5).fish(23)
+BadIDXs = [12,32,64,86,90,109];
 
 CaveAmps = []; SurfaceAmps = []; 
 
@@ -18,13 +21,14 @@ for j=1:length(cfish)
     end
 end
 
-stts.meanSurfaceAmp = mean(SurfaceAmps(SurfaceAmps < OutlierLevel));
-stts.meanCaveAmp = mean(CaveAmps(CaveAmps < OutlierLevel));
-stts.stdSurfaceAmp = std(SurfaceAmps(SurfaceAmps < OutlierLevel));
-stts.stdCaveAmp = std(CaveAmps(CaveAmps < OutlierLevel));
+GoodIDXs = setdiff(1:length(SurfaceAmps), BadIDXs);
 
-% [stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps(CaveAmps < OutlierLevel), SurfaceAmps(SurfaceAmps <OutlierLevel));
-[stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps, SurfaceAmps);
+stts.meanSurfaceAmp = mean(SurfaceAmps(GoodIDXs));
+stts.meanCaveAmp = mean(CaveAmps);
+stts.stdSurfaceAmp = std(SurfaceAmps(GoodIDXs));
+stts.stdCaveAmp = std(CaveAmps);
+
+[stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps, SurfaceAmps(GoodIDXs));
 
     figure(1); clf; subplot(211); semilogy(CaveAmps, '.', 'MarkerSize', 2); hold on; plot(SurfaceAmps, '.', 'MarkerSize', 2);
 
@@ -34,13 +38,11 @@ stts.stdCaveAmp = std(CaveAmps(CaveAmps < OutlierLevel));
 
 
 figure(1); subplot(212); hold on;
-    ctrs = 0:0.0001:0.004;
-    histogram(CaveAmps(CaveAmps < OutlierLevel),ctrs); 
-        text(0.002,20, 'CaveFish EOD dipole Strengths');
-    histogram(SurfaceAmps(SurfaceAmps < OutlierLevel), ctrs);
-        text(0.002,20, 'Surface Fish EOD dipole Strengths');
-    linkaxes(ax, 'xy');
-    xlim([0 0.004]);
+    ctrs = 0:0.003/30:0.003;
+    histogram(CaveAmps, ctrs); 
+    histogram(SurfaceAmps(GoodIDXs), ctrs);
+%    linkaxes(ax, 'xy');
+    xlim([0 0.003]);
 
 end
 

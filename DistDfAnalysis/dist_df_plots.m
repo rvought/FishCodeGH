@@ -1,6 +1,6 @@
 %% Load Tracked Data
-%dataFolderName = '~/Downloads';
-dataFolderName = '/Users/Shared/Data/Brasil';
+dataFolderName = '~/Downloads';
+% dataFolderName = '/Users/Shared/Data/Brasil';
 load(fullfile(dataFolderName,'CaveDataRev2018a.mat'));
 load(fullfile(dataFolderName,'SurfaceDataRev2018a.mat'));
 
@@ -795,8 +795,8 @@ plot(foo,bar,'.');
 
 %%
 % resultFolderName = '~/Google Drive/trentool_results';
-%resultFolderName = '/Users/eric/Downloads/trentool_results';
-resultFolderName = '/Users/Shared/Data/Brasil/trentool_results';
+resultFolderName = '/Users/eric/Downloads/trentool_results';
+%resultFolderName = '/Users/Shared/Data/Brasil/trentool_results';
 
 load(fullfile(resultFolderName,'all_channels_windowed.mat'));
 trentool_result = [trentool_result{:}];
