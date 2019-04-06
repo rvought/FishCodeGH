@@ -269,7 +269,7 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 max_val = max([df_pair_cave,df_pair_srf]);
 edges = linspace(0,max_val,40);
 
-figure(5); clf; hold on;
+figure(5); clf; subplot(211); hold on;
 
 yyaxis left;
 dFc = histogram(df_pair_cave,edges);
@@ -284,7 +284,7 @@ dFs = histogram(df_pair_srf,edges);
     title('Df - cave vs surface');
     hold off;
 
-figure(6); clf; hold on;
+figure(5); subplot(212); hold on;
 plot(dFcx, dFcounts/max(dFcounts)); plot(dFsx, dFscounts/max(dFscounts));    
 
     legend('Cave','Surface');
