@@ -636,7 +636,7 @@ ylabel('Change in frequency');
 hold off;
 
 %% Distance vs df plot - abs change DeltaDistanceVSDeltadF
-clf, hold on;
+figure(10); clf, hold on;
 
 % plot(ddist_abs_fish_cave,ddf_abs_fish_cave,'.b','MarkerSize',10)
 
