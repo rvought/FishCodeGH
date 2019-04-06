@@ -273,6 +273,7 @@ figure(5); clf; hold on;
 
 dFc = histogram(df_pair_cave,edges);
     dFcounts = dFc.BinCounts; dFcx = dFc.BinEdges(2:end);
+yyaxis([0 120]);
 dFs = histogram(df_pair_srf,edges);
     dFscounts = dFs.BinCounts; dFsx = dFs.BinEdges(2:end);
 
