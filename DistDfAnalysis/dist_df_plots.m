@@ -385,7 +385,7 @@ max_val = max([ddist_abs_pair_cave,ddist_abs_pair_srf]);
 edges = linspace(0,max_val,100);
 fulledges = linspace(-2,2,0.10);
 
-figure(7); 
+figure(7); clf;
 histogram(ddist_pair_cave, fulledges,'FaceColor','b');
 
 figure(6); clf;
