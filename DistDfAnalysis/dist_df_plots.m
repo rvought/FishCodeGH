@@ -303,7 +303,7 @@ max_val = max([ddist_pair_cave,ddist_pair_srf]);
 min_val = min([ddist_pair_cave,ddist_pair_srf]);
 edges = linspace(min_val,max_val,100);
 
-clf;
+figure(6); clf;
 hold on;
 
 histogram(ddist_pair_cave,edges);
