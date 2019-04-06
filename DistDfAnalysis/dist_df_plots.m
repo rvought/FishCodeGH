@@ -514,7 +514,7 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 %% For each fish - df
 
 max_val = max([df_fish_cave,df_fish_srf]);
-edges = linspace(0,max_val,20);
+edges = linspace(0,max_val,30);
 
 figure(8); clf;
 hold on;
