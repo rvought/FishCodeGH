@@ -267,7 +267,7 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 %% For each pair - df
 
 max_val = max([df_pair_cave,df_pair_srf]);
-edges = linspace(0,max_val,20);
+edges = linspace(0,max_val,25);
 
 figure(5); clf; hold on;
 
