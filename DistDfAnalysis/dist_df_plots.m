@@ -384,7 +384,10 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 max_val = max([ddist_abs_pair_cave,ddist_abs_pair_srf]);
 edges = linspace(0,max_val,100);
 
-clf;
+figure(7); 
+histogram(ddist_pair_cave, edges,'FaceColor','b');
+
+figure(6); clf;
 subplot(2,1,1)
 hold on;
 
