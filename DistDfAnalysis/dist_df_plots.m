@@ -614,8 +614,8 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 %% Distance vs df plots
 
 figure(9); clf, hold on;
-plot(dist_fish_cave,df_fish_cave,'.b','MarkerSize',10)
-plot(dist_fish_srf,df_fish_srf,'.r','MarkerSize',10)
+plot(dist_fish_cave, df_fish_cave,'.b','MarkerSize',10)
+plot(dist_fish_srf, df_fish_srf,'.r','MarkerSize',10)
 
 grid on;
 
