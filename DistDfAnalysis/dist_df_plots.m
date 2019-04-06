@@ -494,7 +494,7 @@ end
 %% For each fish - distance
 
 max_val = max([dist_fish_cave,dist_fish_srf]);
-edges = linspace(0,max_val,20);
+edges = linspace(0,max_val,30);
 
 figure(7); clf;
 hold on;
