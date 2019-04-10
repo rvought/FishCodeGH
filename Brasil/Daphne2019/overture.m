@@ -44,8 +44,7 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
 
                 % If our focal fish p is either one of the pair, we add the data for the fish.
                 % Overlap is relative to your own distribution histogram (Overlap / self)
-                % In this way, comparison fish1 versus fish2 may not be
-                % identical.
+                % In this way, comparison fish1 versus fish2 may not be identical.
                 % This could be handled more efficiently!!
             if fishlist(combos(n,1)) == p
                 out(p).overfishnums(end+1) = fishlist(combos(n,2));
@@ -65,7 +64,6 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
             end
             
         end
-        
         
        % For convenience, we make a list with all of the overlaps from all
        % of the fish.
