@@ -55,14 +55,14 @@ end
 
 
 % Useful code
-figure(10); clf; hold on;
-fsh = 1;
-clrs = hsv(100);
-for p = 1:length(out(fsh).pdist)
-    curcol = max([1, round(100*(out(fsh).pdist(p) / max(out(fsh).pdist)))]);
-    plot(out(fsh).x(p,:), out(fsh).y(p,:), 'k-.', 'Color', clrs(curcol,:));
-end
+% figure(10); clf; hold on;
+% fsh = 1;
+% clrs = hsv(100);
+% for p = 1:length(out(fsh).pdist)
+%     curcol = max([1, round(100*(out(fsh).pdist(p) / max(out(fsh).pdist)))]);
+%     plot(out(fsh).x(p,:), out(fsh).y(p,:), 'k-.', 'Color', clrs(curcol,:));
+% end
 
-end
+% end
 
 
