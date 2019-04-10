@@ -45,7 +45,7 @@ function [fish, pairs, stts] = Pele(cave, srf)
 %% cave 9, 1 fish, over 1000 seconds
 
     fish(7) = MajorTom(cave(9), [0 500]);
-    fish(8c) = MajorTom(cave(9), [500 1000]);
+    fish(8) = MajorTom(cave(9), [500 1000]);
 
 
 %% cave 10, 3 fish, over 900 seconds
