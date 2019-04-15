@@ -31,7 +31,7 @@ for j = 1:length(idx)
 
         tt = find(~isnan(in.fish(idx(j)).freq(:,2))); % all valid data
         
-        if isempty(tims) % use only data in the range specified by the user
+        if ~isempty(tims) % use only data in the range specified by the user
             tims = sort(tims);
             uu = find(in.fish(idx(j)).freq(:,1) > tims(1) & in.fish(idx(j)).freq(:,1) < tims(2));
             tt = intersect(tt, uu);
