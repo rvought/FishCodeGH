@@ -4,8 +4,9 @@ function QuickPlotGrid(in, idx, freqs, tims)
 % freqs and tims are optional. 
 % Freqs in Hz, tims in seconds.
 
+
 %% Setup
-if nargin < 2 
+if isempty(idx) 
     idx = 1:length(in.fish); % Default is show all fish
 end    
 if nargin < 3 
