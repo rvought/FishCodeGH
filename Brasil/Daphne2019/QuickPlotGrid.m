@@ -4,12 +4,16 @@ function QuickPlotGrid(in, idx, freqs, tims)
 % freqs and tims are optional. 
 % Freqs in Hz, tims in seconds.
 
+if exist('idx','var') == 0; idx = []; end
+if exist('freqs','var') == 0; freqs = []; end
+if exist('tims','var') == 0; freqs = []; end
+
 
 %% Setup
-if exist('idx','var') == 0
+if isempty(idx)
     idx = 1:length(in.fish); % Default is show all fish
 end    
-if exist('freqs','var') == 0
+if isempty(freqs)
     freqs = [250 500]; % Default frequency range for EODs
 end    
 
@@ -27,7 +31,7 @@ for j = 1:length(idx)
 
         tt = find(~isnan(in.fish(idx(j)).freq(:,2))); % all valid data
         
-        if exist('tims','var') == 1 % use only data in the range specified by the user
+        if isempty(tims) % use only data in the range specified by the user
             tims = sort(tims);
             uu = find(in.fish(idx(j)).freq(:,1) > tims(1) & in.fish(idx(j)).freq(:,1) < tims(2));
             tt = intersect(tt, uu);
