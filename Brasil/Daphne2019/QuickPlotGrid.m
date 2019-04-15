@@ -4,12 +4,15 @@ function QuickPlotGrid(in, idx, freqs, tims)
 % freqs and tims are optional. 
 % Freqs in Hz, tims in seconds.
 
+a = exist idx;
+b = exist freqs;
+c = exist tims;
 
 %% Setup
-if exist idx == 0
+if a == 0
     idx = 1:length(in.fish); % Default is show all fish
 end    
-if nargin < 3 
+if b == 0 
     freqs = [250 500]; % Default frequency range for EODs
 end    
 
