@@ -6,7 +6,7 @@ function QuickPlotGrid(in, idx, freqs, tims)
 
 
 %% Setup
-if ~exist idx 
+if exist idx == 0
     idx = 1:length(in.fish); % Default is show all fish
 end    
 if nargin < 3 
