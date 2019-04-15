@@ -7,7 +7,6 @@ function QuickPlotGrid(in, idx, freqs, tims)
 if exist('idx','var') == 0; idx = []; end
 if exist('freqs','var') == 0; freqs = []; end
 if exist('tims','var') == 0; tims = []; end
-tims
 
 %% Setup
 if isempty(idx)
