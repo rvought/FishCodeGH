@@ -1,4 +1,5 @@
-% load 
+% load SurfaceDataRev2018a.mat
+% load CaveDataRev2018a.mat
 
 
 %% Example plots for fish movement versus frequency
