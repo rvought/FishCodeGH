@@ -1,5 +1,6 @@
 % load SurfaceDataRev2018a.mat
 % load CaveDataRev2018a.mat
+% Requires QuickPlotGrid, bFishAmpComparo, 
 
 
 %% Example plots for fish movement versus frequency
@@ -17,5 +18,8 @@
 %% EOD Amplitudes
 
 stts = bFishAmpComparo(cave, srf);
+
+
+%% dF versus distance
 
 
