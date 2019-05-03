@@ -16,6 +16,6 @@
     
 %% EOD Amplitudes
 
-
+stts = bFishAmpComparo(cave, srf);
 
 
