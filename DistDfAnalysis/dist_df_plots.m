@@ -299,10 +299,10 @@ fprintf('\nProbability that the samples are from the same distribution: %.2f\n',
 
 %% Plot distance versus dF
 
-figure(27); clf; hold on;
-    plot(dist_pair_cave, df_pair_cave, '.', 'MarkerSize', 8);
-    plot(dist_pair_srf, df_pair_srf, '.', 'MarkerSize', 8);
-
+figure(27); clf; 
+    ax(1) = subplot(121); plot(dist_pair_cave, df_pair_cave, '.', 'MarkerSize', 8);
+    ax(2) = subplot(122); plot(dist_pair_srf, df_pair_srf, '.', 'MarkerSize', 8);
+    linkaxes(ax, 'xy');
 
 
 %% For each pair - change in distance
