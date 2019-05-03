@@ -28,11 +28,11 @@ stts.meanCaveAmp = mean(CaveAmps);
 stts.stdSurfaceAmp = std(SurfaceAmps(GoodIDXs));
 stts.stdCaveAmp = std(CaveAmps);
 
-[stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps, SurfaceAmps(GoodIDXs), );
+[stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps, SurfaceAmps(GoodIDXs), 'vartype', 'unequal');
 
     figure(1); clf; subplot(211); semilogy(CaveAmps, '.', 'MarkerSize', 2); hold on; plot(SurfaceAmps, '.', 'MarkerSize', 2);
 
-    fprintf('Amplitudes different between cave and surface pVal = %1.4f \n', stts.P);
+    fprintf('Amplitudes different between cave and surface pVal = %1.5f, tstat = %1.5f \n', stts.P, stts.STATS.tstat);
     fprintf('Cave mean & std %1.4f %1.4f \n', stts.meanCaveAmp*100, stts.stdCaveAmp*100);
     fprintf('Surface mean & std %1.4f %1.4f \n', stts.meanSurfaceAmp*100, stts.stdSurfaceAmp*100);
 
