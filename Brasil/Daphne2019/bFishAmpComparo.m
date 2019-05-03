@@ -28,7 +28,7 @@ stts.meanCaveAmp = mean(CaveAmps);
 stts.stdSurfaceAmp = std(SurfaceAmps(GoodIDXs));
 stts.stdCaveAmp = std(CaveAmps);
 
-[stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps, SurfaceAmps(GoodIDXs));
+[stts.H,stts.P,stts.CI,stts.STATS] = ttest2(CaveAmps, SurfaceAmps(GoodIDXs), );
 
     figure(1); clf; subplot(211); semilogy(CaveAmps, '.', 'MarkerSize', 2); hold on; plot(SurfaceAmps, '.', 'MarkerSize', 2);
 
