@@ -39,8 +39,8 @@ stts.stdCaveAmp = std(CaveAmps);
 
 figure(1); subplot(212); hold on;
     ctrs = 0:0.003/30:0.003;
-    histogram(SurfaceAmps(GoodIDXs), ctrs, 'Color', 'b');
-    histogram(CaveAmps, ctrs, 'Color', 'm'); 
+    histogram(SurfaceAmps(GoodIDXs), ctrs, 'FaceColor', 'b');
+    histogram(CaveAmps, ctrs, 'FaceColor', 'r'); 
 %    linkaxes(ax, 'xy');
     xlim([0 0.003]);
 
