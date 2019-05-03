@@ -297,6 +297,14 @@ plot(dFcx, dFcounts/max(dFcounts)); plot(dFsx, dFscounts/max(dFscounts));
 p = compareDistributions(df_pair_cave,df_pair_srf);
 fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
+%% Plot distance versus dF
+
+figure(27); clf; hold on;
+    plot(dist_pair_cave, df_pair_cave, '.', 'MarkerSize', 8);
+    plot(dist_pair_srf, df_pair_srf, '.', 'MarkerSize', 8);
+
+
+
 %% For each pair - change in distance
 
 max_val = max([ddist_pair_cave,ddist_pair_srf]);
