@@ -1014,8 +1014,8 @@ for k = 1:nChannelPairs
     subplot(nChannelPairs,1,k);
     hold on 
     
-    plot(dist_fish_cave,TE_fish_cave(:,k),'.b');
-    plot(dist_fish_srf,TE_fish_srf(:,k),'.r');
+    plot(dist_fish_cave, TE_fish_cave(:,k),'.b');
+    plot(dist_fish_srf, TE_fish_srf(:,k),'.r');
     
     xlabel('Distance');
     ylabel('TE')
