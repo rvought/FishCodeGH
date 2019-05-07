@@ -540,6 +540,10 @@ hold off;
 p = compareDistributions(df_fish_cave,df_fish_srf);
 fprintf('\nProbability that the samples are from the same distribution: %.2f\n',p);
 
+%%%%%%%% Plot against each other to ensure that the non-correlation of dF
+%%%%%%%% and distance is robust.
+
+
 %% For each fish - change in distance
 
 max_val = max([ddist_fish_cave,ddist_fish_srf]);
