@@ -860,7 +860,7 @@ TEmaxIdx(idx) = NaN;
 
 
 %% Examples of high-distance, high TE interactions
-idx = find(TEmax(:,3) > prctile(TEmax(:,3),95) & meta.dist' > prctile(meta.dist,95));
+idx = find(TEmax(:,3) > prctile(TEmax(:,3),90) & meta.dist' > prctile(meta.dist,90));
 
 for k = 1:length(idx)
     clf;
