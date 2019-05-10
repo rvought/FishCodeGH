@@ -181,7 +181,7 @@ for k = 1:nChannelPairs
     channelLabels{k} = [channelPairs{k,1},' -> ',channelPairs{k,2}];
 end
 
-%%
+
 
 [TEmax,TEmaxIdx] = max(TE,[],1);
 
