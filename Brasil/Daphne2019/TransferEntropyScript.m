@@ -147,13 +147,42 @@ end
 
 
 
-%% Does this go here?
+%% Compute mean values for each fish
+
 [dist_fish_cave,dist_fish_srf,...
 df_fish_cave,df_fish_srf,...
 ddist_fish_cave,ddist_fish_srf,...
 ddf_fish_cave,ddf_fish_srf,...
 ddist_abs_fish_cave,ddist_abs_fish_srf,...
 ddf_abs_fish_cave,ddf_abs_fish_srf] = deal([]);
+
+for j = 1:(nCave+nSrf)
+    nFish = nFish_all(j);
+  
+    if nFish>2
+        C = nchoosek(1:nFish,2);
+
+        for f = 1:nFish
+            fishIdx = find(sum(C==f,2));
+
+            if j<=nCave
+                dist_fish_cave = [dist_fish_cave,nanmean(nanmean(dist_all{j}(:,fishIdx)))];
+                df_fish_cave = [df_fish_cave,nanmean(nanmean(df_all{j}(:,fishIdx)))];
+                ddist_fish_cave = [ddist_fish_cave,nanmean(nanmean(ddist_all{j}(:,fishIdx)))];
+                ddf_fish_cave = [ddf_fish_cave,nanmean(nanmean(ddf_all{j}(:,fishIdx)))];
+                ddist_abs_fish_cave = [ddist_abs_fish_cave,nanmean(nanmean(ddist_abs_all{j}(:,fishIdx)))];
+                ddf_abs_fish_cave = [ddf_abs_fish_cave,nanmean(nanmean(ddf_abs_all{j}(:,fishIdx)))];
+            else
+                dist_fish_srf = [dist_fish_srf,nanmean(nanmean(dist_all{j}(:,fishIdx)))];
+                df_fish_srf = [df_fish_srf,nanmean(nanmean(df_all{j}(:,fishIdx)))];
+                ddist_fish_srf = [ddist_fish_srf,nanmean(nanmean(ddist_all{j}(:,fishIdx)))];
+                ddf_fish_srf = [ddf_fish_srf,nanmean(nanmean(ddf_all{j}(:,fishIdx)))];
+                ddist_abs_fish_srf = [ddist_abs_fish_srf,nanmean(nanmean(ddist_abs_all{j}(:,fishIdx)))];
+                ddf_abs_fish_srf = [ddf_abs_fish_srf,nanmean(nanmean(ddf_abs_all{j}(:,fishIdx)))];
+            end
+        end
+    end
+end
 
 
 
