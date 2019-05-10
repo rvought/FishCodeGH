@@ -144,6 +144,24 @@ for k = 1:length(data.trial)
     [maxr_abs(k),idx] = max(abs(r));
     lag_abs(k) = l(idx);
 end
+
+
+
+%% Does this go here?
+[dist_fish_cave,dist_fish_srf,...
+df_fish_cave,df_fish_srf,...
+ddist_fish_cave,ddist_fish_srf,...
+ddf_fish_cave,ddf_fish_srf,...
+ddist_abs_fish_cave,ddist_abs_fish_srf,...
+ddf_abs_fish_cave,ddf_abs_fish_srf] = deal([]);
+
+
+
+
+
+
+
+
 %% Run TRENTOOL analysis
 
 %%
