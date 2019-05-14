@@ -154,7 +154,7 @@ resultFolderName = '/Users/eric/Downloads/trentool_results';
 load(fullfile(resultFolderName,'all_channels_windowed.mat'));
 trentool_result = [trentool_result{:}];
 
-%%
+
 
 TEprepare = [trentool_result.TEprepare];
 u_in_ms = [TEprepare.u_in_ms];
