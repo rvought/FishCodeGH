@@ -625,7 +625,7 @@ for j = 1:(nCave+nSrf)
 end
 
 %% sample plotter
-j = 2777; % set to some number (1 to 51364)
+j = 2776; % set to some number (1 to 51364)
 figure(1);clf;
 subplot(211); 
 yyaxis left; plot(data.time{j}, data.trial{j}(1,:)/max(data.trial{j}(1,:)));
