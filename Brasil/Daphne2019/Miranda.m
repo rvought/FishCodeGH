@@ -262,6 +262,6 @@ currfishnum = 5; maxdur = 1100;
         
     end
 
-
+[srfVsrf.S, srfVsrf.H, kstest2(histcounts(surfReal,20), histcounts(surfRand,20));
 
 
