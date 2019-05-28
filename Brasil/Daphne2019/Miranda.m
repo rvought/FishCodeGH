@@ -1,38 +1,19 @@
-function [fish, sa, sq, spadat, tubular] = Pele(cave, srf)
+function [fish, sa, sq, spadat, tubular] = Miranda(cave, srf)
 
 
+
+epochdur = 300;
 
 %% cave 1, 1 fish, 1000 seconds
 
-fish(1) = MajorTom(cave(1)); 
-
-% Let's do two sections of 500 seconds
-
-%     fish(1) = MajorTom(cave(1), [0 500]);
-%     fish(2) = MajorTom(cave(1), [500 1000]);
-
 %% cave 2, 1 fish, 900 seconds
-
-fish(2) = MajorTom(cave(2)); 
-
-
-%     fish(3) = MajorTom(cave(2), [0 450]);
-%     fish(4) = MajorTom(cave(2), [450 900]);
 
 %% cave 3, 7 fish, good recordings of all fish through over 1200 seconds
 
-curlen = length(fish);
 
-tmp = MajorTom(cave(3));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+    [tmp, ~] = SpaceCorps(cave(3), 1);
+    [cvA, cvQ] = overture(tmp);
 
-    [spadat(1).dat, ~] = SpaceCorps(cave(3), 1);
-    [sa(1).sa, sq(1).sq] = overture(spadat(1).dat);
-
-%     fish(5) = MajorTom(cave(3), [0 600]);
-%     fish(6) = MajorTom(cave(3), [600 1200]);
-%     [tmpOUT, tmpCMBS] = SpaceCorps(cave(1), 1, [600 1200]);
-%     [sa, sq] = overture(tmpOUT);
 
 
 
