@@ -12,8 +12,17 @@ epochdur = 300;
 
 
     [tmp, ~] = SpaceCorps(cave(3), 1, 1:length(cave(3).fish), [0 epochdur]);
-    [cvA, cvQ] = overture(tmp);
-    caveReal = cvQ.
+    [~, cvQ] = overture(tmp);
+    caveReal = cvQ.realoverlaps;
+    caveRand = cvQ.randoverlaps;
+    
+    for j=2:floor(1200/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(3), 1, 1:length(cave(3).fish), [(j-1)*epochdur, j*epochdur]);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 
 
