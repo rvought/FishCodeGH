@@ -1,4 +1,4 @@
-function [fish, sa, sq, spadat, tubular] = Miranda(cave, srf)
+function [srfVsrf, cvVcv, cvVsrf] = Miranda(cave, srf)
 
 
 
