@@ -1,4 +1,4 @@
-function [srfVsrf, cvVcv, cvVsrf] = Miranda(cave, srf)
+function [srfVsrf, cvVcv, cvVsrf, data] = Miranda(cave, srf)
 
 
 
@@ -296,6 +296,11 @@ currfishnum = 5; maxdur = 1100;
         
     end
 
+    data.surfReal = surfReal;
+    data.surfRand = surfRand;
+    data.caveRand = caveRand;
+    data.caveReal = caveReal;
+    
 [srfVsrf.H, srfVsrf.P, srfVsrf.K] = kstest2(histcounts(surfReal,20), histcounts(surfRand,20))
 [cvVcv.H, cvVcv.P, cvVcv.K] = kstest2(histcounts(caveReal,20), histcounts(caveRand,20))
 [cvVsrf.H, cvVsrf.P, cvVsrf.K] = kstest2(histcounts(caveReal,20), histcounts(caveRand,20))
