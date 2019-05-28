@@ -152,18 +152,16 @@ currfishnum = 13; maxdur = 1200;
 
 %% cave 14, 7 fish, over 1000 seconds
 
-curlen = length(fish);
+currfishnum = 14; maxdur = 1000;
 
-tmp = MajorTom(cave(14));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-    
-    [spadat(10).dat, ~] = SpaceCorps(cave(14), 1);
-    [sa(10).sa, sq(10).sq] = overture(spadat(10).dat);
-
-
-    
-CaveIDX = length(fish)
-CaveANA = 10;
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 %% surface 1, 12 fish, over 600 seconds
 
@@ -180,56 +178,70 @@ tmp = MajorTom(srf(1), [0 srf(1).fish(1).freq(end,1)], [7 9 11]);
     [spadat(11).dat, ~] = SpaceCorps(srf(1), 2, [1 2 3 4 5 6 8 10 12]);
     [sa(11).sa, sq(11).sq] = overture(spadat(11).dat);
 
+    
+currfishnum = 1; maxdur = 600; goodfish = [1 2 3 4 5 6 8 10 12];
+
+    [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [0 epochdur]);
+    [~, sfQ] = overture(tmp);
+    surfReal = sfQ.realoverlaps;
+    surfRand = sfQ.randoverlaps;
+    
+    for j=2:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
+        [~, sfQ] = overture(tmp);
+        surfReal = surfReal + sfQ.realoverlaps;
+        surfRand = surfRand + sfQ.randoverlaps;
+        
+    end
+        
 
 %% surface 2, 21 fish, over 1000 seconds
 
 % TUBE FISH, index 11, 18, 19
 
-curlen = length(fish);
-tmp = MajorTom(srf(2), [0 srf(2).fish(1).freq(end,1)], [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17 20 21]);
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+currfishnum = 2; maxdur = 1000; goodfish = [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17 20 21];
 
-curlen = length(tubular);
-tmp = MajorTom(srf(2), [0 srf(2).fish(1).freq(end,1)], [11 18 19]);
-    for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
-    
-    
-     [spadat(12).dat, ~] = SpaceCorps(srf(2), 2, [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17 20 21]);
-     [sa(12).sa, sq(12).sq] = overture(spadat(12).dat);
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
+        [~, sfQ] = overture(tmp);
+        surfReal = surfReal + sfQ.realoverlaps;
+        surfRand = surfRand + sfQ.randoverlaps;
+        
+    end
 
 
 %% surface 3, 31 fish, over 600 seconds
 
 % TUBE FISH, index 22, 28, MISHMASH @ 385 Hz
 
-curlen = length(fish);
-tmp = MajorTom(srf(3), [0 srf(3).fish(1).freq(end,1)], [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 29 30 31]);
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
+currfishnum = 3; maxdur = 1000; goodfish = [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 29 30 31];
 
-curlen = length(tubular);
-tmp = MajorTom(srf(3), [0 srf(3).fish(1).freq(end,1)], [22 28]);
-    for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
-    
-    
-    [spadat(13).dat, ~] = SpaceCorps(srf(3), 2, [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 29 30 31]);
-    [sa(13).sa, sq(13).sq] = overture(spadat(13).dat);
-
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
+        [~, sfQ] = overture(tmp);
+        surfReal = surfReal + sfQ.realoverlaps;
+        surfRand = surfRand + sfQ.randoverlaps;
+        
+    end
 
 %% surface 4, 22 fish, over 600 seconds [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]
 
 % TUBE FISH, index 11, 16, 20
-curlen = length(fish);
-tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]);
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
 
-curlen = length(tubular);
-tmp = MajorTom(srf(4), [0 srf(4).fish(1).freq(end,1)], [11 16 20]);
-    for j=1:length(tmp); tubular(j+curlen) = tmp(j); end    
-    
-    
-    [spadat(14).dat, ~] = SpaceCorps(srf(4), 2, [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22]);
-    [sa(14).sa, sq(14).sq] = overture(spadat(14).dat);
+currfishnum = 4; maxdur = 600; goodfish = [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 19 21 22];
 
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
+        [~, sfQ] = overture(tmp);
+        surfReal = surfReal + sfQ.realoverlaps;
+        surfRand = surfRand + sfQ.randoverlaps;
+        
+    end
+   
 
 %% surface 5, 24 fish, over 1100 seconds
 curlen = length(fish);
@@ -239,31 +251,17 @@ tmp = MajorTom(srf(5), [0 srf(5).fish(1).freq(end,1)]);
     [spadat(15).dat, ~] = SpaceCorps(srf(5), 2);
     [sa(15).sa, sq(15).sq] = overture(spadat(15).dat);
 
+currfishnum = 5; maxdur = 1100; 
+
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(srf(currfishnum), 2, 1:length(srf(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, sfQ] = overture(tmp);
+        surfReal = surfReal + sfQ.realoverlaps;
+        surfRand = surfRand + sfQ.randoverlaps;
+        
+    end
 
 
-%% Stats for single fish
-
-% figure(1); clf; 
-%     subplot(121); plot([fish.meanfreq], '-*'); ylim([200 600]);
-%     subplot(122); plot([fish.varfreq], '-*'); ylim([0 2]);
-
-CaveRealOver = []; SurfRealOver = [];
-CaveRandOver = []; SurfRandOver = [];
-
-for j=1:CaveANA   
-    CaveRealOver = [CaveRealOver sq(j).sq.realoverlaps];
-    CaveRandOver = [CaveRandOver sq(j).sq.randoverlaps];    
-end
-for j=CaveANA+1:length(sq)
-    SurfRealOver = [SurfRealOver sq(j).sq.realoverlaps];
-    SurfRandOver = [SurfRandOver sq(j).sq.randoverlaps];        
-end
-
-lms = 0:0.05:1;
-figure(27); clf;
-    subplot(221); histogram(CaveRealOver, 'BinEdges', lms);
-    subplot(222); histogram(CaveRandOver, 'BinEdges', lms);
-    subplot(223); histogram(SurfRealOver, 'BinEdges', lms);
-    subplot(224); histogram(SurfRandOver, 'BinEdges', lms);
 
 
