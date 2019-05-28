@@ -11,9 +11,9 @@ epochdur = 300;
 %% cave 3, 7 fish, good recordings of all fish through over 1200 seconds
 
 
-    [tmp, ~] = SpaceCorps(cave(3), 1);
+    [tmp, ~] = SpaceCorps(cave(3), 1, 1:length(cave(3).fish), [0 epochdur]);
     [cvA, cvQ] = overture(tmp);
-
+    
 
 
 
