@@ -13,7 +13,7 @@ epochdur = 300;
 
     [tmp, ~] = SpaceCorps(cave(3), 1, 1:length(cave(3).fish), [0 epochdur]);
     [cvA, cvQ] = overture(tmp);
-    
+    caveReal = cvQ.
 
 
 
