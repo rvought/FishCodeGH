@@ -10,16 +10,17 @@ epochdur = 300;
 
 %% cave 3, 7 fish, good recordings of all fish through over 1200 seconds
 
+currfishnum = 3; maxdur = 1200;
 
-    [tmp, ~] = SpaceCorps(cave(3), 1, 1:length(cave(3).fish), [0 epochdur]);
+    [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [0 epochdur]);
     [~, cvQ] = overture(tmp);
     caveReal = cvQ.realoverlaps;
     caveRand = cvQ.randoverlaps;
     
-    for j=2:floor(1200/epochdur)
+    for j=2:floor(maxdur/epochdur)
        
-        [tmp, ~] = SpaceCorps(cave(3), 1, 1:length(cave(3).fish), [(j-1)*epochdur, j*epochdur]);
-        
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
         caveReal = caveReal + cvQ.realoverlaps;
         caveRand = caveRand + cvQ.randoverlaps;
         
@@ -29,24 +30,29 @@ epochdur = 300;
 
 %% cave 4, 7 fish, good recordings of all fish through over 1200 seconds
 
-curlen = length(fish);
+currfishnum = 4; maxdur = 1200;
 
-tmp = MajorTom(cave(4));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-    
-    [spadat(2).dat, ~] = SpaceCorps(cave(4), 1);
-    [sa(2).sa, sq(2).sq] = overture(spadat(2).dat);
-
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 %% cave 5, 7 fish, good recordings of all fish through over 1200 seconds
-curlen = length(fish);
 
-tmp = MajorTom(cave(5));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-    
-    [spadat(3).dat, ~] = SpaceCorps(cave(5), 1);
-    [sa(3).sa, sq(3).sq] = overture(spadat(3).dat);
+currfishnum = 4; maxdur = 1200;
 
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 %% cave 6, 8 fish, good recordings of all fish through over 1200 seconds LOTS OF SOCIAL
 
