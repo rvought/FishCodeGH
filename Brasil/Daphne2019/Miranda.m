@@ -43,7 +43,7 @@ currfishnum = 4; maxdur = 1200;
 
 %% cave 5, 7 fish, good recordings of all fish through over 1200 seconds
 
-currfishnum = 4; maxdur = 1200;
+currfishnum = 5; maxdur = 1200;
 
     for j=1:floor(maxdur/epochdur)
        
@@ -56,81 +56,98 @@ currfishnum = 4; maxdur = 1200;
 
 %% cave 6, 8 fish, good recordings of all fish through over 1200 seconds LOTS OF SOCIAL
 
-curlen = length(fish);
+currfishnum = 6; maxdur = 1200;
 
-tmp = MajorTom(cave(6));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-    
-    [spadat(4).dat, ~] = SpaceCorps(cave(6), 1);
-    [sa(4).sa, sq(4).sq] = overture(spadat(4).dat);
-
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 
 %% cave 7, 7 fish, some gaps over 900 seconds
 
-curlen = length(fish);
+currfishnum = 7; maxdur = 900;
 
-tmp = MajorTom(cave(7));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-    
-    [spadat(5).dat, ~] = SpaceCorps(cave(7), 1);
-    [sa(5).sa, sq(5).sq] = overture(spadat(5).dat);
-
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 %% cave 8, 10 fish, some gaps over 1300 seconds, lovely data
+
+currfishnum = 8; maxdur = 1300;
+
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 
 %% cave 9, 1 fish, over 1000 seconds
 
-curlen = length(fish);
-
-tmp = MajorTom(cave(9));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-
-
 %% cave 10, 3 fish, over 900 seconds
 
-curlen = length(fish);
+currfishnum = 10; maxdur = 900;
 
-tmp = MajorTom(cave(10));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-    
-    [spadat(6).dat, ~] = SpaceCorps(cave(10), 1);
-    [sa(6).sa, sq(6).sq] = overture(spadat(6).dat);
-
-
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 %% cave 11, 7 fish, over 900 seconds
 
-curlen = length(fish);
+currfishnum = 11; maxdur = 900;
 
-tmp = MajorTom(cave(11));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-    
-    [spadat(7).dat, ~] = SpaceCorps(cave(11), 1);
-    [sa(7).sa, sq(7).sq] = overture(spadat(7).dat);
-
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 %% cave 12, 7 fish, over 1100 seconds
 
-curlen = length(fish);
+currfishnum = 12; maxdur = 1100;
 
-tmp = MajorTom(cave(12));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-    
-    [spadat(8).dat, ~] = SpaceCorps(cave(12), 1);
-    [sa(8).sa, sq(8).sq] = overture(spadat(8).dat);
-
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 %% cave 13, 9 fish, over 1200 seconds, some complexity, some in and out
 
-curlen = length(fish);
+currfishnum = 13; maxdur = 1200;
 
-tmp = MajorTom(cave(13));
-    for j=1:length(tmp); fish(j+curlen) = tmp(j); end
-    
-    [spadat(9).dat, ~] = SpaceCorps(cave(13), 1);
-    [sa(9).sa, sq(9).sq] = overture(spadat(9).dat);
+    for j=1:floor(maxdur/epochdur)
+       
+        [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
+        [~, cvQ] = overture(tmp);
+        caveReal = caveReal + cvQ.realoverlaps;
+        caveRand = caveRand + cvQ.randoverlaps;
+        
+    end
 
 
 %% cave 14, 7 fish, over 1000 seconds
