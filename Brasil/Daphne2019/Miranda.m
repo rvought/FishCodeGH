@@ -75,12 +75,8 @@ currfishnum = 7; maxdur = 900;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        if length(cvQ.realoverlaps) == length(caveReal)
             caveReal = [caveReal, cvQ.realoverlaps];
-        end
-        if length(cvQ.randoverlaps) == length(caveRand)
             caveRand = [caveRand, cvQ.randoverlaps];
-        end
         
     end
 
@@ -92,12 +88,8 @@ currfishnum = 8; maxdur = 1300;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        if length(cvQ.realoverlaps) == length(caveReal)
             caveReal = [caveReal, cvQ.realoverlaps];
-        end
-        if length(cvQ.randoverlaps) == length(caveRand)
             caveRand = [caveRand, cvQ.randoverlaps];
-        end
         
     end
 
@@ -112,12 +104,8 @@ currfishnum = 10; maxdur = 900;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        if length(cvQ.realoverlaps) == length(caveReal)
             caveReal = [caveReal, cvQ.realoverlaps];
-        end
-        if length(cvQ.randoverlaps) == length(caveRand)
             caveRand = [caveRand, cvQ.randoverlaps];
-        end
         
     end
 
@@ -129,12 +117,8 @@ currfishnum = 11; maxdur = 900;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        if length(cvQ.realoverlaps) == length(caveReal)
             caveReal = [caveReal, cvQ.realoverlaps];
-        end
-        if length(cvQ.randoverlaps) == length(caveRand)
             caveRand = [caveRand, cvQ.randoverlaps];
-        end
         
     end
 
@@ -146,12 +130,8 @@ currfishnum = 12; maxdur = 1100;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        if length(cvQ.realoverlaps) == length(caveReal)
             caveReal = [caveReal, cvQ.realoverlaps];
-        end
-        if length(cvQ.randoverlaps) == length(caveRand)
             caveRand = [caveRand, cvQ.randoverlaps];
-        end
         
     end
 
@@ -163,12 +143,8 @@ currfishnum = 13; maxdur = 1200;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        if length(cvQ.realoverlaps) == length(caveReal)
             caveReal = [caveReal, cvQ.realoverlaps];
-        end
-        if length(cvQ.randoverlaps) == length(caveRand)
             caveRand = [caveRand, cvQ.randoverlaps];
-        end
         
     end
 
@@ -181,12 +157,8 @@ currfishnum = 14; maxdur = 1000;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        if length(cvQ.realoverlaps) == length(caveReal)
             caveReal = [caveReal, cvQ.realoverlaps];
-        end
-        if length(cvQ.randoverlaps) == length(caveRand)
             caveRand = [caveRand, cvQ.randoverlaps];
-        end
         
     end
 
@@ -205,12 +177,8 @@ currfishnum = 1; maxdur = 600; goodfish = [1 2 3 4 5 6 8 10 12];
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-        if length(sfQ.realoverlaps) == length(surfReal)
-            surfReal = surfReal + sfQ.realoverlaps;
-        end
-        if length(sfQ.randoverlaps) == length(surfRand)
+            surfReal = [surfReal, sfQ.realoverlaps];
             surfRand = surfRand + sfQ.randoverlaps;
-        end
         
     end
         
@@ -225,12 +193,8 @@ currfishnum = 2; maxdur = 1000; goodfish = [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-        if length(sfQ.realoverlaps) == length(surfReal)
-            surfReal = surfReal + sfQ.realoverlaps;
-        end
-        if length(sfQ.randoverlaps) == length(surfRand)
+            surfReal = [surfReal, sfQ.realoverlaps];
             surfRand = surfRand + sfQ.randoverlaps;
-        end
         
     end
 
@@ -246,7 +210,7 @@ currfishnum = 3; maxdur = 1000; goodfish = [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
         if length(sfQ.realoverlaps) == length(surfReal)
-            surfReal = surfReal + sfQ.realoverlaps;
+            surfReal = [surfReal, sfQ.realoverlaps];
         end
         if length(sfQ.randoverlaps) == length(surfRand)
             surfRand = surfRand + sfQ.randoverlaps;
@@ -265,7 +229,7 @@ currfishnum = 4; maxdur = 600; goodfish = [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
         if length(sfQ.realoverlaps) == length(surfReal)
-            surfReal = surfReal + sfQ.realoverlaps;
+            surfReal = [surfReal, sfQ.realoverlaps];
         end
         if length(sfQ.randoverlaps) == length(surfRand)
             surfRand = surfRand + sfQ.randoverlaps;
@@ -283,7 +247,7 @@ currfishnum = 5; maxdur = 1100;
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, 1:length(srf(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
         if length(sfQ.realoverlaps) == length(surfReal)
-            surfReal = surfReal + sfQ.realoverlaps;
+            surfReal = [surfReal, sfQ.realoverlaps];
         end
         if length(sfQ.randoverlaps) == length(surfRand)
             surfRand = surfRand + sfQ.randoverlaps;
