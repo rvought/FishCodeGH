@@ -232,6 +232,7 @@ currfishnum = 2; maxdur = 1000; goodfish = [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17
         [~, sfQ] = overture(tmp);
         if length(sfQ.realoverlaps) == length(surfReal)
             surfReal = surfReal + sfQ.realoverlaps;
+        end
         if length(sfQ.randoverlaps) == length(surfRand)
             surfRand = surfRand + sfQ.randoverlaps;
         end
