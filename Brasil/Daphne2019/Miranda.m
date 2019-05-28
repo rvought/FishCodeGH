@@ -178,7 +178,7 @@ currfishnum = 1; maxdur = 600; goodfish = [1 2 3 4 5 6 8 10 12];
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
             surfReal = [surfReal, sfQ.realoverlaps];
-            surfRand = surfRand + sfQ.randoverlaps;
+            surfRand = [surfRand, sfQ.randoverlaps];
         
     end
         
@@ -194,7 +194,7 @@ currfishnum = 2; maxdur = 1000; goodfish = [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
             surfReal = [surfReal, sfQ.realoverlaps];
-            surfRand = surfRand + sfQ.randoverlaps;
+            surfRand = [surfRand, sfQ.randoverlaps];
         
     end
 
@@ -209,12 +209,8 @@ currfishnum = 3; maxdur = 1000; goodfish = [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-        if length(sfQ.realoverlaps) == length(surfReal)
             surfReal = [surfReal, sfQ.realoverlaps];
-        end
-        if length(sfQ.randoverlaps) == length(surfRand)
-            surfRand = surfRand + sfQ.randoverlaps;
-        end
+            surfRand = [surfRand, sfQ.randoverlaps];
         
     end
 
@@ -228,12 +224,8 @@ currfishnum = 4; maxdur = 600; goodfish = [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-        if length(sfQ.realoverlaps) == length(surfReal)
             surfReal = [surfReal, sfQ.realoverlaps];
-        end
-        if length(sfQ.randoverlaps) == length(surfRand)
-            surfRand = surfRand + sfQ.randoverlaps;
-        end
+            surfRand = [surfRand, sfQ.randoverlaps];
         
     end
    
@@ -246,12 +238,8 @@ currfishnum = 5; maxdur = 1100;
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, 1:length(srf(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-        if length(sfQ.realoverlaps) == length(surfReal)
             surfReal = [surfReal, sfQ.realoverlaps];
-        end
-        if length(sfQ.randoverlaps) == length(surfRand)
-            surfRand = surfRand + sfQ.randoverlaps;
-        end
+            surfRand = [surfRand, sfQ.randoverlaps];
         
     end
 
