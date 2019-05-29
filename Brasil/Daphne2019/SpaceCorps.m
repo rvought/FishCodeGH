@@ -296,20 +296,20 @@ ax(3) = subplot(133); hold on;
     end
 linkaxes(ax, 'xy');    
 
-figure(casu+2); clf;
-    axx(1) = subplot(131); hold on;  
-    for z=1:length(cmbs)
-        plot(cmbs(z).realhist);
-    end
-    axx(2) = subplot(132); hold on;  
-    for z=1:length(cmbs)
-        plot(cmbs(z).jighist);
-    end
-    axx(3) = subplot(133); hold on;  
-    for z=1:length(cmbs)
-        plot(cmbs(z).randhist);
-    end
-linkaxes(axx, 'xy');    
+% figure(casu+2); clf;
+%     axx(1) = subplot(131); hold on;  
+%     for z=1:length(cmbs)
+%         plot(cmbs(z).realhist);
+%     end
+%     axx(2) = subplot(132); hold on;  
+%     for z=1:length(cmbs)
+%         plot(cmbs(z).jighist);
+%     end
+%     axx(3) = subplot(133); hold on;  
+%     for z=1:length(cmbs)
+%         plot(cmbs(z).randhist);
+%     end
+% linkaxes(axx, 'xy');    
     
 end % If we have more than one fish
 
