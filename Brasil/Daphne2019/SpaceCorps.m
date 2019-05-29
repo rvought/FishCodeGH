@@ -187,11 +187,17 @@ for j = numfish:-1:1 % For each fish
     tmp(j).xy(1,:) = in.fish(feesh(j)).x(out(j).valididx);
     tmp(j).xy(2,:) = in.fish(feesh(j)).y(out(j).valididx);  
     
-    rtmp(j).xy(1,:) = out(j).rndXY(1,out(j).valididx);
-    rtmp(j).xy(2,:) = out(j).rndXY(2,out(j).valididx);  
+%     rtmp(j).xy(1,:) = out(j).rndXY(1,out(j).valididx);
+%     rtmp(j).xy(2,:) = out(j).rndXY(2,out(j).valididx);  
+% 
+%     jtmp(j).xy(1,:) = out(j).jigXY(1,out(j).valididx);
+%     jtmp(j).xy(2,:) = out(j).jigXY(2,out(j).valididx);  
 
-    jtmp(j).xy(1,:) = out(j).jigXY(1,out(j).valididx);
-    jtmp(j).xy(2,:) = out(j).jigXY(2,out(j).valididx);  
+    rtmp(j).xy(1,:) = out(j).rndXY(1,:);
+    rtmp(j).xy(2,:) = out(j).rndXY(2,:);  
+
+    jtmp(j).xy(1,:) = out(j).jigXY(1,:);
+    jtmp(j).xy(2,:) = out(j).jigXY(2,:);  
 
     % Spatial histogram (Heat map from above) for each fish
     out(j).realhist = hist3(tmp(j).xy', ctrs);
@@ -210,57 +216,57 @@ end % Cycle through each fish
 
 
 %% Cycle through pairs of fish
-if numfish > 1 % We have more than one fish
-    
-    combos = combnk(1:length(out), 2); % All pairwise combinations of fish
-
-    for p = length(combos):-1:1 % For each pair of fish
-
-        cmbs(p).fishnums = combos(p,:); % Save the identities of the fish to the output structure.
-        
-        % Get only entries for which we have data for both fish (shared indices)
-        [~, idx1, idx2] = intersect(out(combos(p,1)).valididx, out(combos(p,2)).valididx);
-        if ~isempty(idx1) && ~isempty(idx2)       
-        % Calculate the interfish-distance
-        
-        for jj = 1:length(idx1) % THERE HAS GOT TO BE A MORE EFFICIENT WAY OF DOING THIS...
-            cmbs(p).realdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(tmp(combos(p,1)).xy(:,idx1(jj))', tmp(combos(p,2)).xy(:,idx2(jj))');            
-            cmbs(p).randdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(rtmp(combos(p,1)).xy(:,idx1(jj))', rtmp(combos(p,2)).xy(:,idx2(jj))');
-            cmbs(p).jigdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(jtmp(combos(p,1)).xy(:,idx1(jj))', jtmp(combos(p,2)).xy(:,idx2(jj))');
-        end
-        
-        % Distance histogram for each pair of fish
-        if length(cmbs(p).realdist) > 1 % Then we have data for this fish
-            cmbs(p).realhist = hist(cmbs(p).realdist, dctrs);
-            cmbs(p).randhist = hist(cmbs(p).randdist, dctrs);
-            cmbs(p).jighist = hist(cmbs(p).jigdist, dctrs);
-        else % We don't have data for this particular fish
-            fprintf('This happens. \n ');
-        end
-        
-        % Assemble the histogram of distances of each fish to all others
-        
-        if sum(cmbs(p).realhist) > 0
-            out(combos(p,1)).allhist = out(combos(p,1)).allhist + cmbs(p).realhist;        
-            out(combos(p,2)).allhist = out(combos(p,2)).allhist + cmbs(p).realhist;        
-            
-            out(combos(p,1)).allrandhist = out(combos(p,1)).allrandhist + cmbs(p).randhist;        
-            out(combos(p,2)).allrandhist = out(combos(p,2)).allrandhist + cmbs(p).randhist;        
-            
-            out(combos(p,1)).alljighist = out(combos(p,1)).alljighist + cmbs(p).jighist;        
-            out(combos(p,2)).alljighist = out(combos(p,2)).alljighist + cmbs(p).jighist;        
-                        
-        end
-        
-        end
-        
-        % Compare spatial histograms (fish against each fish separately)
-        
-            % Simple sums of overlap
-        
-        
-        
-    end % Cycle through each pair of fish
+% if numfish > 1 % We have more than one fish
+%     
+%     combos = combnk(1:length(out), 2); % All pairwise combinations of fish
+% 
+%     for p = length(combos):-1:1 % For each pair of fish
+% 
+%         cmbs(p).fishnums = combos(p,:); % Save the identities of the fish to the output structure.
+%         
+%         % Get only entries for which we have data for both fish (shared indices)
+%         [~, idx1, idx2] = intersect(out(combos(p,1)).valididx, out(combos(p,2)).valididx);
+%         if ~isempty(idx1) && ~isempty(idx2)       
+%         % Calculate the interfish-distance
+%         
+%         for jj = 1:length(idx1) % THERE HAS GOT TO BE A MORE EFFICIENT WAY OF DOING THIS...
+%             cmbs(p).realdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(tmp(combos(p,1)).xy(:,idx1(jj))', tmp(combos(p,2)).xy(:,idx2(jj))');            
+%             cmbs(p).randdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(rtmp(combos(p,1)).xy(:,idx1(jj))', rtmp(combos(p,2)).xy(:,idx2(jj))');
+%             cmbs(p).jigdist(out(combos(p,1)).valididx(idx1(jj))) = pdist2(jtmp(combos(p,1)).xy(:,idx1(jj))', jtmp(combos(p,2)).xy(:,idx2(jj))');
+%         end
+%         
+%         % Distance histogram for each pair of fish
+%         if length(cmbs(p).realdist) > 1 % Then we have data for this fish
+%             cmbs(p).realhist = hist(cmbs(p).realdist, dctrs);
+%             cmbs(p).randhist = hist(cmbs(p).randdist, dctrs);
+%             cmbs(p).jighist = hist(cmbs(p).jigdist, dctrs);
+%         else % We don't have data for this particular fish
+%             fprintf('This happens. \n ');
+%         end
+%         
+%         % Assemble the histogram of distances of each fish to all others
+%         
+%         if sum(cmbs(p).realhist) > 0
+%             out(combos(p,1)).allhist = out(combos(p,1)).allhist + cmbs(p).realhist;        
+%             out(combos(p,2)).allhist = out(combos(p,2)).allhist + cmbs(p).realhist;        
+%             
+%             out(combos(p,1)).allrandhist = out(combos(p,1)).allrandhist + cmbs(p).randhist;        
+%             out(combos(p,2)).allrandhist = out(combos(p,2)).allrandhist + cmbs(p).randhist;        
+%             
+%             out(combos(p,1)).alljighist = out(combos(p,1)).alljighist + cmbs(p).jighist;        
+%             out(combos(p,2)).alljighist = out(combos(p,2)).alljighist + cmbs(p).jighist;        
+%                         
+%         end
+%         
+%         end
+%         
+%         % Compare spatial histograms (fish against each fish separately)
+%         
+%             % Simple sums of overlap
+%         
+%         
+%         
+%     end % Cycle through each pair of fish
 
 
 %% Plots 
