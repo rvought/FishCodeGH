@@ -6,17 +6,15 @@ function [out, cmbs] = SpaceCorps(in, casu, feesh, tims)
 
 %% Setup
 
-if nargin < 4 % If the user did not specify the time frame, take the whole thing
-    tims = [0 999999];
-end
+% if nargin < 4 % If the user did not specify the time frame, take the whole thing
+%     tims = [0 999999];
+% end
 
-if nargin < 3 % If the user did not specify specific fish, use them all
-    feesh = 1:length(in.fish);
-end
+% if nargin < 3 % If the user did not specify specific fish, use them all
+%     feesh = 1:length(in.fish);
+% end
 
 
-% tr is the data within our time range
-    tr = in.fish(1).freq(:,1) > tims(1) & in.fish(1).freq(:,1) < tims(2);
     
 % Constrains change in angle for jiggling and for the randomized fish
     constrainer = pi/2; % pi/2 (90 degrees) works great (converted to +/- below)
@@ -81,6 +79,8 @@ for j = numfish:-1:1 % For each fish
     % Record the centers of the bins for analysis (Determined above)
     out(j).ctrs = ctrs;
     
+    % tr is the data within our time range
+        tr = in.fish(j).freq(:,1) > tims(1) & in.fish(j).freq(:,1) < tims(2);
     % Get valid data (check frequency data to omit NaNs)            
     out(j).valididx = find(~isnan(in.fish(feesh(j)).freq(tr,2)));
     
