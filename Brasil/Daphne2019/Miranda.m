@@ -14,15 +14,15 @@ currfishnum = 3; maxdur = 1200;
 
     [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [0 epochdur]);
     [~, cvQ] = overture(tmp);
-    caveReal = cvQ.realoverlaps;
-    caveRand = cvQ.randoverlaps;
+    caveReal{1} = cvQ.realoverlaps;
+    caveRand{1} = cvQ.randoverlaps;
     
     for j=2:floor(maxdur/epochdur)
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        caveReal = [caveReal, cvQ.realoverlaps];
-        caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -36,8 +36,8 @@ currfishnum = 4; maxdur = 1200;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        caveReal = [caveReal, cvQ.realoverlaps];
-        caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -49,8 +49,8 @@ currfishnum = 5; maxdur = 1200;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-        caveReal = [caveReal, cvQ.realoverlaps];
-        caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -62,8 +62,8 @@ currfishnum = 6; maxdur = 1200;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-            caveReal = [caveReal, cvQ.realoverlaps];
-            caveRand = [caveRand, cvQ.randoverlaps];        
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
     end
 
 
@@ -75,8 +75,8 @@ currfishnum = 7; maxdur = 900;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-            caveReal = [caveReal, cvQ.realoverlaps];
-            caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -88,8 +88,8 @@ currfishnum = 8; maxdur = 1300;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-            caveReal = [caveReal, cvQ.realoverlaps];
-            caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -104,8 +104,8 @@ currfishnum = 10; maxdur = 900;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-            caveReal = [caveReal, cvQ.realoverlaps];
-            caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -117,8 +117,8 @@ currfishnum = 11; maxdur = 900;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-            caveReal = [caveReal, cvQ.realoverlaps];
-            caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -130,8 +130,8 @@ currfishnum = 12; maxdur = 1100;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-            caveReal = [caveReal, cvQ.realoverlaps];
-            caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -143,8 +143,8 @@ currfishnum = 13; maxdur = 1200;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-            caveReal = [caveReal, cvQ.realoverlaps];
-            caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -157,8 +157,8 @@ currfishnum = 14; maxdur = 1000;
        
         [tmp, ~] = SpaceCorps(cave(currfishnum), 1, 1:length(cave(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, cvQ] = overture(tmp);
-            caveReal = [caveReal, cvQ.realoverlaps];
-            caveRand = [caveRand, cvQ.randoverlaps];
+        caveReal{end+1} = cvQ.realoverlaps;
+        caveRand{end+1} = cvQ.randoverlaps;
         
     end
 
@@ -170,15 +170,15 @@ currfishnum = 1; maxdur = 600; goodfish = [1 2 3 4 5 6 8 10 12];
 
     [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [0 epochdur]);
     [~, sfQ] = overture(tmp);
-    surfReal = sfQ.realoverlaps;
-    surfRand = sfQ.randoverlaps;
+    surfReal{1} = sfQ.realoverlaps;
+    surfRand{1} = sfQ.randoverlaps;
     
     for j=2:floor(maxdur/epochdur)
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-            surfReal = [surfReal, sfQ.realoverlaps];
-            surfRand = [surfRand, sfQ.randoverlaps];
+            surfReal{end+1} = sfQ.realoverlaps;
+            surfRand{end+1} = sfQ.randoverlaps;
         
     end
         
@@ -193,8 +193,8 @@ currfishnum = 2; maxdur = 1000; goodfish = [1 2 3 4 5 6 7 8 10 12 13 14 15 16 17
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-            surfReal = [surfReal, sfQ.realoverlaps];
-            surfRand = [surfRand, sfQ.randoverlaps];
+            surfReal{end+1} = sfQ.realoverlaps;
+            surfRand{end+1} = sfQ.randoverlaps;
         
     end
 
@@ -209,8 +209,8 @@ currfishnum = 3; maxdur = 1000; goodfish = [1 2 3 4 5 6 7 8 10 11 12 13 14 15 16
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-            surfReal = [surfReal, sfQ.realoverlaps];
-            surfRand = [surfRand, sfQ.randoverlaps];
+            surfReal{end+1} = sfQ.realoverlaps;
+            surfRand{end+1} = sfQ.randoverlaps;
         
     end
 
@@ -224,8 +224,8 @@ currfishnum = 4; maxdur = 600; goodfish = [1 2 3 4 5 6 7 8 10 12 13 14 15 17 18 
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, goodfish, [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-            surfReal = [surfReal, sfQ.realoverlaps];
-            surfRand = [surfRand, sfQ.randoverlaps];
+            surfReal{end+1} = sfQ.realoverlaps;
+            surfRand{end+1} = sfQ.randoverlaps;
         
     end
    
@@ -238,8 +238,8 @@ currfishnum = 5; maxdur = 1100;
        
         [tmp, ~] = SpaceCorps(srf(currfishnum), 2, 1:length(srf(currfishnum).fish), [(j-1)*epochdur, j*epochdur]);
         [~, sfQ] = overture(tmp);
-            surfReal = [surfReal, sfQ.realoverlaps];
-            surfRand = [surfRand, sfQ.randoverlaps];
+            surfReal{end+1} = sfQ.realoverlaps;
+            surfRand{end+1} = sfQ.randoverlaps;
         
     end
 
@@ -248,8 +248,8 @@ currfishnum = 5; maxdur = 1100;
     data.caveRand = caveRand;
     data.caveReal = caveReal;
     
-[srfVsrf.H, srfVsrf.P, srfVsrf.K] = kstest2(histcounts(surfReal,20), histcounts(surfRand,20))
-[cvVcv.H, cvVcv.P, cvVcv.K] = kstest2(histcounts(caveReal,20), histcounts(caveRand,20))
-[cvVsrf.H, cvVsrf.P, cvVsrf.K] = kstest2(histcounts(caveReal,20), histcounts(caveRand,20))
+% [srfVsrf.H, srfVsrf.P, srfVsrf.K] = kstest2(histcounts(surfReal,20), histcounts(surfRand,20))
+% [cvVcv.H, cvVcv.P, cvVcv.K] = kstest2(histcounts(caveReal,20), histcounts(caveRand,20))
+% [cvVsrf.H, cvVsrf.P, cvVsrf.K] = kstest2(histcounts(caveReal,20), histcounts(caveRand,20))
 
 
