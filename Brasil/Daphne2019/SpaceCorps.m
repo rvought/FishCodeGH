@@ -80,7 +80,7 @@ for j = numfish:-1:1 % For each fish
     out(j).ctrs = ctrs;
     
     % tr is the data within our time range
-        tr = in.fish(j).freq(:,1) > tims(1) & in.fish(j).freq(:,1) < tims(2);
+        tr = find(in.fish(j).freq(:,1) > tims(1) & in.fish(j).freq(:,1) < tims(2));
     % Get valid data (check frequency data to omit NaNs)            
     out(j).valididx = find(~isnan(in.fish(feesh(j)).freq(tr,2)));
     
