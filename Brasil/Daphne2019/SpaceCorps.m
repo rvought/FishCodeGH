@@ -315,7 +315,7 @@ end % If we have more than one fish
 
 %% Analyses
 
-
+cmbs = 1;
 
 
 
