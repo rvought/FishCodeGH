@@ -283,14 +283,14 @@ ax(1) = subplot(131); hold on;
 ax(2) = subplot(132); hold on;
     for z=1:length(out)
         if ~isempty(out(z).valididx)
-        plot(out(z).jigXY(1,out(z).valididx), out(z).jigXY(2,out(z).valididx), '.', 'MarkerSize', 8);
+        plot(out(z).jigXY(1,:), out(z).jigXY(2,:), '.', 'MarkerSize', 8);
 %        plot(out(z).jigXY(1,out(z).valididx), out(z).jigXY(2,out(z).valididx), '*-');
         end
     end
 ax(3) = subplot(133); hold on;
     for z=1:length(out)
         if ~isempty(out(z).valididx)
-        plot(out(z).rndXY(1,out(z).valididx), out(z).rndXY(2,out(z).valididx), '.', 'MarkerSize', 8);
+        plot(out(z).rndXY(1,:), out(z).rndXY(2,:), '.', 'MarkerSize', 8);
 %        plot(out(z).rndXY(1,out(z).valididx), out(z).rndXY(2,out(z).valididx), '*-');
         end
     end
