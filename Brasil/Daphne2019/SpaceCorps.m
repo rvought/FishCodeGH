@@ -311,11 +311,11 @@ linkaxes(ax, 'xy');
 %     end
 % linkaxes(axx, 'xy');    
     
-end % If we have more than one fish
+%end % If we have more than one fish
+cmbs = 1;
 
 %% Analyses
 
-cmbs = 1;
 
 
 
