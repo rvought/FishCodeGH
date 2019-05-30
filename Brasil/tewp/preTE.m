@@ -7,6 +7,8 @@ end
 fishnum = length(fishidx); % How many fish
 combos = combnk(fishidx, 2); % Each pair of fish that we plan to analyze
 
+[b,a] = butter(3, 
+
 %% Copy original data into structure
 for k = fishnum:-1:1
     
