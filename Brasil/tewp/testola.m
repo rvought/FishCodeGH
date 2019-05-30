@@ -18,7 +18,7 @@
 % 
 % end
 
-f = cave(3).fish(1).freq(:,2);
+f = 'pchip'cave(3).fish(1).freq(:,2);
 ff = cave(3).fish(3).freq(:,2);
 
 for j=length(cave(3).fish(1).freq(:,1)):-1:1
