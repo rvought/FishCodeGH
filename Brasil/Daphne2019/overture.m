@@ -10,8 +10,13 @@ else
 end
 
 out(1).overfishnums = []; 
-out(1).realoverlap = []; out(1).jigoverlap = []; out(1).rndoverlap = []; 
-plt.realoverlaps = []; plt.jigoverlaps = []; plt.randoverlaps = [];
+out(1).realoverlap = []; 
+out(1).jigoverlap = []; 
+out(1).rndoverlap = [];
+
+plt.realoverlaps = []; 
+plt.jigoverlaps = []; 
+plt.randoverlaps = [];
 
 combos = combnk(fishlist, 2); % All pairwise combinations of fish
 
@@ -50,14 +55,14 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
                 out(p).overfishnums(end+1) = fishlist(combos(n,2));
 
                 out(p).realoverlap(end+1) = 1 - (sum(out(p).combo(n).realdiffhist(out(p).combo(n).realdiffhist > 0)) / sum(sum(in(fishlist(combos(n,1))).realhist)));
-                out(p).jigoverlap(end+1) = 1 - (sum(out(p).combo(n).jigdiffhist(out(p).combo(n).jigdiffhist > 0)) / sum(sum(in(fishlist(combos(n,1))).jighist)));
-                out(p).rndoverlap(end+1) = 1 - (sum(out(p).combo(n).randiffhist(out(p).combo(n).randiffhist > 0)) / sum(sum(in(fishlist(combos(n,1))).randhist)));
+                out(p).jigoverlap(end+1) =  1 - (sum(out(p).combo(n).jigdiffhist(out(p).combo(n).jigdiffhist > 0))   / sum(sum(in(fishlist(combos(n,1))).jighist)));
+                out(p).rndoverlap(end+1) =  1 - (sum(out(p).combo(n).randiffhist(out(p).combo(n).randiffhist > 0))   / sum(sum(in(fishlist(combos(n,1))).randhist)));
             else
                 out(p).overfishnums(end+1) = fishlist(combos(n,1));
  
                 out(p).realoverlap(end+1) = 1 - abs((sum(out(p).combo(n).realdiffhist(out(p).combo(n).realdiffhist < 0)) / sum(sum(in(fishlist(combos(n,2))).realhist))));
-                out(p).jigoverlap(end+1) = 1 - abs((sum(out(p).combo(n).jigdiffhist(out(p).combo(n).jigdiffhist < 0)) / sum(sum(in(fishlist(combos(n,2))).jighist))));
-                out(p).rndoverlap(end+1) = 1 - abs((sum(out(p).combo(n).randiffhist(out(p).combo(n).randiffhist < 0)) / sum(sum(in(fishlist(combos(n,2))).randhist))));
+                out(p).jigoverlap(end+1) =  1 - abs((sum(out(p).combo(n).jigdiffhist(out(p).combo(n).jigdiffhist < 0))   / sum(sum(in(fishlist(combos(n,2))).jighist))));
+                out(p).rndoverlap(end+1) =  1 - abs((sum(out(p).combo(n).randiffhist(out(p).combo(n).randiffhist < 0))   / sum(sum(in(fishlist(combos(n,2))).randhist))));
             end
             
                 end
@@ -69,7 +74,7 @@ combos = combnk(fishlist, 2); % All pairwise combinations of fish
        % of the fish.
        
         plt.realoverlaps = [plt.realoverlaps, out(p).realoverlap];        
-        plt.jigoverlaps = [plt.jigoverlaps, out(p).jigoverlap];        
+        plt.jigoverlaps =  [plt.jigoverlaps,  out(p).jigoverlap];        
         plt.randoverlaps = [plt.randoverlaps, out(p).rndoverlap];        
         
     end % For each fish

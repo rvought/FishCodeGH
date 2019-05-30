@@ -21,7 +21,7 @@ for j = length(feesh):-1:1 % For each fish
    out(j).numfish = length(feesh);
     
 end
-figure(7); clf; 
+%figure(7); clf; 
 
 
 %% Movement distance and velocity
@@ -48,9 +48,9 @@ for j = length(feesh):-1:1 % For each fish
     end 
    end
    
-   ax(1) = subplot(211); hold on; plot(out(j).pdist, '.-')
-   ax(2) = subplot(212); hold on; plot(diff(out(j).pdist), '.-')
-   linkaxes(ax, 'x')
+ %  ax(1) = subplot(211); hold on; plot(out(j).pdist, '.-')
+ %  ax(2) = subplot(212); hold on; plot(diff(out(j).pdist), '.-')
+ %  linkaxes(ax, 'x')
 end
 
 

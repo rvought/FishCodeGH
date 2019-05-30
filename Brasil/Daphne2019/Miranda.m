@@ -248,8 +248,20 @@ currfishnum = 5; maxdur = 1100;
     data.caveRand = caveRand;
     data.caveReal = caveReal;
     
-% [srfVsrf.H, srfVsrf.P, srfVsrf.K] = kstest2(histcounts(surfReal,20), histcounts(surfRand,20))
-% [cvVcv.H, cvVcv.P, cvVcv.K] = kstest2(histcounts(caveReal,20), histcounts(caveRand,20))
-% [cvVsrf.H, cvVsrf.P, cvVsrf.K] = kstest2(histcounts(caveReal,20), histcounts(caveRand,20))
+    surfRealAll = [];
+    for j=1:length(surfReal); surfRealAll = [surfRealAll surfReal{j}]; end
+    surfRandAll = [];
+    for j=1:length(surfRand); surfRandAll = [surfRandAll surfRand{j}]; end
+    caveRealAll = [];
+    for j=1:length(caveReal); caveRealAll = [caveRealAll caveReal{j}]; end
+    caveRandAll = [];
+    for j=1:length(caveRand); caveRandAll = [caveRandAll caveRand{j}]; end
+    
+    
+[srfVsrf.H, srfVsrf.P, srfVsrf.K] = kstest2(histcounts(surfRealAll,20), histcounts(surfRandAll,20));
+[cvVcv.H, cvVcv.P, cvVcv.K] = kstest2(histcounts(caveRealAll,20), histcounts(caveRandAll,20));
+[cvVsrf.H, cvVsrf.P, cvVsrf.K] = kstest2(histcounts(caveRealAll,20), histcounts(surfRealAll,20));
+
+fprintf('Cave versus surface significant %1.0f \n', cvVsrf.H);
 
 
