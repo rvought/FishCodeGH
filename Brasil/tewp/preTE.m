@@ -1,31 +1,38 @@
-function out = preTE(data, fishidx)
+function [dFdist, orig] = preTE(data, fishidx)
 
 if nargin < 2
     fishidx = 1:length(data.fish);
 end
 
-fishum = length(fishidx);
-combos = combnk(fishidx, 2);
+fishnum = length(fishidx); % How many fish
+combos = combnk(fishidx, 2); % Each pair of fish that we plan to analyze
 
+%% Copy original data into structure
+for k = fishnum:-1:1
+    
+         orig(fishidx(k)).EOD = data.fish(fishidx(k)).freq(:,2);
+         orig(fishidx(k)).xy(:,1) = data.fish(fishidx(k)).x;
+         orig(fishidx(k)).xy(:,2) = data.fish(fishidx(k)).y;
+         orig(fishidx(k)).tim = data.fish(fishidx(k)).freq(:,1);
+         
+end
+
+%% Calculate dF and distance between each pair
 for p = length(combos):-1:1 % For each pair of fish
 
-         out(p).fishnums = combos(p,:); % Save the identities of the fish to the output structure
+         dFdist(p).fishnums = combos(p,:); % Save the identities of the fish to the output structure
  
-         % THIS SECTION IS WASTEFUL: Copies original data into structure
-         out(p).EODA = data.fish(combos(p,1)).freq(:,2);
-         out(p).EODB = data.fish(combos(p,2)).freq(:,2);
-         out(p).tim = data.fish(combos(p,2)).freq(:,1);
          
          % Use embedded function to calcuate distance and dF
          [currdist, currdF] = distdfcalc(data.fish(combos(p,1)), data.fish(combos(p,2)));
          
-         out(p).distance = currdist;
-         out(p).dF = currdF;
+         dFdist(p).distance = currdist;
+         dFdist(p).dF = currdF;
 
 end
 
 
-%% Embedded function
+%% Embedded function to calculate dF and distance
 function [dist, dF] = distdfcalc(A, B)
 
 for j=length(A(1).freq(:,1)):-1:1 % For every time step in the sample
@@ -42,7 +49,7 @@ for j=length(A(1).freq(:,1)):-1:1 % For every time step in the sample
     
 end
 
-% Fill in missing data.  This is dangerous - need reality check.
+% Fill in missing data.  This is dangerous - need reality check somewhere!!
 
         dist(dist == 0) = NaN;
         dist = fillmissing(dist, 'pchip');
