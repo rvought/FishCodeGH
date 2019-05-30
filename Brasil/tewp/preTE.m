@@ -28,6 +28,7 @@ for p = length(combos):-1:1 % For each pair of fish
          
          dFdist(p).distance = currdist;
          dFdist(p).dF = currdF;
+         dFdist(p).tim = data.fish(combos(p,1)).freq(:,1);
 
 end
 
