@@ -8,7 +8,7 @@ fishnum = length(fishidx); % How many fish
 combos = combnk(fishidx, 2); % Each pair of fish that we plan to analyze
 
 Fs = 1/mean(diff(data.fish(fishidx(1)).freq(:,1)));
-[b,a] = butter(3, 0.2/(Fs/2), 'low');
+[b,a] = butter(3, 0.05/(Fs/2), 'low');
 
 %% Copy original data into structure
 for k = fishnum:-1:1
