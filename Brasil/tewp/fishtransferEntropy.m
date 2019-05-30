@@ -1,4 +1,5 @@
 function TE = fishtransferEntropy(dat, met, ind)
+% This works with Manu's dataset.
 
 idx = (met.dataset == ind);
 listofpairs = unique(met.pair(idx));
