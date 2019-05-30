@@ -26,6 +26,7 @@ for j=length(cave(3).fish(1).freq(:,1)):-1:1
     if ~isnan(cave(3).fish(1).freq(j,2)) && ~isnan(cave(3).fish(5).freq(j,2))
         % Calculate distance
         dist(j) = sqrt((cave(3).fish(1).x(j) - cave(3).fish(3).x(j)).^2 + (cave(3).fish(1).y(j) - cave(3).fish(3).y(j)).^2);
+        
         % Calculate dF
         dF(j) = abs(cave(3).fish(1).freq(j,2) - cave(3).fish(3).freq(j,2));
     end
