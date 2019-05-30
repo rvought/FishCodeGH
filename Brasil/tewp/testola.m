@@ -21,9 +21,9 @@
 f =  cave(3).fish(1).freq(:,2);
 ff = cave(3).fish(3).freq(:,2);
 
-for j=length(cave(3).fish(1).freq(:,1)):-1:1
+for j=length(cave(3).fish(1).freq(:,1)):-1:1 % For every time step in the sample
    
-    if ~isnan(cave(3).fish(1).freq(j,2)) && ~isnan(cave(3).fish(5).freq(j,2))
+    if ~isnan(cave(3).fish(1).freq(j,2)) && ~isnan(cave(3).fish(5).freq(j,2)) % If both have real data at the moment         
         % Calculate distance
         dist(j) = sqrt((cave(3).fish(1).x(j) - cave(3).fish(3).x(j)).^2 + (cave(3).fish(1).y(j) - cave(3).fish(3).y(j)).^2);
         
@@ -32,6 +32,14 @@ for j=length(cave(3).fish(1).freq(:,1)):-1:1
     end
     
 end
+
+% 
+
+        dist{j}(dist{j} == 0) = NaN;
+        dist{j} = fillmissing(dist{j}, 'pchip');
+        dF{j}(dF{j} == 0) = NaN;
+        dF{j} = fillmissing(dF{j}, 'pchip');
+
 
 figure(1); clf; subplot(311); plot(f); hold on; plot(ff);
 figure(1); subplot(312); plot(dist);
