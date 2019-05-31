@@ -1,12 +1,14 @@
-function out = getTE(dFdist, windowlength, stepsize)
+function out = getXC(dFdist, windowlength, stepsize)
 
-delays = [50, 60, 70, 80, 90];
+% delays = [50, 60, 70, 80, 90];
     
 for j = length(dFdist):-1:1
     
-    for z = 1:length(delays)
-    [out(j).TE{z}, out(j).tt{z}] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
-    end
+    [out(j).CC, out(j).tt] = calcCORR(dFdist(j), windowlength, stepsize);
+
+%     for z = 1:length(delays)
+%     [out(j).TE{z}, out(j).tt{z}] = calcCORR(dFdist(j), windowlength, stepsize, delays(z));
+%     end
     
 end
 
@@ -19,27 +21,20 @@ end
         end
     end
 
-%% Embedded calcTE function
-function [currTE, currTT] = calcTE(data, windo, stp, kk)
-
-ll = 1; 
-
-currTE = []; currTT = [];
+%% Embedded calcCORR function
+function [currTE, currTT] = calcCORR(data, windo, stp)
 
 strts = 0:stp:data.tim(end)-windo;
-
 
 parfor loopr = 1:length(strts)
     
       curstart = strts(loopr);
       aaa= data.dF(data.tim > curstart & data.tim < curstart+windo);
       bbb = data.distance(data.tim > curstart & data.tim < curstart+windo);
-      [currTE(loopr),~ ,~] = transferEntropyPartition(aaa(1:2:end), bbb(1:2:end), ll, kk);
       
-      [currTE(loopr),~ ,~] = transferEntropyPartition(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk);      
-      %currTE(loopr) = transferEntropyKDE(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk, 2, 2); 
-      %currTE(loopr) = transferEntropyRank(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk, 2, 2, 10);
-
+      RR = corrcoef(aaa, bbb);
+      
+      currRR = RR(2);
       currTT(loopr) = curstart + (windo/2);
                  
 end
