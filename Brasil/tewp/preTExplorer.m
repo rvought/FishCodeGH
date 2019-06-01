@@ -1,7 +1,7 @@
 function preTExplorer(dFdist, orig)
 % ESF
-windw = 400;
-advanceby = 20;
+windw = 300;
+advanceby = 10;
 
 for j=1:length(dFdist)
 
