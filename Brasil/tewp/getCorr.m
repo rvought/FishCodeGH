@@ -34,12 +34,27 @@ end
             for j=1:length(out)
                 plot(out(j).tt, out(j).Corr);
             end
-        subplot(223);
-        plot(out.Corr, out.dF, 'o');
-        subplot(224);
-        plot(out.Corr, out.distance, 'o');
-        
             
+            alldists = []; alldFs = []; maxcorrs = []; avgcorrs = [];
+            for j=1:length(out)
+                alldists = [alldists, out(j).meanDist];
+                alldFs = [alldFs, out(j).meandF];
+                [~, idx] =  max(abs(out(j).Corr));
+                maxcorrs = [maxcorrs, out(j).Corr(idx)];
+                avgcorrs = [avgcorrs, median(out(j).Corr)];
+            end
+            
+        subplot(223); hold on;
+            plot(maxcorrs, alldFs, 'ro');
+            plot(avgcorrs, alldFs, 'co');
+        subplot(224); hold on;
+            plot(maxcorrs, alldists, 'ro');
+            plot(avgcorrs, alldists, 'co');
+        
+            figure(6); clf; hold on;
+            plot3(alldFs, alldists, maxcorrs, 'ro');
+            plot3(alldFs, alldists, avgcorrs, 'co');
+
     
     
 %% Embedded function slideCorr
