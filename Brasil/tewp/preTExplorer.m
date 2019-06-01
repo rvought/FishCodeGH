@@ -36,7 +36,7 @@ for j=1:length(dFdist)
     xlim([-250, 250]);
     ylim([-250, 250]);
     
-    subplot(4,1,4); hold on
+    subplot(4,1,4); hold on;
         tmpdF = dFdist(j).dF-mean(dFdist(j).dF);
         tmpdF = tmpdF/(max(abs(tmpdF)));
         tmpDistance = dFdist(j).distance-mean(dFdist(j).distance);
