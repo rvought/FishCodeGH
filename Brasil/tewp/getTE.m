@@ -1,24 +1,36 @@
 function out = getTE(dFdist, windowlength, stepsize)
+% ESF
 
-delays = [50, 60, 70, 80, 90];
+% delays = [50, 60, 70, 80, 90];
+% delays = 50;
+delays = [10 40 60 80 120];
     
 for j = length(dFdist):-1:1
     
     for z = 1:length(delays)
-    [out(j).TE{z}, out(j).tt{z}] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
+        [out(j).TE{z}, out(j).tt{z}] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
     end
     
 end
 
 
 %% Plot
+    if length(delays) > 1
     for j=1:length(out)
         figure(j+10); clf; hold on;
         for k = 1:length(out(j).TE)
             plot(out(j).tt{k}, out(j).TE{k});
         end
     end
-
+    end
+    if length(delays) == 1
+        figure(5); clf; hold on;
+            for j=1:length(out)
+                plot(out(j).tt{1}, out(j).TE{1});
+            end
+    end
+    
+    
 %% Embedded calcTE function
 function [currTE, currTT] = calcTE(data, windo, stp, kk)
 
