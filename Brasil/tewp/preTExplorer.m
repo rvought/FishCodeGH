@@ -45,6 +45,9 @@ for j=1:length(dFdist)
         
         [CC, TT] = slideCorr(tmpdF, tmpDistance, tims, windw, advanceby);
         
+        plot([0, max(tims)], [0.7, 0.7], 'r');
+        plot([0, max(tims)], [-0.7, -0.7], 'r');
+        
         plot(TT, CC, '.k-', 'MarkerSize', 4); xlim([0, max(tims)]); ylim([-1, 1]);
         text(100, 0, num2str(mean(CC)));
 
