@@ -12,7 +12,7 @@ for j=1:length(dFdist)
         plot(orig(dFdist(j).fishnums(1)).tim, orig(dFdist(j).fishnums(1)).EOD, '.b', 'MarkerSize', 2);
         plot(orig(dFdist(j).fishnums(1)).tim, orig(dFdist(j).fishnums(2)).EOD, '.m', 'MarkerSize', 2);
     xlim([0 orig(dFdist(j).fishnums(1)).tim(end)]);
-    ylim([250 500]);
+    ylim([200 500]);
     text(100, 450, num2str(dFdist(j).fishnums));
     text(100, 400, num2str(j));
 
