@@ -1,62 +1,65 @@
-function out = getTE(dFdist, windowlength, stepsize)
+function out = getCorr(dFdist, windowlength, stepsize)
 % ESF
 
 % delays = [50, 60, 70, 80, 90];
 % delays = 50;
-delays = [10 40 60 80 120];
+% delays = [10 40 60 80 120];
     
 for j = length(dFdist):-1:1
     
-    for z = 1:length(delays)
-        [out(j).TE{z}, out(j).tt{z}] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
-    end
+%     for z = 1:length(delays)
+%         [out(j).TE{z}, out(j).tt{z}] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
+%     end
+[out(j).Corr, out.(j).dF, out(j).distance, out(j).tt] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
     
 end
 
 
 %% Plot
-    if length(delays) > 1
-    for j=1:length(out)
-        figure(j+10); clf; hold on;
-        for k = 1:length(out(j).TE)
-            plot(out(j).tt{k}, out(j).TE{k});
-        end
-    end
-    end
-    if length(delays) == 1
-        figure(5); clf; hold on;
+%     if length(delays) > 1
+%     for j=1:length(out)
+%         figure(j+10); clf; hold on;
+%         for k = 1:length(out(j).TE)
+%             plot(out(j).tt{k}, out(j).TE{k});
+%         end
+%     end
+%     end
+        figure(5); clf; 
+        subplot(211); hold on;
             for j=1:length(out)
-                plot(out(j).tt{1}, out(j).TE{1});
+                plot(out(j).tt, out(j).Corr);
             end
-    end
+        subplot(223);
+        plot(out.Corr, out.dF, 'o');
+        subplot(224);
+        plot(out.Corr, out.distance, 'o');
+        
+            
     
     
-%% Embedded calcTE function
-function [currTE, currTT] = calcTE(data, windo, stp, kk)
+%% Embedded function slideCorr
+function [currCorr, meandF, meanDist, currTT] = slideCorr(dF, dist, tim, windo, stp)
 
-ll = 1; 
-
-currTE = []; currTT = [];
-
-strts = 0:stp:data.tim(end)-windo;
+strts = 0:stp:tim(end)-windo;
 
 
-parfor loopr = 1:length(strts)
+for loopr = 1:length(strts)
     
       curstart = strts(loopr);
-      aaa= data.dF(data.tim > curstart & data.tim < curstart+windo);
-      bbb = data.distance(data.tim > curstart & data.tim < curstart+windo);
-      [currTE(loopr),~ ,~] = transferEntropyPartition(aaa(1:2:end), bbb(1:2:end), ll, kk);
+      aaa = dF(tim > curstart & tim < curstart+windo);
+      bbb = dist(tim > curstart & tim < curstart+windo);
       
-      [currTE(loopr),~ ,~] = transferEntropyPartition(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk);      
-      %currTE(loopr) = transferEntropyKDE(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk, 2, 2); 
-      %currTE(loopr) = transferEntropyRank(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk, 2, 2, 10);
+        RR = corrcoef(aaa, bbb);
+        currCorr(loopr) = RR(2);
+        meandF = mean(aaa);
+        meanDist = mean(bbb);
 
       currTT(loopr) = curstart + (windo/2);
                  
-end
+ end
 
 
-end
+end % End of embedded function
+
 
 end
