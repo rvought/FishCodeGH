@@ -46,6 +46,7 @@ for j=1:length(dFdist)
         [CC, TT] = slideCorr(tmpdF, tmpDistance, tims, windw, advanceby);
         
         plot(TT, CC); xlim([0, max(tims)]); ylim([-1, 1]);
+        text(100, 0, 
 
 %     xa = xcorr(tmpdF, tmpDistance);
 %     plot(xa); xlim([0 length(xa)]);
@@ -67,7 +68,7 @@ function [currCorr, currTT] = slideCorr(dF, dist, tim, windo, stp)
 strts = 0:stp:tim(end)-windo;
 
 
- parfor loopr = 1:length(strts)
+ for loopr = 1:length(strts)
     
       curstart = strts(loopr);
       aaa = dF(tim > curstart & tim < curstart+windo);
