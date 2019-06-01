@@ -4,7 +4,7 @@ function out = getCorr(dFdist, windowlength, stepsize)
 % delays = [50, 60, 70, 80, 90];
 % delays = 50;
 % delays = [10 40 60 80 120];
-    
+    out.Corr =[]; out.dF = []; out.distance = []; out.tt = [];
 for j = length(dFdist):-1:1
     
 %     for z = 1:length(delays)
