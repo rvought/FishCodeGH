@@ -4,13 +4,18 @@ function out = getCorr(dFdist, windowlength, stepsize)
 % delays = [50, 60, 70, 80, 90];
 % delays = 50;
 % delays = [10 40 60 80 120];
-    out.Corr =[]; out.dF = []; out.distance = []; out.tt = [];
+%    out.Corr =[]; out.dF = []; out.distance = []; out.tt = [];
 for j = length(dFdist):-1:1
     
 %     for z = 1:length(delays)
 %         [out(j).TE{z}, out(j).tt{z}] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
 %     end
 [aa,bb,cc,dd] = slideCorr(dFdist(j).dF, dFdist(j).distance, dFdist(j).tim, windowlength, stepsize);
+    
+    out(j).Corr = aa;
+    out(j).meandF = bb;
+    out(j).meanDist = cc;
+    out(j).tim = dd;
     
 end
 
