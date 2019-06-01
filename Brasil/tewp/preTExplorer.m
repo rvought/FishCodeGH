@@ -47,6 +47,8 @@ for j=1:length(dFdist)
         
         plot([0, max(tims)], [0.7, 0.7], 'r');
         plot([0, max(tims)], [-0.7, -0.7], 'r');
+        plot([0, max(tims)], [0.5, 0.5], 'm');
+        plot([0, max(tims)], [-0.5, -0.5], 'm');
         
         plot(TT, CC, '.k-', 'MarkerSize', 4); xlim([0, max(tims)]); ylim([-1, 1]);
         text(100, 0, num2str(mean(CC)));
