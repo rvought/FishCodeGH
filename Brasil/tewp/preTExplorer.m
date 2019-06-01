@@ -56,6 +56,32 @@ end
 
 %% Embedded function slideCorr
 function slideCorr(dat, win, overlp)
+function [currTE, currTT] = calcTE(data, windo, stp, kk)
+
+ll = 1; 
+
+currTE = []; currTT = [];
+
+strts = 0:stp:data.tim(end)-windo;
+
+
+parfor loopr = 1:length(strts)
+    
+      curstart = strts(loopr);
+      aaa= data.dF(data.tim > curstart & data.tim < curstart+windo);
+      bbb = data.distance(data.tim > curstart & data.tim < curstart+windo);
+      [currTE(loopr),~ ,~] = transferEntropyPartition(aaa(1:2:end), bbb(1:2:end), ll, kk);
+      
+      [currTE(loopr),~ ,~] = transferEntropyPartition(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk);      
+      %currTE(loopr) = transferEntropyKDE(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk, 2, 2); 
+      %currTE(loopr) = transferEntropyRank(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk, 2, 2, 10);
+
+      currTT(loopr) = curstart + (windo/2);
+                 
+end
+
+
+end
 
 
 
