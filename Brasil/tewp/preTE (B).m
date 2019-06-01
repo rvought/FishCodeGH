@@ -23,7 +23,6 @@ end
 %% Calculate dF and distance between each pair
 for p = length(combos):-1:1 % For each pair of fish
 
-    
     if ~isnan(data.fish(combos(p,1)).freq(:,2)) && ~isnan(data.fish(combos(p,2)).freq(:,2))
         
          dFdist(p).fishnums = combos(p,:); % Save the identities of the fish to the output structure

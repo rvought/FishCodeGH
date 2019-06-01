@@ -1,4 +1,5 @@
 function [dFdist, orig] = preTE(data, fishidx)
+% ESF
 
 if nargin < 2
     fishidx = 1:length(data.fish);
@@ -24,10 +25,9 @@ end
 for p = length(combos):-1:1 % For each pair of fish
 
     
-    if ~isnan(data.fish(combos(p,1)).freq(:,2)) && ~isnan(data.fish(combos(p,2)).freq(:,2))
+    if length(find(~isnan(data.fish(combos(p,1)).freq(:,2)) & ~isnan(data.fish(combos(p,2)).freq(:,2)))) > 100
         
          dFdist(p).fishnums = combos(p,:); % Save the identities of the fish to the output structure
- 
          
          % Use embedded function to calcuate distance and dF
          [currdist, currdF] = distdfcalc(data.fish(combos(p,1)), data.fish(combos(p,2)));
@@ -40,10 +40,17 @@ for p = length(combos):-1:1 % For each pair of fish
 
 end
 
+%% Check for length mismatches (which shouldn't happen...)
+
+
+
 
 %% Embedded function to calculate dF and distance
 function [dist, dF] = distdfcalc(A, B)
 
+    dist = zeros(1,length(A(1).freq(:,1)));
+    dF = zeros(1,length(A(1).freq(:,1)));
+    
 for j=length(A(1).freq(:,1)):-1:1 % For every time step in the sample
    
     if ~isnan(A.freq(j,2)) && ~isnan(B.freq(j,2)) % If both have real data at the moment         
@@ -61,9 +68,11 @@ end
 % Fill in missing data.  This is dangerous - need reality check somewhere!!
 
         dist(dist == 0) = NaN;
-        dist = fillmissing(dist, 'pchip');
+        % dist = fillmissing(dist, 'pchip');
+        dist = fillmissing(dist, 'linear','EndValues','nearest');
         dF(dF == 0) = NaN;
-        dF = fillmissing(dF, 'pchip');
+        %dF = fillmissing(dF, 'pchip');
+        dF = fillmissing(dF, 'linear','EndValues','nearest');
 
 end % End of distdfcalc embedded function
 
