@@ -1,5 +1,7 @@
 function preTExplorer(dFdist, orig)
 % ESF
+windw = 400;
+advanceby = 20;
 
 for j=1:length(dFdist)
 
@@ -34,20 +36,25 @@ for j=1:length(dFdist)
     xlim([-250, 250]);
     ylim([-250, 250]);
     
-    subplot(4,1,4); hold on;
-    tmpdF = dFdist(j).dF-mean(dFdist(j).dF);
-    tmpdF = tmpdF/(max(abs(tmpdF)));
-    tmpDistance = dFdist(j).distance-mean(dFdist(j).distance);
-    tmpDistance = tmpDistance/(max(abs(tmpDistance)));
-    
-    xa = xcorr(tmpdF, tmpDistance);
-    plot(xa); xlim([0 length(xa)]);
-    [mm, midx] = max(xa);
-    plot([length(xa)/2, length(xa)/2], [0 mm], 'r');
-    plot(midx, mm, 'go');
-    [h,~] = corrcoef(dFdist(j).dF-mean(dFdist(j).dF), dFdist(j).distance-mean(dFdist(j).distance));
-    text(length(xa)/2, 0, num2str(h(2)));
-    ylim([-1000, 1000]);
+    subplot(4,1,4); 
+        tmpdF = dFdist(j).dF-mean(dFdist(j).dF);
+        tmpdF = tmpdF/(max(abs(tmpdF)));
+        tmpDistance = dFdist(j).distance-mean(dFdist(j).distance);
+        tmpDistance = tmpDistance/(max(abs(tmpDistance)));
+        tims = dFdist(j).tim;
+        
+        [CC, TT] = slideCorr(tmpdF, tmpDistance, tims, windw, advanceby);
+        
+        plot(TT, CC); xlim([0, max(tims)]);
+
+%     xa = xcorr(tmpdF, tmpDistance);
+%     plot(xa); xlim([0 length(xa)]);
+%     [mm, midx] = max(xa);
+%     plot([length(xa)/2, length(xa)/2], [0 mm], 'r');
+%     plot(midx, mm, 'go');
+%     [h,~] = corrcoef(dFdist(j).dF-mean(dFdist(j).dF), dFdist(j).distance-mean(dFdist(j).distance));
+%     text(length(xa)/2, 0, num2str(h(2)));
+%     ylim([-1000, 1000]);
     
     endogo = input('foobar 9 to end: ');  
     if endogo == 9; break; end
@@ -55,38 +62,28 @@ for j=1:length(dFdist)
 end
 
 %% Embedded function slideCorr
-function slideCorr(dat, win, overlp)
-function [currTE, currTT] = calcTE(data, windo, stp, kk)
+function [currCorr, currTT] = slideCorr(dF, dist, tim, windo, stp)
 
-ll = 1; 
-
-currTE = []; currTT = [];
-
-strts = 0:stp:data.tim(end)-windo;
+strts = 0:stp:tim(end)-windo;
 
 
-parfor loopr = 1:length(strts)
+ parfor loopr = 1:length(strts)
     
       curstart = strts(loopr);
-      aaa= data.dF(data.tim > curstart & data.tim < curstart+windo);
-      bbb = data.distance(data.tim > curstart & data.tim < curstart+windo);
-      [currTE(loopr),~ ,~] = transferEntropyPartition(aaa(1:2:end), bbb(1:2:end), ll, kk);
+      aaa = dF(tim > curstart & tim < curstart+windo);
+      bbb = dist(tim > curstart & tim < curstart+windo);
       
-      [currTE(loopr),~ ,~] = transferEntropyPartition(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk);      
-      %currTE(loopr) = transferEntropyKDE(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk, 2, 2); 
-      %currTE(loopr) = transferEntropyRank(data.dF(data.tim > curstart & data.tim < curstart+windo), data.distance(data.tim > curstart & data.tim < curstart+windo), ll, kk, 2, 2, 10);
+        RR = corrcoef(aaa, bbb);
+        currCorr(loopr) = RR(2);
 
       currTT(loopr) = curstart + (windo/2);
                  
-end
+ end
 
 
-end
+end % End of embedded function
 
 
+end % End of function
 
-end
-
-
-end
     
