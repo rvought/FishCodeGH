@@ -15,7 +15,7 @@ for j = length(dFdist):-1:1
     out(j).Corr = aa;
     out(j).meandF = bb;
     out(j).meanDist = cc;
-    out(j).tim = dd;
+    out(j).tt = dd;
     
 end
 
