@@ -45,7 +45,7 @@ for j=1:length(dFdist)
         
         [CC, TT] = slideCorr(tmpdF, tmpDistance, tims, windw, advanceby);
         
-        plot(TT, CC); xlim([0, max(tims)]);
+        plot(TT, CC); xlim([0, max(tims)]); ylim([-1, 1]);
 
 %     xa = xcorr(tmpdF, tmpDistance);
 %     plot(xa); xlim([0 length(xa)]);
