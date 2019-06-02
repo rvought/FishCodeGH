@@ -26,12 +26,14 @@ for j=1:length(dFdist)
         plot(dFdist(j).tim, dFdist(j).dF);
     ylabel('dF')
     
-    subplot(425);
+    subplot(425); hold on;
+    plot(orig(dFdist(j).fishnums(2)).xy(:,1), orig(dFdist(j).fishnums(2)).xy(:,2), '.', 'MarkerSize', 4, 'Color', [0.7 0.7 0.7]);
     plot(orig(dFdist(j).fishnums(1)).xy(:,1), orig(dFdist(j).fishnums(1)).xy(:,2), '.b', 'MarkerSize', 4);
     xlim([-250, 250]);
     ylim([-250, 250]);
     
-    subplot(426);
+    subplot(426); hold on;
+    plot(orig(dFdist(j).fishnums(1)).xy(:,1), orig(dFdist(j).fishnums(1)).xy(:,2), '.', 'MarkerSize', 4, 'Color', [0.7 0.7 0.7]);
     plot(orig(dFdist(j).fishnums(2)).xy(:,1), orig(dFdist(j).fishnums(2)).xy(:,2), '.m', 'MarkerSize', 4);
     xlim([-250, 250]);
     ylim([-250, 250]);
@@ -49,6 +51,7 @@ for j=1:length(dFdist)
         plot([0, max(tims)], [-0.7, -0.7], 'r');
         plot([0, max(tims)], [0.5, 0.5], 'm');
         plot([0, max(tims)], [-0.5, -0.5], 'm');
+        plot([0, max(tims)], [0, 0], 'g', 'LineWidth', 6);
         
         plot(TT, CC, '.k-', 'MarkerSize', 4); xlim([0, max(tims)]); ylim([-1, 1]);
         text(100, 0, num2str(mean(CC)));
