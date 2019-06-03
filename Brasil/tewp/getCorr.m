@@ -1,4 +1,4 @@
-function out = getCorr(dFdist, windowlength, stepsize)
+function out = getCorr(dFdist, orig, windowlength, stepsize)
 % ESF
 
 % delays = [50, 60, 70, 80, 90];
@@ -10,6 +10,7 @@ for j = length(dFdist):-1:1
 %     for z = 1:length(delays)
 %         [out(j).TE{z}, out(j).tt{z}] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
 %     end
+
 [aa,bb,cc,dd] = slideCorr(dFdist(j).dF, dFdist(j).distance, dFdist(j).tim, windowlength, stepsize);
     
     out(j).Corr = aa;
@@ -17,8 +18,15 @@ for j = length(dFdist):-1:1
     out(j).meanDist = cc;
     out(j).tt = dd;
     
-end
+    fa = dFdist(j).fishnums(1);
+    fb = dFdist(j).fishnums(2);
+    
+    [aaeod,bbeod] = eodCorr(orig(fa).EOD, orig(fb).EOD, dFdist(j).tim, windowlength, stepsize);
 
+    out(j).eodCorr = aaeod;
+    out(j).eodtt = bbeod;
+    
+end
 
 %% Plot
 %     if length(delays) > 1
@@ -29,7 +37,8 @@ end
 %         end
 %     end
 %     end
-        figure(5); clf; 
+
+figure(5); clf; 
         subplot(211); hold on;
             for j=1:length(out)
                 plot(out(j).tt, out(j).Corr);
@@ -55,13 +64,18 @@ end
             plot3(alldFs, alldists, maxcorrs, 'ro');
             plot3(alldFs, alldists, avgcorrs, 'co');
 
+figure(6); clf; 
+        subplot(211); hold on;
+            for j=1:length(out)
+                plot(out(j).eodtt, out(j).eodCorr);
+            end
+            
     
     
 %% Embedded function slideCorr
 function [currCorr, meandF, meanDist, currTT] = slideCorr(dF, dist, tim, windo, stp)
 
 strts = 0:stp:tim(end)-windo;
-
 
 for loopr = 1:length(strts)
     
@@ -80,6 +94,28 @@ for loopr = 1:length(strts)
 
 
 end % End of embedded function
+
+%% Embedded function eodCorr
+function [curreodCorr, curreodTT] = eodCorr(eod1, eod2, timtim, wndo, stpstp)
+
+strtseod = 0:stpstp:timtim(end)-wndo;
+
+
+for loopreod = 1:length(strtseod)
+    
+      curstarteod = strtseod(loopreod);
+      aaaa = fillmissing(eod1(timtim > curstarteod & timtim < curstarteod+wndo), 'linear','EndValues','nearest');
+      bbbb = fillmissing(eod2(timtim > curstarteod & timtim < curstarteod+wndo), 'linear','EndValues','nearest');
+      aaaa = aaaa - min(aaaa); bbbb = bbbb - min(bbbb);
+        RReod = corrcoef(aaaa, bbbb);
+        curreodCorr(loopreod) = RReod(2);
+        curreodTT(loopreod) = curstarteod + (wndo/2);
+                 
+ end
+
+curreodCorr = fillmissing(curreodCorr, 'linear','EndValues','nearest');
+
+end % End of eodCorr
 
 
 end
