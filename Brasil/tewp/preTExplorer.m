@@ -3,8 +3,16 @@ function preTExplorer(dFdist, orig)
 windw = 300;
 advanceby = 10;
 
+trialstouse=[]; emptytrials= [];
 for j=1:length(dFdist)
+    if ~isempty(dFdist(j).dF); trialstouse(end+1) = j; end
+    if isempty(dFdist(j).dF); emptytrials(end+1) = j; end
+end
 
+fprintf('These are the bad trials: %2d \n', emptytrials);
+
+for j = trialstouse
+        
     figure(1); clf;
     
     subplot(411); % plot original frequency data
@@ -64,7 +72,7 @@ for j=1:length(dFdist)
 %     [h,~] = corrcoef(dFdist(j).dF-mean(dFdist(j).dF), dFdist(j).distance-mean(dFdist(j).distance));
 %     text(length(xa)/2, 0, num2str(h(2)));
 %     ylim([-1000, 1000]);
-    
+
     endogo = input('foobar 9 to end: ');  
     if endogo == 9; break; end
     

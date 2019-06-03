@@ -51,6 +51,40 @@
 %Sample 0-900
 %12 Reasonable NO JAR case
 
+%% Cave 12
+
+%Sample 0-1100
+
+%21 Distance chirp JAR case?  Brief interaction (fish 6,7) 
+
+
+%% Cave 13
+
+%Sample 0-1200
+
+%Fish 7 too short (6,13,19,24,28,31
+%Fish 8, 300-1200 (7,14,20,25,29,32 
+%Fish 9, 0-300 (8,15,21,26,30,33 
+% Error in data at 34 - not a problem here, but a problem
+
+%% Cave 14
+
+%Sample 0-1000
+
+%Fish 7, 300-1000, (6,11,15,18,20,21
+
+%12 Good NO-JAR, Fish 2 3
+
+
+%% Surface 1
+
+%Sample 0-600
+
+%12 OK NO-JAR, fish 2 ?
+%46 Excellent No-JAR, fish 6 7
+
+
+
 
 %% Surface 3
 
