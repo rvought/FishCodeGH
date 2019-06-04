@@ -1,14 +1,20 @@
-function out = corrTensor(dFdist, orig, in, rango)
+function out = corrTensor(dFdist, orig, in, makemovie, rango)
 % This is the tensor plot based on dF correlations
 figure(1); clf; hold on;
 
 thresh = 0.5;
 
-if nargin > 3
+if makemovie == 1
+    writerObj = VideoWriter('delmenowplease.avi');
+    writerObj.FrameRate = 15;
+    open(writerObj);
+end
+
+if nargin > 4
     startim = rango(1);
     endtim = rango(2);
 end
-if nargin == 3
+if nargin == 4
     startim = 0;
     endtim = dFdist(1).tim(end);
 end
@@ -24,10 +30,24 @@ clrs = zeros(numcolors, 3);
 for k=1:length(in(1).Corr)
 
 %% dF vs Distance    
-    figure(1); clf; 
-    subplot(121); hold on; axis([-100, 200, -200, 100]);
-    subplot(122); hold on; axis([-100, 200, -200, 100]);
+    figure(1); clf; set(gcf,'color','w');
+    set(gcf,'Position', [600, 600, 1200, 500]);
     
+%     subplot(121); hold on; axis([-100, 200, -150, 150]); % cave 3
+%     text(-75, 120, 'dF vs. distance', 'FontSize', 24);
+%     subplot(122); hold on; axis([-100, 200, -150, 150]);
+%     text(-75, 120, 'EODf vs. EODf', 'FontSize', 24);
+
+%     subplot(121); hold on; axis([-75, 225, -150, 150]); % cave 4,5,6
+%     text(-50, 120, 'dF vs. distance', 'FontSize', 24);
+%     subplot(122); hold on; axis([-75, 225, -150, 150]);
+%     text(-50, 120, 'EODf vs. EODf', 'FontSize', 24);
+    
+    subplot(121); hold on; axis([-75, 225, -250, 100]); % cave  7
+    text(-50, 70, 'dF vs. distance', 'FontSize', 24);
+    subplot(122); hold on; axis([-75, 225, -250, 100]);
+    text(-50, 70, 'EODf vs. EODf', 'FontSize', 24);
+
     for j=1:length(dFdist)
     
     aa = dFdist(j).fishnums(1);
@@ -43,13 +63,17 @@ for k=1:length(in(1).Corr)
     if abs(in(j).Corr(k)) > thresh   
         
         if in(j).Corr(k) < 0
-            plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'm-', 'LineWidth', 5*abs(in(j).Corr(k)));
+            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'm-', 'LineWidth', 8*abs(in(j).Corr(k)));
+            h.Color(4)=0.3;
         end
         if in(j).Corr(k) >= 0
-            plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'g-', 'LineWidth', 5*in(j).Corr(k));
+            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'g-', 'LineWidth', 8*in(j).Corr(k));
+            h.Color(4)=0.3;
         end
         
     end
+    box on;
+    set(gca,'Yticklabel', [], 'Xticklabel', []);
     
     subplot(122);
     % If the correlation is below threshold, plot a thin grey line
@@ -61,32 +85,44 @@ for k=1:length(in(1).Corr)
     if abs(in(j).eodCorr(k)) > thresh   
         
         if in(j).eodCorr(k) < 0
-            plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'm-', 'LineWidth', 5*abs(in(j).eodCorr(k)));
+            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'm-', 'LineWidth', 8*abs(in(j).eodCorr(k)));
+            h.Color(4)=0.3;
         end
         if in(j).eodCorr(k) >= 0
-            plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'g-', 'LineWidth', 5*in(j).eodCorr(k));
+            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'g-', 'LineWidth', 8*in(j).eodCorr(k));
+            h.Color(4)=0.3;
         end
         
     end
-    
+    box on;
+    set(gca,'Yticklabel', [], 'Xticklabel', []);    
     
     end
         
     % Plot fish position dots
     subplot(121)
     for j=1:length(orig)
-        plot(orig(j).xy(k,1), orig(j).xy(k,2), '.', 'MarkerSize', 32, 'Color', oclrs(j,:));
+        plot(orig(j).xy(k,1), orig(j).xy(k,2), '.', 'MarkerSize', 36, 'Color', oclrs(j,:));
     end
     
     subplot(122);
     for j=1:length(orig)
-        plot(orig(j).xy(k,1), orig(j).xy(k,2), '.', 'MarkerSize', 32, 'Color', oclrs(j,:));
+        plot(orig(j).xy(k,1), orig(j).xy(k,2), '.', 'MarkerSize', 36, 'Color', oclrs(j,:));
     end
     
-    
+if makemovie == 1
+    mframe = getframe(gcf);
+    writeVideo(writerObj,mframe);
+end
+
     pause(0.01);
     
 end
+
+if makemovie == 1
+    close(writerObj);
+end
+
 
 out = 1;
 % 

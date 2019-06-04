@@ -1,6 +1,6 @@
 
 
-    writerObj = VideoWriter('tensoranimation-f22s-1200s.avi');
+    writerObj = VideoWriter('delmenowplease.avi');
     writerObj.FrameRate = 15;
     open(writerObj);
 

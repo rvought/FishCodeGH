@@ -106,8 +106,11 @@ for loopreod = 1:length(strtseod)
       curstarteod = strtseod(loopreod);
       aaaa = fillmissing(eod1(timtim > curstarteod & timtim < curstarteod+wndo), 'linear','EndValues','nearest');
       bbbb = fillmissing(eod2(timtim > curstarteod & timtim < curstarteod+wndo), 'linear','EndValues','nearest');
+      
       aaaa = aaaa - min(aaaa); bbbb = bbbb - min(bbbb);
+      
         RReod = corrcoef(aaaa, bbbb);
+        
         curreodCorr(loopreod) = RReod(2);
         curreodTT(loopreod) = curstarteod + (wndo/2);
                  
