@@ -10,7 +10,7 @@ for j = length(dFdist):-1:1
 %     for z = 1:length(delays)
 %         [out(j).TE{z}, out(j).tt{z}] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
 %     end
-
+j
 [aa,bb,cc,dd] = slideCorr(dFdist(j).dF, dFdist(j).distance, dFdist(j).tim, windowlength, stepsize);
     
     out(j).Corr = aa;
