@@ -14,6 +14,7 @@ for j = length(dFdist):-1:1
     if ~isempty(dFdist(j).dF)
         
         %%%%%%% plot(dFdist(27).dF(~isnan(orig(8).EOD) & ~isnan(orig(2).EOD)))
+                
 [aa,bb,cc,dd] = slideCorr(dFdist(j).dF, dFdist(j).distance, dFdist(j).tim, windowlength, stepsize);
     
     out(j).Corr = aa;
