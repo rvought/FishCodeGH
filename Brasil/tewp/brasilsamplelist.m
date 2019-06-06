@@ -3,6 +3,7 @@ function [ strt, stp ] = brasilsamplelist(id, fish)
 %   Detailed explanation goes here
 
 
+strt = []; stp = [];
 
 if id(1) == 1 % CAVE
    
