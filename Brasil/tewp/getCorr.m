@@ -20,8 +20,8 @@ for j = length(dFdist):-1:1
     [strt, stp] = brasilsamplelist(id, dFdist(j).fishnums);
 
     out(j).Corr = correlc(timothy > strt & timothy < stp);
-    out(j).meandF = dfdat(timothy > strt & timothy < stp);
-    out(j).meanDist = distdat(timothy > strt & timothy < stp);
+    out(j).meandF = dfdat;
+    out(j).meanDist = distdat;
     out(j).tt = timothy(timothy > strt & timothy < stp);
     
     fa = dFdist(j).fishnums(1);
@@ -62,18 +62,18 @@ figure(5); clf;
                 avgcorrs = [avgcorrs, tmpt];
             end
             
-        subplot(223); hold on;
-            plot(maxcorrs, alldFs, 'ro');
-            length(avgcorrs)
-            length(alldFs)
-            plot(avgcorrs, alldFs, 'co');
-        subplot(224); hold on;
-            plot(maxcorrs, alldists, 'ro');
-            plot(avgcorrs, alldists, 'co');
-        
-            figure(6); clf; hold on;
-            plot3(alldFs, alldists, maxcorrs, 'ro');
-            plot3(alldFs, alldists, avgcorrs, 'co');
+%         subplot(223); hold on;
+%             plot(maxcorrs, alldFs, 'ro');
+%             length(avgcorrs)
+%             length(alldFs)
+%             plot(avgcorrs, alldFs, 'co');
+%         subplot(224); hold on;
+%             plot(maxcorrs, alldists, 'ro');
+%             plot(avgcorrs, alldists, 'co');
+%         
+%             figure(6); clf; hold on;
+%             plot3(alldFs, alldists, maxcorrs, 'ro');
+%             plot3(alldFs, alldists, avgcorrs, 'co');
 
 figure(6); clf; 
         subplot(211); hold on;
@@ -101,7 +101,7 @@ for loopr = 1:length(strts)
 
       currTT(loopr) = curstart + (windo/2);
                  
- end
+end
 
 
 end % End of embedded function

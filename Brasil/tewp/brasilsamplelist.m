@@ -11,6 +11,9 @@ if id(1) == 1 % CAVE
     
     if id(2) == 4
           strt = 0; stp = 1200;        
+        if sum(ismember(fish, 5)) > 0
+          stp = 1000; 
+        end
         if sum(ismember(fish, 6)) > 0
           strt = 400; 
         end
