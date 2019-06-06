@@ -29,8 +29,8 @@ for j = length(dFdist):-1:1
     
     [aaeod,bbeod] = eodCorr(orig(fa).EOD, orig(fb).EOD, dFdist(j).tim, windowlength, stepsize);
 
-    out(j).eodCorr = aaeod;
-    out(j).eodtt = bbeod;
+    out(j).eodCorr = aaeod(bbeod > strt & bbeod < stp);
+    out(j).eodtt = bbeod(bbeod > strt & bbeod < stp);
     end
     
     
