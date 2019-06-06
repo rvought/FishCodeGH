@@ -13,7 +13,6 @@ if id(1) == 1 % CAVE
           strt = 0; stp = 1200;        
         if sum(ismember(fish, 6)) > 0
           strt = 400; 
-        else
         end
     end
     
