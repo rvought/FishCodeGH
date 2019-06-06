@@ -15,12 +15,14 @@ for j = length(dFdist):-1:1
         
         %%%%%%% plot(dFdist(27).dF(~isnan(orig(8).EOD) & ~isnan(orig(2).EOD)))
                 
-[aa,bb,cc,dd] = slideCorr(dFdist(j).dF, dFdist(j).distance, dFdist(j).tim, windowlength, stepsize);
-    
-    out(j).Corr = aa;
-    out(j).meandF = bb;
-    out(j).meanDist = cc;
-    out(j).tt = dd;
+[correlc,dfdat,distdat,timothy] = slideCorr(dFdist(j).dF, dFdist(j).distance, dFdist(j).tim, windowlength, stepsize);
+
+    [strt, stp] = brasilsamplelist(
+
+    out(j).Corr = correlc;
+    out(j).meandF = dfdat;
+    out(j).meanDist = distdat;
+    out(j).tt = timothy;
     
     fa = dFdist(j).fishnums(1);
     fb = dFdist(j).fishnums(2);
