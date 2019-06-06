@@ -1,4 +1,4 @@
-function out = getCorr(dFdist, orig, windowlength, stepsize)
+function out = getCorr(dFdist, orig, windowlength, stepsize, id)
 % ESF
 
 % delays = [50, 60, 70, 80, 90];
@@ -17,12 +17,12 @@ for j = length(dFdist):-1:1
                 
 [correlc,dfdat,distdat,timothy] = slideCorr(dFdist(j).dF, dFdist(j).distance, dFdist(j).tim, windowlength, stepsize);
 
-    [strt, stp] = brasilsamplelist(
+    [strt, stp] = brasilsamplelist(id, dFdist(j).fishnums);
 
-    out(j).Corr = correlc;
-    out(j).meandF = dfdat;
-    out(j).meanDist = distdat;
-    out(j).tt = timothy;
+    out(j).Corr = correlc(timothy > strt & timothy < stp);
+    out(j).meandF = dfdat(timothy > strt & timothy < stp);
+    out(j).meanDist = distdat(timothy > strt & timothy < stp);
+    out(j).tt = timothy(timothy > strt & timothy < stp);
     
     fa = dFdist(j).fishnums(1);
     fb = dFdist(j).fishnums(2);
