@@ -11,6 +11,9 @@ for j = length(dFdist):-1:1
 %         [out(j).TE{z}, out(j).tt{z}] = calcTE(dFdist(j), windowlength, stepsize, delays(z));
 %     end
 
+    if ~isempty(dFdist(j).dF)
+        
+        %%%%%%% plot(dFdist(27).dF(~isnan(orig(8).EOD) & ~isnan(orig(2).EOD)))
 [aa,bb,cc,dd] = slideCorr(dFdist(j).dF, dFdist(j).distance, dFdist(j).tim, windowlength, stepsize);
     
     out(j).Corr = aa;
@@ -25,6 +28,8 @@ for j = length(dFdist):-1:1
 
     out(j).eodCorr = aaeod;
     out(j).eodtt = bbeod;
+    end
+    
     
 end
 
@@ -50,11 +55,14 @@ figure(5); clf;
                 alldFs = [alldFs, out(j).meandF];
                 [~, idx] =  max(abs(out(j).Corr));
                 maxcorrs = [maxcorrs, out(j).Corr(idx)];
-                avgcorrs = [avgcorrs, median(out(j).Corr)];
+                    tmpt = nanmedian(out(j).Corr);
+                avgcorrs = [avgcorrs, tmpt];
             end
             
         subplot(223); hold on;
             plot(maxcorrs, alldFs, 'ro');
+            length(avgcorrs)
+            length(alldFs)
             plot(avgcorrs, alldFs, 'co');
         subplot(224); hold on;
             plot(maxcorrs, alldists, 'ro');
@@ -85,8 +93,8 @@ for loopr = 1:length(strts)
       
         RR = corrcoef(aaa, bbb);
         currCorr(loopr) = RR(2);
-        meandF = mean(aaa);
-        meanDist = mean(bbb);
+        meandF = nanmean(aaa);
+        meanDist = nanmean(bbb);
 
       currTT(loopr) = curstart + (windo/2);
                  
