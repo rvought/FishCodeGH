@@ -3,6 +3,7 @@ function out = corrTensor(dFdist, orig, in, makemovie, rango)
 figure(1); clf; hold on;
 
 thresh = 0.5;
+opacitylevel = 0.5;
 
 if makemovie == 1
     writerObj = VideoWriter('delmenowplease.avi');
@@ -16,7 +17,8 @@ if nargin > 4
 end
 if nargin == 4
     startim = 0;
-    endtim = dFdist(1).tim(end);
+    for j=1:length(dFdist); atmp(j)=length(dFdist(j).dF); end
+    endtim = max(atmp);
 end
 
 numcolors = 40;
@@ -26,9 +28,15 @@ clrs = zeros(numcolors, 3);
 %     shuff = randperm(numcolors);
 %     for i=1:numcolors; clrs(i,:) = oclrs(shuff(i),:); end
 
+fprintf('Starting Animation');
 
-for k=1:length(in(1).Corr)
+% Get the total length (many entries will be empty)
+for tmp=length(in):-1:1; ourmaxK(tmp) = length(in(tmp).alltim); end
 
+for k = 1:max(ourmaxK)
+
+    fishinthisepoch = [];
+    
 %% dF vs Distance    
     figure(1); clf; set(gcf,'color','w');
     set(gcf,'Position', [600, 600, 1200, 500]);
@@ -48,27 +56,43 @@ for k=1:length(in(1).Corr)
     subplot(122); hold on; axis([-75, 225, -250, 100]);
     text(-50, 70, 'EODf vs. EODf', 'FontSize', 24);
 
-    for j=1:length(dFdist)
-    
+    for j=1:length(in)
+        
     aa = dFdist(j).fishnums(1);
     bb = dFdist(j).fishnums(2);
+    
+    % Do we have any data for these fish?
+    if ~isempty(in(j).alltim)
+    % Do we have data for both fish?
+    if sum(ismember(in(j).tt, in(j).alltim(k))) == 1 
+        
+        fishinthisepoch = [fishinthisepoch, aa, bb];
 
+
+        % Get the current XY values for each fish
+        posIDX = find(orig(aa).tim >= in(j).alltim(k), 1);
+        fishAA = [orig(aa).xy(posIDX,1), orig(aa).xy(posIDX,2)];
+        fishBB = [orig(bb).xy(posIDX,1), orig(bb).xy(posIDX,2)];
+        
     subplot(121);
     % If the correlation is below threshold, plot a thin grey line
     if abs(in(j).Corr(k)) < thresh   
-        plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], '-', 'Color', [0.5 0.5 0.5], 'LineWidth', 1);
+%        plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], '-', 'Color', [0.5 0.5 0.5], 'LineWidth', 1);
+        plot([fishAA(1), fishBB(1)],  [fishAA(2), fishBB(2)], '-', 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5);
     end
     
     % If the correlation is above threshold, plot with color and thickness
     if abs(in(j).Corr(k)) > thresh   
         
         if in(j).Corr(k) < 0
-            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'm-', 'LineWidth', 8*abs(in(j).Corr(k)));
-            h.Color(4)=0.3;
+%            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'm-', 'LineWidth', 8*abs(in(j).Corr(k)));
+            h = plot([fishAA(1), fishBB(1)],  [fishAA(2), fishBB(2)], 'm-', 'LineWidth', 8*abs(in(j).Corr(k)));
+            h.Color(4)=opacitylevel;
         end
         if in(j).Corr(k) >= 0
-            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'g-', 'LineWidth', 8*in(j).Corr(k));
-            h.Color(4)=0.3;
+%            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'g-', 'LineWidth', 8*in(j).Corr(k));
+            h = plot([fishAA(1), fishBB(1)],  [fishAA(2), fishBB(2)], 'g-', 'LineWidth', 8*in(j).Corr(k));
+            h.Color(4)=opacitylevel;
         end
         
     end
@@ -78,46 +102,56 @@ for k=1:length(in(1).Corr)
     subplot(122);
     % If the correlation is below threshold, plot a thin grey line
     if abs(in(j).eodCorr(k)) < thresh   
-        plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], '-', 'Color', [0.5 0.5 0.5], 'LineWidth', 1);
+%        plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], '-', 'Color', [0.5 0.5 0.5], 'LineWidth', 1);
+        plot([fishAA(1), fishBB(1)],  [fishAA(2), fishBB(2)], '-', 'Color', [0.7 0.7 0.7], 'LineWidth', 0.5);
     end
     
     % If the correlation is above threshold, plot with color and thickness
     if abs(in(j).eodCorr(k)) > thresh   
         
         if in(j).eodCorr(k) < 0
-            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'm-', 'LineWidth', 8*abs(in(j).eodCorr(k)));
-            h.Color(4)=0.3;
+%            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'm-', 'LineWidth', 8*abs(in(j).eodCorr(k)));
+            h = plot([fishAA(1), fishBB(1)],  [fishAA(2), fishBB(2)], 'm-', 'LineWidth', 8*abs(in(j).eodCorr(k)));
+            h.Color(4)=opacitylevel;
         end
         if in(j).eodCorr(k) >= 0
-            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'g-', 'LineWidth', 8*in(j).eodCorr(k));
-            h.Color(4)=0.3;
+%            h = plot([orig(aa).xy(k,1), orig(bb).xy(k,1)],  [orig(aa).xy(k,2), orig(bb).xy(k,2)], 'g-', 'LineWidth', 8*in(j).eodCorr(k));
+            h = plot([fishAA(1), fishBB(1)],  [fishAA(2), fishBB(2)], 'g-', 'LineWidth', 8*in(j).eodCorr(k));
+            h.Color(4)=opacitylevel;
         end
         
     end
     box on;
     set(gca,'Yticklabel', [], 'Xticklabel', []);    
     
-    end
-        
-    % Plot fish position dots
-    subplot(121)
-    for j=1:length(orig)
-        plot(orig(j).xy(k,1), orig(j).xy(k,2), '.', 'MarkerSize', 36, 'Color', oclrs(j,:));
-    end
+    end % The if
+    end % Testing if there is any data
+    end % For each dFdist
+
     
-    subplot(122);
+    % Plot fish position dots
+    
     for j=1:length(orig)
-        plot(orig(j).xy(k,1), orig(j).xy(k,2), '.', 'MarkerSize', 36, 'Color', oclrs(j,:));
+        % Plot only the fish that have correlations   
+        if sum(ismember(fishinthisepoch, j)) > 1
+        subplot(121);
+        plot(orig(j).xy(posIDX,1), orig(j).xy(posIDX,2), '.', 'MarkerSize', 36, 'Color', oclrs(j,:));
+        subplot(122);
+        plot(orig(j).xy(posIDX,1), orig(j).xy(posIDX,2), '.', 'MarkerSize', 36, 'Color', oclrs(j,:));    
+        end
     end
     
 if makemovie == 1
     mframe = getframe(gcf);
     writeVideo(writerObj,mframe);
 end
-
-    pause(0.01);
     
+    pause(0.01);
+        
 end
+
+
+
 
 if makemovie == 1
     close(writerObj);

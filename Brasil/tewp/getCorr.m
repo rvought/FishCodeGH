@@ -19,17 +19,21 @@ for j = length(dFdist):-1:1
 
     [strt, stp] = brasilsamplelist(id, dFdist(j).fishnums);
 
-    out(j).Corr = correlc(timothy > strt & timothy < stp);
+    out(j).Corr = correlc;
+    out(j).CC = correlc(timothy > strt & timothy < stp); % ONLY THE GOOD DATA
     out(j).meandF = dfdat;
     out(j).meanDist = distdat;
-    out(j).tt = timothy(timothy > strt & timothy < stp);
+    out(j).tt = timothy(timothy > strt & timothy < stp); % ONLY THE GOOD DATA
+    out(j).alltim = timothy;
     
     fa = dFdist(j).fishnums(1);
     fb = dFdist(j).fishnums(2);
     
     [aaeod,bbeod] = eodCorr(orig(fa).EOD, orig(fb).EOD, dFdist(j).tim, windowlength, stepsize);
 
-    out(j).eodCorr = aaeod(bbeod > strt & bbeod < stp);
+    out(j).eodCorr = aaeod;
+    out(j).eodCC = aaeod(bbeod > strt & bbeod < stp);
+    out(j).eodalltim = bbeod;
     out(j).eodtt = bbeod(bbeod > strt & bbeod < stp);
     end
     
@@ -49,7 +53,7 @@ end
 figure(5); clf; 
         subplot(211); hold on;
             for j=1:length(out)
-                plot(out(j).tt, out(j).Corr);
+                plot(out(j).tt, out(j).CC);
             end
             
             alldists = []; alldFs = []; maxcorrs = []; avgcorrs = [];
@@ -78,7 +82,7 @@ figure(5); clf;
 figure(6); clf; 
         subplot(211); hold on;
             for j=1:length(out)
-                plot(out(j).eodtt, out(j).eodCorr);
+                plot(out(j).eodtt, out(j).eodCC);
             end
             
     
