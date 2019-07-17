@@ -68,7 +68,7 @@ end
 
         dist(dist == 0) = NaN;
         % dist = fillmissing(dist, 'pchip');
-        idx{1} = find(dist);
+   
         dist = fillmissing(dist, 'linear','EndValues','nearest');
         dF(dF == 0) = NaN;
         idx{2} = find(dF);
