@@ -68,10 +68,10 @@ end
 
         dist(dist == 0) = NaN;
         % dist = fillmissing(dist, 'pchip');
-        dist = fillmissing(dist, 'linear','EndValues','nearest');
+        %dist = fillmissing(dist, 'linear','EndValues','nearest');
         dF(dF == 0) = NaN;
         %dF = fillmissing(dF, 'pchip');
-        dF = fillmissing(dF, 'linear','EndValues','nearest');
+        %dF = fillmissing(dF, 'linear','EndValues','nearest');
 
 end % End of distdfcalc embedded function
 
