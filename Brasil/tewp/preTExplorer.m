@@ -82,8 +82,6 @@ end
 
 %% Embedded function slideCorr
 function [currCorr, currTT] = slideCorr(dF, dist, tim, windo, stp)
-
-    length(dF)
     
 strts = 0:stp:tim(end)-windo;
 
@@ -93,7 +91,7 @@ strts = 0:stp:tim(end)-windo;
       aaa = dF(tim > curstart & tim < curstart+windo);
       bbb = dist(tim > curstart & tim < curstart+windo);
       
-        RR = corrcoef(aaa, bbb);
+        RR = corrcoef(aaa, bbb)
         currCorr(loopr) = RR(2);
 
       currTT(loopr) = curstart + (windo/2);
