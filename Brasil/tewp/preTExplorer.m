@@ -47,10 +47,10 @@ for j = trialstouse
     ylim([-250, 250]);
     
     subplot(4,1,4); hold on;
-        tmpdF = dFdist(j).dF-mean(dFdist(j).dF);
+        tmpdF = dFdist(j).dF - nanmean(dFdist(j).dF);
         tmpdF = tmpdF/(max(abs(tmpdF)));
-        tmpDistance = dFdist(j).distance-mean(dFdist(j).distance);
-        tmpDistance = tmpDistance/(max(abs(tmpDistance)));
+        tmpDistance = dFdist(j).distance - nanmean(dFdist(j).distance);
+        tmpDistance = tmpDistance / (max(abs(tmpDistance)));
         tims = dFdist(j).tim;
         
         [CC, TT] = slideCorr(tmpdF, tmpDistance, tims, windw, advanceby);
@@ -89,12 +89,10 @@ strts = 0:stp:tim(end)-windo;
       aaa = dF(tim > curstart & tim < curstart+windo);
       bbb = dist(tim > curstart & tim < curstart+windo);
       
-      if sum(aaa) > 0 && sum(bbb) > 0
         RR = corrcoef(aaa, bbb);
         currCorr(loopr) = RR(2);
 
       currTT(loopr) = curstart + (windo/2);
-      end
                  
  end
 
