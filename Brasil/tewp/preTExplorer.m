@@ -63,8 +63,8 @@ for j = trialstouse
         plot([0, max(tims)], [-0.5, -0.5], 'm');
         plot([0, max(tims)], [0, 0], 'g', 'LineWidth', 6);
         
-        plot(TT(PPP > 0.05), CC(PPP > 0.05), '.r', 'MarkerSize', 4);
-        plot(TT(PPP < 0.05), CC(PPP < 0.05), '.k', 'MarkerSize', 4);
+        plot(TT(PPP > 0.001), CC(PPP > 0.001), '.r', 'MarkerSize', 4);
+        plot(TT(PPP < 0.001), CC(PPP < 0.001), '.k', 'MarkerSize', 4);
         
         xlim([0, max(tims)]); ylim([-1, 1]);
         text(100, 0, num2str(mean(CC)));
