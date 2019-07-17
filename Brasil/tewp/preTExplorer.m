@@ -89,11 +89,12 @@ strts = 0:stp:tim(end)-windo;
       aaa = dF(tim > curstart & tim < curstart+windo);
       bbb = dist(tim > curstart & tim < curstart+windo);
       
+      if sum(aaa) > 0 && sum(bbb) > 0
         RR = corrcoef(aaa, bbb);
-        RR
         currCorr(loopr) = RR(2);
 
       currTT(loopr) = curstart + (windo/2);
+      end
                  
  end
 
