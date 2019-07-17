@@ -66,12 +66,13 @@ end
 
 % Fill in missing data.  This is dangerous - need reality check somewhere!!
 
+        idx{1} = find(dist == 0);
         dist(dist == 0) = NaN;
         % dist = fillmissing(dist, 'pchip');
-   
         dist = fillmissing(dist, 'linear','EndValues','nearest');
+        
+        idx{2} = find(dF == 0);
         dF(dF == 0) = NaN;
-        idx{2} = find(dF);
         %dF = fillmissing(dF, 'pchip');
         dF = fillmissing(dF, 'linear','EndValues','nearest');
 
