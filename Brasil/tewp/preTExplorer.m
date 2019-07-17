@@ -55,7 +55,7 @@ for j = trialstouse
         
         tims = dFdist(j).tim;
         
-        [CC, TT] = slideCorr(tmpdF, tmpDistance, tims, windw, advanceby);
+        [CC, TT, PPP] = slideCorr(tmpdF, tmpDistance, tims, windw, advanceby);
         
         plot([0, max(tims)], [0.7, 0.7], 'r');
         plot([0, max(tims)], [-0.7, -0.7], 'r');
@@ -63,7 +63,8 @@ for j = trialstouse
         plot([0, max(tims)], [-0.5, -0.5], 'm');
         plot([0, max(tims)], [0, 0], 'g', 'LineWidth', 6);
         
-        plot(TT, CC, '.k-', 'MarkerSize', 4);
+        plot(TT, CC(PPP > 0.05), '.r', 'MarkerSize', 4);
+        plot(TT, CC(PPP < 0.05), '.k', 'MarkerSize', 4);
         
         xlim([0, max(tims)]); ylim([-1, 1]);
         text(100, 0, num2str(mean(CC)));
@@ -83,7 +84,7 @@ for j = trialstouse
 end
 
 %% Embedded function slideCorr
-function [currCorr, currTT] = slideCorr(dF, dist, tim, windo, stp)
+function [currCorr, currTT, currP] = slideCorr(dF, dist, tim, windo, stp)
     
 strts = 0.001:stp:tim(end)-windo;
 
@@ -95,14 +96,14 @@ strts = 0.001:stp:tim(end)-windo;
       
         [RR, PP] = corrcoef(aaa, bbb);
         currCorr(loopr) = RR(2);
-        PP(2)
+        currP(loopr) = PP(2);
 
       currTT(loopr) = curstart + (windo/2);
                  
  end
 
  if ~exist('currCorr', 'var')
-     currCorr = 0; currTT = 0;
+     currCorr = 0; currTT = 0; currP = 1;
  end
 
 end % End of embedded function
