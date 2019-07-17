@@ -88,7 +88,7 @@ function [currCorr, currTT] = slideCorr(dF, dist, tim, windo, stp)
 strts = 0.001:stp:tim(end)-windo;
 
  for loopr = 1:length(strts)
-    
+    loopr
       curstart = strts(loopr);
       aaa = dF(tim > curstart & tim < curstart+windo);
       bbb = dist(tim > curstart & tim < curstart+windo);
