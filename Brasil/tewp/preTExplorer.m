@@ -61,7 +61,9 @@ for j = trialstouse
         plot([0, max(tims)], [-0.5, -0.5], 'm');
         plot([0, max(tims)], [0, 0], 'g', 'LineWidth', 6);
         
-        plot(TT, CC, '.k-', 'MarkerSize', 4); xlim([0, max(tims)]); ylim([-1, 1]);
+        plot(TT, CC, '.k-', 'MarkerSize', 4);
+        
+        xlim([0, max(tims)]); ylim([-1, 1]);
         text(100, 0, num2str(mean(CC)));
 
 %     xa = xcorr(tmpdF, tmpDistance);
@@ -81,6 +83,8 @@ end
 %% Embedded function slideCorr
 function [currCorr, currTT] = slideCorr(dF, dist, tim, windo, stp)
 
+    length(dF)
+    
 strts = 0:stp:tim(end)-windo;
 
  for loopr = 1:length(strts)
