@@ -68,11 +68,16 @@ end
 
         dist(dist == 0) = NaN;
         % dist = fillmissing(dist, 'pchip');
-        %dist = fillmissing(dist, 'linear','EndValues','nearest');
+        idx{1} = find(dist);
+        dist = fillmissing(dist, 'linear','EndValues','nearest');
         dF(dF == 0) = NaN;
+        idx{2} = find(dF);
         %dF = fillmissing(dF, 'pchip');
-        %dF = fillmissing(dF, 'linear','EndValues','nearest');
+        dF = fillmissing(dF, 'linear','EndValues','nearest');
 
+        length(idx{1})
+        length(idx{2})
+        
 end % End of distdfcalc embedded function
 
 end % End of preTE function
