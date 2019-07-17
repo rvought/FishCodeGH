@@ -100,7 +100,7 @@ strts = 0.001:stp:tim(end)-windo;
                  
  end
 
- if ~exist(currCorr, 'var')
+ if ~exist('currCorr', 'var')
      currCorr = 0; currTT = 0;
  end
 
