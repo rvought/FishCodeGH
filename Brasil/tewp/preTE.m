@@ -29,10 +29,10 @@ for p = length(combos):-1:1 % For each pair of fish
     if length(find(~isnan(data.fish(combos(p,1)).freq(:,2)) & ~isnan(data.fish(combos(p,2)).freq(:,2)))) > 10
         
          % Use embedded function to calcuate distance and dF
-         [currdist, currdF] = distdfcalc(data.fish(combos(p,1)), data.fish(combos(p,2)));
+         [currdist, currdF, goodIDX] = distdfcalc(data.fish(combos(p,1)), data.fish(combos(p,2)));
          
-         dFdist(p).distance = filtfilt(b,a,currdist);
-         dFdist(p).dF = filtfilt(b,a,currdF);
+         dFdist(p).distance = filtfilt(b,a,currdist(goodIDX{1}));
+         dFdist(p).dF = filtfilt(b,a,currdF(goodIDX{2}));
          dFdist(p).tim = data.fish(combos(p,1)).freq(:,1);
          
     end
@@ -45,7 +45,7 @@ end
 
 
 %% Embedded function to calculate dF and distance
-function [dist, dF] = distdfcalc(A, B)
+function [dist, dF, idx] = distdfcalc(A, B)
 
     dist = zeros(1,length(A(1).freq(:,1)));
     dF = zeros(1,length(A(1).freq(:,1)));
@@ -66,18 +66,15 @@ end
 
 % Fill in missing data.  This is dangerous - need reality check somewhere!!
 
-        idx{1} = find(dist == 0);
+        idx{1} = find(dist ~= 0);
         dist(dist == 0) = NaN;
         % dist = fillmissing(dist, 'pchip');
         dist = fillmissing(dist, 'linear','EndValues','nearest');
         
-        idx{2} = find(dF == 0);
+        idx{2} = find(dF ~= 0);
         dF(dF == 0) = NaN;
         %dF = fillmissing(dF, 'pchip');
         dF = fillmissing(dF, 'linear','EndValues','nearest');
-
-        length(idx{1})
-        length(idx{2})
         
 end % End of distdfcalc embedded function
 
