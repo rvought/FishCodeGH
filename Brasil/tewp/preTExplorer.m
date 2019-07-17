@@ -85,7 +85,7 @@ end
 %% Embedded function slideCorr
 function [currCorr, currTT] = slideCorr(dF, dist, tim, windo, stp)
     
-strts = 0:stp:tim(end)-windo;
+strts = 0.001:stp:tim(end)-windo;
 
  for loopr = 1:length(strts)
     
