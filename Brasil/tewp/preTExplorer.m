@@ -28,10 +28,10 @@ for j = trialstouse
     xlim([0 orig(dFdist(j).fishnums(1)).tim(end)]);
     hold on;
     yyaxis right;
-        plot(dFdist(j).tim, dFdist(j).distance);
+        plot(dFdist(j).tim, dFdist(j).distance, '.');
     ylabel('distance')
     yyaxis left;
-        plot(dFdist(j).tim, dFdist(j).dF);
+        plot(dFdist(j).tim, dFdist(j).dF, '.');
     ylabel('dF')
     
     subplot(425); hold on;
