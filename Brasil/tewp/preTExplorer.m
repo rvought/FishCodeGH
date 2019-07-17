@@ -90,6 +90,7 @@ strts = 0:stp:tim(end)-windo;
       bbb = dist(tim > curstart & tim < curstart+windo);
       
         RR = corrcoef(aaa, bbb);
+        RR
         currCorr(loopr) = RR(2);
 
       currTT(loopr) = curstart + (windo/2);
