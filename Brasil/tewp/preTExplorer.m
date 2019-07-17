@@ -100,8 +100,8 @@ strts = 0.001:stp:tim(end)-windo;
                  
  end
 
- if ~exist(currCorr)
-     currCorr = 0; curr(tt) = 0;
+ if ~exist(currCorr, 'var')
+     currCorr = 0; currTT = 0;
  end
 
 end % End of embedded function
