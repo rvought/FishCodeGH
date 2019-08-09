@@ -262,7 +262,7 @@ ax(3) = subplot(133); hold on;
         end
     end
 linkaxes(ax, 'xy');
-axes([xminedge, xmaxedge, yminedge, ymaxedge);
+set(ax, 'Axes', [xminedge, xmaxedge, yminedge, ymaxedge]);
 
 % figure(casu+2); clf;
 %     axx(1) = subplot(131); hold on;  
