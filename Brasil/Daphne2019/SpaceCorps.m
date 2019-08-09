@@ -261,7 +261,8 @@ ax(3) = subplot(133); hold on;
 %        plot(out(z).rndXY(1,out(z).valididx), out(z).rndXY(2,out(z).valididx), '*-');
         end
     end
-linkaxes(ax, 'xy');    
+linkaxes(ax, 'xy');
+axes([xminedge, xmaxedge, yminedge, ymaxedge);
 
 % figure(casu+2); clf;
 %     axx(1) = subplot(131); hold on;  
