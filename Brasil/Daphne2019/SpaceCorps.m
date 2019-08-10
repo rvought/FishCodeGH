@@ -1,4 +1,4 @@
-function [out, cmbs] = SpaceCorps(in, casu, feesh, tims)
+function out = SpaceCorps(in, feesh, tims, casu)
 % Usage out = SpaceCorps(in)
 % Find spatial relations between fish and compare to 'jiggled' and 'randomized'
 % distributions.
@@ -13,10 +13,17 @@ function [out, cmbs] = SpaceCorps(in, casu, feesh, tims)
     yminedge = []; ymaxedge = [];
 
     for bb = 1:length(feesh)
-            xminedge = min([xminedge, min(in.fish(feesh(bb)).x)]);
-            yminedge = min([yminedge, min(in.fish(feesh(bb)).y)]);
-            xmaxedge = max([xmaxedge, max(in.fish(feesh(bb)).x)]);
-            ymaxedge = max([ymaxedge, max(in.fish(feesh(bb)).y)]);        
+        
+        % tr is the data within our time range
+            ttrr = find(in.fish(feesh(bb)).freq(:,1) > tims(1) & in.fish(feesh(bb)).freq(:,1) < tims(2));
+         % Get valid data (check frequency data to omit NaNs)            
+            vidx = ttrr(~isnan(in.fish(feesh(bb)).freq(ttrr,2)));
+            
+            xminedge = min([xminedge, min(in.fish(feesh(bb)).x(vidx))]);
+            xmaxedge = max([xmaxedge, max(in.fish(feesh(bb)).x(vidx))]);
+            
+            yminedge = min([yminedge, min(in.fish(feesh(bb)).y(vidx))]);
+            ymaxedge = max([ymaxedge, max(in.fish(feesh(bb)).y(vidx))]);        
     end    
    
 
@@ -237,7 +244,7 @@ end % Cycle through each fish
 
 
 %% Plots 
-
+if nargin > 3
 figure(casu); clf;
 
 ax(1) = subplot(131); hold on;
@@ -262,7 +269,9 @@ ax(3) = subplot(133); hold on;
         end
     end
 linkaxes(ax, 'xy');
-set(ax, 'Axes', [xminedge, xmaxedge, yminedge, ymaxedge]);
+set(ax, 'XLim', [xminedge, xmaxedge]);
+set(ax, 'YLim', [yminedge, ymaxedge]);
+end
 
 % figure(casu+2); clf;
 %     axx(1) = subplot(131); hold on;  
@@ -280,7 +289,6 @@ set(ax, 'Axes', [xminedge, xmaxedge, yminedge, ymaxedge]);
 % linkaxes(axx, 'xy');    
     
 %end % If we have more than one fish
-cmbs = 1;
 
 %% Analyses
 
