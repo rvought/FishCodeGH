@@ -20,10 +20,10 @@ for j = length(dFdist):-1:1
     [strt, stp] = brasilsamplelist(id, dFdist(j).fishnums);
 
     out(j).Corr = correlc;
-    out(j).CC = correlc(timothy > strt & timothy < stp); % ONLY THE GOOD DATA
+    out(j).dfdistCC = correlc(timothy > strt & timothy < stp); % ONLY THE GOOD DATA
     out(j).meandF = dfdat;
     out(j).meanDist = distdat;
-    out(j).tt = timothy(timothy > strt & timothy < stp); % ONLY THE GOOD DATA
+    out(j).dfdistTT = timothy(timothy > strt & timothy < stp); % ONLY THE GOOD DATA
     out(j).alltim = timothy;
     
     fa = dFdist(j).fishnums(1);
@@ -34,7 +34,7 @@ for j = length(dFdist):-1:1
     out(j).eodCorr = aaeod;
     out(j).eodCC = aaeod(bbeod > strt & bbeod < stp);
     out(j).eodalltim = bbeod;
-    out(j).eodtt = bbeod(bbeod > strt & bbeod < stp);
+    out(j).eodTT = bbeod(bbeod > strt & bbeod < stp);
     end
     
     
@@ -50,11 +50,11 @@ end
 %     end
 %     end
 
-figure(5); clf; 
-        subplot(211); hold on;
-            for j=1:length(out)
-                plot(out(j).tt, out(j).CC);
-            end
+% figure(5); clf; 
+%         subplot(211); hold on;
+%             for j=1:length(out)
+%                 plot(out(j).dfdistTT, out(j).dfdistCC);
+%             end
             
             alldists = []; alldFs = []; maxcorrs = []; avgcorrs = [];
             for j=1:length(out)
@@ -79,11 +79,11 @@ figure(5); clf;
 %             plot3(alldFs, alldists, maxcorrs, 'ro');
 %             plot3(alldFs, alldists, avgcorrs, 'co');
 
-figure(6); clf; 
-        subplot(211); hold on;
-            for j=1:length(out)
-                plot(out(j).eodtt, out(j).eodCC);
-            end
+% figure(6); clf; 
+%         subplot(211); hold on;
+%             for j=1:length(out)
+%                 plot(out(j).eodTT, out(j).eodCC);
+%             end
             
     
     
@@ -100,8 +100,8 @@ for loopr = 1:length(strts)
       
         RR = corrcoef(aaa, bbb);
         currCorr(loopr) = RR(2);
-        meandF = nanmean(aaa);
-        meanDist = nanmean(bbb);
+        meandF(loopr) = nanmean(aaa);
+        meanDist(loopr) = nanmean(bbb);
 
       currTT(loopr) = curstart + (windo/2);
                  

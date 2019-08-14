@@ -22,11 +22,11 @@ end
     end
 
 %% Embedded calcCORR function
-function [currTE, currTT] = calcCORR(data, windo, stp)
+function [currRR, currTT] = calcCORR(data, windo, stp)
 
 strts = 0:stp:data.tim(end)-windo;
 
-parfor loopr = 1:length(strts)
+for loopr = 1:length(strts)
     
       curstart = strts(loopr);
       aaa= data.dF(data.tim > curstart & data.tim < curstart+windo);
