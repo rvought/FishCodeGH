@@ -12,29 +12,31 @@ for j = length(dFdist):-1:1
 %     end
 
     if ~isempty(dFdist(j).dF)
-        
+    realtims = dFdist(j).tim(dFdist(j).tim > 0);
+    if max(realtims) - min(realtims) > windowlength
         %%%%%%% plot(dFdist(27).dF(~isnan(orig(8).EOD) & ~isnan(orig(2).EOD)))
-                
+     
 [correlc,dfdat,distdat,timothy] = slideCorr(dFdist(j).dF, dFdist(j).distance, dFdist(j).tim, windowlength, stepsize);
 
     [strt, stp] = brasilsamplelist(id, dFdist(j).fishnums);
 
     out(j).Corr = correlc;
     out(j).dfdistCC = correlc(timothy > strt & timothy < stp); % ONLY THE GOOD DATA
-    out(j).meandF = dfdat;
-    out(j).meanDist = distdat;
+    out(j).meandF = dfdat(timothy > strt & timothy < stp);
+    out(j).meanDist = distdat(timothy > strt & timothy < stp);
     out(j).dfdistTT = timothy(timothy > strt & timothy < stp); % ONLY THE GOOD DATA
     out(j).alltim = timothy;
     
     fa = dFdist(j).fishnums(1);
     fb = dFdist(j).fishnums(2);
     
-    [aaeod,bbeod] = eodCorr(orig(fa).EOD, orig(fb).EOD, dFdist(j).tim, windowlength, stepsize);
+[aaeod,bbeod] = eodCorr(orig(fa).EOD, orig(fb).EOD, dFdist(j).tim, windowlength, stepsize);
 
     out(j).eodCorr = aaeod;
     out(j).eodCC = aaeod(bbeod > strt & bbeod < stp);
     out(j).eodalltim = bbeod;
     out(j).eodTT = bbeod(bbeod > strt & bbeod < stp);
+    end
     end
     
     
@@ -90,7 +92,7 @@ end
 %% Embedded function slideCorr
 function [currCorr, meandF, meanDist, currTT] = slideCorr(dF, dist, tim, windo, stp)
 
-strts = 0:stp:tim(end)-windo;
+strts = 0:stp:max(tim)-windo;
 
 for loopr = 1:length(strts)
     
@@ -113,7 +115,7 @@ end % End of embedded function
 %% Embedded function eodCorr
 function [curreodCorr, curreodTT] = eodCorr(eod1, eod2, timtim, wndo, stpstp)
 
-strtseod = 0:stpstp:timtim(end)-wndo;
+strtseod = 0:stpstp:max(timtim)-wndo;
 
 
 for loopreod = 1:length(strtseod)
