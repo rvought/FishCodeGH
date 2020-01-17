@@ -70,7 +70,7 @@ ax(2) = subplot(224); hold on;
     plot(srf(5).fish(10).x(idxA), srf(5).fish(10).y(idxA), '.', 'MarkerSize', 10, 'Color', '[0.5, 0.5, 0.5]');
     plot(srf(5).fish(11).x(idxB), srf(5).fish(11).y(idxB), '.c', 'MarkerSize', 10);
     
-linkaxes(ax, 'xy');
+linkaxes(ax, 'xy'); ylim([-100 125]); xlim([-125 100]);
 
 clear Asurfhist surfhist Acavehist cavehist plotspots numbins maxfreq ctrs idxA idxB st startim endtim;
     
