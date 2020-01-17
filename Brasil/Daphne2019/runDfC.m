@@ -19,10 +19,11 @@ Acavehist = histcounts(CalldFs, ctrs);
 figure(1); clf; hold on;
     bar(plotspots, Asurfhist, 'b');
     bar(plotspots, -Acavehist, 'r');
+    ylim([-0.2, 0.2]);
 
     
 % Low dFs histogram
-numbins = 20; 
+numbins = 21; 
 maxfreq = 10;   
 ctrs = 0:maxfreq/numbins:maxfreq;
 plotspots = ctrs(2:end) - maxfreq/(2*numbins);
