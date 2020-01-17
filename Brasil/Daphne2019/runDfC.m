@@ -23,7 +23,7 @@ figure(1); clf; hold on;
 
     
 % Low dFs histogram
-numbins = 10; 
+numbins = 12; 
 maxfreq = 10;   
 ctrs = 0:maxfreq/numbins:maxfreq;
 plotspots = ctrs(2:end) - maxfreq/(2*numbins);
