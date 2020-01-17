@@ -36,7 +36,7 @@ cavehist = histcounts(CalldFs, ctrs);
 figure(2); clf; hold on;
     bar(plotspots, surfhist, 'b');
     bar(plotspots, -cavehist, 'r');
-    
+    ylim([-0.03, 0.03]);
 
 % Best low-dF example    
 % Surface entry 5, fish 10 and 11 and pair 172 in the output of dFanalysis
