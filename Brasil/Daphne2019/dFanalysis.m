@@ -1,6 +1,6 @@
 function [out, alldFs] = dFanalysis(data)
 % January 2020 
-% load SurfaceDataRev2018a.mat and CaveDataRev2018a.mat
+% load SurfaceDataRev2018a.mat and/or CaveDataRev2018a.mat
 % This cycles through each entry in the data and extracts pairwise dFs
 
 minimuminteraction = 50; % The minimum number of shared sample times to be considered for dF analysis
