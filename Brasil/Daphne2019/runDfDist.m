@@ -6,6 +6,8 @@
 % [caveDF, CalldFs] = dFanalysis(cave);
 % [srfDF, SalldFs] = dFanalysis(srf);
 
+Fs = 4.8828;
+
 kk = 1;
 
 for j = 1:length(data(kk).pair) % For each pair of fish
