@@ -29,7 +29,9 @@ end
 
 % aaaa = fillmissing(eod1(timtim > curstarteod & timtim < curstarteod+wndo), 'linear','EndValues','nearest');
 
-% 
+%         RReod = corrcoef(aaaa, bbbb);
+%        curreodCorr(loopreod) = RReod(2);
+
 
 
 
