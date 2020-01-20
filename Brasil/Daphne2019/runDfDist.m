@@ -27,6 +27,9 @@ end
 % %         %dF = fillmissing(dF, 'pchip');
 % %         dF = fillmissing(dF, 'linear','EndValues','nearest');
 
+% aaaa = fillmissing(eod1(timtim > curstarteod & timtim < curstarteod+wndo), 'linear','EndValues','nearest');
+
+% 
 
 
 
