@@ -7,10 +7,12 @@
 % [srfDF, SalldFs] = dFanalysis(srf);
 
 Fs = 4.8828;
+CorrWindow = 40; % Time in seconds for correlation analysis
 
-kk = 1;
+kk = 3; % Placeholder for our data
 
 for j = 1:length(data(kk).pair) % For each pair of fish
+    
     
     
     
