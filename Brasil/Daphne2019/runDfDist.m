@@ -6,3 +6,28 @@
 % [caveDF, CalldFs] = dFanalysis(cave);
 % [srfDF, SalldFs] = dFanalysis(srf);
 
+kk = 1;
+
+for j = 1:length(data(kk).pair) % For each pair of fish
+    
+    
+    
+    
+end
+
+
+
+% % % Fill in missing data.  This is dangerous - need reality check somewhere!!
+% % 
+% %         dist(dist == 0) = NaN;
+% %         % dist = fillmissing(dist, 'pchip');
+% %         dist = fillmissing(dist, 'linear','EndValues','nearest');
+% %         
+% %         dF(dF == 0) = NaN;
+% %         %dF = fillmissing(dF, 'pchip');
+% %         dF = fillmissing(dF, 'linear','EndValues','nearest');
+
+
+
+
+
