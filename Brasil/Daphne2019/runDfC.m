@@ -1,6 +1,6 @@
 % This script produces figure 4 for the manuscript - pairwise dF interactions
 % between fish in cave and surface habitats. It does not look at the
-% correlation between distance and dF.
+% correlation between distance and dF. Relies on dFanalysis.m
 
 % Calculate CAVE dFs TIME CONSUMING - ONLY DO THIS ONCE prior to running this script!
 % load SurfaceDataRev2018a.mat; load CaveDataRev2018a.mat;
