@@ -1,5 +1,5 @@
 % Calculate CAVE dFs TIME CONSUMING - ONLY DO THIS ONCE prior to running this script!
-% load 
+% load SurfaceDataRev2018a.mat; 
 % [caveDF, CalldFs] = dFanalysis(cave);
 % [srfDF, SalldFs] = dFanalysis(srf);
 
