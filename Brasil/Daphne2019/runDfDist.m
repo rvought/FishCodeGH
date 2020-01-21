@@ -13,7 +13,7 @@ kk = 3; % Placeholder for our data
 
 for j = 1:length(data(kk).pair) % For each pair of fish
     
-    
+    tim = 1/Fs:1/Fs:length(data(kk).pair(
     
     
     
