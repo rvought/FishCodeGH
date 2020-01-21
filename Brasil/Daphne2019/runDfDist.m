@@ -10,7 +10,7 @@ Fs = 4.8828;
 CorrWindow = 300; % Time in seconds for correlation analysis
 StepSz = 150; % Time in seconds for the step
 
-kk = 3; % Placeholder for our data
+kk = 3:4; % Placeholder for our data
 
 for j = 1:length(data(kk).pair) % For each pair of fish
     
