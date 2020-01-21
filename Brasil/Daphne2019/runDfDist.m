@@ -7,7 +7,7 @@
 % [srfDF, SalldFs] = dFanalysis(srf);
 
 realCorrs = []; shuffCorrs = []; shiftCorrs = [];
-
+idxPs = []; idxKs = [];
 Fs = 4.8828;
 
 CorrWindow = 500; % Time in seconds for correlation analysis
@@ -61,6 +61,8 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(ts));
             shiftCorrs(end+1) = tmp(2);
         clear tmp;
+        idxPs(end+1) = j;
+        idxKs(end+1) = kk;
     end    
     
 end 
