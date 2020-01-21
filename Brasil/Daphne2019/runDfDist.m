@@ -100,7 +100,7 @@ for z=1:length(posIDX)
     descartesdata = data(idxKs(z)).pair(idxPs(z)).descartes(tt) - mean(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
     dFdata = data(idxKs(z)).pair(idxPs(z)).dF(tt) - mean(data(idxKs(z)).pair(idxPs(z)).dF(tt));
     xc = xcorr(descartesdata, dFdata);
-    plot(xc);
+    plot(xc/max(xc));
     [~, maxidx] = max(abs(xc));
     posShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
 end
