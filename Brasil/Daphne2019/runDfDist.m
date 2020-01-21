@@ -74,14 +74,14 @@ end % For each entry
 % Plot the data
 
 figure(1); clf; 
-cenbins =[-1:0.2:1];
+cenbins = -1:0.2:1;
 ax(1) = subplot(311); histogram(realCorrs, cenbins);
 ax(2) = subplot(312); histogram(shuffCorrs, cenbins);
 ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
 linkaxes(ax, 'xy'); xlim([-1,1]);
 
 
-clear Fs stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength numbins j kk
+clear Fs stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
 % % % Fill in missing data.  This is dangerous - need reality check somewhere!!
 % % 
