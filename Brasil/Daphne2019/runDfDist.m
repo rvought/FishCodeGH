@@ -19,8 +19,9 @@ for kk = 1:length(data)
 if ~isempty(data(kk).pair)
     
 for j = 1:length(data(kk).pair) % For each pair of fish
-    j
+    
     tim = 1/Fs:1/Fs:length(data(kk).pair(j).descartes)/Fs;
+    tim(end)
     
     stepnum = floor( (tim(end)-StepSz) / StepSz );
     
