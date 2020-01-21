@@ -28,8 +28,11 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         tt = find(tim > StepSz * (z-1) & tim < (StepSz * (z-1)) + CorrWindow);
         tf = find(tim > StepSz * (fakies(z)-1) & tim < (StepSz * (fakies(z)-1)) + CorrWindow);
         
-        realCorrs(end+1) = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
-        fakeCorrs(end+1) = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tf));
+        tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
+            realCorrs(end+1) = tmp(2);
+        tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tf));
+            fakeCorrs(end+1) = tmp(2);
+            clear tmp;
     end
     % Get time scrambled (fake) Correlations (baseline correlation)
     
