@@ -147,7 +147,8 @@ end
 % Plot extreme examples - this is correlation coefficient of 0.XXXX
 kval = 12; pval = 12;
 tim = 1/Fs:1/Fs:length(caveDF(kval).pair(pval).descartes)/Fs;
-figure(2); clf; hold on;
+figure(2); clf; 
+subplot(211); hold on;
 yyaxis left; plot(tim, caveDF(kval).pair(pval).descartes, '.b'); 
 plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).descartes), '-b');
 yyaxis right; plot(tim, caveDF(kval).pair(pval).dF, '.m');
@@ -157,7 +158,8 @@ xlim([600, 1100]);
 % Plot extreme examples - this is correlation coefficient of -XXXX
 kval = 14; pval = 18;
 tim = 1/Fs:1/Fs:length(caveDF(kval).pair(pval).descartes)/Fs;
-figure(3); clf; hold on;
+% figure(3); clf; hold on;
+subplot(212); hold on;
 yyaxis left; plot(tim, caveDF(kval).pair(pval).descartes, '.b'); 
 plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).descartes), '-b');
 yyaxis right; plot(tim, caveDF(kval).pair(pval).dF, '.m');
