@@ -30,7 +30,7 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         
         realCorrs(end+1) = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
         fakeCorrs(end+1) = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tf));
-    
+    end
     % Get time scrambled (fake) Correlations (baseline correlation)
     
     
