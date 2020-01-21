@@ -41,16 +41,16 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         
         % Our shifted time window
         if z ~= stepnum
-        tt = find(tim > StepSz * z & tim < (StepSz * z) + CorrWindow);
+        ts = find(tim > StepSz * z & tim < (StepSz * z) + CorrWindow);
         else
-        tt = find(tim > 0 & tim < CorrWindow); % The first window
+        ts = find(tim > 0 & tim < CorrWindow); % The first window
         end
         
         tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
             realCorrs(end+1) = tmp(2);
         tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tf));
             shuffCorrs(end+1) = tmp(2);
-        tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tf));
+        tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(ts));
             shiftCorrs(end+1) = tmp(2);
             
         clear tmp;
