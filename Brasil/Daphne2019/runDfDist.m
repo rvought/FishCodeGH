@@ -90,8 +90,8 @@ clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
 % What is the phase lag between movement and dF for highly correlated epochs
 posShift = []; negShift = [];
-posCorrThresh = 0.80;
-negCorrThresh = -0.80;
+posCorrThresh = 0.70;
+negCorrThresh = -0.70;
 posIDX = find(realCorrs > posCorrThresh);
 negIDX = find(realCorrs < negCorrThresh);
 
