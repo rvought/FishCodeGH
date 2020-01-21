@@ -70,7 +70,7 @@ end % For each entry
 % Plot the data
 
 figure(1); clf; 
-cenbins =[-1:0.1:1];
+cenbins =[-1:0.15:1];
 ax(1) = subplot(311); histogram(realCorrs, cenbins);
 ax(2) = subplot(312); histogram(shuffCorrs, cenbins);
 ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
