@@ -27,8 +27,9 @@ for j = 1:length(data(kk).pair) % For each pair of fish
     for z = 1:stepnum
         tt = find(tim > StepSz * (z-1) & tim < (StepSz * (z-1)) + CorrWindow);
         tf = find(tim > StepSz * (fakies(z)-1) & tim < (StepSz * (fakies(z)-1)) + CorrWindow);
-        length(tt)
-        length(tf)
+        makethemthesamelength = min([length(tt), length(tf)]);
+        tt = tt(1:makethemthesamelength);
+        tf = tf(1:makethemthesamelength);
         
         tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
             realCorrs(end+1) = tmp(2);
