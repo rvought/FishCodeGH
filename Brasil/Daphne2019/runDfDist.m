@@ -91,10 +91,27 @@ clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 % What is the phase lag between movement and dF for highly correlated epochs
 posShift = [];
 posCorrThresh = 0.80;
+negCorrThresh = -0.80;
 posIDX = find(realCorrs > posCorrThresh);
+negIDX = find(realCorrs < negCorrThresh);
+
 figure(4); clf; hold on;
-for z=1:length(posIDX)
+
+for z=1:length(posIDX)    
+    tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
+    tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
     
+    descartesdata = data(idxKs(z)).pair(idxPs(z)).descartes(tt) - mean(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
+    dFdata = data(idxKs(z)).pair(idxPs(z)).dF(tt) - mean(data(idxKs(z)).pair(idxPs(z)).dF(tt));
+    xc = xcorr(descartesdata, dFdata);
+    % plot(abs(xc)/max(abs(xc)));
+    wid = length(xc);
+    [~, maxidx] = max(abs(xc)); 
+    if maxidx > 0.4*length(xc) && maxidx < 0.6*length(xc)
+        posShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
+    end
+end
+for z=1:length(negIDX)    
     tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
     tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
     
@@ -105,7 +122,7 @@ for z=1:length(posIDX)
     wid = length(xc);
     [~, maxidx] = max(abs(xc)); 
     if maxidx > 0.4*length(xc) && maxidx < 0.6*length(xc)
-    posShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
+        negShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
     end
 end
 
