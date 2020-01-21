@@ -89,7 +89,7 @@ clear stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength numb
 
 
 % What is the phase lag between movement and dF for highly correlated epochs
-
+posShift = [];
 posCorrThresh = 0.8;
 posIDX = find(realCorrs > posCorrThresh);
 
@@ -98,8 +98,7 @@ for z=1:length(posIDX)
     tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
     xc = xcorr(data(idxKs(z)).pair(idxPs(z)).descartes(tt), data(idxKs(z)).pair(idxPs(z)).dF(tt));
     [~, maxidx] = max(abs(xc));
-    posShift
-
+    posShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
 end
 
 % % % Fill in missing data.  This is dangerous - need reality check somewhere!!
