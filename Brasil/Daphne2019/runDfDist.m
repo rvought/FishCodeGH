@@ -81,7 +81,7 @@ ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
 linkaxes(ax, 'xy'); xlim([-1,1]);
 
 
-clear Fs stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
+clear stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
 % % % Fill in missing data.  This is dangerous - need reality check somewhere!!
 % % 
