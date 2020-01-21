@@ -13,7 +13,7 @@ Fs = 4.8828;
 CorrWindow = 200; % Time in seconds for correlation analysis
 StepSz = 100; % Time in seconds for the step
 
-for kk = 4 % Placeholder for our data
+for kk = 6 % Placeholder for our data
 % for kk = 1:length(data)
     
 if ~isempty(data(kk).pair)
