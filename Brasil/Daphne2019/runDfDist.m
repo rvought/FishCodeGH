@@ -74,7 +74,7 @@ cenbins =[-1:0.2:1];
 ax(1) = subplot(311); histogram(realCorrs, cenbins);
 ax(2) = subplot(312); histogram(shuffCorrs, cenbins);
 ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
-linkaxes(ax, 'x'); xlim([-1,1]);
+linkaxes(ax, 'xy'); xlim([-1,1]);
 
 
 
