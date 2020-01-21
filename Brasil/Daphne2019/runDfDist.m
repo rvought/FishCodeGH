@@ -35,9 +35,6 @@ for j = 1:length(data(kk).pair) % For each pair of fish
 
         % Our shuffled time window
         tf = find(tim > StepSz * (fakies(z)-1) & tim < (StepSz * (fakies(z)-1)) + CorrWindow);
-        makethemthesamelength = min([length(tt), length(tf)]);
-        tt = tt(1:makethemthesamelength);
-        tf = tf(1:makethemthesamelength);
         
         % Our shifted time window
         if z ~= stepnum
@@ -46,13 +43,18 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         ts = find(tim > 0 & tim < CorrWindow); % The first window
         end
         
+        makethemthesamelength = min([length(tt), length(tf), length(ts)]);
+        tt = tt(1:makethemthesamelength);
+        tf = tf(1:makethemthesamelength);
+        ts = ts(1:makethemthesamelength);
+
+        
         tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
             realCorrs(end+1) = tmp(2);
         tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tf));
             shuffCorrs(end+1) = tmp(2);
         tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(ts));
             shiftCorrs(end+1) = tmp(2);
-            
         clear tmp;
     end
     
