@@ -6,7 +6,7 @@
 % [caveDF, CalldFs] = dFanalysis(cave);
 % [srfDF, SalldFs] = dFanalysis(srf);
 
-realCorrs = []; shuffCorrs = []; shiftCorrs;
+realCorrs = []; shuffCorrs = []; shiftCorrs = [];
 
 Fs = 4.8828;
 
