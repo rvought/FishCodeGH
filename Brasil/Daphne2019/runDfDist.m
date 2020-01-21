@@ -96,7 +96,10 @@ figure(4); clf; hold on;
 for z=1:length(posIDX)
     tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
     tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
-    xc = xcorr(data(idxKs(z)).pair(idxPs(z)).descartes(tt), data(idxKs(z)).pair(idxPs(z)).dF(tt));
+    
+    descartesdata = data(idxKs(z)).pair(idxPs(z)).descartes(tt) - mean(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
+    dFdata = data(idxKs(z)).pair(idxPs(z)).dF(tt) - mean(data(idxKs(z)).pair(idxPs(z)).dF(tt));
+    xc = xcorr(descartesdata, dFdata);
     plot(xc);
     [~, maxidx] = max(abs(xc));
     posShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
