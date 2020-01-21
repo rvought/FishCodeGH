@@ -19,12 +19,16 @@ for j = 1:length(data(kk).pair) % For each pair of fish
     stepnum = floor( (tim(end)-StepSz) / StepSz );
     
     % Get the real Correlation coefficients
+    
+    fakies = randperm([1:stepnum]);
+    
     for z = 1:stepnum
         tt = find(tim > StepSz * (z-1) & tim < (StepSz * (z-1)) + CorrWindow);
         realCorrs(end+1) = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
     end
     
-    % Get time scrambled (fake) Correlations (bootstrap)
+    % Get time scrambled (fake) Correlations (baseline correlation)
+    
     
     
 end
