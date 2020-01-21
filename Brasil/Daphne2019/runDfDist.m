@@ -13,8 +13,11 @@ Fs = 4.8828;
 CorrWindow = 300; % Time in seconds for correlation analysis
 StepSz = 150; % Time in seconds for the step
 
-for kk = 3:4 % Placeholder for our data
-
+%for kk = 3:4 % Placeholder for our data
+for kk = 1:length(data)
+    
+if ~isempty(data(kk).pair)
+    
 for j = 1:length(data(kk).pair) % For each pair of fish
     
     tim = 1/Fs:1/Fs:length(data(kk).pair(j).descartes)/Fs;
@@ -58,9 +61,11 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         clear tmp;
     end    
     
-end
+end % For each pair
 
-end
+end % Has pair data
+
+end % For each entry 
 
 % Plot the data
 
