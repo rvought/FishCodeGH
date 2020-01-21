@@ -92,11 +92,12 @@ clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 posShift = [];
 posCorrThresh = 0.8;
 posIDX = find(realCorrs > posCorrThresh);
-
+figure(4); clf; hold on;
 for z=1:length(posIDX)
     tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
     tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
     xc = xcorr(data(idxKs(z)).pair(idxPs(z)).descartes(tt), data(idxKs(z)).pair(idxPs(z)).dF(tt));
+    plot(xc);
     [~, maxidx] = max(abs(xc));
     posShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
 end
