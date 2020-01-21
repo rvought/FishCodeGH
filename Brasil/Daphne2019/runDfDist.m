@@ -7,7 +7,7 @@
 % [srfDF, SalldFs] = dFanalysis(srf);
 
 realCorrs = []; shuffCorrs = []; shiftCorrs = [];
-idxPs = []; idxKs = [];
+idxPs = []; idxKs = []; timStarts = [];
 Fs = 4.8828;
 
 CorrWindow = 200; % Time in seconds for correlation analysis
@@ -61,8 +61,10 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(ts));
             shiftCorrs(end+1) = tmp(2);
         clear tmp;
+        
         idxPs(end+1) = j;
         idxKs(end+1) = kk;
+        timStarts(end+1) = StepSz * (z-1);
     end    
     
 end 
@@ -88,7 +90,17 @@ clear stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength numb
 
 % What is the phase lag between movement and dF for highly correlated epochs
 
+posCorrThresh = 0.8;
+posIDX = find(realCorrs > posCorrThresh);
 
+for z=1:length(posIDX)
+    tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
+    tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
+    xc = xcorr(data(idxKs(z)).pair(idxPs(z)).descartes(tt), data(idxKs(z)).pair(idxPs(z)).dF(tt));
+    [~, maxidx] = max(abs(xc));
+    posShift
+
+end
 
 % % % Fill in missing data.  This is dangerous - need reality check somewhere!!
 % % 
