@@ -90,10 +90,11 @@ clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
 % What is the phase lag between movement and dF for highly correlated epochs
 posShift = [];
-posCorrThresh = 0.85;
+posCorrThresh = 0.80;
 posIDX = find(realCorrs > posCorrThresh);
 figure(4); clf; hold on;
 for z=1:length(posIDX)
+    
     tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
     tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
     
