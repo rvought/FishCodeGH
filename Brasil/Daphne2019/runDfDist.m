@@ -98,6 +98,8 @@ clear Fs stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength n
 %         RReod = corrcoef(aaaa, bbbb);
 %        curreodCorr(loopreod) = RReod(2);
 
+% Plot extreme examples - this is correlation coefficient of 
+figure(2); clf; plot(caveDF(6).pair(1).descartes); yyaxis right; plot(caveDF(6).pair(1).dF);
 
 
 
