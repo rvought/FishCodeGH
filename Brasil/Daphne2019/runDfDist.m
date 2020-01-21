@@ -5,7 +5,7 @@
 % load SurfaceDataRev2018a.mat; load CaveDataRev2018a.mat;
 % [caveDF, CalldFs] = dFanalysis(cave);
 % [srfDF, SalldFs] = dFanalysis(srf);
-
+realCorrs = []; fakeCorrs = [];
 Fs = 4.8828;
 CorrWindow = 300; % Time in seconds for correlation analysis
 StepSz = 150; % Time in seconds for the step
@@ -16,13 +16,15 @@ for j = 1:length(data(kk).pair) % For each pair of fish
     
     tim = 1/Fs:1/Fs:length(data(kk).pair(j).descartes)/Fs;
     
-    for z = 1:floor( (tim(end)-StepSz) / StepSz )
-        
+    stepnum = floor( (tim(end)-StepSz) / StepSz );
+    
+    % Get the real Correlation coefficients
+    for z = 1:stepnum
         tt = find(tim > StepSz * (z-1) & tim < (StepSz * (z-1)) + CorrWindow);
-        realCorrs(z) = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
-        
+        realCorrs(end+1) = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
     end
     
+    % Get time scrambled (fake) Correlations (bootstrap)
     
     
 end
