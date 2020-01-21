@@ -86,6 +86,8 @@ linkaxes(ax, 'xy'); xlim([-1,1]);
 clear stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
 
+% What is the phase lag between movement and dF for highly correlated epochs
+
 
 
 % % % Fill in missing data.  This is dangerous - need reality check somewhere!!
