@@ -26,7 +26,7 @@ for j = 1:length(data(kk).pair) % For each pair of fish
     
     stepnum = floor( (tim(end)-StepSz) / StepSz );
     
-    % Get the real Correlation coefficients and time-scrambled Correlation
+    % Get the real Correlation coefficients and time-scrambled Correlation`
     % coefficients.
     
     tmp = 1:stepnum;
