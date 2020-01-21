@@ -21,7 +21,8 @@ if ~isempty(data(kk).pair)
 for j = 1:length(data(kk).pair) % For each pair of fish
     
     tim = 1/Fs:1/Fs:length(data(kk).pair(j).descartes)/Fs;
-    tim(end)
+    
+    if exist(tim)
     
     stepnum = floor( (tim(end)-StepSz) / StepSz );
     
@@ -62,6 +63,8 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         clear tmp;
     end    
     
+end 
+
 end % For each pair
 
 end % Has pair data
