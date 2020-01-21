@@ -85,6 +85,9 @@ linkaxes(ax, 'xy'); xlim([-1,1]);
 
 clear stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
+
+
+
 % % % Fill in missing data.  This is dangerous - need reality check somewhere!!
 % % 
 % %         dist(dist == 0) = NaN;
