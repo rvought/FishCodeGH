@@ -105,8 +105,8 @@ tim = 1/Fs:1/Fs:length(caveDF(6).pair(1).descartes)/Fs;
 figure(2); clf; plot(tim, caveDF(6).pair(1).descartes, '.'); yyaxis right; plot(tim, caveDF(6).pair(1).dF, '.');
 
 % Plot extreme examples - this is correlation coefficient of -0.9256
-tim = 1/Fs:1/Fs:length(caveDF(3).pair(6).descartes)/Fs;
-figure(3); clf; plot(tim, caveDF(3).pair(6).descartes, '.'); yyaxis right; plot(tim, caveDF(3).pair(6).dF, '.');
+tim = 1/Fs:1/Fs:length(caveDF(7).pair(7).descartes)/Fs;
+figure(3); clf; plot(tim, caveDF(7).pair(7).descartes, '.'); yyaxis right; plot(tim, caveDF(7).pair(7).dF, '.');
 
 
 
