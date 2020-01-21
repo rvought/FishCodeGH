@@ -56,13 +56,22 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         tmp = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(ts));
             shiftCorrs(end+1) = tmp(2);
         clear tmp;
-    end
-    
-    
+    end    
     
 end
 
 end
+
+% Plot the data
+
+figure(1); clf; 
+cenbins =[-1:0.1:1];
+ax(1) = subplot(311); histogram(realCorrs, cenbins);
+ax(2) = subplot(312); histogram(shuffCorrs, cenbins);
+ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
+linkaxes(ax, 'x');
+
+
 
 % % % Fill in missing data.  This is dangerous - need reality check somewhere!!
 % % 
