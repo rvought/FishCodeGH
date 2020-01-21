@@ -7,13 +7,21 @@
 % [srfDF, SalldFs] = dFanalysis(srf);
 
 Fs = 4.8828;
-CorrWindow = 40; % Time in seconds for correlation analysis
+CorrWindow = 300; % Time in seconds for correlation analysis
+StepSz = 150; % Time in seconds for the step
 
 kk = 3; % Placeholder for our data
 
 for j = 1:length(data(kk).pair) % For each pair of fish
     
-    tim = 1/Fs:1/Fs:length(data(kk).pair(
+    tim = 1/Fs:1/Fs:length(data(kk).pair(j).descartes)/Fs;
+    
+    for z = 1:floor( (tim(end)-StepSz) / StepSz )
+        
+        tt = find(tim > StepSz * (z-1) & tim < (StepSz * (z-1)) + CorrWindow);
+        realCorrs(z) = corrcoef(data(kk).pair(j).descartes(tt), data(kk).pair(j).dF(tt));
+        
+    end
     
     
     
