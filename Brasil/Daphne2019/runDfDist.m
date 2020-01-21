@@ -111,7 +111,7 @@ yyaxis right; plot(tim, caveDF(kval).pair(pval).dF, '.');
 plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).dF), '-k');
 
 % Plot extreme examples - this is correlation coefficient of -XXXX
-kval = 5; pval = 21;
+kval = 14; pval = 18;
 tim = 1/Fs:1/Fs:length(caveDF(kval).pair(pval).descartes)/Fs;
 figure(3); clf; hold on;
 plot(tim, caveDF(kval).pair(pval).descartes, '.'); 
