@@ -10,8 +10,8 @@ realCorrs = []; shuffCorrs = []; shiftCorrs = [];
 
 Fs = 4.8828;
 
-CorrWindow = 300; % Time in seconds for correlation analysis
-StepSz = 150; % Time in seconds for the step
+CorrWindow = 200; % Time in seconds for correlation analysis
+StepSz = 100; % Time in seconds for the step
 
 %for kk = 3:4 % Placeholder for our data
 for kk = 1:length(data)
