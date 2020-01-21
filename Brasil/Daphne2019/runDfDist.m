@@ -103,9 +103,10 @@ for z=1:length(posIDX)
     xc = xcorr(descartesdata, dFdata);
     plot(abs(xc)/max(abs(xc)));
     wid = length(xc);
-    [~, maxidx] = max(abs(xc(round(wid*0.40):round(wid*0.60)) )); maxidx = maxidx + round(wid*0.33);
+    [~, maxidx] = max(abs(xc)); 
+    if maxidx > 0.4*length(xc) && maxidx < 0.6*length(xc)
     posShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
-    
+    end
 end
 
 
