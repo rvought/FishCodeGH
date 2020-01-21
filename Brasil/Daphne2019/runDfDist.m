@@ -117,7 +117,7 @@ figure(3); clf; hold on;
 plot(tim, caveDF(kval).pair(pval).descartes, '.'); 
 yyaxis right; plot(tim, caveDF(kval).pair(pval).dF, '.');
 plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).dF), '-k');
-xlim([150, 
+xlim([150, 650]);
 
 
 
