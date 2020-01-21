@@ -102,7 +102,7 @@ clear stepnum CorrWindow StepSz tt tf ts fakies z tim makethemthesamelength numb
 
 [b,a] = butter(5, 0.1/(2*Fs), 'low');
 
-% Plot extreme examples - this is correlation coefficient of 0.9048
+% Plot extreme examples - this is correlation coefficient of 0.XXXX
 kval = 12; pval = 12;
 tim = 1/Fs:1/Fs:length(caveDF(kval).pair(pval).descartes)/Fs;
 figure(2); clf; hold on;
