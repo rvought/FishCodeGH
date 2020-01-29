@@ -67,7 +67,7 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         timStarts(end+1) = StepSz * (z-1);
     end    
     
-end 
+    end % to make sure...
 
 end % For each pair
 
@@ -86,6 +86,10 @@ cenbins = -1:0.2:1;
     histogram(shuffCorrs, cenbins); 
         hold on; 
     histogram(realCorrs, cenbins);
+    
+figure(2); clf;
+
+
 
 clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
@@ -146,10 +150,10 @@ end
 
 [b,a] = butter(5, 0.1/(2*Fs), 'low');
 
-% Plot extreme examples - this is correlation coefficient of 0.XXXX
+% Plot excellent examples - this is correlation coefficient of 0.XXXX
 kval = 12; pval = 12;
 tim = 1/Fs:1/Fs:length(caveDF(kval).pair(pval).descartes)/Fs;
-figure(2); clf; 
+figure(3); clf; 
 subplot(211); hold on;
 yyaxis left; plot(tim, caveDF(kval).pair(pval).descartes, '.b'); 
 plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).descartes), '-b');
