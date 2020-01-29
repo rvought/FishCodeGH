@@ -85,8 +85,8 @@ pltbins = -0.83335:0.3333:0.83335;
 % ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
 % linkaxes(ax, 'xy'); xlim([-1,1]);
 
-%    histogram(shuffCorrs, cenbins); 
-    histogram(shiftCorrs, cenbins, 'FaceColor', 'red'); 
+    histogram(shuffCorrs, cenbins); 
+%    histogram(shiftCorrs, cenbins, 'FaceColor', 'red'); 
         hold on; 
     histogram(realCorrs, cenbins, 'FaceColor', 'blue');
     
