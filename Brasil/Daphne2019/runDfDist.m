@@ -89,7 +89,7 @@ cenbins = -1:0.2:1;
     
 figure(2); clf;
 
-
+[h,p,ci,stats] = vartest2(realCorrs, shuffCorrs);
 
 clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
