@@ -88,7 +88,10 @@ pltbins = -0.83335:0.3333:0.83335;
         hold on; 
     histogram(realCorrs, cenbins);
     
-
+% TESTING significance.  We have 3908 samples for CAVE.
+% We have 8 shuffCors greater than 0.8 and 24 realCors > 0.8
+% This is significantly more high positive correlations than expected.
+% p >
 
 figure(2); clf;
 
