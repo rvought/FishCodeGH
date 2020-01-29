@@ -79,13 +79,18 @@ end % For each entry
 
 figure(1); clf; 
 cenbins = -1:0.25:1;
+pltbins = -0.875:0.25:0.875;
 % ax(1) = subplot(311); histogram(realCorrs, cenbins);
 % ax(2) = subplot(312); histogram(shuffCorrs, cenbins);
 % ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
 % linkaxes(ax, 'xy'); xlim([-1,1]);
-    histogram(shuffCorrs, cenbins); 
+    shuffHist = histcounts(shuffCorrs, cenbins); 
         hold on; 
-    histogram(realCorrs, cenbins);
+    realHist = histcounts(realCorrs, cenbins);
+    
+    plot(pltbins, shuffHist, '*-'); 
+        hold on;
+    plot(pltbins, realHist, '*-');
     
 figure(2); clf;
 
