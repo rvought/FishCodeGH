@@ -128,82 +128,82 @@ clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
 
 %% What is the phase lag between movement and dF for highly correlated epochs
-posShift = []; negShift = [];
-posCorrThresh = 0.85;
-negCorrThresh = -0.85;
-posIDX = find(realCorrs > posCorrThresh);
-negIDX = find(realCorrs < negCorrThresh);
-
-figure(4); clf; hold on;
-
-for z=1:length(posIDX)    
-    tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
-    tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
-    
-    descartesdata = data(idxKs(z)).pair(idxPs(z)).descartes(tt) - mean(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
-    dFdata = data(idxKs(z)).pair(idxPs(z)).dF(tt) - mean(data(idxKs(z)).pair(idxPs(z)).dF(tt));
-    xc = xcorr(descartesdata, dFdata);
-    % plot(abs(xc)/max(abs(xc)));
-    wid = length(xc);
-    [~, maxidx] = max(abs(xc)); 
-    if maxidx > 0.4*length(xc) && maxidx < 0.6*length(xc)
-        posShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
-    end
-end
-for z=1:length(negIDX)    
-    tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
-    tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
-    
-    descartesdata = data(idxKs(z)).pair(idxPs(z)).descartes(tt) - mean(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
-    dFdata = data(idxKs(z)).pair(idxPs(z)).dF(tt) - mean(data(idxKs(z)).pair(idxPs(z)).dF(tt));
-    xc = xcorr(descartesdata, dFdata);
-    plot(abs(xc)/max(abs(xc)));
-    wid = length(xc);
-    [~, maxidx] = max(abs(xc)); 
-    if maxidx > 0.4*length(xc) && maxidx < 0.6*length(xc)
-        negShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
-    end
-end
-
-
-% % % Fill in missing data.  This is dangerous - need reality check somewhere!!
-% % 
-% %         dist(dist == 0) = NaN;
-% %         % dist = fillmissing(dist, 'pchip');
-% %         dist = fillmissing(dist, 'linear','EndValues','nearest');
-% %         
-% %         dF(dF == 0) = NaN;
-% %         %dF = fillmissing(dF, 'pchip');
-% %         dF = fillmissing(dF, 'linear','EndValues','nearest');
-
-% aaaa = fillmissing(eod1(timtim > curstarteod & timtim < curstarteod+wndo), 'linear','EndValues','nearest');
-
-%         RReod = corrcoef(aaaa, bbbb);
-%        curreodCorr(loopreod) = RReod(2);
-
-[b,a] = butter(5, 0.1/(2*Fs), 'low');
-
-% Plot excellent examples - this is correlation coefficient of 0.XXXX
-kval = 12; pval = 12;
-tim = 1/Fs:1/Fs:length(caveDF(kval).pair(pval).descartes)/Fs;
-figure(3); clf; 
-subplot(211); hold on;
-yyaxis left; plot(tim, caveDF(kval).pair(pval).descartes, '.b'); 
-plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).descartes), '-b');
-yyaxis right; plot(tim, caveDF(kval).pair(pval).dF, '.m');
-plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).dF), '-m');
-xlim([600, 1100]);
-
-% Plot extreme examples - this is correlation coefficient of -XXXX
-kval = 14; pval = 18;
-tim = 1/Fs:1/Fs:length(caveDF(kval).pair(pval).descartes)/Fs;
-% figure(3); clf; hold on;
-subplot(212); hold on;
-yyaxis left; plot(tim, caveDF(kval).pair(pval).descartes, '.b'); 
-plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).descartes), '-b');
-yyaxis right; plot(tim, caveDF(kval).pair(pval).dF, '.m');
-plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).dF), '-m');
-xlim([150, 650]);
-
-
+% posShift = []; negShift = [];
+% posCorrThresh = 0.85;
+% negCorrThresh = -0.85;
+% posIDX = find(realCorrs > posCorrThresh);
+% negIDX = find(realCorrs < negCorrThresh);
+% 
+% figure(4); clf; hold on;
+% 
+% for z=1:length(posIDX)    
+%     tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
+%     tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
+%     
+%     descartesdata = data(idxKs(z)).pair(idxPs(z)).descartes(tt) - mean(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
+%     dFdata = data(idxKs(z)).pair(idxPs(z)).dF(tt) - mean(data(idxKs(z)).pair(idxPs(z)).dF(tt));
+%     xc = xcorr(descartesdata, dFdata);
+%     % plot(abs(xc)/max(abs(xc)));
+%     wid = length(xc);
+%     [~, maxidx] = max(abs(xc)); 
+%     if maxidx > 0.4*length(xc) && maxidx < 0.6*length(xc)
+%         posShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
+%     end
+% end
+% for z=1:length(negIDX)    
+%     tim = 1/Fs:1/Fs:length(data(idxKs(z)).pair(idxPs(z)).descartes);
+%     tt = find(tim > timStarts(z) & tim < timStarts(z) + CorrWindow);
+%     
+%     descartesdata = data(idxKs(z)).pair(idxPs(z)).descartes(tt) - mean(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
+%     dFdata = data(idxKs(z)).pair(idxPs(z)).dF(tt) - mean(data(idxKs(z)).pair(idxPs(z)).dF(tt));
+%     xc = xcorr(descartesdata, dFdata);
+%     plot(abs(xc)/max(abs(xc)));
+%     wid = length(xc);
+%     [~, maxidx] = max(abs(xc)); 
+%     if maxidx > 0.4*length(xc) && maxidx < 0.6*length(xc)
+%         negShift(end+1) = maxidx - length(data(idxKs(z)).pair(idxPs(z)).descartes(tt));
+%     end
+% end
+% 
+% 
+% % % % Fill in missing data.  This is dangerous - need reality check somewhere!!
+% % % 
+% % %         dist(dist == 0) = NaN;
+% % %         % dist = fillmissing(dist, 'pchip');
+% % %         dist = fillmissing(dist, 'linear','EndValues','nearest');
+% % %         
+% % %         dF(dF == 0) = NaN;
+% % %         %dF = fillmissing(dF, 'pchip');
+% % %         dF = fillmissing(dF, 'linear','EndValues','nearest');
+% 
+% % aaaa = fillmissing(eod1(timtim > curstarteod & timtim < curstarteod+wndo), 'linear','EndValues','nearest');
+% 
+% %         RReod = corrcoef(aaaa, bbbb);
+% %        curreodCorr(loopreod) = RReod(2);
+% 
+% [b,a] = butter(5, 0.1/(2*Fs), 'low');
+% 
+% % Plot excellent examples - this is correlation coefficient of 0.XXXX
+% kval = 12; pval = 12;
+% tim = 1/Fs:1/Fs:length(caveDF(kval).pair(pval).descartes)/Fs;
+% figure(3); clf; 
+% subplot(211); hold on;
+% yyaxis left; plot(tim, caveDF(kval).pair(pval).descartes, '.b'); 
+% plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).descartes), '-b');
+% yyaxis right; plot(tim, caveDF(kval).pair(pval).dF, '.m');
+% plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).dF), '-m');
+% xlim([600, 1100]);
+% 
+% % Plot extreme examples - this is correlation coefficient of -XXXX
+% kval = 14; pval = 18;
+% tim = 1/Fs:1/Fs:length(caveDF(kval).pair(pval).descartes)/Fs;
+% % figure(3); clf; hold on;
+% subplot(212); hold on;
+% yyaxis left; plot(tim, caveDF(kval).pair(pval).descartes, '.b'); 
+% plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).descartes), '-b');
+% yyaxis right; plot(tim, caveDF(kval).pair(pval).dF, '.m');
+% plot(tim, filtfilt(b,a, caveDF(kval).pair(pval).dF), '-m');
+% xlim([150, 650]);
+% 
+% 
 
