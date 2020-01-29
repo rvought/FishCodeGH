@@ -94,6 +94,9 @@ pltbins = -0.83335:0.3333:0.83335;
 % This is significantly more high positive correlations than expected.
 % p < 0.0001, Chi Squared = 32.066, 1 degree of freedom
 
+% We have 8 shuffCors less than -0.8 and 24 realCors > 0.8
+% This is significantly more high positive correlations than expected.
+% p < 0.0001, Chi Squared = 32.066, 1 degree of freedom
 
 
 figure(2); clf;
