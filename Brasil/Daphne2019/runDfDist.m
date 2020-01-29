@@ -101,6 +101,9 @@ gtgt(2,:) = [length(find(realCorrs > 0.8)), length(find(realCorrs < 0.8))];
 % We have 8 shuffCors less than -0.8 and 36 realCors < 0.8
 % This is significantly more high positive correlations than expected.
 % p < 0.0001, Chi Squared = 98.201, 1 degree of freedom (two tailed)
+ltlt(1,:) = [length(find(shuffCorrs < -0.8)), length(find(shuffCorrs > -0.8))];
+ltlt(2,:) = [length(find(realCorrs < -0.8)), length(find(realCorrs > -0.8))];
+[h,p,stats] = fishertest(ltlt)
 
 
 figure(2); clf;
