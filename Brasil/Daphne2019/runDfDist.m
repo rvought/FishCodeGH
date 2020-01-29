@@ -112,14 +112,16 @@ ltlt(2,:) = [length(find(realCorrs < -0.8)), length(find(realCorrs > -0.8))];
 
 figure(2); clf;
 
+totalnum = length(realCorrs);
+
     shuffHist = histcounts(shuffCorrs, cenbins); 
     shiftHist = histcounts(shiftCorrs, cenbins); 
         hold on; 
     realHist = histcounts(realCorrs, cenbins);
-    plot(pltbins, shuffHist, '*-'); 
-    plot(pltbins, shiftHist, '*-'); 
+    plot(pltbins, shuffHist/totalnum, '*-'); 
+    plot(pltbins, shiftHist/totalnum, '*-'); 
         hold on;
-    plot(pltbins, realHist, '*-');
+    plot(pltbins, realHist/totalnum, '*-');
     
 
 
