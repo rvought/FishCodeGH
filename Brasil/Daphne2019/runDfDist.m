@@ -84,7 +84,9 @@ pltbins = -0.83335:0.3333:0.83335;
 % ax(2) = subplot(312); histogram(shuffCorrs, cenbins);
 % ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
 % linkaxes(ax, 'xy'); xlim([-1,1]);
-    histogram(shuffCorrs, cenbins); 
+
+%    histogram(shuffCorrs, cenbins); 
+    histogram(shiftCorrs, cenbins); 
         hold on; 
     histogram(realCorrs, cenbins);
     
@@ -92,7 +94,8 @@ pltbins = -0.83335:0.3333:0.83335;
 
 % We have 8 shuffCors greater than 0.8 and 24 realCors > 0.8
 % This is significantly more high positive correlations than expected.
-gtgt(1,:) = [length(find(shiftCorrs > 0.8)), length(find(shiftCorrs < 0.8))];
+gtgt(1,:) = [length(find(shuffCorrs > 0.8)), length(find(shuffCorrs < 0.8))];
+%gtgt(1,:) = [length(find(shiftCorrs > 0.8)), length(find(shiftCorrs < 0.8))];
 gtgt(2,:) = [length(find(realCorrs > 0.8)), length(find(realCorrs < 0.8))];
 [h,p,stats] = fishertest(gtgt)
 
@@ -101,7 +104,8 @@ gtgt(2,:) = [length(find(realCorrs > 0.8)), length(find(realCorrs < 0.8))];
 % We have 8 shuffCors less than -0.8 and 36 realCors < 0.8
 % This is significantly more high positive correlations than expected.
 % p < 0.0001, Chi Squared = 98.201, 1 degree of freedom (two tailed)
-ltlt(1,:) = [length(find(shiftCorrs < -0.8)), length(find(shiftCorrs > -0.8))];
+ltlt(1,:) = [length(find(shuffCorrs < -0.8)), length(find(shuffCorrs > -0.8))];
+%ltlt(1,:) = [length(find(shiftCorrs < -0.8)), length(find(shiftCorrs > -0.8))];
 ltlt(2,:) = [length(find(realCorrs < -0.8)), length(find(realCorrs > -0.8))];
 [h,p,stats] = fishertest(ltlt)
 
@@ -109,9 +113,11 @@ ltlt(2,:) = [length(find(realCorrs < -0.8)), length(find(realCorrs > -0.8))];
 figure(2); clf;
 
     shuffHist = histcounts(shuffCorrs, cenbins); 
+    shiftHist = histcounts(shuffCorrs, cenbins); 
         hold on; 
     realHist = histcounts(realCorrs, cenbins);
     plot(pltbins, shuffHist, '*-'); 
+    plot(pltbins, shiftHist, '*-'); 
         hold on;
     plot(pltbins, realHist, '*-');
     
