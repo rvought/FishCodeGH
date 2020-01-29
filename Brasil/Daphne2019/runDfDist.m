@@ -83,7 +83,9 @@ cenbins = -1:0.2:1;
 % ax(2) = subplot(312); histogram(shuffCorrs, cenbins);
 % ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
 % linkaxes(ax, 'xy'); xlim([-1,1]);
-histogram(shuffCorrs, cenbins); hold on; histogram(realCorrs, cenbins);
+    histogram(shuffCorrs, cenbins); 
+        hold on; 
+    histogram(realCorrs, cenbins);
 
 clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
