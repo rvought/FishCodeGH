@@ -95,14 +95,14 @@ pltbins = -0.83335:0.3333:0.83335;
 % MORE STRONG POSITIVE CORRELATIONS than expected?
 posthresh = 0.7;
 gtgt(1,:) = [length(find(shuffCorrs > posthresh)), length(find(shuffCorrs < posthresh))];
-%gtgt(1,:) = [length(find(shiftCorrs > 0.8)), length(find(shiftCorrs < 0.8))];
+%gtgt(1,:) = [length(find(shiftCorrs > posthresh)), length(find(shiftCorrs < posthresh))];
 gtgt(2,:) = [length(find(realCorrs > posthresh)), length(find(realCorrs < posthresh))];
 [h,p,stats] = fishertest(gtgt)
 
 % MORE STRONG NEGATIVE CORRELATIONS than expected?
 negthresh = -posthresh;
 ltlt(1,:) = [length(find(shuffCorrs < negthresh)), length(find(shuffCorrs > negthresh))];
-%ltlt(1,:) = [length(find(shiftCorrs < -0.8)), length(find(shiftCorrs > -0.8))];
+%ltlt(1,:) = [length(find(shiftCorrs < negthresh)), length(find(shiftCorrs > negthresh))];
 ltlt(2,:) = [length(find(realCorrs < negthresh)), length(find(realCorrs > negthresh))];
 [h,p,stats] = fishertest(ltlt)
 
