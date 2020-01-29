@@ -86,9 +86,9 @@ pltbins = -0.83335:0.3333:0.83335;
 % linkaxes(ax, 'xy'); xlim([-1,1]);
 
 %    histogram(shuffCorrs, cenbins); 
-    histogram(shiftCorrs, cenbins); 
+    histogram(shiftCorrs, cenbins, 'Color', 'red'); 
         hold on; 
-    histogram(realCorrs, cenbins);
+    histogram(realCorrs, cenbins, 'Color', 'blue');
     
 % TESTING significance.  We have 3908 samples for CAVE.
 
