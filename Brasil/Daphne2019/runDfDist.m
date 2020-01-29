@@ -92,8 +92,8 @@ pltbins = -0.83335:0.3333:0.83335;
 
 % We have 8 shuffCors greater than 0.8 and 24 realCors > 0.8
 % This is significantly more high positive correlations than expected.
-gtgt(:,1) = [length(find(shuffCorrs > 0.8)), length(find(shuffCorrs < 0.8))];
-gtgt(:,2) = [length(find(realCorrs > 0.8)), length(find(realCorrs < 0.8))];
+gtgt(1,:) = [length(find(shuffCorrs > 0.8)), length(find(shuffCorrs < 0.8))];
+gtgt(2,:) = [length(find(realCorrs > 0.8)), length(find(realCorrs < 0.8))];
 [h,p,stats] = fishertest(gtgt)
 
 % p < 0.0001, Chi Squared = 32.066, 1 degree of freedom (two tailed)
