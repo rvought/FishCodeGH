@@ -118,10 +118,10 @@ totalnum = length(realCorrs);
     shiftHist = histcounts(shiftCorrs, cenbins); 
         hold on; 
     realHist = histcounts(realCorrs, cenbins);
-    plot(pltbins, shuffHist/totalnum, '*-'); 
-    plot(pltbins, shiftHist/totalnum, '*-'); 
+    plot(pltbins, shuffHist/totalnum, 'r*-'); 
+    plot(pltbins, shiftHist/totalnum, 'm*-'); 
         hold on;
-    plot(pltbins, realHist/totalnum, '*-');
+    plot(pltbins, realHist/totalnum, 'b*-');
     
 
 
