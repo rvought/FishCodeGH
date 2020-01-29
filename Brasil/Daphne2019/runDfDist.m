@@ -88,11 +88,13 @@ pltbins = -0.875:0.25:0.875;
         hold on; 
     realHist = histcounts(realCorrs, cenbins);
     
+figure(2); clf;
+
     plot(pltbins, shuffHist, '*-'); 
         hold on;
     plot(pltbins, realHist, '*-');
     
-figure(2); clf;
+
 
 [h,p,ci,stats] = vartest2(realCorrs, shuffCorrs);
 
