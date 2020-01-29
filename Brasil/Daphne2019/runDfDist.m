@@ -75,7 +75,7 @@ end % Has pair data
 
 end % For each entry 
 
-% Plot the histgram data
+%% Plot the histgram data
 
 figure(1); clf; 
 cenbins = -1:0.5:1;
@@ -94,7 +94,7 @@ figure(2); clf;
 clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
 
-% What is the phase lag between movement and dF for highly correlated epochs
+%% What is the phase lag between movement and dF for highly correlated epochs
 posShift = []; negShift = [];
 posCorrThresh = 0.85;
 negCorrThresh = -0.85;
