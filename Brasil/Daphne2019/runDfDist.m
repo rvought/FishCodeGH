@@ -96,7 +96,7 @@ pltbins = -0.9:0.2:0.9;
 % TESTING significance.  We have 3908 samples for CAVE.
 
 % MORE STRONG POSITIVE CORRELATIONS than expected?
-posthresh = 0.7;
+posthresh = 0.6;
 gtgt(1,:) = [length(find(shuffCorrs > posthresh)), length(find(shuffCorrs < posthresh))];
 %gtgt(1,:) = [length(find(shiftCorrs > posthresh)), length(find(shiftCorrs < posthresh))];
 gtgt(2,:) = [length(find(realCorrs > posthresh)), length(find(realCorrs < posthresh))];
