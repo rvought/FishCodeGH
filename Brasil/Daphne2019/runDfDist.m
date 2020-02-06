@@ -123,7 +123,7 @@ totalnum = length(realCorrs);
     plot(pltbins, shiftHist/totalnum, '.m-', 'MarkerSize', 16); 
         hold on;
     plot(pltbins, realHist/totalnum, '.b-', 'MarkerSize', 16);
-    ylim([0 0.35]);
+    ylim([0 0.31]);
     
 
 
