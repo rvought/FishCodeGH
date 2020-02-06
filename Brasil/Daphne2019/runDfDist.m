@@ -82,7 +82,7 @@ figure(1); clf;
 %cenbins = -1:0.33333:1;
 %pltbins = -0.83335:0.3333:0.83335;
 cenbins = -1:0.2:1;
-pltbins = -0.9:0.3333:0.9;
+pltbins = -0.8:0.3333:0.8;
 % ax(1) = subplot(311); histogram(realCorrs, cenbins);
 % ax(2) = subplot(312); histogram(shuffCorrs, cenbins);
 % ax(3) = subplot(313); histogram(shiftCorrs, cenbins);
