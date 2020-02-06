@@ -77,8 +77,8 @@ end % For each entry
 
 %% Plot the histgram data
 
-figure(1); clf; 
-% figure(3); clf;
+%figure(1); clf; 
+figure(3); clf;
 %cenbins = -1:0.33333:1;
 %pltbins = -0.83335:0.3333:0.83335;
 cenbins = -1:0.2:1;
@@ -110,8 +110,8 @@ ltlt(2,:) = [length(find(realCorrs < negthresh)), length(find(realCorrs > negthr
 [h,p,stats] = fishertest(ltlt)
 
 
-figure(2); clf;
-% figure(4); clf;
+% figure(2); clf;
+figure(4); clf;
 
 totalnum = length(realCorrs);
 
