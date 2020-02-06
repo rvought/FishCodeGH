@@ -119,10 +119,10 @@ totalnum = length(realCorrs);
     shiftHist = histcounts(shiftCorrs, cenbins); 
         hold on; 
     realHist = histcounts(realCorrs, cenbins);
-    plot(pltbins, shuffHist/totalnum, 'r*-'); 
-    plot(pltbins, shiftHist/totalnum, 'm*-'); 
+    plot(pltbins, shuffHist/totalnum, '.r-', 'MarkerSize', 8); 
+    plot(pltbins, shiftHist/totalnum, '.m-', 'MarkerSize', 8); 
         hold on;
-    plot(pltbins, realHist/totalnum, 'b*-');
+    plot(pltbins, realHist/totalnum, '.b-', 'MarkerSize', 8);
     
 
 
