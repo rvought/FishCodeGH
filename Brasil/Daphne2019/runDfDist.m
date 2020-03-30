@@ -8,7 +8,7 @@
 
 realCorrs = []; shuffCorrs = []; shiftCorrs = [];
 idxPs = []; idxKs = []; timStarts = [];
-Fs = 4.8828;
+Fs = 4.8828; % This is the sample rate that emerged from the grid analysis.
 
 CorrWindow = 200; % Time in seconds for correlation analysis
 StepSz = 100; % Time in seconds for the step
