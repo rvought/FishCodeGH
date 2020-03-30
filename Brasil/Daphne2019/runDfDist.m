@@ -6,6 +6,10 @@
 % [caveDF, CalldFs] = dFanalysis(cave);
 % [srfDF, SalldFs] = dFanalysis(srf);
 
+% data = caveDF;
+% data = srfDF;
+
+
 realCorrs = []; shuffCorrs = []; shiftCorrs = [];
 idxPs = []; idxKs = []; timStarts = [];
 Fs = 4.8828; % This is the sample rate that emerged from the grid analysis.
