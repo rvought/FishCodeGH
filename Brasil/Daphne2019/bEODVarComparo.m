@@ -95,7 +95,7 @@ Gstds = Gstds(~isnan(Gstds));
 Gstds = Gstds(Gstds ~= 0);
 
 fprintf('Mean Surface Swimming Var = %2.8f, Var %2.8f, n=%i \n', mean(Gstds), std(Gstds), length(Gstds));
-[aa,bb,cc] = ttest(Sstds, Gstds)
+[aa,bb,cc,dd] = ttest(Sstds, Gstds)
 
 %% Freely moving solitary fish in the cave
 
