@@ -137,4 +137,4 @@ end
 
 %% Do the stats for the paper
 
-fprintf('Mean %2.8f and STD %2.8f and N $i for CAVE overlap percentages \n', mean
+fprintf('Mean %2.8f and STD %2.8f and N $i for CAVE overlap percentages \n', mean(Coverlaps ./ CpairAreas), std(Coverlaps ./ CpairAreas), length(Coverlaps));
