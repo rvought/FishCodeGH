@@ -140,5 +140,5 @@ end
 fprintf('Mean %2.4f and STD %2.4f and N %i for CAVE overlap percentages \n', mean(Coverlaps ./ CpairAreas), std(Coverlaps ./ CpairAreas), length(Coverlaps));
 fprintf('Mean %2.4f and STD %2.4f and N %i for SURFACE overlap percentages \n', mean(Soverlaps ./ SpairAreas), std(Soverlaps ./ SpairAreas), length(Soverlaps));
 
-
-
+% [aa,bb,cc,dd] = ttest2(Coverlaps, Soverlaps)
+[aa,bb,cc,dd] = ttest2(Coverlaps ./ CpairAreas, Soverlaps ./ SpairAreas)
