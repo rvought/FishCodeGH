@@ -135,3 +135,6 @@ for j=1:length(oof)
     
 end
 
+%% Do the stats for the paper
+
+fprintf('Mean %2.8f and STD %2.8f and N $i for CAVE overlap percentages \n', mean
