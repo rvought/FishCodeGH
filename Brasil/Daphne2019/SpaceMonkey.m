@@ -143,3 +143,5 @@ fprintf('Mean %2.4f and STD %2.4f and N %i for SURFACE overlap percentages \n', 
 % [aa,bb,cc,dd] = ttest2(Coverlaps, Soverlaps) % Just the size of the overlap areas
 % [aa,bb,cc,dd] = ttest2(Coverlaps ./ CpairAreas, Soverlaps ./ SpairAreas) % The percentage of overlap
  
+fprintf('Mean %2.4f and STD %2.4f and N %i for CAVE convex areas \n', mean(CfishArea), std(CfishArea), length(CfishArea));
+fprintf('Mean %2.4f and STD %2.4f and N %i for SURFACE convex areas \n', mean(SfishArea), std(SfishArea), length(SfishArea));
