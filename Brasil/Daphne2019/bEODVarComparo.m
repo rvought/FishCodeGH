@@ -45,6 +45,8 @@ end
 Sstds = Sstds(~isnan(Sstds));
 Sstds = Sstds(Sstds ~= 0);
 
+fprintf('Mean Surface Immobile Var = %2.8f, Var %2.8f', mean(Sstds), var(Sstds));
+
 %% Moving Surface Fish in the grid
 
 Gstds = [];
