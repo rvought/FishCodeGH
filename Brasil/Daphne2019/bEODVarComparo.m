@@ -45,7 +45,7 @@ end
 Sstds = Sstds(~isnan(Sstds));
 Sstds = Sstds(Sstds ~= 0);
 
-fprintf('Mean Surface Immobile Var = %2.8f, Var %2.8f \n', mean(Sstds), var(Sstds));
+fprintf('Mean Surface Immobile Var = %2.8f, Var %2.8f \n', mean(Sstds), std(Sstds));
 
 %% Moving Surface Fish in the grid
 
@@ -94,7 +94,7 @@ end
 Gstds = Gstds(~isnan(Gstds));
 Gstds = Gstds(Gstds ~= 0);
 
-fprintf('Mean Surface Swimming Var = %2.8f, Var %2.8f \n', mean(Gstds), var(Gstds));
+fprintf('Mean Surface Swimming Var = %2.8f, Var %2.8f \n', mean(Gstds), std(Gstds));
 
 
 %% Freely moving solitary fish in the cave
@@ -120,6 +120,6 @@ SCstds = [];
 SCstds = SCstds(~isnan(SCstds));
 SCstds = SCstds(SCstds ~=0);
 
-fprintf('Mean Cave Solitary Var = %2.8f, Var %2.8f \n', mean(SCstds), var(SCstds));
+fprintf('Mean Cave Solitary Var = %2.8f, Var %2.8f \n', mean(SCstds), std(SCstds));
 
 
