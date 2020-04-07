@@ -26,7 +26,7 @@ for j = 1:144
     
     % Start the DAQ in the background
     s.startBackground();
-
+    fprintf('Collecting entry %2i out of 144.\n', j);
     % 60 seconds of collection
     for k = 1:6
         %pause(5)
@@ -44,5 +44,6 @@ for j = 1:144
 
     % Here is the pause between samples
     pause(540);
+    datetime('now','TimeZone','local','Format','d-MMM-y HH:mm:ss')
     
 end
