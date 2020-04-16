@@ -54,8 +54,10 @@ while eidx < length(eFiles)
             
     end
     
-    ampdataOne(end+1) = mean(mean(vData(100:200, 500:600)));
-    ampdataTwo(end+1) = mean(mean(vData(100:200, 500:600)));
+%     ampdataOne(end+1) = mean(mean(vData(100:200, 500:600)));
+%     ampdataTwo(end+1) = mean(mean(vData(100:200, 500:600)));
+    ampdataOne(end+1) = mean(mean(vData(700:800, 500:600)));
+    ampdataTwo(end+1) = mean(mean(vData(700:800, 500:600)));
     
     iidx = iidx+6;
     eidx = eidx+1;
