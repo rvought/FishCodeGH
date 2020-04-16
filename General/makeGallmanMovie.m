@@ -3,7 +3,8 @@ eFiles = dir('GallmanElectro*.mat');
 
 ampdataOne = [];
 ampdataTwo = [];
-Fs = 20000;
+Fs = 20000; % Sample rate for EOD in Hz
+samlen = 10; % Duration of the sample (60 seconds total)
 
 % out = VideoWriter('video.avi');
 % open(out);
@@ -30,14 +31,20 @@ eidx = 1;
 
 while eidx < length(eFiles)
 
+    eval(['load ' eFiles(iidx+j).name]);
     fprintf('Entry %i. \n', eidx);
     
+    
     for j=1:6
+        figure(1);
         eval(['load ' iFiles(iidx+j).name]);
-        subplot(3,2,j); imshow(vData); text(100,100, num2str(j), 'Color', 'g');    
-        drawnow;
+        subplot(3,2,j); imshow(vData); text(100,100, num2str(j), 'Color', 'g');
+        figure(2);
+        subplot(3,2,j);
+        plot
     end
    
+    drawnow;
     a = input('Frame? ');
     
     if isempty(a)
