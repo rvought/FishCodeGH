@@ -33,7 +33,7 @@ eidx = 1;
 
 while eidx < length(eFiles)
 
-    eval(['load ' eFiles(iidx+j).name]); % Load the EOD data
+    eval(['load ' eFiles(eidx+j).name]); % Load the EOD data
     tmpsigA = filtfilt(b,a,data(:,1)); % Filter both channles
     tmpsigB = filtfilt(b,a,data(:,2));
     
