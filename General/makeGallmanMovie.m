@@ -106,8 +106,8 @@ end
 
 
 figure(2); clf; 
-ax(1) = subplot(411); plot(lightims, fftamp(:,1), '.', 'MarkerSize', 5);
-ax(2) = subplot(412); plot(lightims, rmsamp, '.', 'MarkerSize', 5)
-ax(3) = subplot(413); plot(lightims, fftamp(:,2), '.', 'MarkerSize', 5);
-ax(4) = subplot(414); plot(lightims, lightlevel, '.', 'MarkerSize', 5)
+ax(1) = subplot(411); plot(lightims, fftamp(:,1), '.', 'MarkerSize', 8);
+ax(2) = subplot(412); plot(lightims, rmsamp, '.', 'MarkerSize', 8)
+ax(3) = subplot(413); plot(lightims, fftamp(:,2), '.', 'MarkerSize', 8);
+ax(4) = subplot(414); plot(lightims, lightlevel, '.', 'MarkerSize', 8)
 linkaxes(ax, 'x');
