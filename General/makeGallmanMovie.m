@@ -126,7 +126,7 @@ figure(2); clf;
 freeampdata = ampdata; freeampdata(freeampdata > 10) = 0;
 % % hdat = real(hilbert(freeampdata));
 hdat = envelope(freeampdata, 200, 'peak');
-figure(28); clf; plot(timtim(1:4:end), freeampdata(1:4:end), timtim(1:4:end), hdat(1:4:end)); ylim([-0.5 0.5]);
+figure(28); clf; plot(timtim(1:3:end), freeampdata(1:3:end), timtim(1:3:end), hdat(1:3:end)); ylim([-0.5 0.5]);
 % tt = find(timtim > 920 & timtim < 930);
 % asdf = fftmachine(hdat(tt(1:10:end)), Fs/10);
 % figure(29); hold on; semilogy(asdf.fftfreq, asdf.fftdata); xlim([0 100]);
