@@ -63,8 +63,8 @@ while eidx <= length(eFiles)
     
     if ~isempty(framNo) % The fish is in the correct position in these frames
                            
-          ampdataOne = [ampdataOne, tmpsigA(tim > samlen*(framNo-1) & tim <= samlen*framNo)];
-          ampdataTwo = [ampdataTwo, data(tim > samlen*(framNo-1) & tim <= samlen*framNo)];
+          ampdataOne = [ampdataOne, tmpsigA(tim > samlen*(framNo-1) & tim <= samlen*framNo)'];
+          ampdataTwo = [ampdataTwo, data(tim > samlen*(framNo-1) & tim <= samlen*framNo)'];
             
     end
     
