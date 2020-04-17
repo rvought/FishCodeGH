@@ -122,13 +122,13 @@ figure(2); clf;
     ax(4) = subplot(414); plot(lightims, lightlevel, '.-', 'MarkerSize', 8)
     linkaxes(ax, 'x');
 
-freeampdata = ampdata; freeampdata(freeampdata > 10) = 0;
-% hdat = real(hilbert(freeampdata));
-hdat = envelope(freeampdata, 200, 'peak');
-figure(28); clf; plot(timtim, freeampdata, timtim, hdat);
-tt = find(timtim > 920 & timtim < 930);
-asdf = fftmachine(hdat(tt(1:10:end)), Fs/10);
-figure(29); hold on; semilogy(asdf.fftfreq, asdf.fftdata); xlim([0 100]);
+% freeampdata = ampdata; freeampdata(freeampdata > 10) = 0;
+% % hdat = real(hilbert(freeampdata));
+% hdat = envelope(freeampdata, 200, 'peak');
+% figure(28); clf; plot(timtim, freeampdata, timtim, hdat);
+% tt = find(timtim > 920 & timtim < 930);
+% asdf = fftmachine(hdat(tt(1:10:end)), Fs/10);
+% figure(29); hold on; semilogy(asdf.fftfreq, asdf.fftdata); xlim([0 100]);
 
 
 
