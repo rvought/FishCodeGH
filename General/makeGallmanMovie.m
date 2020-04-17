@@ -1,4 +1,4 @@
-%% Setup
+%% Setup once per Matlab start
 
     addpath('~/SparkleShare/github.com/FishCodeGH/General')
     addpath('~/SparkleShare/github.com/FishCodeGH')
