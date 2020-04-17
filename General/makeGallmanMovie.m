@@ -1,3 +1,5 @@
+%% Picking
+
 iFiles = dir('GallmanImage*.mat');
 eFiles = dir('GallmanElectro*.mat');
 
@@ -78,4 +80,6 @@ while eidx <= length(eFiles)
     eidx = eidx+1;
     
 end
+
+%% Analysis
 
