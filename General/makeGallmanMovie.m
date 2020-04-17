@@ -106,7 +106,8 @@ end
 
 
 figure(2); clf; 
-subplot(311); plot(lightims, fftamp(:,1), '.', 'MarkerSize', 5);
-subplot(312); plot(lightims, rmsamp, '.', 'MarkerSize', 5)
-subplot(313); plot(lightims, lightlevel, '.', 'MarkerSize', 5)
+subplot(411); plot(lightims, fftamp(:,1), '.', 'MarkerSize', 5);
+subplot(412); plot(lightims, rmsamp, '.', 'MarkerSize', 5)
+subplot(413); plot(lightims, fftamp(:,2), '.', 'MarkerSize', 5);
+subplot(414); plot(lightims, lightlevel, '.', 'MarkerSize', 5)
 
