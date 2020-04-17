@@ -82,6 +82,7 @@ end
 
 %% Analysis
 
+timtim = 1/Fs:1/Fs:length(ampdataOne)/Fs;
 lightlevelidxs(1) = 1;
 lightlevelidxs = [lightlevelidxs find(ampdataOne > 10)];
 
@@ -89,16 +90,20 @@ for j=2:length(lightlevelidxs)
     
     tt = lightlevelidxs(j-1)+1:lightlevelidxs(j)-1; % Range between pulses
     
-    if sum(ampdataOne(tt) > 0
+    if sum(ampdataOne(tt)) > 0
         
-        
-        
-    end
-    
-    
-    
-    
-    
-    
+        sondat = fftmachine(ampdataOne(tt), Fs);
+        [famp, fidx] = max(sondat.fftdata);
+        fftamp(:,j-1) = [famp, sondat.fftfreq(fidx)];
+        rmsamp(j-1) = rms(ampdataOne(tt));
+        lightlevel(j-1) = ampdataOne(lightlevelidxs(j));
+        lightims(j-1) = timtim(lightlevelidxs(j));
+    end    
     
 end
+
+figure(2); clf; 
+subplot(311); plot(lightims, fftamp);
+subplot(312); plot(lightims, rmsamp)
+subplot(312); plot(lightims, lightlevel)
+
