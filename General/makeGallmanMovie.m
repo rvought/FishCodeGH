@@ -100,6 +100,13 @@ for j=2:length(lightlevelidxs)
         lightims(j-1) = timtim(lightlevelidxs(j));
     end    
     
+    if sum(ampdataOne(tt)) == 0
+        fftamp(:,j-1) = [];
+        rmsamp(j-1) = [];
+        lightlevel(j-1) = [];
+        lightims(j-1) = timtim(lightlevelidxs(j));
+    end
+    
 end
 
 figure(2); clf; 
