@@ -93,7 +93,7 @@ for j=2:length(lightlevelidxs)
     if sum(ampdataOne(tt)) > 0
         
         sondat = fftmachine(ampdataOne(tt), Fs);
-        [famp, fidx] = max(sondat.fftdata);
+            [famp, fidx] = max(sondat.fftdata);
         fftamp(j-1,:) = [famp, sondat.fftfreq(fidx)];
         rmsamp(j-1) = rms(ampdataOne(tt));
         lightlevel(j-1) = ampdataOne(lightlevelidxs(j));
