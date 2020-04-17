@@ -113,6 +113,7 @@ ax(4) = subplot(414); plot(lightims, lightlevel, '.', 'MarkerSize', 8)
 linkaxes(ax, 'x');
 
 freeampdata = ampdata; freeampdata(freeampdata > 10) = 0;
+hdat = real(hilbert(freeampdata));
 
 
 
