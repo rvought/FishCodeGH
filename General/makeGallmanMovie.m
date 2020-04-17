@@ -48,6 +48,7 @@ while eidx <= length(eFiles)
         figure(2); 
         subplot(3,2,j); hold on;
         tt = find(tim > (j-1)*samlen &  tim <= j*samlen);
+        length(tt)
         plot(tmpsigA(tt(1:4:end))+0.5); 
         plot(tmpsigB(tt(1:4:end))-0.5);
     end
