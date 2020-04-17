@@ -88,7 +88,7 @@ ampdata = ampdataOne - mean(ampdataOne);
 
 timtim = 1/Fs:1/Fs:length(ampdata)/Fs;
 lightlevelidxs(1) = 1;
-lightlevelidxs = [lightlevelidxs find(ampdata > 10)];
+lightlevelidxs = [lightlevelidxs(1) find(ampdata > 10)];
 
 for j=2:length(lightlevelidxs)
     
