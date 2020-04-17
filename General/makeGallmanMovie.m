@@ -1,3 +1,8 @@
+%% Setup
+
+    addpath('~/SparkleShare/github.com/FishCodeGH/General')
+    addpath('~/SparkleShare/github.com/FishCodeGH')
+
 %% Picking
 
 iFiles = dir('GallmanImage*.mat');
