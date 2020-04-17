@@ -102,13 +102,9 @@ for j=2:length(lightlevelidxs)
         
 end
 
-zz = find(rmsamp == 0);
-lightims(zz) = [];
-rmsamp(zz) = [];
-fftamp(zz,1) = [];
 
 figure(2); clf; 
-subplot(311); plot(lightims, fftamp(:,1), '-.', 'MarkerSize', 5);
-subplot(312); plot(lightims, rmsamp, '-.', 'MarkerSize', 5)
-subplot(312); plot(lightims, lightlevel, '-.', 'MarkerSize', 5)
+subplot(311); plot(lightims, fftamp(:,1), '.', 'MarkerSize', 5);
+subplot(312); plot(lightims, rmsamp, '.', 'MarkerSize', 5)
+subplot(312); plot(lightims, lightlevel, '.', 'MarkerSize', 5)
 
