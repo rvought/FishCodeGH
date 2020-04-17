@@ -98,6 +98,7 @@ for j=2:length(lightlevelidxs)
         rmsamp(j-1) = rms(ampdataOne(tt));
         lightlevel(j-1) = ampdataOne(lightlevelidxs(j));
         lightims(j-1) = timtim(lightlevelidxs(j));
+        
     end    
         
 end
