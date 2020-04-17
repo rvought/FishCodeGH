@@ -33,6 +33,7 @@ eidx = 1;
 
 while eidx <= length(eFiles)
 
+    figure(1); clf; figure(2); clf;
     eval(['load ' eFiles(eidx).name]); % Load the EOD data
     tmpsigA = filtfilt(b,a,data(:,1)); % Filter both channles
     tmpsigB = filtfilt(b,a,data(:,2));
@@ -40,11 +41,11 @@ while eidx <= length(eFiles)
     fprintf('Entry %i. \n', eidx); % Tell the user where we are    
     
     for j=1:6 % For each 10 second epoch in the 60 second sample
-        figure(1); clf;
+        figure(1); 
         eval(['load ' iFiles(iidx+j).name]); % Load the image
         subplot(3,2,j); imshow(vData); % Plot the data
         text(100,100, num2str(j), 'Color', 'g', 'FontSize', 24); % Add the label
-        figure(2); clf;
+        figure(2); 
         subplot(3,2,j); hold on;
         tt = find(tim > (j-1)*samlen &  tim < j*samlen);
         plot(tim(tt(1:4:length(tt))), data((1:4:length(tt)),1)+0.5); 
