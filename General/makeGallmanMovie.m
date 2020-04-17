@@ -54,17 +54,17 @@ while eidx <= length(eFiles)
     end
    
     drawnow;
-    a = input('Best Frame? ');
+    framNo = input('Best Frame? ');
     
-    if isempty(a)
+    if isempty(framNo)
         ampdataOne = [ampdataOne, zeros(1, Fs*10)];
         ampdataTwo = [ampdataTwo, zeros(1, Fs*10)];
     end
     
-    if ~isempty(a) % The fish is in the correct position in these frames
+    if ~isempty(framNo) % The fish is in the correct position in these frames
                            
-          ampdataOne = [ampdataOne, tmpsigA(tim > samlen*(a-1) & tim <= samlen*a)];
-          ampdataTwo = [ampdataTwo, data(tim > samlen*(a-1) & tim <= samlen*a)];
+          ampdataOne = [ampdataOne, tmpsigA(tim > samlen*(framNo-1) & tim <= samlen*framNo)];
+          ampdataTwo = [ampdataTwo, data(tim > samlen*(framNo-1) & tim <= samlen*framNo)];
             
     end
     
