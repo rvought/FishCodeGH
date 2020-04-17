@@ -82,11 +82,18 @@ end
 
 %% Analysis
 
-lightlevelidxs = find(ampdataOne > 10);
+lightlevelidxs(1) = 1;
+lightlevelidxs = [lightlevelidxs find(ampdataOne > 10)];
 
-for j=1:length(lightlevelidxs)
+for j=2:length(lightlevelidxs)
     
+    tt = lightlevelidxs(j-1)+1:lightlevelidxs(j)-1; % Range between pulses
     
+    if sum(ampdataOne(tt) > 0
+        
+        
+        
+    end
     
     
     
