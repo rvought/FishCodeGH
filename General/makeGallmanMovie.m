@@ -108,7 +108,6 @@ for j=2:length(lightlevelidxs)
 end
 
 gIDX = find(rmsamp ~= 0);
-gIDX = gIDX(1:end-1);
 
 figure(2); clf; 
     ax(1) = subplot(411); plot(lightims(gIDX), fftamp(gIDX,1), '.-', 'MarkerSize', 8);
