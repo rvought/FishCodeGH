@@ -105,7 +105,7 @@ end
 zz = find(fftamp == 0);
 
 figure(2); clf; 
-subplot(311); plot(lightims(zz), fftamp(zz), '-.', 'MarkerSize', 5);
+subplot(311); plot(lightims(zz), fftamp(1,zz), '-.', 'MarkerSize', 5);
 subplot(312); plot(lightims(zz), rmsamp(zz), '-.', 'MarkerSize', 5)
 subplot(312); plot(lightims(zz), lightlevel(zz), '-.', 'MarkerSize', 5)
 
