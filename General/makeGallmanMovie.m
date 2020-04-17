@@ -82,3 +82,16 @@ end
 
 %% Analysis
 
+lightlevelidxs = find(ampdataOne > 10);
+
+for j=1:length(lightlevelidxs)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+end
