@@ -105,7 +105,7 @@ for j=2:length(lightlevelidxs)
         
 end
 
-
+freeampdata = ampdata; freeampdata > 
 
 figure(2); clf; 
 ax(1) = subplot(411); plot(lightims, fftamp(:,1), '.', 'MarkerSize', 8);
