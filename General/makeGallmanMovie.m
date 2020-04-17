@@ -84,7 +84,7 @@ end
 
 %% Analysis
 
-ampdata = ampdataOne - mean(ampdataOne);
+ampdata = ampdataOne;
 
 timtim = 1/Fs:1/Fs:length(ampdata)/Fs;
 lightlevelidxs(1) = 1;
