@@ -95,7 +95,7 @@ for j=2:length(lightlevelidxs)
     tt = lightlevelidxs(j-1)+1:lightlevelidxs(j)-1; % Range between pulses
     lightims(j-1) = timtim(lightlevelidxs(j));
 
-    if sum(ampdata(tt)) > 0
+    if sum(ampdata(tt)) ~= 0
         
         sondat = fftmachine(ampdata(tt), Fs, 50);
             [famp, fidx] = max(sondat.fftdata);
