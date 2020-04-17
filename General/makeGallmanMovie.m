@@ -52,6 +52,8 @@ while eidx <= length(eFiles)
         tt = find(tim > (j-1)*samlen &  tim <= j*samlen);
         plot(tim(tt(1:4:end)), tmpsigA(tt(1:4:end))+0.5); 
         plot(tim(tt(1:4:end)), tmpsigB(tt(1:4:end))-0.5);
+        text(0.5+((j-1)*10), 0, num2str(j), 'Color', 'g', 'FontSize', 24); % Add the label
+        ylim([-1.5 1.5]);
     end
    
     drawnow;
