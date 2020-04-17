@@ -140,4 +140,7 @@ figure(2); clf;
 % % figure(29); hold on; semilogy(asdf.fftfreq, asdf.fftdata); xlim([0 100]);
 
 
+%% When you are done...
+
+% save filname.mat
 
