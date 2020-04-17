@@ -47,7 +47,7 @@ while eidx <= length(eFiles)
         text(100,100, num2str(j), 'Color', 'g', 'FontSize', 24); % Add the label
         figure(2); 
         subplot(3,2,j); hold on;
-        tt = find(tim > (j-1)*samlen &  tim < j*samlen);
+        tt = find(tim > (j-1)*samlen &  tim <= j*samlen);
         plot(tmpsigA(tt(1:4:end))+0.5); 
         plot(tmpsigB(tt(1:4:end))-0.5);
     end
