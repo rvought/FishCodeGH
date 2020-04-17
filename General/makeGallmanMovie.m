@@ -2,6 +2,7 @@
 
     addpath('~/SparkleShare/github.com/FishCodeGH/General')
     addpath('~/SparkleShare/github.com/FishCodeGH')
+    % Relies on fftmachine.m
 
 %% Picking
 
