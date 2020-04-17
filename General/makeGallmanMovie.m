@@ -94,7 +94,7 @@ for j=2:length(lightlevelidxs)
         
         sondat = fftmachine(ampdataOne(tt), Fs);
         [famp, fidx] = max(sondat.fftdata);
-        fftamp(:,j-1) = [famp, sondat.fftfreq(fidx)];
+        fftamp(j-1,:) = [famp, sondat.fftfreq(fidx)];
         rmsamp(j-1) = rms(ampdataOne(tt));
         lightlevel(j-1) = ampdataOne(lightlevelidxs(j));
         lightims(j-1) = timtim(lightlevelidxs(j));
@@ -105,7 +105,7 @@ end
 zz = find(fftamp == 0);
 
 figure(2); clf; 
-subplot(311); plot(lightims(zz), fftamp(1,zz), '-.', 'MarkerSize', 5);
+subplot(311); plot(lightims(zz), fftamp(zz,1), '-.', 'MarkerSize', 5);
 subplot(312); plot(lightims(zz), rmsamp(zz), '-.', 'MarkerSize', 5)
 subplot(312); plot(lightims(zz), lightlevel(zz), '-.', 'MarkerSize', 5)
 
