@@ -48,8 +48,8 @@ while eidx <= length(eFiles)
         figure(2); 
         subplot(3,2,j); hold on;
         tt = find(tim > (j-1)*samlen &  tim < j*samlen);
-        plot(tim(tt(1:4:length(tt))), data((1:4:length(tt)),1)+0.5); 
-        plot(tim((1:4:length(tt))), data((1:4:length(tt)),2)-0.5);
+        plot(data((1:4:length(tt)),1)+0.5); 
+        plot(data((1:4:length(tt)),2)-0.5);
     end
    
     drawnow;
