@@ -123,6 +123,8 @@ figure(2); clf;
 %     ax(4) = subplot(414); plot(lightims, lightlevel, '.-', 'MarkerSize', 8)
 %     linkaxes(ax, 'x');
 
+%% Other stuff to do
+
 freeampdata = ampdata; freeampdata(freeampdata > 10) = 0;
 % % hdat = real(hilbert(freeampdata));
 hdat = envelope(freeampdata, 200, 'peak');
