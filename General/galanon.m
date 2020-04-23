@@ -100,6 +100,10 @@ for j=length(out):-1:1
     end    
     
     if sum(out(j).Ch1) == 0
+        
+        out(j).Ch1 = []; % Empty out the 0'ed data to save space
+        out(j).Ch2 = [];
+
         dataidxs(j) = [];
         temps(j) = [];
         lightlevels(j) = [];
