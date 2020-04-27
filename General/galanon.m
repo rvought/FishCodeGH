@@ -130,7 +130,7 @@ figure(2); clf;
         plot(squeeze(dataidxs), squeeze(fftCh1(:,2)), '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
         hold on; plot(dataidxs, fftCh2(:,2), '.-', 'MarkerSize', 8); ylim([300 600]);
     ax(4) = subplot(414); 
-        yyaxis left; plot(dataidxs, lightlevels, '.-', 'MarkerSize', 8); ylim([190 250]);
+        yyaxis left; plot(dataidxs, lightlevels, '.-', 'MarkerSize', 8); ylim([140 260]);
         title('Light level & Temperature');
         yyaxis right; plot(dataidxs, temps, '.-', 'MarkerSize', 8); ylim([0.7 0.9]);
         
