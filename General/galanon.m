@@ -6,7 +6,7 @@
 
     % cd into the directory where the original files live
     
-%% Setup 
+%% Setup once per directory
 
 iFiles = dir('GallmanImage*.mat');
 eFiles = dir('GallmanElectro*.mat');
