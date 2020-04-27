@@ -76,9 +76,11 @@ while eidx <= length(eFiles)
     
 end
 
+out(1).Fs = Fs;
+
 %% Analysis
 
-Fs = 1 / (out.time(2) - out.time(1));
+Fs = out(1).Fs;
 
 for j=length(out):-1:1
     
