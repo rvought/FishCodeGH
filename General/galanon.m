@@ -152,4 +152,5 @@ figure(2); clf;
 
 %% When you are done...
 
-% save filname.mat
+%
+% save filname.mat out
