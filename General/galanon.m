@@ -78,6 +78,8 @@ end
 
 %% Analysis
 
+Fs = 1 / (out.time(2) - out.time(1));
+
 for j=length(out):-1:1
     
     if sum(out(j).Ch1) ~= 0
