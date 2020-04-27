@@ -121,11 +121,11 @@ end
 
 figure(2); clf; 
     ax(1) = subplot(411); 
-        plot(dataidxs, fftCh1(:,1), '.-', 'MarkerSize', 8); title('FFT amplitude');
-        hold on; plot(dataidxs, fftCh2(:,1), '.-', 'MarkerSize', 8); 
+        yyaxis right; plot(dataidxs, fftCh1(:,1), '.-', 'MarkerSize', 8); title('FFT amplitude');
+        hold on; yyaxis left; plot(dataidxs, fftCh2(:,1), '.-', 'MarkerSize', 8); 
     ax(2) = subplot(412); 
-        plot(dataidxs, rmsCh1, '.-', 'MarkerSize', 8);
-        hold on; plot(dataidxs, rmsCh2, '.-', 'MarkerSize', 8); title('RMS amplitude');
+        yyaxis right; plot(dataidxs, rmsCh1, '.-', 'MarkerSize', 8);
+        hold on; yyaxis left; plot(dataidxs, rmsCh2, '.-', 'MarkerSize', 8); title('RMS amplitude');
     ax(3) = subplot(413); 
         plot(squeeze(dataidxs), squeeze(fftCh1(:,2)), '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
         hold on; plot(dataidxs, fftCh2(:,2), '.-', 'MarkerSize', 8); ylim([300 600]);
