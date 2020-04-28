@@ -52,9 +52,11 @@ fprintf('Cave mean dF %2.4f var dF %2.4f and n= %i. \n', mean(CalldFs), std(Call
 fprintf('T-test surface versus cave dfs: P=%2.4f, tstat=%4.2f and df=%i. \n', bb, dd.tstat, dd.df);
 
 % Get 
+for j=1:length(caveDF)
+    if ~isempty(caveDF(j).pair)
 
 
-
+end
 
 figure(3); clf;
 subplot(211); hold on;
