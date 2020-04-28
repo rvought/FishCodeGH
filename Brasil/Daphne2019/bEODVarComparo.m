@@ -145,10 +145,16 @@ end
 fprintf('Mean Cave Group Var = %2.8f, Var %2.8f, n=%i \n', nanmean(CaveGroupSTDs), nanstd(CaveGroupSTDs), length(~isnan(CaveGroupSTDs)));
 
 [a,b,c,d] = ttest2(CaveGroupSTDs, SurfGroupSTDs);
-fprintf('Surface tube vs group: p=%2.6f, df=%i, tstat=%2.4f \n', b, d.df, d.tstat);
+fprintf('Cave group vs Surface group: p=%2.6f, df=%i, tstat=%2.4f \n', b, d.df, d.tstat);
 
 
 [a,b,c,d] = ttest2(SurfImmobileSTDs, SurfGroupSTDs);
-[a,b,c,d] = ttest2(CaveGroupSTDs, CaveSoloSTDs);
-[a,b,c,d] = ttest2(SurfImmobileSTDs, CaveSoloSTDs);
+fprintf('Surface tube vs Surface group: p=%2.6f, df=%i, tstat=%2.4f \n', b, d.df, d.tstat);
 
+[a,b,c,d] = ttest2(CaveGroupSTDs, CaveSoloSTDs);
+fprintf('Cave group vs Cave solo: p=%2.6f, df=%i, tstat=%2.4f \n', b, d.df, d.tstat);
+
+[a,b,c,d] = ttest2(SurfImmobileSTDs, CaveSoloSTDs);
+fprintf('Surface tube vs Cave solo: p=%2.6f, df=%i, tstat=%2.4f \n', b, d.df, d.tstat);
+
+clear a b c d k j tt nFish fishidx StepSize
