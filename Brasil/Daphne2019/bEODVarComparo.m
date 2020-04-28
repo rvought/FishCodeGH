@@ -1,7 +1,7 @@
 
 StepSize = 300;
 
-%% Immobilized Surface Fish in the grid
+%% Immobilized (in tubes) Surface Fish in the grid
 
 SurfImmobileSTDs = [];
 
@@ -119,5 +119,10 @@ CaveSoloSTDs = CaveSoloSTDs(~isnan(CaveSoloSTDs));
 CaveSoloSTDs = CaveSoloSTDs(CaveSoloSTDs ~=0);
 
 fprintf('Mean Cave Solitary Var = %2.8f, Var %2.8f, n=%i \n', mean(CaveSoloSTDs), std(CaveSoloSTDs), length(CaveSoloSTDs));
+
+%% Freely moving group fish in the cave
+
+CaveGroupSTDs = [];
+
 
 
