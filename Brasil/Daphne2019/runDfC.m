@@ -46,8 +46,8 @@ figure(2); clf; hold on;
 % Best low-dF example    
 % Surface entry 5, fish 10 and 11 and pair 172 in the output of dFanalysis
 
-fprintf('Surface mean dF %2.4f var dF %2.4f and n= %i. \n', mean(SalldFs), var(SalldFs), length(SalldFs));
-fprintf('Cave mean dF %2.4f var dF %2.4f and n= %i. \n', mean(CalldFs), var(CalldFs), length(CalldFs));
+fprintf('Surface mean dF %2.4f var dF %2.4f and n= %i. \n', mean(SalldFs), std(SalldFs), length(SalldFs));
+fprintf('Cave mean dF %2.4f var dF %2.4f and n= %i. \n', mean(CalldFs), std(CalldFs), length(CalldFs));
 
 
 
