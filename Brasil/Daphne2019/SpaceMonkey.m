@@ -1,4 +1,4 @@
-
+% Relies on SpaceCorps.m and SpaceAnal.m
 
 StepSize = 300;
 CfishArea = []; 
