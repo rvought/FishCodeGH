@@ -48,7 +48,7 @@ figure(2); clf; hold on;
 
 fprintf('Surface mean dF %2.4f var dF %2.4f and n= %i. \n', mean(SalldFs), std(SalldFs), length(SalldFs));
 fprintf('Cave mean dF %2.4f var dF %2.4f and n= %i. \n', mean(CalldFs), std(CalldFs), length(CalldFs));
-
+[aa,bb,cc,dd] = ttest2(SalldFs, CalldFs)
 
 
 
