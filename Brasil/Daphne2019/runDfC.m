@@ -43,24 +43,44 @@ figure(2); clf; hold on;
     bar(plotspots, -cavehist, 'r');
     ylim([-0.03, 0.03]);
 
-% Best low-dF example    
-% Surface entry 5, fish 10 and 11 and pair 172 in the output of dFanalysis
 
 fprintf('Surface mean dF %2.4f var dF %2.4f and n= %i. \n', mean(SalldFs), std(SalldFs), length(SalldFs));
 fprintf('Cave mean dF %2.4f var dF %2.4f and n= %i. \n', mean(CalldFs), std(CalldFs), length(CalldFs));
 [aa,bb,cc,dd] = ttest2(SalldFs, CalldFs);
 fprintf('T-test surface versus cave dfs: P=%2.4f, tstat=%4.2f and df=%i. \n', bb, dd.tstat, dd.df);
 
-% Get 
+%% Get low dF stats
+caveLessthanTen = 0; caveLessthanFive = 0;
+surfLessthanTen = 0; surfLessthanFive = 0;
+
 for j=1:length(caveDF)
     if ~isempty(caveDF(j).pair)
     for k=1:length(caveDF(j).pair)
-        if caveDF(j).pair(k).mean
-        
+        if caveDF(j).pair(k).dFmean < 10
+            caveLessthanTen = caveLessthanTen + 1;
+        if caveDF(j).pair(k).dFmean < 5
+            caveLessthanFive = caveLessthanFive + 1;
+        end
+        end
+    end
+    end
+end
+for j=1:length(surfDF)
+    if ~isempty(surfDF(j).pair)
+    for k=1:length(surfDF(j).pair)
+        if surfDF(j).pair(k).dFmean < 10
+            surfLessthanTen = surfLessthanTen + 1;
+        if surfDF(j).pair(k).dFmean < 5
+            surfLessthanFive = surfLessthanFive + 1;
+        end
+        end
     end
     end
 end
 
+%% Plot
+% Best low-dF example    
+% Surface entry 5, fish 10 and 11 and pair 172 in the output of dFanalysis
 figure(3); clf;
 subplot(211); hold on;
 
