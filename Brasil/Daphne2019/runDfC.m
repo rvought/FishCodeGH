@@ -80,7 +80,7 @@ for j=1:length(srfDF)
     end
 end
 
-%% Plot
+%% Plot dF distribution
 % Best low-dF example    
 % Surface entry 5, fish 10 and 11 and pair 172 in the output of dFanalysis
 figure(3); clf;
