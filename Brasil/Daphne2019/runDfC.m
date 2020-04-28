@@ -50,8 +50,8 @@ fprintf('Cave mean dF %2.4f var dF %2.4f and n= %i. \n', mean(CalldFs), std(Call
 fprintf('T-test surface versus cave dfs: P=%2.4f, tstat=%4.2f and df=%i. \n', bb, dd.tstat, dd.df);
 
 %% Get low dF stats
-caveLessthanTen = 0; caveLessthanFive = 0;
-surfLessthanTen = 0; surfLessthanFive = 0;
+caveLessthanTen = 0; caveLessthanFive = 0; caveTotalDfs = 0;
+surfLessthanTen = 0; surfLessthanFive = 0; surfTotalDfs = 0;
 
 for j=1:length(caveDF)
     if ~isempty(caveDF(j).pair)
@@ -62,6 +62,7 @@ for j=1:length(caveDF)
             caveLessthanFive = caveLessthanFive + 1;
         end
         end
+        caveTotalDfs = caveTotalDfs + 1;
     end
     end
 end
@@ -74,6 +75,7 @@ for j=1:length(srfDF)
             surfLessthanFive = surfLessthanFive + 1;
         end
         end
+        surfTotalDfs = surfTotalDfs + 1;
     end
     end
 end
