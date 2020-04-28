@@ -50,6 +50,7 @@ fprintf('Cave mean dF %2.4f var dF %2.4f and n= %i. \n', mean(CalldFs), std(Call
 fprintf('T-test surface versus cave dfs: P=%2.4f, tstat=%4.2f and df=%i. \n', bb, dd.tstat, dd.df);
 
 %% Get low dF stats
+
 caveLessthanTen = 0; caveLessthanFive = 0; caveTotalDfs = 0;
 surfLessthanTen = 0; surfLessthanFive = 0; surfTotalDfs = 0;
 
@@ -80,9 +81,14 @@ for j=1:length(srfDF)
     end
 end
 
-%% Plot dF distribution
+fprintf('Surface pairs %i, of which %i are less than 10Hz and %i are less than 5Hz dF \n', surfTotalDfs, surfLessthanTen, surfLessthanFive);
+fprintf('Cave pairs %i, of which %i are less than 10Hz and %i are less than 5Hz dF \n', caveTotalDfs, caveLessthanTen, caveLessthanFive);
+
+%% Plot low dF example
+
 % Best low-dF example    
 % Surface entry 5, fish 10 and 11 and pair 172 in the output of dFanalysis
+
 figure(3); clf;
 subplot(211); hold on;
 
