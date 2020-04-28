@@ -54,8 +54,11 @@ fprintf('T-test surface versus cave dfs: P=%2.4f, tstat=%4.2f and df=%i. \n', bb
 % Get 
 for j=1:length(caveDF)
     if ~isempty(caveDF(j).pair)
-
-
+    for k=1:length(caveDF(j).pair)
+        if caveDF(j).pair(k).mean
+        
+    end
+    end
 end
 
 figure(3); clf;
