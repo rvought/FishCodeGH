@@ -65,10 +65,10 @@ for j=1:length(caveDF)
     end
     end
 end
-for j=1:length(surfDF)
-    if ~isempty(surfDF(j).pair)
-    for k=1:length(surfDF(j).pair)
-        if surfDF(j).pair(k).dFmean < 10
+for j=1:length(srfDF)
+    if ~isempty(srfDF(j).pair)
+    for k=1:length(srfDF(j).pair)
+        if srfDF(j).pair(k).dFmean < 10
             surfLessthanTen = surfLessthanTen + 1;
         if surfDF(j).pair(k).dFmean < 5
             surfLessthanFive = surfLessthanFive + 1;
