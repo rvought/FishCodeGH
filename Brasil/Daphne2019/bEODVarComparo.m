@@ -124,13 +124,25 @@ fprintf('Mean Cave Solitary Var = %2.8f, Var %2.8f, n=%i \n', mean(CaveSoloSTDs)
 
 CaveGroupSTDs = [];
 
-[3, 4, 5, 6, 8, 13, 14] % >1200 second samples
-[7, 10, 11, 12] % <1200 second samples
-% Cave recording #1 - 1 fish
-    for j = 1:3 % 0 to 900
-        tt = cave(1).fish(1).freq(:,1) > StepSize*(j-1) & cave(1).fish(1).freq(:,1) < StepSize*j;
-        CaveSoloSTDs(end+1) = nanstd(cave(1).fish(1).freq(tt,2));
+for k = [3, 4, 5, 6, 8, 13, 14] % Cave recordings with durations >1200 seconds
+    for nFish = 1:length(cave(k).fish) % For each fish in those recordings
+        for j = 1:4 % 0 to 1200 
+            tt = cave(k).fish(nFish).freq(:,1) > StepSize*(j-1) & cave(k).fish(nFish).freq(:,1) < StepSize*j;
+            CaveGroupSTDs(end+1) = nanstd(cave(k).fish(nFish).freq(tt,2));
+        end
     end
+end
+
+for k = [7, 10, 11, 12] % Cave recordings with durations <1200 seconds
+    for nFish = 1:length(cave(k).fish) % For each fish in those recordings
+        for j = 1:3 % 0 to 900 
+            tt = cave(k).fish(nFish).freq(:,1) > StepSize*(j-1) & cave(k).fish(nFish).freq(:,1) < StepSize*j;
+            CaveGroupSTDs(end+1) = nanstd(cave(k).fish(nFish).freq(tt,2));
+        end
+    end
+end
+
+fprintf('Mean Cave Group Var = %2.8f, Var %2.8f, n=%i \n', mean(CaveGroupSTDs), std(CaveGroupSTDs), length(CaveGroupSTDs));
 
 
 
