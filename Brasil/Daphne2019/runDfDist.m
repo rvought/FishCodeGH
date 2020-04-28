@@ -112,7 +112,7 @@ negthresh = -posthresh;
 ltlt(1,:) = [length(find(shuffCorrs < negthresh)), length(find(shuffCorrs > negthresh))];
 %ltlt(1,:) = [length(find(shiftCorrs < negthresh)), length(find(shiftCorrs > negthresh))];
 ltlt(2,:) = [length(find(realCorrs < negthresh)), length(find(realCorrs > negthresh))];
-[h,p,stats] = fishertest(ltlt)
+[~,p,stats] = fishertest(ltlt);
 fprintf('Fisher Test more NEGATIVE correlations than expected? p=%2.4f, oddsratio=%2.4f \n', p, stats.OddsRatio); 
 
 
