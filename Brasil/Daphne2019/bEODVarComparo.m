@@ -126,3 +126,11 @@ CaveGroupSTDs = [];
 
 
 
+% Cave recording #1 - 1 fish
+    for j = 1:3 % 0 to 900
+        tt = cave(1).fish(1).freq(:,1) > StepSize*(j-1) & cave(1).fish(1).freq(:,1) < StepSize*j;
+        CaveSoloSTDs(end+1) = nanstd(cave(1).fish(1).freq(tt,2));
+    end
+
+
+
