@@ -70,7 +70,7 @@ for j=1:length(srfDF)
     for k=1:length(srfDF(j).pair)
         if srfDF(j).pair(k).dFmean < 10
             surfLessthanTen = surfLessthanTen + 1;
-        if surfDF(j).pair(k).dFmean < 5
+        if srfDF(j).pair(k).dFmean < 5
             surfLessthanFive = surfLessthanFive + 1;
         end
         end
