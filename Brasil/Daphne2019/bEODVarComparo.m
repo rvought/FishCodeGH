@@ -142,7 +142,7 @@ for k = [7, 10, 11, 12] % Cave recordings with durations <1200 seconds
     end
 end
 
-fprintf('Mean Cave Group Var = %2.8f, Var %2.8f, n=%i \n', mean(CaveGroupSTDs), std(CaveGroupSTDs), length(CaveGroupSTDs));
+fprintf('Mean Cave Group Var = %2.8f, Var %2.8f, n=%i \n', nanmean(CaveGroupSTDs), nanstd(CaveGroupSTDs), length(~isnan(CaveGroupSTDs)));
 
 
 
