@@ -146,4 +146,5 @@ fprintf('Mean Cave Group Var = %2.8f, Var %2.8f, n=%i \n', nanmean(CaveGroupSTDs
 
 [a,b,c,d] = ttest2(CaveGroupSTDs, SurfGroupSTDs);
 [a,b,c,d] = ttest2(SurfImmobileSTDs, SurfGroupSTDs);
+[a,b,c,d] = ttest2(CaveGroupSTDs, CaveSoloSTDs);
 
