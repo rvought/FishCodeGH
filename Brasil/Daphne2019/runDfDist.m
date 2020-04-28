@@ -104,7 +104,8 @@ posthresh = 0.6;
 gtgt(1,:) = [length(find(shuffCorrs > posthresh)), length(find(shuffCorrs < posthresh))];
 %gtgt(1,:) = [length(find(shiftCorrs > posthresh)), length(find(shiftCorrs < posthresh))];
 gtgt(2,:) = [length(find(realCorrs > posthresh)), length(find(realCorrs < posthresh))];
-[h,p,stats] = fishertest(gtgt)
+[~,p,stats] = fishertest(gtgt);
+fprintf('Fisher Test more POSITIVE correlations than expected? p=%2.4f, oddsratio=%2.4f \n', p, stats.OddsRatio); 
 
 % MORE STRONG NEGATIVE CORRELATIONS than expected?
 negthresh = -posthresh;
@@ -112,6 +113,7 @@ ltlt(1,:) = [length(find(shuffCorrs < negthresh)), length(find(shuffCorrs > negt
 %ltlt(1,:) = [length(find(shiftCorrs < negthresh)), length(find(shiftCorrs > negthresh))];
 ltlt(2,:) = [length(find(realCorrs < negthresh)), length(find(realCorrs > negthresh))];
 [h,p,stats] = fishertest(ltlt)
+fprintf('Fisher Test more NEGATIVE correlations than expected? p=%2.4f, oddsratio=%2.4f \n', p, stats.OddsRatio); 
 
 
 %figure(2); clf;
