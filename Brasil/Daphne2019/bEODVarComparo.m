@@ -124,8 +124,8 @@ fprintf('Mean Cave Solitary Var = %2.8f, Var %2.8f, n=%i \n', mean(CaveSoloSTDs)
 
 CaveGroupSTDs = [];
 
-[3, 4, 5, 6] % 1200 second samples
-[7
+[3, 4, 5, 6, 8] % >1200 second samples
+[7, 9]
 % Cave recording #1 - 1 fish
     for j = 1:3 % 0 to 900
         tt = cave(1).fish(1).freq(:,1) > StepSize*(j-1) & cave(1).fish(1).freq(:,1) < StepSize*j;
