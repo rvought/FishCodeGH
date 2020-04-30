@@ -2,7 +2,7 @@
 
     addpath('~/SparkleShare/github.com/FishCodeGH/General')
     addpath('~/SparkleShare/github.com/FishCodeGH')
-    % Relies on fftmachine.m, which lives in 
+    % Relies on fftmachine.m
 
     % cd into the directory where the original files live
     
@@ -15,6 +15,7 @@ Fs = 20000; % Sample rate for EOD in Hz
 samlen = 10; % Duration of the sample (60 seconds total)
 
 [b,a] = butter(3, 160 / (Fs/2), 'high'); % Highpass filter to remove 60Hz.
+[d,c] = butter(3, 5000 / (Fs/2), 'low'); % Lowpass filter that should not be necessary.
 
 if (length(iFiles) / 6) ~= length(eFiles)
     fprintf('Fuck off motherfucker\n');
@@ -30,15 +31,19 @@ while eidx <= length(eFiles)
     figure(1); clf; figure(2); clf;
     eval(['load ' eFiles(eidx).name]); % Load the EOD data
     tmpsigA = filtfilt(b,a,EODonly(:,1)); % Filter both channels
+        tmpsigA = filtfilt(d,c,tmpsigA);
     tmpsigB = filtfilt(b,a,EODonly(:,2));
+        tmpsigB = filtfilt(d,c,tmpsigB);
     
     fprintf('Entry %i. \n', eidx); % Tell the user where we are    
     
     for j=1:6 % For each 10 second epoch in the 60 second sample
+        
         figure(1); 
         eval(['load ' iFiles(iidx+j).name]); % Load the image
         subplot(3,2,j); imshow(vData); % Plot the EODonly
         text(100,100, num2str(j), 'Color', 'g', 'FontSize', 24); % Add the label
+        
         figure(2); 
         subplot(3,2,j); hold on;
         tt = find(tim > (j-1)*samlen &  tim <= j*samlen);
@@ -51,10 +56,10 @@ while eidx <= length(eFiles)
     drawnow;
     framNo = input('Best Frame? ');
     
-    if isempty(framNo)
+    if isempty(framNo) % User didn't click a frame
         
-        out(eidx).Ch1 = zeros(1, Fs*10);
-        out(eidx).Ch2 = zeros(1, Fs*10);
+        out(eidx).Ch1 = 0;
+        out(eidx).Ch2 = 0;
         
     end
     
