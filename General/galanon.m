@@ -92,12 +92,12 @@ for j=length(out):-1:1
     if sum(out(j).Ch1) ~= 0
         
         sondatCh1 = fftmachine(out(j).Ch1, Fs);
-            [famp, fidx] = max(smooth(sondatCh1.fftdata,100));
+            [famp, fidx] = max(smooth(sondatCh1.fftdata,10));
         fftCh1(j,:) = [famp, sondatCh1.fftfreq(fidx)];
         rmsCh1(j) = rms(out(j).Ch1);
         
         sondatCh2 = fftmachine(out(j).Ch2, Fs);
-            [famp, fidx] = max(smooth(sondatCh2.fftdata,100));
+            [famp, fidx] = max(smooth(sondatCh2.fftdata,10));
         fftCh2(j,:) = [famp, sondatCh2.fftfreq(fidx)];
         rmsCh2(j) = rms(out(j).Ch2);
 
@@ -110,7 +110,7 @@ for j=length(out):-1:1
     
     if sum(out(j).Ch1) == 0
         
-        out(j).Ch1 = []; % Empty out the 0'ed data to save space
+        out(j).Ch1 = []; % Empty out the 0'ed data 
         out(j).Ch2 = [];
 
         dataidxs(j) = [];
