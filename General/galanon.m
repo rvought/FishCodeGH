@@ -143,7 +143,7 @@ end
 f2 = figure(2); clf; 
     bb = [0, 0, 1]; mm = [1, 0, 1];
     ax(1) = subplot(411); 
-    set(ax(1), 'defaultAxesColorOrder', [bb, mm]);
+    set(ax(1), 'defaultAxesColorOrder', [bb; mm]);
         yyaxis left; plot(dataidxs, fftCh1(:,1), 'b.-', 'MarkerSize', 8); title('FFT amplitude');
         hold on; 
         yyaxis right; plot(dataidxs, fftCh2(:,1), 'm.-', 'MarkerSize', 8); 
