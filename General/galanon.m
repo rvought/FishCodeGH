@@ -47,8 +47,8 @@ while eidx <= length(eFiles)
         figure(2); 
         subplot(3,2,j); hold on;
         tt = find(tim > (j-1)*samlen &  tim <= j*samlen);
-        plot(tim(tt(1:4:end)), tmpsigA(tt(1:4:end))+0.5); 
-        plot(tim(tt(1:4:end)), tmpsigB(tt(1:4:end))-0.5);
+        plot(tim(tt(1:4:end)), tmpsigA(tt(1:4:end))+0.5, 'b'); 
+        plot(tim(tt(1:4:end)), tmpsigB(tt(1:4:end))-0.5, 'm');
         text(0.5+((j-1)*10), 0, num2str(j), 'Color', 'm', 'FontSize', 24); % Add the label
         ylim([-1.5 1.5]);
         
@@ -143,11 +143,10 @@ end
 figure(2); clf; 
     ax(1) = subplot(411); 
         yyaxis right; plot(dataidxs, fftCh1(:,1), 'b.-', 'MarkerSize', 8); title('FFT amplitude');
-        hold on; 
-        yyaxis left; plot(dataidxs, fftCh2(:,1), 'r.-', 'MarkerSize', 8); 
+        hold on; yyaxis left; plot(dataidxs, fftCh2(:,1), 'm.-', 'MarkerSize', 8); 
     ax(2) = subplot(412); 
         yyaxis right; plot(dataidxs, rmsCh1, 'b.-', 'MarkerSize', 8);
-        hold on; yyaxis left; plot(dataidxs, rmsCh2, 'r.-', 'MarkerSize', 8); title('RMS amplitude');
+        hold on; yyaxis left; plot(dataidxs, rmsCh2, 'm.-', 'MarkerSize', 8); title('RMS amplitude');
     ax(3) = subplot(413); 
         plot(squeeze(dataidxs), squeeze(fftCh1(:,2)), '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
         hold on; plot(dataidxs, fftCh2(:,2), '.-', 'MarkerSize', 8); ylim([300 600]);
