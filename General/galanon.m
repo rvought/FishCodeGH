@@ -143,9 +143,9 @@ end
 figure(2); clf; 
     ax(1) = subplot(411); 
         yyaxis(ax(1), 'left'); plot(dataidxs, fftCh1(:,1), 'b.-', 'MarkerSize', 8); title('FFT amplitude');
-        ax(1).YAxis.Color = 'b';
+        foo=gca; foo.YAxis.Color = 'b';
         hold on; yyaxis(ax(1), 'right'); plot(dataidxs, fftCh2(:,1), 'm.-', 'MarkerSize', 8); 
-        ax(1).YAxis.Color = 'm';
+        foo=gca; foo.YAxis.Color = 'm';
     ax(2) = subplot(412); 
         yyaxis right; plot(dataidxs, rmsCh1, 'b.-', 'MarkerSize', 8);
         hold on; yyaxis left; plot(dataidxs, rmsCh2, 'm.-', 'MarkerSize', 8); title('RMS amplitude');
