@@ -142,8 +142,8 @@ end
 
 figure(2); clf; 
     ax(1) = subplot(411); 
-        yyaxis right; plot(dataidxs, fftCh1(:,1), 'b.-', 'MarkerSize', 8); title('FFT amplitude');
-        hold on; yyaxis(ax1, left; plot(dataidxs, fftCh2(:,1), 'm.-', 'MarkerSize', 8); 
+        yyaxis(ax(1), 'left', 'Color', 'b'); plot(dataidxs, fftCh1(:,1), 'b.-', 'MarkerSize', 8); title('FFT amplitude');
+        hold on; yyaxis(ax(1), 'right', 'Color', 'm'); plot(dataidxs, fftCh2(:,1), 'm.-', 'MarkerSize', 8); 
     ax(2) = subplot(412); 
         yyaxis right; plot(dataidxs, rmsCh1, 'b.-', 'MarkerSize', 8);
         hold on; yyaxis left; plot(dataidxs, rmsCh2, 'm.-', 'MarkerSize', 8); title('RMS amplitude');
