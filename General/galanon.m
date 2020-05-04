@@ -69,8 +69,18 @@ while eidx <= length(eFiles)
 
 % Click frame - NEW VERSION
 
+winwidth = 2; % Duration of the window for analysis
+
 [xPos, ~] = ginput(1);
 
+    if ~isempty(xPos)
+        out(eidx).Ch1 = tmpsigA(tim > xPos & tim <= xPos + winwidth);
+        out(eidx).Ch2 = tmpsigB(tim > xPos & tim <= xPos + winwidth);        
+    end
+    if isempty(xPos) % User didn't click a frame    
+        out(eidx).Ch1 = 0;
+        out(eidx).Ch2 = 0;        
+    end    
 
 
 % Light, temp, and time data    
@@ -82,6 +92,9 @@ while eidx <= length(eFiles)
     iidx = iidx+6;
     eidx = eidx+1;
     
+% Clear xPos
+    clear xPos
+
 end
 
 out(1).Fs = Fs;
