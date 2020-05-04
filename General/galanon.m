@@ -141,11 +141,11 @@ for j=length(out):-1:1
 end
 
 figure(2); clf; 
+    set(2, 'defaultAxesColorOrder', ['b', 'm']);
     ax(1) = subplot(411); 
         yyaxis left; plot(dataidxs, fftCh1(:,1), 'b.-', 'MarkerSize', 8); title('FFT amplitude');
-        foo=gca; foo.YAxis.Color = 'b';
-        hold on; yyaxis right; plot(dataidxs, fftCh2(:,1), 'm.-', 'MarkerSize', 8); 
-        foo=gca; foo.YAxis.Color = 'm';
+        hold on; 
+        yyaxis right; plot(dataidxs, fftCh2(:,1), 'm.-', 'MarkerSize', 8); 
     ax(2) = subplot(412); 
         yyaxis right; plot(dataidxs, rmsCh1, 'b.-', 'MarkerSize', 8);
         hold on; yyaxis left; plot(dataidxs, rmsCh2, 'm.-', 'MarkerSize', 8); title('RMS amplitude');
