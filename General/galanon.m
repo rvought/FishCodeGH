@@ -51,25 +51,28 @@ while eidx <= length(eFiles)
         plot(tim(tt(1:4:end)), tmpsigB(tt(1:4:end))-0.5);
         text(0.5+((j-1)*10), 0, num2str(j), 'Color', 'm', 'FontSize', 24); % Add the label
         ylim([-1.5 1.5]);
+        
     end
    
     drawnow;
-    framNo = input('Best Frame? ');
     
-    if isempty(framNo) % User didn't click a frame
-        
-        out(eidx).Ch1 = 0;
-        out(eidx).Ch2 = 0;
-        
-    end
-    
-    if ~isempty(framNo) % The fish is in the correct position in these frames
-                           
-        out(eidx).Ch1 = tmpsigA(tim > samlen*(framNo-1) & tim <= samlen*framNo);
-        out(eidx).Ch2 = tmpsigB(tim > samlen*(framNo-1) & tim <= samlen*framNo);
-            
-    end
-    
+% Pick frame - OLD VERSION
+% %     framNo = input('Best Frame? ');    
+% %     if isempty(framNo) % User didn't click a frame    
+% %         out(eidx).Ch1 = 0;
+% %         out(eidx).Ch2 = 0;        
+% %     end    
+% %     if ~isempty(framNo) % The fish is in the correct position in these frames                          
+% %         out(eidx).Ch1 = tmpsigA(tim > samlen*(framNo-1) & tim <= samlen*framNo);
+% %         out(eidx).Ch2 = tmpsigB(tim > samlen*(framNo-1) & tim <= samlen*framNo);            
+% %     end
+
+% Click frame - NEW VERSION
+
+[xPos, ~] = ginput(1);
+
+
+
 % Light, temp, and time data    
     out(eidx).light = mean(mean(vData(700:800, 500:600)));
     out(eidx).temp = temp;
