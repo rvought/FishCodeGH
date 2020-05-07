@@ -137,6 +137,9 @@ totalnum = length(realCorrs);
 
 
 [h,p,ci,stats] = vartest2(realCorrs, shuffCorrs);
+fprintf('vartest2 realCorrs versus shuffCorss p=%1.6f', p);
+
+fprintf('Mean dF=%3.4f and var=%3.4f and N=%i\n', mean(meandF), var(meandF), length(meandF));
 
 clear stepnum tt tf ts fakies z tim makethemthesamelength numbins j kk cenbins
 
