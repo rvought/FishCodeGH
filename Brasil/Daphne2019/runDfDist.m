@@ -70,7 +70,7 @@ for j = 1:length(data(kk).pair) % For each pair of fish
         idxKs(end+1) = kk;
         timStarts(end+1) = StepSz * (z-1);
         
-        meandF(end+1) = mean(data(kk).pair(j).dF(tt))
+        meandF(end+1) = mean(data(kk).pair(j).dF(tt));
         
     end    
     
