@@ -110,15 +110,15 @@ for j=length(out):-1:1
         tmp = fftmachine(out(j).Ch1, Fs);
         out(j).fftCh1data = tmp.fftdata; out(j).fftCh1freq = tmp.fftfreq;
             [famp, fidx] = max(smooth(out(j).fftCh1data, 10));
-        out(j).fftCh1.fftpeakfreq = out(j).fftCh1freq(fidx);
-        out(j).fftCh1.fftpeakamp = famp; 
+        out(j).fftCh1peakfreq = out(j).fftCh1freq(fidx);
+        out(j).fftCh1peakamp = famp; 
         out(j).rmsCh1 = rms(out(j).Ch1);
         
         tmp = fftmachine(out(j).Ch2, Fs);
         out(j).fftCh2data = tmp.fftdata; out(j).fftCh2freq = tmp.fftfreq;
             [famp, fidx] = max(smooth(out(j).fftCh2data,10));
-        out(j).fftCh2.fftpeakfreq = out(j).fftCh2freq(fidx);
-        out(j).fftCh2.fftpeakamp = famp; 
+        out(j).fftCh2peakfreq = out(j).fftCh2freq(fidx);
+        out(j).fftCh2peakamp = famp; 
         out(j).rmsCh2 = rms(out(j).Ch2);
 
         lightlevels(j) = out(j).light;
