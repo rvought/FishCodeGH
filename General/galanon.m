@@ -146,28 +146,32 @@ f2 = figure(2); clf;
     bb = [0 0 1]; mm = [1 0 1];
     set(f2, 'defaultAxesColorOrder', [bb; mm]);
     ax(1) = subplot(411); 
-        fftCh1tmp = zeros(1,length(out));  
-        fftCh2tmp = zeros(1,length(out));
+        fftCh1tmpAMP = zeros(1,length(out));  
+        fftCh2tmpAMP = zeros(1,length(out));
         for kk = length(out):-1:1
             if ~isempty(out(kk).fftCh1.fftpeakamp)
-            fftCh1tmp(kk) = out(kk).fftCh1.fftpeakamp; 
-            fftCh2tmp(kk) = out(kk).fftCh2.fftpeakamp; 
+            fftCh1tmpAMP(kk) = out(kk).fftCh1.fftpeakamp; 
+            fftCh2tmpAMP(kk) = out(kk).fftCh2.fftpeakamp; 
+            fftCh1tmpF(kk) = out(kk).fftCh1.fftpeakfreq; 
+            fftCh2tmpF(kk) = out(kk).fftCh2.fftpeakfreq; 
             end
             if isempty(out(kk).fftCh1.fftpeakamp)
-                fftCh1tmp(kk) = [];
-                fftCh2tmp(kk) = [];            
+                fftCh1tmpAMP(kk) = [];
+                fftCh2tmpAMP(kk) = [];            
+                fftCh1tmpF(kk) = []; 
+                fftCh2tmpF(kk) = []; 
             end
         end
-        yyaxis left; plot([out.idx], fftCh1tmp, 'b.-', 'MarkerSize', 8); title('FFT amplitude');
+        yyaxis left; plot([out.idx], fftCh1tmpAMP, 'b.-', 'MarkerSize', 8); title('FFT amplitude');
 %        yyaxis left; plot([out.idx], [out.fftCh1.fftpeakamp], 'b.-', 'MarkerSize', 8); title('FFT amplitude');
         hold on; 
-        yyaxis right; plot([out.idx], fftCh1tmp, 'm.-', 'MarkerSize', 8); 
+        yyaxis right; plot([out.idx], fftCh1tmpAMP, 'm.-', 'MarkerSize', 8); 
     ax(2) = subplot(412); 
         yyaxis right; plot([out.idx], [out.rmsCh1], 'b.-', 'MarkerSize', 8);
         hold on; yyaxis left; plot([out.idx], [out.rmsCh2], 'm.-', 'MarkerSize', 8); title('RMS amplitude');
     ax(3) = subplot(413); 
-        plot([out.idx], [out.fftCh1.fftpeakfreq], '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
-        hold on; plot([out.idx], [out.fftCh2.fftpeakfreq], '.-', 'MarkerSize', 8); ylim([300 600]);
+        plot([out.idx], fftCh1tmpF, '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
+        hold on; plot([out.idx], fftCh2tmpF, '.-', 'MarkerSize', 8); ylim([300 600]);
     ax(4) = subplot(414); 
         yyaxis left; plot(1:length(out), [out.light], '.-', 'MarkerSize', 8); ylim([180 260]);
         title('Light level & Temperature');
