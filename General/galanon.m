@@ -65,10 +65,11 @@ while eidx <= length(eFiles)
                 totalvar(zz) = tmpBvar + tmpAvar;
             end
                 
-                [minVar(j), minVaridx(j)] = min(totalvar);
-                
+                [minVar(j), minVaridx] = min(totalvar);
+                minVartim(j) = tim(tt(1)) + winwidth*(minVaridx-1);
     end
-   
+   minVar
+   minVartim
     drawnow;
     
 % Pick frame - OLD VERSION
