@@ -54,6 +54,7 @@ while eidx <= length(eFiles)
         ylim([-1.5 1.5]);
         
         % Get the variance for both
+            tmpsigA(tt)
         
     end
    
