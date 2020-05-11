@@ -146,7 +146,8 @@ f2 = figure(2); clf;
     bb = [0 0 1]; mm = [1 0 1];
     set(f2, 'defaultAxesColorOrder', [bb; mm]);
     ax(1) = subplot(411); 
-        fftCh1tmp = zeros(length(out),1);  fftCh2tmp = zeros(length(out),1);
+        fftCh1tmp = zeros(1,length(out));  
+        fftCh2tmp = zeros(1,length(out));
         for kk = 1:length(out)
             if ~isempty(out(kk).fftCh1.fftpeakamp)
             fftCh1tmp(kk) = out(kk).fftCh1.fftpeakamp; 
