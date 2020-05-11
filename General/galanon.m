@@ -23,6 +23,7 @@ end
 
 %% Cycle through the files and build the structure "out"
 
+winwidth = 2; % Duration of the window for analysis
 iidx = 0;
 eidx = 1;
 
@@ -47,10 +48,12 @@ while eidx <= length(eFiles)
         figure(2); 
         subplot(3,2,j); hold on;
         tt = find(tim > (j-1)*samlen &  tim <= j*samlen);
-        plot(tim(tt(1:4:end)), tmpsigA(tt(1:4:end))+0.5, 'b'); 
-        plot(tim(tt(1:4:end)), tmpsigB(tt(1:4:end))-0.5, 'm');
+        plot(tim(tt(1:4:end)), 2*(tmpsigA(tt(1:4:end)))+0.5, 'b'); 
+        plot(tim(tt(1:4:end)), 2*(tmpsigB(tt(1:4:end)))-0.5, 'm');
         text(0.5+((j-1)*10), 0, num2str(j), 'Color', 'm', 'FontSize', 24); % Add the label
         ylim([-1.5 1.5]);
+        
+        % Get the least variance for both
         
     end
    
@@ -69,7 +72,6 @@ while eidx <= length(eFiles)
 
 % Click frame - NEW VERSION
 
-winwidth = 2; % Duration of the window for analysis
 
 [xPos, ~] = ginput(1);
 
