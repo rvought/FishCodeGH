@@ -50,7 +50,7 @@ while eidx <= length(eFiles)
         tt = find(tim > (j-1)*samlen &  tim <= j*samlen);
         plot(tim(tt(1:4:end)), 2*(tmpsigA(tt(1:4:end)))+0.5, 'b'); 
         plot(tim(tt(1:4:end)), 2*(tmpsigB(tt(1:4:end)))-0.5, 'm');
-        text(0.5+((j-1)*10), 0, num2str(j), 'Color', 'm', 'FontSize', 24); % Add the label
+        text(0.5+((j-1)*10), 0, num2str(j), 'Color', 'k', 'FontSize', 24); % Add the label
         ylim([-1.5 1.5]);
         
         % Get the variance for both
