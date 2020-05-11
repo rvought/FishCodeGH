@@ -24,7 +24,7 @@ end
 %% Cycle through the files and build the structure "out"
 
 winwidth = 2; % Duration of the window for analysis
-stepize = winwidth/2; % This is 50% overlap
+stepsize = winwidth/2; % This is 50% overlap
 iidx = 0;
 eidx = 1;
 
