@@ -56,7 +56,7 @@ while eidx <= length(eFiles)
         % Get the variance for both
             for zz = 1:(samlen/winwidth)
                 
-                att = tt(tim(tt) < ((winwith*zz) + tim(tt(1))) & tim(tt) > ((winwidth*(zz-1)) + tim(tt(1))));
+                att = tt(tim(tt) < ((winwidth*zz) + tim(tt(1))) & tim(tt) > ((winwidth*(zz-1)) + tim(tt(1))));
                 
                 tmpApeaks = findpeaks(tmpsigA(att) - mean(tmpsigA(att)));
                 tmpAvar = var(tmpApeaks(tmpApeaks > 0));
