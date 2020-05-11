@@ -54,8 +54,12 @@ while eidx <= length(eFiles)
         ylim([-1.5 1.5]);
         
         % Get the variance for both
-            tmpsigA(tt)
-        
+            for zz = 1:(samlen/winwidth)
+                att = tt(find(tim(tt) < ((winwith*zz) + tim(tt(1))) & tim(tt) > ((winwidth*(zz-1)) + tim(tt(1)))));
+                tmpsigA(att)
+            end
+                
+                
     end
    
     drawnow;
