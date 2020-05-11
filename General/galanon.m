@@ -142,9 +142,9 @@ for j=length(out):-1:1
         
 end
 
-f2 = figure(2); clf; 
+f3 = figure(3); clf; 
     bb = [0 0 1]; mm = [1 0 1];
-    set(f2, 'defaultAxesColorOrder', [bb; mm]);
+    set(f3, 'defaultAxesColorOrder', [bb; mm]);
     ax(1) = subplot(411); 
         fftCh1tmpAMP(length(out)) = 0;  
         fftCh2tmpAMP(length(out)) = 0;
