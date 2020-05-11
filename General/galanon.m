@@ -76,29 +76,29 @@ while eidx <= length(eFiles)
     drawnow;
     
 % Pick frame - OLD VERSION
-% %     framNo = input('Best Frame? ');    
-% %     if isempty(framNo) % User didn't click a frame    
-% %         out(eidx).Ch1 = 0;
-% %         out(eidx).Ch2 = 0;        
-% %     end    
-% %     if ~isempty(framNo) % The fish is in the correct position in these frames                          
-% %         out(eidx).Ch1 = tmpsigA(tim > samlen*(framNo-1) & tim <= samlen*framNo);
-% %         out(eidx).Ch2 = tmpsigB(tim > samlen*(framNo-1) & tim <= samlen*framNo);            
-% %     end
-
-% Click frame - NEW VERSION
-
-
-[xPos, ~] = ginput(1);
-
-    if ~isempty(xPos)
-        out(eidx).Ch1 = tmpsigA(tim > xPos & tim <= xPos + winwidth);
-        out(eidx).Ch2 = tmpsigB(tim > xPos & tim <= xPos + winwidth);        
-    end
-    if isempty(xPos) % User didn't click a frame    
+    framNo = input('Best Frame? ');    
+    if isempty(framNo) % User didn't click a frame    
         out(eidx).Ch1 = 0;
         out(eidx).Ch2 = 0;        
     end    
+    if ~isempty(framNo) % The fish is in the correct position in these frames
+        fprintf('Our frame started at %i.\n', minVartim(framNo));
+        out(eidx).Ch1 = tmpsigA(tim > minVartim(framNo) & minVartim(framNo)+winwidth);
+        out(eidx).Ch2 = tmpsigB(tim > minVartim(framNo) & minVartim(framNo)+winwidth);            
+    end
+
+% % % Click frame - NEW VERSION
+% % 
+% % [xPos, ~] = ginput(1);
+% % 
+% %     if ~isempty(xPos)
+% %         out(eidx).Ch1 = tmpsigA(tim > xPos & tim <= xPos + winwidth);
+% %         out(eidx).Ch2 = tmpsigB(tim > xPos & tim <= xPos + winwidth);        
+% %     end
+% %     if isempty(xPos) % User didn't click a frame    
+% %         out(eidx).Ch1 = 0;
+% %         out(eidx).Ch2 = 0;        
+% %     end    
 
 
 % Light, temp, and time data    
