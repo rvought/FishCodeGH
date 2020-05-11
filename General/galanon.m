@@ -148,7 +148,7 @@ f2 = figure(2); clf;
     ax(1) = subplot(411); 
         fftCh1tmp = zeros(1,length(out));  
         fftCh2tmp = zeros(1,length(out));
-        for kk = 1:length(out)
+        for kk = length(out):-1:1
             if ~isempty(out(kk).fftCh1.fftpeakamp)
             fftCh1tmp(kk) = out(kk).fftCh1.fftpeakamp; 
             fftCh2tmp(kk) = out(kk).fftCh2.fftpeakamp; 
