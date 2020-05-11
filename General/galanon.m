@@ -153,7 +153,7 @@ f2 = figure(2); clf;
         yyaxis right; plot([out.idx], [out.rmsCh1], 'b.-', 'MarkerSize', 8);
         hold on; yyaxis left; plot([out.idx], [out.rmsCh2], 'm.-', 'MarkerSize', 8); title('RMS amplitude');
     ax(3) = subplot(413); 
-        plot([out.idx], [out.fftCh1.fftpeakfreq]), '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
+        plot([out.idx], [out.fftCh1.fftpeakfreq], '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
         hold on; plot([out.idx], [out.fftCh2.fftpeakfreq], '.-', 'MarkerSize', 8); ylim([300 600]);
     ax(4) = subplot(414); 
         yyaxis left; plot(1:length(out), [out.light], '.-', 'MarkerSize', 8); ylim([180 260]);
