@@ -109,13 +109,13 @@ for j=length(out):-1:1
         
         out(j).fftCh1 = fftmachine(out(j).Ch1, Fs);
             [famp, fidx] = max(smooth(out(j).fftCh1.fftdata,10));
-        out(j).fftCh1.fftpeakfreq = sondatCh1.fftfreq(fidx);
+        out(j).fftCh1.fftpeakfreq = out(j).fftCh1.fftfreq(fidx);
         out(j).fftCh1.fftpeakamp = famp; 
         out(j).rmsCh1 = rms(out(j).Ch1);
         
         out(j).fftCh2 = fftmachine(out(j).Ch2, Fs);
             [famp, fidx] = max(smooth(out(j).fftCh2.fftdata,10));
-        out(j).fftCh2.fftpeakfreq = sondatCh2.fftfreq(fidx);
+        out(j).fftCh2.fftpeakfreq = out(j).fftCh2.fftfreq(fidx);
         out(j).fftCh2.fftpeakamp = famp; 
         out(j).rmsCh2 = rms(out(j).Ch2);
 
