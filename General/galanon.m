@@ -24,6 +24,7 @@ end
 %% Cycle through the files and build the structure "out"
 
 winwidth = 2; % Duration of the window for analysis
+stepize = winwidth/2; % This is 50% overlap
 iidx = 0;
 eidx = 1;
 
@@ -54,9 +55,8 @@ while eidx <= length(eFiles)
         ylim([-1.5 1.5]);
         
         % Get the variance for both
-            for zz = 1:(samlen/winwidth)
-                
-                att = tt(tim(tt) < ((winwidth*zz) + tim(tt(1))) & tim(tt) > ((winwidth*(zz-1)) + tim(tt(1))));
+            for zz = 1:(samlen/stepsize) - 1                 
+                att = tt(tim(tt) < tim(tt) > (tim(tt(1)) + stepsize*(zz-1)) &  tim(tt) > (tim(tt(1)) + stepsize*(zz-1) + winwidth));
                 
                 tmpApeaks = findpeaks(tmpsigA(att) - mean(tmpsigA(att)));
                 tmpAvar = var(tmpApeaks(tmpApeaks > 0));
@@ -68,8 +68,8 @@ while eidx <= length(eFiles)
                 [minVar(j), minVaridx] = min(totalvar);
                 minVartim(j) = tim(tt(1)) + winwidth*(minVaridx-1);
                 
-                plot([minVartim(j), minVartim(j)], [-1, 1], 'g-', 'LineWidth', 2);
-                plot([minVartim(j)+winwidth, minVartim(j)+winwidth], [-1, 1], 'g-', 'LineWidth', 2);                
+                plot([minVartim(j), minVartim(j)], [-1.5, 1.5], 'k-', 'LineWidth', 2);
+                plot([minVartim(j)+winwidth, minVartim(j)+winwidth], [-1.5, 1.5], 'k-', 'LineWidth', 2);                
                 
     end
     
