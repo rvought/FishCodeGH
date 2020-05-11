@@ -82,7 +82,7 @@ while eidx <= length(eFiles)
         out(eidx).Ch2 = 0;        
     end    
     if ~isempty(framNo) % The fish is in the correct position in these frames
-        fprintf('Our frame started at %i.\n', minVartim(framNo));
+        fprintf('Our frame started at %i.\n', round(minVartim(framNo)));
         out(eidx).Ch1 = tmpsigA(tim > minVartim(framNo) & minVartim(framNo)+winwidth);
         out(eidx).Ch2 = tmpsigB(tim > minVartim(framNo) & minVartim(framNo)+winwidth);            
     end
