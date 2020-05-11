@@ -107,15 +107,15 @@ for j=length(out):-1:1
     
     if sum(out(j).Ch1) ~= 0
         
-        out(j).fftCh1 = fftmachine(out(j).Ch1, Fs);
-            [famp, fidx] = max(smooth(out(j).fftCh1.fftdata,10));
-        out(j).fftCh1.fftpeakfreq = out(j).fftCh1.fftfreq(fidx);
+        [out(j).fftCh1data, out(j).fftCh1freq] = fftmachine(out(j).Ch1, Fs);
+            [famp, fidx] = max(smooth(out(j).fftCh1data, 10));
+        out(j).fftCh1.fftpeakfreq = out(j).fftCh1freq(fidx);
         out(j).fftCh1.fftpeakamp = famp; 
         out(j).rmsCh1 = rms(out(j).Ch1);
         
-        out(j).fftCh2 = fftmachine(out(j).Ch2, Fs);
-            [famp, fidx] = max(smooth(out(j).fftCh2.fftdata,10));
-        out(j).fftCh2.fftpeakfreq = out(j).fftCh2.fftfreq(fidx);
+        [out(j).fftCh2data, out(j).fftCh2freq] = fftmachine(out(j).Ch2, Fs);
+            [famp, fidx] = max(smooth(out(j).fftCh2data,10));
+        out(j).fftCh2.fftpeakfreq = out(j).fftCh2freq(fidx);
         out(j).fftCh2.fftpeakamp = famp; 
         out(j).rmsCh2 = rms(out(j).Ch2);
 
@@ -134,10 +134,10 @@ for j=length(out):-1:1
         out(j).idx = [];
         out(j).rmsCh1 = [];
         out(j).rmsCh2 = [];
-        out(j).fftCh1.fftfreq = []; out(j).fftCh1.fftdata = [];
-        out(j).fftCh1.fftpeakfreq = []; out(j).fftCh1.fftpeakamp = [];
-        out(j).fftCh2.fftfreq = []; out(j).fftCh2.fftdata = [];
-        out(j).fftCh2.fftpeakfreq = []; out(j).fftCh2.fftpeakamp = [];
+        out(j).fftCh1freq = []; out(j).fftCh1data = [];
+        out(j).fftCh1peakfreq = []; out(j).fftCh1peakamp = [];
+        out(j).fftCh2freq = []; out(j).fftCh2data = [];
+        out(j).fftCh2peakfreq = []; out(j).fftCh2peakamp = [];
     end
         
 end
@@ -146,32 +146,15 @@ f3 = figure(3); clf;
     bb = [0 0 1]; mm = [1 0 1];
     set(f3, 'defaultAxesColorOrder', [bb; mm]);
     ax(1) = subplot(411); 
-        fftCh1tmpAMP(length(out)) = 0;  
-        fftCh2tmpAMP(length(out)) = 0;
-        for kk = length(out):-1:1
-            if ~isempty(out(kk).fftCh1.fftpeakamp)
-            fftCh1tmpAMP(kk) = out(kk).fftCh1.fftpeakamp; 
-            fftCh2tmpAMP(kk) = out(kk).fftCh2.fftpeakamp; 
-            fftCh1tmpF(kk) = out(kk).fftCh1.fftpeakfreq; 
-            fftCh2tmpF(kk) = out(kk).fftCh2.fftpeakfreq; 
-            end
-            if isempty(out(kk).fftCh1.fftpeakamp)
-                fftCh1tmpAMP(kk) = [];
-                fftCh2tmpAMP(kk) = [];            
-                fftCh1tmpF(kk) = []; 
-                fftCh2tmpF(kk) = []; 
-            end
-        end
-        yyaxis left; plot([out.idx], fftCh1tmpAMP, 'b.-', 'MarkerSize', 8); title('FFT amplitude');
-%        yyaxis left; plot([out.idx], [out.fftCh1.fftpeakamp], 'b.-', 'MarkerSize', 8); title('FFT amplitude');
+        yyaxis left; plot([out.idx], [out.fftCh1peakamp], 'b.-', 'MarkerSize', 8); title('FFT amplitude');
         hold on; 
-        yyaxis right; plot([out.idx], fftCh2tmpAMP, 'm.-', 'MarkerSize', 8); 
+        yyaxis right; plot([out.idx], [out.fftCh2peakamp], 'm.-', 'MarkerSize', 8); 
     ax(2) = subplot(412); 
         yyaxis right; plot([out.idx], [out.rmsCh1], 'b.-', 'MarkerSize', 8);
         hold on; yyaxis left; plot([out.idx], [out.rmsCh2], 'm.-', 'MarkerSize', 8); title('RMS amplitude');
     ax(3) = subplot(413); 
-        plot([out.idx], fftCh1tmpF, '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
-        hold on; plot([out.idx], fftCh2tmpF, '.-', 'MarkerSize', 8); ylim([300 600]);
+        plot([out.idx], [out.fftCh1peakfreq], '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
+        hold on; plot([out.idx], [out.fftCh2peakfreq], '.-', 'MarkerSize', 8); ylim([300 600]);
     ax(4) = subplot(414); 
         yyaxis left; plot(1:length(out), [out.light], '.-', 'MarkerSize', 8); ylim([180 260]);
         title('Light level & Temperature');
