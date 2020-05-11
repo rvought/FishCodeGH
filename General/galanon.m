@@ -53,7 +53,7 @@ while eidx <= length(eFiles)
         text(0.5+((j-1)*10), 0, num2str(j), 'Color', 'm', 'FontSize', 24); % Add the label
         ylim([-1.5 1.5]);
         
-        % Get the least variance for both
+        % Get the variance for both
         
     end
    
