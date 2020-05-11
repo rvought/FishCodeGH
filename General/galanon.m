@@ -86,7 +86,7 @@ winwidth = 2; % Duration of the window for analysis
 % Light, temp, and time data    
     out(eidx).light = mean(mean(vData(700:800, 500:600)));
     out(eidx).temp = temp;
-    out(eidx).time = eFiles(eidx).name;
+    out(eidx).fileinfo = eFiles(eidx).name;
     
 % Advance our counters
     iidx = iidx+6;
@@ -107,20 +107,22 @@ for j=length(out):-1:1
     
     if sum(out(j).Ch1) ~= 0
         
-        sondatCh1 = fftmachine(out(j).Ch1, Fs);
-            [famp, fidx] = max(smooth(sondatCh1.fftdata,10));
-        fftCh1(j,:) = [famp, sondatCh1.fftfreq(fidx)];
-        rmsCh1(j) = rms(out(j).Ch1);
+        out(j).fftCh1 = fftmachine(out(j).Ch1, Fs);
+            [famp, fidx] = max(smooth(out(j).fftCh1.fftdata,10));
+        out(j).fftCh1.fftpeakfreq = sondatCh1.fftfreq(fidx);
+        out(j).fftCh1.fftpeakamp = famp; 
+        out(j).rmsCh1 = rms(out(j).Ch1);
         
-        sondatCh2 = fftmachine(out(j).Ch2, Fs);
-            [famp, fidx] = max(smooth(sondatCh2.fftdata,10));
-        fftCh2(j,:) = [famp, sondatCh2.fftfreq(fidx)];
-        rmsCh2(j) = rms(out(j).Ch2);
+        out(j).fftCh2 = fftmachine(out(j).Ch2, Fs);
+            [famp, fidx] = max(smooth(out(j).fftCh2.fftdata,10));
+        out(j).fftCh2.fftpeakfreq = sondatCh2.fftfreq(fidx);
+        out(j).fftCh2.fftpeakamp = famp; 
+        out(j).rmsCh2 = rms(out(j).Ch2);
 
         lightlevels(j) = out(j).light;
         temps(j) = out(j).temp;
         
-        dataidxs(j) = j;
+        out(j).idx = j;
         
     end    
     
@@ -129,13 +131,13 @@ for j=length(out):-1:1
         out(j).Ch1 = []; % Empty out the 0'ed data 
         out(j).Ch2 = [];
 
-        dataidxs(j) = [];
-        temps(j) = [];
-        lightlevels(j) = [];
-        rmsCh1(j) = [];
-        rmsCh2(j) = [];
-        fftCh1(j,:) = [];
-        fftCh2(j,:) = [];
+        out(j).idx = [];
+        out(j).rmsCh1 = [];
+        out(j).rmsCh2 = [];
+        out(j).fftCh1.fftfreq = []; out(j).fftCh1.fftdata = [];
+        out(j).fftCh1.fftpeakfreq = []; out(j).fftCh1.fftpeakamp = [];
+        out(j).fftCh2.fftfreq = []; out(j).fftCh2.fftdata = [];
+        out(j).fftCh2.fftpeakfreq = []; out(j).fftCh2.fftpeakamp = [];
     end
         
 end
@@ -144,21 +146,23 @@ f2 = figure(2); clf;
     bb = [0 0 1]; mm = [1 0 1];
     set(f2, 'defaultAxesColorOrder', [bb; mm]);
     ax(1) = subplot(411); 
-        yyaxis left; plot(dataidxs, fftCh1(:,1), 'b.-', 'MarkerSize', 8); title('FFT amplitude');
+        yyaxis left; plot([out.idx], [out.fftCh1.fftpeakamp], 'b.-', 'MarkerSize', 8); title('FFT amplitude');
         hold on; 
-        yyaxis right; plot(dataidxs, fftCh2(:,1), 'm.-', 'MarkerSize', 8); 
+        yyaxis right; plot([out.idx], [out.fftCh2.fftpeakamp], 'm.-', 'MarkerSize', 8); 
     ax(2) = subplot(412); 
-        yyaxis right; plot(dataidxs, rmsCh1, 'b.-', 'MarkerSize', 8);
-        hold on; yyaxis left; plot(dataidxs, rmsCh2, 'm.-', 'MarkerSize', 8); title('RMS amplitude');
+        yyaxis right; plot([out.idx], [out.rmsCh1], 'b.-', 'MarkerSize', 8);
+        hold on; yyaxis left; plot([out.idx], [out.rmsCh2], 'm.-', 'MarkerSize', 8); title('RMS amplitude');
     ax(3) = subplot(413); 
-        plot(squeeze(dataidxs), squeeze(fftCh1(:,2)), '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
-        hold on; plot(dataidxs, fftCh2(:,2), '.-', 'MarkerSize', 8); ylim([300 600]);
+        plot([out.idx], [out.fftCh1.fftpeakfreq]), '.-', 'MarkerSize', 8); ylim([200 700]); title('EOD Frequency');
+        hold on; plot([out.idx], [out.fftCh2.fftpeakfreq], '.-', 'MarkerSize', 8); ylim([300 600]);
     ax(4) = subplot(414); 
-        yyaxis left; plot(dataidxs, lightlevels, '.-', 'MarkerSize', 8); ylim([180 260]);
+        yyaxis left; plot(1:length(out), [out.light], '.-', 'MarkerSize', 8); ylim([180 260]);
         title('Light level & Temperature');
-        yyaxis right; plot(dataidxs, temps, '.-', 'MarkerSize', 8); ylim([0.7 0.9]);
+        yyaxis right; plot(1:length(out), [out.temp], '.-', 'MarkerSize', 8); ylim([0.7 0.9]);
         
     linkaxes(ax, 'x');
+    
+    
     
 % figure(2); clf; 
 %     ax(1) = subplot(411); plot(lightims, fftamp(:,1), '.-', 'MarkerSize', 8);
