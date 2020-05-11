@@ -67,9 +67,12 @@ while eidx <= length(eFiles)
                 
                 [minVar(j), minVaridx] = min(totalvar);
                 minVartim(j) = tim(tt(1)) + winwidth*(minVaridx-1);
+                
+                plot([minVartim(j), minVartim(j)], [-1, 1], 'g-');
+                plot([minVartim(j)+winwidth, minVartim(j)+winwidth], [-1, 1], 'g-');                
+                
     end
-   minVar
-   minVartim
+    
     drawnow;
     
 % Pick frame - OLD VERSION
