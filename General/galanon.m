@@ -107,13 +107,15 @@ for j=length(out):-1:1
     
     if sum(out(j).Ch1) ~= 0
         
-        [out(j).fftCh1data, out(j).fftCh1freq] = fftmachine(out(j).Ch1, Fs);
+        tmp = fftmachine(out(j).Ch1, Fs);
+        out(j).fftCh1data = tmp.fftdata; out(j).fftCh1freq = tmp.fftfreq;
             [famp, fidx] = max(smooth(out(j).fftCh1data, 10));
         out(j).fftCh1.fftpeakfreq = out(j).fftCh1freq(fidx);
         out(j).fftCh1.fftpeakamp = famp; 
         out(j).rmsCh1 = rms(out(j).Ch1);
         
-        [out(j).fftCh2data, out(j).fftCh2freq] = fftmachine(out(j).Ch2, Fs);
+        tmp = fftmachine(out(j).Ch2, Fs);
+        out(j).fftCh2data = tmp.fftdata; out(j).fftCh2freq = tmp.fftfreq;
             [famp, fidx] = max(smooth(out(j).fftCh2data,10));
         out(j).fftCh2.fftpeakfreq = out(j).fftCh2freq(fidx);
         out(j).fftCh2.fftpeakamp = famp; 
