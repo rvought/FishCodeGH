@@ -147,7 +147,16 @@ f2 = figure(2); clf;
     set(f2, 'defaultAxesColorOrder', [bb; mm]);
     ax(1) = subplot(411); 
         fftCh1tmp = zeros(length(out),1);  fftCh2tmp = zeros(length(out),1);
-        for kk = 1:length(out); fftCh1tmp(kk) = out(kk).fftCh1.fftpeakamp; fftCh2tmp(kk) = out(kk).fftCh2.fftpeakamp; end
+        for kk = 1:length(out)
+            if ~isempty(out(kk).fftCh1.fftpeakamp)
+            fftCh1tmp(kk) = out(kk).fftCh1.fftpeakamp; 
+            fftCh2tmp(kk) = out(kk).fftCh2.fftpeakamp; 
+            end
+            if isempty(out(kk).fftCh1.fftpeakamp)
+                fftCh1tmp(kk) = [];
+                fftCh2tmp(kk) = [];            
+            end
+        end
         yyaxis left; plot([out.idx], fftCh1tmp, 'b.-', 'MarkerSize', 8); title('FFT amplitude');
 %        yyaxis left; plot([out.idx], [out.fftCh1.fftpeakamp], 'b.-', 'MarkerSize', 8); title('FFT amplitude');
         hold on; 
