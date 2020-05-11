@@ -165,7 +165,7 @@ f3 = figure(3); clf;
         yyaxis left; plot([out.idx], fftCh1tmpAMP, 'b.-', 'MarkerSize', 8); title('FFT amplitude');
 %        yyaxis left; plot([out.idx], [out.fftCh1.fftpeakamp], 'b.-', 'MarkerSize', 8); title('FFT amplitude');
         hold on; 
-        yyaxis right; plot([out.idx], fftCh1tmpAMP, 'm.-', 'MarkerSize', 8); 
+        yyaxis right; plot([out.idx], fftCh2tmpAMP, 'm.-', 'MarkerSize', 8); 
     ax(2) = subplot(412); 
         yyaxis right; plot([out.idx], [out.rmsCh1], 'b.-', 'MarkerSize', 8);
         hold on; yyaxis left; plot([out.idx], [out.rmsCh2], 'm.-', 'MarkerSize', 8); title('RMS amplitude');
