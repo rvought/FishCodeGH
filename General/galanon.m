@@ -74,8 +74,8 @@ while eidx <= length(eFiles)
                 
                
                 
-               arr = zeros(length(minVar(j)), 6);
-               minVar(j) = arr(:,j);
+           
+               A = minVar(:,j);
                
                
          
