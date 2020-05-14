@@ -72,8 +72,9 @@ while eidx <= length(eFiles)
                 plot([minVartim(j), minVartim(j)], [-1.5, 1.5], 'k-', 'LineWidth', 2);
                 plot([minVartim(j)+winwidth, minVartim(j)+winwidth], [-1.5, 1.5], 'k-', 'LineWidth', 2); 
                 
-               arr = zeros(length(j));
-                (:,j);
+               arr = minVar(:, j);
+               
+               
          
 ResultsA=zeros(length(A),N); %Lenght A has to be input manually since you havent computed A.
 ResultsB=zeros(length(B),N); %Same
