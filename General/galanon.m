@@ -72,11 +72,14 @@ while eidx <= length(eFiles)
                 plot([minVartim(j), minVartim(j)], [-1.5, 1.5], 'k-', 'LineWidth', 2);
                 plot([minVartim(j)+winwidth, minVartim(j)+winwidth], [-1.5, 1.5], 'k-', 'LineWidth', 2); 
                 
+               
+         
+               
+                sorted = minVar(j).slice().sort(function(a,b){return b-a});
+                ranks = minVar(j).map(function(v){return sorted.indexOf(v)+1});
                 
-var arr = [79, 5, 18, 5, 32, 1, 16, 1, 82, 13];
-var sorted = arr.slice().sort(function(a,b){return b-a})
-var ranks = arr.map(function(v){ return sorted.indexOf(v)+1 });
-console.log(ranks);  
+                
+
                 
                 
                 %text(8+((j-1)*10), 1, num2str(minVar(j)), 'Color', 'k', 'FontSize', 24);
