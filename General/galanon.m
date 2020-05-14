@@ -72,19 +72,11 @@ while eidx <= length(eFiles)
                 plot([minVartim(j), minVartim(j)], [-1.5, 1.5], 'k-', 'LineWidth', 2);
                 plot([minVartim(j)+winwidth, minVartim(j)+winwidth], [-1.5, 1.5], 'k-', 'LineWidth', 2); 
                 
-               
+               arr = zeros(length(j));
+               varr = minVar(:,j);
          
                 
-ResultsA=zeros(length(A),N); %Lenght A has to be input manually since you havent computed A.
-ResultsB=zeros(length(B),N); %Same
-for i=1:N
-   [A B] = coconuts( a, b, c);
-   ResultsA(:,i)= A;
-   ResultsB(:,i)= B;
-end
-                
- sorted = minVar(j).slice().sort(function(a,b){return b-a});
-                ranks = minVar(j).map(function(v){return sorted.indexOf(v)+1});
+
                               
                 
                 
