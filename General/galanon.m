@@ -75,28 +75,11 @@ while eidx <= length(eFiles)
                
                 
            
-               A = minVar(:,j);
-               
-               
-         
-ResultsA=zeros(length(A),N); %Lenght A has to be input manually since you havent computed A.
-ResultsB=zeros(length(B),N); %Same
-for i=1:N
-   [A B] = coconuts( a, b, c);
-   ResultsA(:,i)= A;
-   ResultsB(:,i)= B;
-end
-
-                              
- M = [1,5; 7 9; 2 0];
-[dummy, index] = sort(M(:));
-R(index) = 1:numel(M);
-R = reshape(R, size(M));  
-                
+  
 
                 
                 
-                %text(8+((j-1)*10), 1, num2str(minVar(j)), 'Color', 'k', 'FontSize', 24);
+                text(8+((j-1)*10), 1, num2str(minVar(j)), 'Color', 'k', 'FontSize', 24);
                 
     end
     
