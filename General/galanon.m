@@ -67,7 +67,7 @@ while eidx <= length(eFiles)
                 
                 [minVar(j), minVaridx] = min(totalvar);
                 minVartim(j) = tim(tt(1)) + stepsize*(minVaridx-1);
-                [R(j), minVaridx] = sort(minVar(j));
+                [R(j), minVaridx] = sort(minVar(j), value);
           
                 plot([minVartim(j), minVartim(j)], [-1.5, 1.5], 'k-', 'LineWidth', 2);
                 plot([minVartim(j)+winwidth, minVartim(j)+winwidth], [-1.5, 1.5], 'k-', 'LineWidth', 2); 
