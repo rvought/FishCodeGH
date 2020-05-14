@@ -73,7 +73,7 @@ while eidx <= length(eFiles)
                 plot([minVartim(j)+winwidth, minVartim(j)+winwidth], [-1.5, 1.5], 'k-', 'LineWidth', 2); 
                 
                 
-               text(((j-1)*10), 1, num2str(minVar(j)), 'Color', 'k', 'FontSize', 24); 
+               text(((j-1)), 1, num2str(minVar(j)), 'Color', 'k', 'FontSize', 24); 
                 
                 
                 %text(8+((j-1)*10), 1, num2str(minVar(j)), 'Color', 'k', 'FontSize', 24);
