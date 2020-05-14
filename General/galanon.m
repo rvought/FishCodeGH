@@ -78,7 +78,10 @@ while eidx <= length(eFiles)
 
 
                               
-                
+ M = [1,5; 7 9; 2 0];
+[dummy, index] = sort(M(:));
+R(index) = 1:numel(M);
+R = reshape(R, size(M));  
                 
 
                 
