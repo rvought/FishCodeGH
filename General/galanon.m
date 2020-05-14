@@ -74,9 +74,18 @@ while eidx <= length(eFiles)
                 
                
          
-               
-                sorted = minVar(j).slice().sort(function(a,b){return b-a});
+                
+ResultsA=zeros(length(A),N); %Lenght A has to be input manually since you havent computed A.
+ResultsB=zeros(length(B),N); %Same
+for i=1:N
+   [A B] = coconuts( a, b, c);
+   ResultsA(:,i)= A;
+   ResultsB(:,i)= B;
+end
+                
+ sorted = minVar(j).slice().sort(function(a,b){return b-a});
                 ranks = minVar(j).map(function(v){return sorted.indexOf(v)+1});
+                              
                 
                 
 
