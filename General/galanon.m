@@ -76,6 +76,13 @@ while eidx <= length(eFiles)
                 
     end
     
+    
+                [~,iii] = sort(minVar);
+                 for j = 1:length(iii)
+                 subplot(3,2,iii(j)); 
+                 text(8+((iii(j)-1)*10), 1, num2str(j), 'Color', 'r', 'FontSize', 24);
+    end
+        
     drawnow;
     
 % Pick frame - OLD VERSION
