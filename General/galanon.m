@@ -31,6 +31,15 @@ eidx = 1;
 while eidx <= length(eFiles)
 
     figure(1); clf; figure(2); clf;
+    
+     clear EODonly
+    
+    %Load the EOD data
+    eval(['load ' eFiles(eidx).name]); 
+
+    if ~exist('EODonly', 'var'); EODonly = data; end
+    
+    
     eval(['load ' eFiles(eidx).name]); % Load the EOD data
     tmpsigA = filtfilt(b,a,EODonly(:,1)); % Filter both channels
         tmpsigA = filtfilt(d,c,tmpsigA);
