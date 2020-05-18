@@ -15,7 +15,7 @@ L = length(data);
 
 % NFFT = 2^nextpow2(L); % Next power of 2 from length of the data
 
-NFFT = 1024*32;
+NFFT = 1024*2;
 
 fftdata = fft(data,NFFT)/L;
 % f = Fs/2*linspace(0,1,NFFT/2+1);
