@@ -180,6 +180,7 @@ for j=length(out):-1:1
     end
         
 end
+%% Just plot
 
 f3 = figure(3); clf; 
     bb = [0 0 1]; mm = [1 0 1];
