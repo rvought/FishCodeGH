@@ -140,7 +140,7 @@ out(1).Fs = Fs;
 
 Fs = out(1).Fs;
 
-for j=length(out):-1:1
+for j=length(out):-1:11
     
     if sum(out(j).Ch1) ~= 0
         
