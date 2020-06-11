@@ -53,7 +53,6 @@ for j=1:length(out)
 end
 
 
-
 %% Plot 
 
 figure(4); clf;
