@@ -125,6 +125,7 @@ while eidx <= length(eFiles)
     out(eidx).temp = temp;
     out(eidx).fileinfo = eFiles(eidx).name;
     
+    %out(eidx).filetime = datnum
 % Advance our counters
     iidx = iidx+6;
     eidx = eidx+1;
