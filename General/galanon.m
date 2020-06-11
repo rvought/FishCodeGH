@@ -125,7 +125,17 @@ while eidx <= length(eFiles)
     out(eidx).temp = temp;
     out(eidx).fileinfo = eFiles(eidx).name;
     
-    %out(eidx).filetime = datnum
+    
+    mon = str2num(eFiles(eidx).name(16:17));
+    day = str2num(eFiles(eidx).name(19:20));
+    yr = str2num(eFiles(eidx).name(22:25));
+    hr = str2num(eFiles(eidx).name(27:28));
+    mi = str2num(eFiles(eidx).name(30:31));
+    ss = str2num(eFiles(eidx).name(33:34));
+    out(eidx).filetime = datenum(yr,mon,day,hr,mi,ss);
+    
+    
+    
 % Advance our counters
     iidx = iidx+6;
     eidx = eidx+1;
