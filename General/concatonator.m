@@ -65,7 +65,7 @@ ax(2)=subplot(312);
     plot(c.idx, c.rmsCh1); 
     hold on; plot(c.idx, c.rmsCh2);
 
-ax(3)=subplot(313); plot(1:max(c.idx), c.lightlevel);
+ax(3)=subplot(313); plot(1:length(c.lightlevel), c.lightlevel);
 linkaxes(ax, 'x');
 
 
