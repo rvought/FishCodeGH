@@ -38,7 +38,7 @@ c.rmsCh2 = [c.rmsCh2 [out.rmsCh2]];
 c.lightlevel = [c.lightlevel [out.light]];
 c.temper = [c.temper [out.temp]];
 
-c.timmy = [c.timmy [out.temp]];
+c.timmy = [c.timmy [out.filetime]];
 % Extract the times
 
 %prelen = length(c.timmy);
