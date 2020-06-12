@@ -39,6 +39,7 @@ c.lightlevel = [c.lightlevel [out.light]];
 c.temper = [c.temper [out.temp]];
 
 c.timmy = [c.timmy [out.filetime]];
+
 % Extract the times
 
 %prelen = length(c.timmy);
