@@ -59,7 +59,7 @@ c.timmy = [c.timmy [out.filetime]];
 figure(4); clf;
 
 ax(1)=subplot(311); 
-    plot(c.timmy(c.idx), c.fftCh1amp, 'LineWidth', 4); 
+    plot(c.timmy, c.fftCh1amp, 'LineWidth', 4); 
     hold on; plot(c.timmy(c.idx), c.fftCh2amp, 'LineWidth', 4);
 
 ax(2)=subplot(312); 
