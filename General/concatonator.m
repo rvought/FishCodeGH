@@ -13,6 +13,7 @@ c.idx = [];
 
 c.timmy = [];
 
+
 %% Load data
 
 % load 7May20b66.mat
@@ -27,7 +28,7 @@ c.fftCh2freq = [c.fftCh2freq [out.fftCh2peakfreq]];
 
 maxidx = max(c.idx);
     if ~isempty(maxidx)
-        c.idx = [c.idx ([out.idx]+ maxidx)];
+        c.idx = [c.idx ([out.idx]+ length(c.lightlevel))];
     else
         c.idx = [out.idx];
     end
@@ -39,6 +40,8 @@ c.lightlevel = [c.lightlevel [out.light]];
 c.temper = [c.temper [out.temp]];
 
 c.timmy = [c.timmy [out.filetime]];
+
+
 
 % Extract the times
 
