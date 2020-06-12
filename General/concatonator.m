@@ -40,18 +40,17 @@ c.temper = [c.temper [out.temp]];
 
 % Extract the times
 
-prelen = length(c.timmy);
+%prelen = length(c.timmy);
 
-for j=1:length(out)
-    mon = str2num(out(j).fileinfo(16:17));
-    day = str2num(out(j).fileinfo(19:20));
-    yr = str2num(out(j).fileinfo(22:25));
-    hr = str2num(out(j).fileinfo(27:28));
-    mi = str2num(out(j).fileinfo(30:31));
-    ss = str2num(out(j).fileinfo(33:34));
-    c.timmy(j+prelen) = datenum(yr,mon,day,hr,mi,ss);
-end
-
+%for j=1:length(out)
+    %mon = str2num(out(j).fileinfo(16:17));
+    %day = str2num(out(j).fileinfo(19:20));
+    %yr = str2num(out(j).fileinfo(22:25));
+    %hr = str2num(out(j).fileinfo(27:28));
+    %mi = str2num(out(j).fileinfo(30:31));
+    %ss = str2num(out(j).fileinfo(33:34));
+    %c.timmy(j+prelen) = datenum(yr,mon,day,hr,mi,ss);
+%
 
 %% Plot 
 
