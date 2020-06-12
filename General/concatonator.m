@@ -28,7 +28,7 @@ c.fftCh2freq = [c.fftCh2freq [out.fftCh2peakfreq]];
 
 maxidx = max(c.idx);
     if ~isempty(maxidx)
-        c.idx = [c.idx ([out.idx]+ length(c.lightlevel))];
+        c.idx = [c.idx ([out.idx] + length(c.lightlevel))];
     else
         c.idx = [out.idx];
     end
