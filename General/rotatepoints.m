@@ -26,13 +26,13 @@ function out = rotatepoints(dat, deg)
 figure(1); clf;
 
 ax(1) = subplot(121); title('Centroid'); hold on; 
-    plot(dat(:,1), dat(:,2), 'b*'); % Original data
-    plot(out.centroidrotate(:,1), out.centroidrotate(:,2), 'g*'); 
+    plot(dat(:,1), dat(:,2), 'b-*'); % Original data
+    plot(out.centroidrotate(:,1), out.centroidrotate(:,2), 'g-*'); 
     plot(xC, yC, 'r*');
 
 ax(2) = subplot(122); title('Third'); hold on; 
-    plot(dat(:,1), dat(:,2), 'b*'); % Original data
-    plot(out.thirdrotate(:,1), out.thirdrotate(:,2), 'g*'); 
+    plot(dat(:,1), dat(:,2), 'b-*'); % Original data
+    plot(out.thirdrotate(:,1), out.thirdrotate(:,2), 'g-*'); 
     plot(tt(1),tt(2), 'r*');
 
 linkaxes(ax, 'xy'); 
