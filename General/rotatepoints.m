@@ -1,12 +1,18 @@
 function out = rotatepoints(dat, deg)
-% dat are x,y values
-% deg is rotation in degrees
+% Usage: out = rotatepoints(dat, deg)
+% where dat is x,y pairs (Column 1 is X, Column 2 is Y)
+% deg is desired rotation in degrees
+% out is a structure with the rotated XY coordinates using two center points
+% out.centroidrotate is the data rotated around the centroid of the original data
+% out.thirdrotate is the rotated data using the third point as the center
+% There is no check to make sure that you have more than three points. So don't f*ck that up.
+
 
 %% Prepare data
 % STRATEGY 1: Calculate centroid for center of rotation
 
-    poly = polyshape(dat);
-    [xC,yC] = centroid(poly);
+    poly = polyshape(dat); % Change the data into a Matlab object known as a polyshape
+    [xC,yC] = centroid(poly); % centroid is a useful command that can calculate a variety of centroid variants.
     
 % STRATEGY 2: Take the third point as the center of rotation
 
