@@ -1,7 +1,7 @@
 % Plot spike triggered averages for error_pos, error_vel, error_acc, and error_jerk
 % Load data first! Relies on iu_sta.m
 
-% Load your data first (
+% Load your data first (downsampled_data.mat)
 
 %% Calculate spike triggered averages
     fprintf('Calculating error_pos STA.\n');
