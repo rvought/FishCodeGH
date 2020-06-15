@@ -126,12 +126,19 @@ while eidx <= length(eFiles)
     out(eidx).fileinfo = eFiles(eidx).name;
     
     
-    mon = str2num(eFiles(eidx).name(16:17));
-    day = str2num(eFiles(eidx).name(19:20));
-    yr = str2num(eFiles(eidx).name(22:25));
-    hr = str2num(eFiles(eidx).name(27:28));
-    mi = str2num(eFiles(eidx).name(30:31));
-    ss = str2num(eFiles(eidx).name(33:34));
+%     mon = str2num(eFiles(eidx).name(16:17));
+%     day = str2num(eFiles(eidx).name(19:20));
+%     yr = str2num(eFiles(eidx).name(22:25));
+%     hr = str2num(eFiles(eidx).name(27:28));
+%     mi = str2num(eFiles(eidx).name(30:31));
+%     ss = str2num(eFiles(eidx).name(33:34));
+%     out(eidx).filetime = datenum(yr,mon,day,hr,mi,ss);
+    mon = str2num(out(eidx).fileinfo(16:17));
+    day = str2num(out(eidx).fileinfo(19:20));
+    yr = str2num(out(eidx).fileinfo(22:25));
+    hr = str2num(out(eidx).fileinfo(27:28));
+    mi = str2num(out(eidx).fileinfo(30:31));
+    ss = str2num(out(eidx).fileinfo(33:34));
     out(eidx).filetime = datenum(yr,mon,day,hr,mi,ss);
     
     
