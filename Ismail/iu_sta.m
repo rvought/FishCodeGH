@@ -26,13 +26,13 @@ for idx = length(randspikes):-1:1
     end
 end
 
-    out.MEAN  = nanmean(sta,1);
-    out.STD  = nanstd(sta,0,1);
+    out.MEAN  = nanmean(sta,1); % Calculate the mean (which is the STA)
+    out.STD  = nanstd(sta,0,1); % Get the standard deviation for each point.
 
     out.randMEAN  = nanmean(sta_rand,1);
     out.randSTD  = nanstd(sta_rand,0,1);
 
-    out.time = -wid:1/Fs:wid;
+    out.time = -wid:1/Fs:wid; % Give the user a time base for plotting.
 
 % figure,
 % hold on,
