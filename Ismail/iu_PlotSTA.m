@@ -12,11 +12,12 @@
     eacc = iu_sta(spikes.times, spikes_rand.times, error_acc, fs, 2);
     fprintf('Calculating error_jerk STA.\n');
     ejerk = iu_sta(spikes.times, spikes_rand.times, error_jerk, fs, 2);
+    fprintf('And we are done!!!\n');
 
-%% Plot them all in one figure
+    %% Plot them all in one figure
     figure(1); clf; 
 
-    subplot(221); title('Position'); hold on;
+    subplot(2,2,1); title('Position'); hold on;
     plot([0, 0], [min(epos.MEAN), max(epos.MEAN)], 'k-', 'LineWidth',1);
     plot(epos.time, epos.MEAN, 'b-', 'LineWidth', 3);
     plot(epos.time, epos.randMEAN,'r-','LineWidth',3);
