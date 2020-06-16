@@ -1,18 +1,21 @@
+function asdf = iu_PlotSTA(data, entry, tims)
+
 % Plot spike triggered averages for error_pos, error_vel, error_acc, and error_jerk
 % Load data first! Relies on iu_sta.m
 
+k=1; % Entry number
+startim = 0;
+endtim = 90;
 % Load your data first (downsampled_data.mat)
 
-% spks = spikes.times(spikes.times > 270 & spikes.times < 330);
-% rspks = spikes_rand.times(spikes_rand.times > 270 & spikes_rand.times < 330);
-%spks = spikes.times(spikes.times < 90);
-%rspks = spikes_rand.times(spikes_rand.times < 90);
+spks = spikes.times(spikes.times > startim & spikes.times < endtim);
+rspks = spikes_rand.times(spikes_rand.times > endtim & spikes_rand.times < startim);
 
-% spks = ismail(1).spikes.times;
-% rspks = ismail(1).spikes_rand.times;
+% spks = ismail(k).spikes.times;
+% rspks = ismail(k).spikes_rand.times;
 
-spks = spikes.times;
-rspks = spikes_rand.times;
+% spks = spikes.times;
+% rspks = spikes_rand.times;
 
 %% Calculate spike triggered averages
     fprintf('Calculating error_pos STA.\n');
