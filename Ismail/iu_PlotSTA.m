@@ -3,8 +3,10 @@
 
 % Load your data first (downsampled_data.mat)
 
-spks = spikes.times(spikes.times > 360 & spikes.times < 520);
-rspks = spikes_rand.times(spikes_rand.times > 360 & spikes_rand.times < 520);
+% spks = spikes.times(spikes.times > 360 & spikes.times < 520);
+% rspks = spikes_rand.times(spikes_rand.times > 360 & spikes_rand.times < 520);
+spks = spikes.times(spikes.times < 30);
+rspks = spikes_rand.times(spikes_rand.times < 30);
 
 %% Calculate spike triggered averages
     fprintf('Calculating error_pos STA.\n');
@@ -18,7 +20,7 @@ rspks = spikes_rand.times(spikes_rand.times > 360 & spikes_rand.times < 520);
     fprintf('And we are done!!!\n');
 
     %% Plot them all in one figure
-    figure(6); clf; 
+    figure(8); clf; 
 
     subplot(2,2,1); title('Position'); hold on;
     plot([0, 0], [min(epos.MEAN), max(epos.MEAN)], 'k-', 'LineWidth',1);
