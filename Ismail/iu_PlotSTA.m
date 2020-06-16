@@ -3,20 +3,20 @@ function asdf = iu_PlotSTA(data, entry, tims)
 % Plot spike triggered averages for error_pos, error_vel, error_acc, and error_jerk
 % Load data first! Relies on iu_sta.m
 
-% spks = data(entry).spikes.times(data(entry).spikes.times > tims(1) & data(entry).spikes.times < tims(2));
-% rspks = data(entry).spikes_rand.times;
+spks = data(entry).spikes.times(data(entry).spikes.times > tims(1) & data(entry).spikes.times < tims(2));
+rspks = data(entry).spikes_rand.times(data(entry).spikes_rand.times > tims(1) & data(entry).spikes_rand.times < tims(2));
 
 
 
-k=1; % Entry number
-startim = 0;
-endtim = 90;
-% Load your data first (downsampled_data.mat)
+% k=1; % Entry number
+% startim = 0;
+% endtim = 90;
+% % Load your data first (downsampled_data.mat)
+% 
 
 
-
-spks = spikes.times(spikes.times > startim & spikes.times < endtim);
-rspks = spikes_rand.times(spikes_rand.times > endtim & spikes_rand.times < startim);
+% spks = spikes.times(spikes.times > startim & spikes.times < endtim);
+% rspks = spikes_rand.times(spikes_rand.times > endtim & spikes_rand.times < startim);
 
 % spks = ismail(k).spikes.times;
 % rspks = ismail(k).spikes_rand.times;
@@ -26,7 +26,7 @@ rspks = spikes_rand.times(spikes_rand.times > endtim & spikes_rand.times < start
 
 %% Calculate spike triggered averages
     fprintf('Calculating error_pos STA.\n');
-    epos = iu_sta(spks, rspks, fish_pos, fs, 2);
+    epos = iu_sta(spks, rspks, data(entry).fish_pos, fs, 2);
     fprintf('Calculating error_vel STA.\n');
     evel = iu_sta(spks, rspks, fish_vel, fs, 2);
     fprintf('Calculating error_acc STA.\n');
