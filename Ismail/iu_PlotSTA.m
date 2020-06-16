@@ -26,13 +26,13 @@ rspks = data(entry).spikes_rand.times(data(entry).spikes_rand.times > tims(1) & 
 
 %% Calculate spike triggered averages
     fprintf('Calculating error_pos STA.\n');
-    epos = iu_sta(spks, rspks, data(entry).fish_pos, fs, 2);
+    epos = iu_sta(spks, rspks, data(entry).fish_pos, data(entry).fs, 2);
     fprintf('Calculating error_vel STA.\n');
-    evel = iu_sta(spks, rspks, fish_vel, fs, 2);
+    evel = iu_sta(spks, rspks, data(entry).fish_vel, data(entry).fs, 2);
     fprintf('Calculating error_acc STA.\n');
-    eacc = iu_sta(spks, rspks, fish_acc, fs, 2);
+    eacc = iu_sta(spks, rspks, data(entry).fish_acc, data(entry).fs, 2);
     fprintf('Calculating error_jerk STA.\n');
-    ejerk = iu_sta(spks, rspks, fish_jerk, fs, 2);
+    ejerk = iu_sta(spks, rspks, data(entry).fish_jerk, data(entry).fs, 2);
     fprintf('And we are done!!!\n');
 
     %% Plot them all in one figure
