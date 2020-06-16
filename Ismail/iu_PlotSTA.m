@@ -36,7 +36,7 @@ rspks = data(entry).spikes_rand.times(data(entry).spikes_rand.times > tims(1) & 
     fprintf('And we are done!!!\n');
 
     %% Plot them all in one figure
-    figure(3); clf; 
+    figure(1); clf; 
 
     subplot(2,2,1); title('Position'); hold on;
     plot([0, 0], [min(epos.MEAN), max(epos.MEAN)], 'k-', 'LineWidth',1);
@@ -60,7 +60,7 @@ rspks = data(entry).spikes_rand.times(data(entry).spikes_rand.times > tims(1) & 
 
 %% Plot the error
 
-figure(7); clf; 
+figure(2); clf; 
 
     subplot(221); title('Position'); hold on;
     plot([0, 0], [min(epos.STD), max(epos.STD)], 'k-', 'LineWidth',1);
