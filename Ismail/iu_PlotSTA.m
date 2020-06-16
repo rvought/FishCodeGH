@@ -5,13 +5,13 @@
 
 %% Calculate spike triggered averages
     fprintf('Calculating error_pos STA.\n');
-    epos = iu_sta(spikes.times, spikes_rand.times, error_pos, fs, 2);
+    epos = iu_sta(spikes.times, spikes_rand.times, fish_pos, fs, 2);
     fprintf('Calculating error_vel STA.\n');
-    evel = iu_sta(spikes.times, spikes_rand.times, error_vel, fs, 2);
+    evel = iu_sta(spikes.times, spikes_rand.times, fish_vel, fs, 2);
     fprintf('Calculating error_acc STA.\n');
-    eacc = iu_sta(spikes.times, spikes_rand.times, error_acc, fs, 2);
+    eacc = iu_sta(spikes.times, spikes_rand.times, fish_acc, fs, 2);
     fprintf('Calculating error_jerk STA.\n');
-    ejerk = iu_sta(spikes.times, spikes_rand.times, error_jerk, fs, 2);
+    ejerk = iu_sta(spikes.times, spikes_rand.times, fish_jerk, fs, 2);
     fprintf('And we are done!!!\n');
 
     %% Plot them all in one figure
