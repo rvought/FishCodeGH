@@ -39,7 +39,7 @@
 
 %% Plot the error
 
-figure(2); clf; 
+figure(5); clf; 
 
     subplot(221); title('Position'); hold on;
     plot([0, 0], [min(epos.STD), max(epos.STD)], 'k-', 'LineWidth',1);
