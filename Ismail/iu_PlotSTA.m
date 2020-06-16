@@ -8,6 +8,9 @@
 %spks = spikes.times(spikes.times < 90);
 %rspks = spikes_rand.times(spikes_rand.times < 90);
 
+% spks = ismail(1).spikes.times;
+% rspks = ismail(1).spikes_rand.times;
+
 spks = spikes.times;
 rspks = spikes_rand.times;
 
