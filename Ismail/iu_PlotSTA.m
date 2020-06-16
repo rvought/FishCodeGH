@@ -7,6 +7,7 @@
 % rspks = spikes_rand.times(spikes_rand.times > 30 & spikes_rand.times < 360);
 % spks = spikes.times(spikes.times < 30);
 % rspks = spikes_rand.times(spikes_rand.times < 30);
+
 spks = spikes.times;
 rspks = spikes_rand.times;
 
