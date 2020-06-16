@@ -3,10 +3,10 @@
 
 % Load your data first (downsampled_data.mat)
 
-% spks = spikes.times(spikes.times > 360 & spikes.times < 520);
-% rspks = spikes_rand.times(spikes_rand.times > 360 & spikes_rand.times < 520);
-spks = spikes.times(spikes.times < 30);
-rspks = spikes_rand.times(spikes_rand.times < 30);
+spks = spikes.times(spikes.times > 30 & spikes.times < 360);
+rspks = spikes_rand.times(spikes_rand.times > 30 & spikes_rand.times < 360);
+% spks = spikes.times(spikes.times < 30);
+% rspks = spikes_rand.times(spikes_rand.times < 30);
 
 %% Calculate spike triggered averages
     fprintf('Calculating error_pos STA.\n');
