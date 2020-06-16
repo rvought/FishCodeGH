@@ -7,7 +7,7 @@ spks = data(entry).spikes.times(data(entry).spikes.times > tims(1) & data(entry)
 rspks = data(entry).spikes_rand.times(data(entry).spikes_rand.times > tims(1) & data(entry).spikes_rand.times < tims(2));
 
 
-
+asdf  = 0 ;
 % k=1; % Entry number
 % startim = 0;
 % endtim = 90;
