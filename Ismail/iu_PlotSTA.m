@@ -42,7 +42,7 @@ rspks = spikes_rand.times(spikes_rand.times > 360 & spikes_rand.times < 520);
 
 %% Plot the error
 
-figure(5); clf; 
+figure(7); clf; 
 
     subplot(221); title('Position'); hold on;
     plot([0, 0], [min(epos.STD), max(epos.STD)], 'k-', 'LineWidth',1);
