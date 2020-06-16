@@ -23,7 +23,7 @@ rspks = spikes_rand.times;
     fprintf('And we are done!!!\n');
 
     %% Plot them all in one figure
-    figure(2); clf; 
+    figure(3); clf; 
 
     subplot(2,2,1); title('Position'); hold on;
     plot([0, 0], [min(epos.MEAN), max(epos.MEAN)], 'k-', 'LineWidth',1);
