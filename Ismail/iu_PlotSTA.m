@@ -3,19 +3,22 @@
 
 % Load your data first (downsampled_data.mat)
 
+spks = spikes.times(spikes.times > 360 & spikes.times < 520);
+rspks = spikes_rand.times(spikes_rand.times > 360 & spikes_rand.times < 520);
+
 %% Calculate spike triggered averages
     fprintf('Calculating error_pos STA.\n');
-    epos = iu_sta(spikes.times, spikes_rand.times, fish_pos, fs, 2);
+    epos = iu_sta(spks, rspks, fish_pos, fs, 2);
     fprintf('Calculating error_vel STA.\n');
-    evel = iu_sta(spikes.times, spikes_rand.times, fish_vel, fs, 2);
+    evel = iu_sta(spks, rspks, fish_vel, fs, 2);
     fprintf('Calculating error_acc STA.\n');
-    eacc = iu_sta(spikes.times, spikes_rand.times, fish_acc, fs, 2);
+    eacc = iu_sta(spks, rspks, fish_acc, fs, 2);
     fprintf('Calculating error_jerk STA.\n');
-    ejerk = iu_sta(spikes.times, spikes_rand.times, fish_jerk, fs, 2);
+    ejerk = iu_sta(spks, rspks, fish_jerk, fs, 2);
     fprintf('And we are done!!!\n');
 
     %% Plot them all in one figure
-    figure(4); clf; 
+    figure(6); clf; 
 
     subplot(2,2,1); title('Position'); hold on;
     plot([0, 0], [min(epos.MEAN), max(epos.MEAN)], 'k-', 'LineWidth',1);
