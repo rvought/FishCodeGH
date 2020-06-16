@@ -3,10 +3,10 @@
 
 % Load your data first (downsampled_data.mat)
 
-spks = spikes.times(spikes.times > 270 & spikes.times < 330);
-rspks = spikes_rand.times(spikes_rand.times > 270 & spikes_rand.times < 330);
-spks = spikes.times(spikes.times < 30);
-rspks = spikes_rand.times(spikes_rand.times < 30);
+% spks = spikes.times(spikes.times > 270 & spikes.times < 330);
+% rspks = spikes_rand.times(spikes_rand.times > 270 & spikes_rand.times < 330);
+spks = spikes.times(spikes.times < 90);
+rspks = spikes_rand.times(spikes_rand.times < 90);
 
 % spks = spikes.times;
 % rspks = spikes_rand.times;
