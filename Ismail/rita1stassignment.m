@@ -50,3 +50,7 @@ ismail(j).error_jerk = error_jerk;
 ismail(j).shuttle_pos = shuttle_pos;
 ismail(j).shuttle_vel = shuttle_vel;
 ismail(j).shuttle_acc = shuttle_acc; 
+
+
+% save filename.mat ismail
+
